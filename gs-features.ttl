@@ -1,0 +1,1439 @@
+@prefix : <https://gallosiciliani.unict.it/ns/galloSicilianFeatures#> .
+@prefix lp: <https://gallosiciliani.unict.it/ns/linguisticPhenomena#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://gallosiciliani.unict.it/ns/galloSicilianFeatures#> .
+
+<https://gallosiciliani.unict.it/ns/galloSicilianFeatures> rdf:type owl:Ontology ;
+                                                            owl:imports <https://gallosiciliani.unict.it/ns/linguisticPhenomena> ;
+                                                            rdfs:comment "Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily." ;
+                                                            rdfs:label "Gallo-Sicilian features" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  https://gallosiciliani.unict.it/ns/linguisticPhenomena#regex
+lp:regex rdf:type owl:AnnotationProperty .
+
+
+###  https://gallosiciliani.unict.it/ns/linguisticPhenomena#replacement
+lp:replacement rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#D01a
+:D01a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :sanFratelloFeature ,
+                         lp:linguisticPhenomenon ;
+      rdfs:label "D01a -CJ- > [tts]" ;
+      lp:regex "(\\S)cj(\\S)" ;
+      lp:replacement "$1zz$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#D01b
+:D01b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :sanFratelloFeature ,
+                         lp:linguisticPhenomenon ;
+      rdfs:label "D01b -CJ- > [tʃ]" ;
+      lp:regex "(\\S)cj(\\S)" ;
+      lp:replacement "$1ci$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#D02
+:D02 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :sanFratelloFeature ,
+                        lp:linguisticPhenomenon ;
+     rdfs:label "D02 CL > cr" ;
+     lp:regex "cl" ;
+     lp:replacement "cr" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#D03
+:D03 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :novaraDiSiciliaFeature ,
+                        lp:linguisticPhenomenon ;
+     rdfs:label "D03 C+E/I > [dʒ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#D04a
+:D04a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         lp:linguisticPhenomenon ;
+      rdfs:label "D04a PTJ > [tts]" ;
+      lp:regex "ptj" ;
+      lp:replacement "zzi" ,
+                     "zzï" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#D04b
+:D04b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         lp:linguisticPhenomenon ;
+      rdfs:label "D04b PTJ > [tʃ]" ;
+      lp:regex "ptj" ;
+      lp:replacement "ci" ,
+                     "cï" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#D04c
+:D04c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         lp:linguisticPhenomenon ;
+      rdfs:label "D04c PJ > [pj]" ;
+      lp:regex "([aàeèéiìíoòóuùúyöëïüj])pj(\\S)" ;
+      lp:replacement "$1pi$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#D04d
+:D04d rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         lp:linguisticPhenomenon ;
+      rdfs:label "D04d PJ > [tʃ]" ;
+      lp:regex "([aàeèéiìíoòóuùúyöëïüj])pj(\\S)" ;
+      lp:replacement "$1ci$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N01a
+:N01a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N01a -ALLU/-ELLU > [ˈɛu]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N01b
+:N01b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N01b –(voc)LLU > voc+ö" ;
+      lp:regex "(\\S)àllu$" ,
+               "(\\S)éllu$" ,
+               "(\\S)óllu$" ;
+      lp:replacement "$1àö" ,
+                     "$1èö" ,
+                     "$1òö" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N02
+:N02 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :northernItalyFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N02 -ANU/-ANE > [ˈɛã]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N03a
+:N03a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N03a -ĀRE > à" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N03b
+:N03b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N03b -ĀRE > [ɛ(r(o̝))]" ;
+      lp:regex "(\\S)àre" ;
+      lp:replacement "$1è" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N04a
+:N04a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N04a -ARJU > jêu" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N04b
+:N04b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N04b -ARJU > ìa" ;
+      lp:regex "(\\S)àrju$" ;
+      lp:replacement "$1ìa" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N04c
+:N04c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N04c -ARJU > àiru" ;
+      lp:regex "(\\S)àrju$" ;
+      lp:replacement "$1àirö" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N05
+:N05 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N05 àu > öu" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N06
+:N06 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N06 -ĔN- tonico > ën" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N07
+:N07 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :northernItalyFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N07 -etta/o > [ˈɔ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N08a
+:N08a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N08a -INA > ê̤jâ" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N08b
+:N08b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N08b -INA > êa" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N08c
+:N08c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N08c -INU > êu" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N08d
+:N08d rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N08d -INU > ìan" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N09a
+:N09a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N09a -ŌNE > àn" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N09b
+:N09b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N09b -ŌNE > ô" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N10a
+:N10a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N10a À > ä" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N10b
+:N10b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N10b À > ɛ <e>" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N10c
+:N10c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N10c À > èa" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N10d
+:N10d rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N10d À > eu" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N10e
+:N10e rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N10e À > iè" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N10f
+:N10f rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N10f À > ˈjɛa" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N10g
+:N10g rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N10g À > ei" ;
+      lp:regex "à$|à([^aàeèéiìíoòóuùúyöëïüj][aàeèéiìíoòóuùúyöëïüj])" ;
+      lp:replacement "èi$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N10h
+:N10h rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N10h À > eö/eu" ;
+      lp:regex "à$|à([^aàeèéiìíoòóuùúyöëïüj][aàeèéiìíoòóuùúyöëïüj])" ;
+      lp:replacement "èu$1" ,
+                     "èö$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N11a
+:N11a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N11a Ĕ tonico > jɛ aperta sillaba]" ;
+      lp:regex "é$|é([^aàeèéiìíoòóuùúyöëïüj][aàeèéiìíoòóuùúyöëïüj])" ;
+      lp:replacement "iè$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N11b
+:N11b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N11b Ĕ tonico > jɛ chiusa sillaba" ;
+      lp:regex "é" ;
+      lp:replacement "iè" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N11c
+:N11c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N11c Ĕ > ẹ [e] sillaba chiusa (o chiusissima _nasale)" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N11d
+:N11d rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N11d Ĕ > œ sillaba aperta" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N11e
+:N11e rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N11e Ĕ tonico > a" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N11f
+:N11f rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N11f Ĕ tonico > ea" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N12a
+:N12a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N12a Ē/Ĭ tonico > [e̝i̯]" ;
+      lp:regex "è$|è([^aàeèéiìíoòóuùúyöëïüj][aàeèéiìíoòóuùúyöëïüj])" ;
+      lp:replacement "éi$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N12b
+:N12b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N12b Ē/Ĭ tonico > e̤" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N12c
+:N12c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N12c Ē/Ĭ tonico > à" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N12d
+:N12d rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N12d Ē/Ĭ tonico > ɔ" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N13a
+:N13a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N13a -ə finale" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N13b
+:N13b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N13b -ə- mediano" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N14a
+:N14a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N14a Ī tonico > ˈiæ" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N15b
+:N15b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N15b -i finale" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N16a
+:N16a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N16a Ŏ tonico > wɔ aperta sillaba" ;
+      lp:regex "ó$|ó([^aàeèéiìíoòóuùúyöëïüj][aàeèéiìíoòóuùúyöëïüj])" ;
+      lp:replacement "uò$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N16b
+:N16b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N16b Ŏ tonico > wɔ chiusa sillaba" ;
+      lp:regex "ó" ;
+      lp:replacement "uò" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N16c
+:N16c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N16c Ŏ tonico > ö [œ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N16d
+:N16d rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N16d Ŏ (+ N) tonico > ön" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N16e
+:N16e rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N16e Ŏ tonico > à" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N17
+:N17 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N17 Ō/Ŭ tonico > öu" ;
+     lp:regex "[òú]$|[òú]([^aàeèéiìíoòóuùúyöëïüj][aàeèéiìíoòóuùúyöëïüj])" ;
+     lp:replacement "óu$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N18a
+:N18a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N18a Ō/Ŭ tonico > [o̝]" ;
+      lp:regex "[òú]" ;
+      lp:replacement "ó" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N18b
+:N18b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N18b Ō/Ŭ tonico > àu" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N18c
+:N18c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N18c Ō/Ŭ tonico > [wɔ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N19a
+:N19a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N19a -ö- atono interno" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N19b
+:N19b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N19b -ö finale" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N19c
+:N19c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N19c -o finale" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N20a
+:N20a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N20a Ū tonico > ü" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N20b
+:N20b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N20b Ū tonico > ö analog." ;
+      lp:regex "ù" ;
+      lp:replacement "ó" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N20c
+:N20c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N20c Ū tonico +N+voc > ô" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N21
+:N21 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :northernItalyFeature ,
+                        :novaraDiSiciliaFeature ;
+     rdfs:label "N21 -u finale" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N22a
+:N22a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N22a apocope “ni”" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N22b
+:N22b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N22b apocope “plätt”" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N22c
+:N22c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N22c troncamento" ;
+      lp:regex "(\\S)([mn])[ue]$" ;
+      lp:replacement "$1$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N23
+:N23 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ,
+                        :novaraDiSiciliaFeature ;
+     rdfs:label "N23 lunghezza" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N24a
+:N24a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N24a BL- > bl" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N24b
+:N24b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N24b BL- > br" ;
+      lp:regex "bl" ;
+      lp:replacement "br" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N24c
+:N24c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N24c BL- > dʒ" ;
+      lp:regex "^bl" ;
+      lp:replacement "ge" ,
+                     "gi" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N25
+:N25 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :northernItalyFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N25 -BL- > dʒ" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N26
+:N26 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N26 BR- > br" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N27
+:N27 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N27 CL-/PL- > [tʃ]" ;
+     lp:regex "^[cp]l" ;
+     lp:replacement "ci" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N28a
+:N28a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N28a -CL-/-TL- > [dʒ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N28b
+:N28b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N28b -CL-/-TL- > ghj" ;
+      lp:regex "(\\S)[ct]l(\\S)" ;
+      lp:replacement "$1ghj$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N29a
+:N29a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N29a -CT- > it" ;
+      lp:regex "(\\S)ct(\\S)" ;
+      lp:replacement "$1it$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N29b
+:N29b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N29b -CT- > tʃ" ;
+      lp:regex "ct" ;
+      lp:replacement "ci" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N30a
+:N30a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N30a NDC > ndz" ;
+      lp:regex "ndc" ;
+      lp:replacement "nż" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N30b
+:N30b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N30b DC > dz" ;
+      lp:regex "dc" ;
+      lp:replacement "ż" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N31
+:N31 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N31 DR > dr" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N32
+:N32 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N32 DV > v" ;
+     lp:regex "dv" ;
+     lp:replacement "v" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N33
+:N33 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N33 FL > ʃ" ;
+     lp:regex "fl" ;
+     lp:replacement "sce" ,
+                    "sci" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N34
+:N34 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N34 GL- > dʒ" ;
+     lp:regex "^gl" ;
+     lp:replacement "ge" ,
+                    "gi" ,
+                    "gè" ,
+                    "gé" ,
+                    "gì" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N35
+:N35 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N35 GR- > gr" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N36
+:N36 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :northernItalyFeature ,
+                        :novaraDiSiciliaFeature ;
+     rdfs:label "N36 LJ > [ʎʎ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N37
+:N37 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N37 MB > mb" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N38
+:N38 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N38 ND > nd" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N39
+:N39 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ,
+                        :novaraDiSiciliaFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N39 ns <> nz" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N40
+:N40 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N40 NV > mb" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N41
+:N41 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N41 NV > nv" ;
+     lp:regex "nv" ;
+     lp:replacement "mb" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N42a
+:N42a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N42a PL- > pl" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N42b
+:N42b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N42b PL- > pr" ;
+      lp:regex "^pl" ;
+      lp:replacement "pr" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N43
+:N43 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N43 -PL- > dʒ" ;
+     lp:regex "(\\S)pl(\\S)" ;
+     lp:replacement "$1ge$2" ,
+                    "$1gi$2" ,
+                    "$1gè$2" ,
+                    "$1gé$2" ,
+                    "$1gì$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N44
+:N44 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ,
+                        :novaraDiSiciliaFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N44 SJ > [ᴣ] (o <sic çi)" ;
+     lp:regex "sj" ;
+     lp:replacement "sg" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N45
+:N45 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N45 SPL > sbr" ;
+     lp:regex "spl" ;
+     lp:replacement "sbr" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N46a
+:N46a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N46a b- > b- " .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N46b
+:N46b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N46b b scempia (ogni contesto)" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N46c
+:N46c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N46c -B- > -b-" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N47a
+:N47a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N47a -C+E/I (o sic. ce/i) > [ʒ]" ;
+      lp:regex "c([èéìí])" ,
+               "c[ei]" ;
+      lp:replacement "sg" ,
+                     "sg$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N47b
+:N47b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N47b -C+E/I > [ddʒ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N47c
+:N47c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N47c C+E/I > [ts] " ;
+      lp:regex "(^c|([^c])c|cc)([èìíé])" ,
+               "(^c|([^c])c|cc)[ei]" ;
+      lp:replacement "$2zz" ,
+                     "$2zz$3" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N48
+:N48 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :northernItalyFeature ,
+                        :novaraDiSiciliaFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N48 -D- > r" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N49
+:N49 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N49 g- scempia" ;
+     lp:regex "^g" ;
+     lp:replacement "gà" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N50
+:N50 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :northernItalyFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N50 G-+A/O/U > Ø " .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N51a
+:N51a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N51a G-+E/I > [dz]" ;
+      lp:regex "^gi" ,
+               "g[ei]" ;
+      lp:replacement "g" ,
+                     "ż" ,
+                     "żż" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N51b
+:N51b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N51b G-+E/I > [dʒ]" ;
+      lp:regex "^g[ei]" ;
+      lp:replacement "g" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N52
+:N52 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N52 G-+A/O/U > [g]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N53
+:N53 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :northernItalyFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N53 J- > [dz]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54a1
+:N54a1 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54a1 Leniz C > [g/ɣ]" ;
+       lp:regex "([aàeèéiìíoòóuùúyöëïü])[cq]([aàeèéiìíoòóuùúyöëïür])" ;
+       lp:replacement "$1g$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54a2
+:N54a2 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54a2 Leniz C > Ø" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54a3
+:N54a3 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54a3 Leniz CR > [gr]" ;
+       lp:regex "([aàeèéiìíoòóuùúyöëïü])cr" ;
+       lp:replacement "$1gr" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54b1
+:N54b1 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54b1 Leniz P > [b]" ;
+       lp:regex "([aàeèéiìíoòóuùúyöëïü])p([aàeèéiìíoòóuùúyöëïür])" ;
+       lp:replacement "$1b$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54b2
+:N54b2 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54b2 Leniz P > Ø" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54b3
+:N54b3 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54b3 Leniz P > v" ;
+       lp:regex "([aàeèéiìíoòóuùúyöëïü])p([aàeèéiìíoòóuùúyöëïür])" ;
+       lp:replacement "$1v$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54b4
+:N54b4 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ,
+                          :sanFratelloFeature ;
+       rdfs:label "N54b4 Leniz P > [w]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54b5
+:N54b5 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54b5 Leniz PR > [vr]" ;
+       lp:regex "([aàeèéiìíoòóuùúyöëïü])pr" ;
+       lp:replacement "$1vr" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54c1
+:N54c1 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54c1 Leniz T > [d]" ;
+       lp:regex "([aàeèéiìíoòóuùúyöëïü])t([aàeèéiìíoòóuùúyöëïür])" ;
+       lp:replacement "$1d$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54c2
+:N54c2 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54c2 Leniz T > [r]" ;
+       lp:regex "([aàeèéiìíoòóuùúyöëïü])t([aàeèéiìíoòóuùúyöëïür])" ;
+       lp:replacement "$1r$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54c3
+:N54c3 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54c3 Leniz T > Ø" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54c4
+:N54c4 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54c4 Leniz TR > [dr]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54c5
+:N54c5 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :nicosiaFeature ,
+                          :northernItalyFeature ;
+       rdfs:label "N54c5 Leniz TR > [ir]" ;
+       lp:regex "([aàeèéiìíoòóuùúyöëïü])tr" ;
+       lp:replacement "$1ir" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N54c6
+:N54c6 rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :northernItalyFeature ;
+       rdfs:label "N54c6 Leniz TR > [r]" ;
+       lp:regex "([aàeèéiìíoòóuùúyöëïü])tr" ;
+       lp:replacement "$1rr" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N55a
+:N55a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ;
+      rdfs:label "N55a L- > r" ;
+      lp:regex "^l" ;
+      lp:replacement "r" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N55b
+:N55b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N55b L- > [ll]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N56a
+:N56a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N56a -L- > [ɹ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N56b
+:N56b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N56b -L- > Ø" ;
+      lp:regex "àl[ue]$" ;
+      lp:replacement "àö" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N58a
+:N58a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N58a -N- > [ɹ] e nasalizza" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N58b
+:N58b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N58b -N- dilegua e nasalizza la voc" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N59a
+:N59a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N59a -R- > [ɹ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N59b
+:N59b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :novaraDiSiciliaFeature ;
+      rdfs:label "N59b -R- > Ø" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N60b
+:N60b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N60b s+cons sonora > [ʒ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N60c
+:N60c rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :northernItalyFeature ,
+                         :sanFratelloFeature ;
+      rdfs:label "N60c S+cons sorda > [ʃ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N61
+:N61 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ,
+                        :novaraDiSiciliaFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N61 -[s]- > [z]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N62
+:N62 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N62 [z-]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N63
+:N63 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :northernItalyFeature ,
+                        :sanFratelloFeature ;
+     rdfs:label "N63 W- > [w]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#N64
+:N64 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :northernItalyFeature ;
+     rdfs:label "N64 metapl tipo forta" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S01
+:S01 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S01 Ĕ(N) tonica > [ɛ(n)]" ;
+     lp:regex "én" ;
+     lp:replacement "èn" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S02
+:S02 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S02 Ē/Ĭ toniche > i" ;
+     lp:regex "[èí]" ;
+     lp:replacement "ì" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S03
+:S03 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S03 Ē/Ĭ toniche > [ɛ]" ;
+     lp:regex "í" ;
+     lp:replacement "è" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S04
+:S04 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S04 Ŏ tonica aperta sillaba > [ɔ]" ;
+     lp:regex "ó$|ó([^aàeèéiìíoòóuùúyöëïüj][aàeèéiìíoòóuùúyöëïüj])" ;
+     lp:replacement "ò$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S05
+:S05 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S05 Ō/Ŭ tonici > ù" ;
+     lp:regex "(\\S)[òú]" ;
+     lp:replacement "$1ù" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S06
+:S06 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S06 Ō tonico > [ɔ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S07
+:S07 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S07 [i] atono" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S08
+:S08 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S08 Ŏ/Ō/Ŭ atono proton.> a" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S09
+:S09 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S09 -CL-/-TL- > chj" ;
+     lp:regex "(\\S)[ct]l(\\S)" ;
+     lp:replacement "$1chj$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S10
+:S10 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S10 CT- > t/tt" ;
+     lp:regex "ct" ;
+     lp:replacement "t" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S11
+:S11 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S11 -K-> [k]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S12
+:S12 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S12 -DR- > ḍṛ" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S13a
+:S13a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :southernItalyFeature ;
+      rdfs:label "S13a GL- > gr" ;
+      lp:regex "^gl" ;
+      lp:replacement "gr" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S13b
+:S13b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :southernItalyFeature ;
+      rdfs:label "S13b GL- > [j]" ;
+      lp:regex "^gl" ;
+      lp:replacement "i" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S14
+:S14 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S14 -GL- > ghj" ;
+     lp:regex "gl" ;
+     lp:replacement "ghj" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S15
+:S15 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S15 GR- > r" ;
+     lp:regex "^gr" ;
+     lp:replacement "r" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S16
+:S16 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S16 G+E/I > [j]" ;
+     lp:regex "g[eèéiìí]" ;
+     lp:replacement "i" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S17
+:S17 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S17 LJ > ghj" ;
+     lp:regex "lj" ;
+     lp:replacement "ghj" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S18
+:S18 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S18 LL > [ɖ]" ;
+     lp:regex "ll" ;
+     lp:replacement "dd" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S19
+:S19 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S19 -MB- > m" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S20
+:S20 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S20 -ND- > n" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S21
+:S21 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S21 PL > chj" ;
+     lp:regex "pl" ;
+     lp:replacement "chj" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S22a
+:S22a rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :novaraDiSiciliaFeature ,
+                         :southernItalyFeature ;
+      rdfs:label "S22a TJ > [ʒ] " ;
+      lp:regex "tj" ;
+      lp:replacement "sg" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S22b
+:S22b rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :nicosiaFeature ,
+                         :southernItalyFeature ;
+      rdfs:label "S22b KS > [ʒ] " .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#S23
+:S23 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :sanFratelloFeature ,
+                        :southernItalyFeature ;
+     rdfs:label "S23 TR > ṭṛ" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#X01
+:X01 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        lp:linguisticPhenomenon ;
+     rdfs:label "X01 Ē/Ĭ tonica > [e̝]" ;
+     lp:regex "(\\S)[èí]" ;
+     lp:replacement "$1é" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#X02
+:X02 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :sanFratelloFeature ,
+                        lp:linguisticPhenomenon ;
+     rdfs:label "X02 D- > [ɖ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#X03
+:X03 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        :sanFratelloFeature ,
+                        lp:linguisticPhenomenon ;
+     rdfs:label "X03 L- > [ɖ]" ;
+     lp:regex "^l" ;
+     lp:replacement "dd" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#X04
+:X04 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        lp:linguisticPhenomenon ;
+     rdfs:label "X04 mm > mb" ;
+     lp:regex "mm" ;
+     lp:replacement "mb" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#X05
+:X05 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :nicosiaFeature ,
+                        lp:linguisticPhenomenon ;
+     rdfs:label "X05 nn > nd" ;
+     lp:regex "nn" ;
+     lp:replacement "nd" .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#nicosiaFeature
+:nicosiaFeature rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf lp:linguisticPhenomenon ;
+                rdfs:comment "A linguistic phenomena recurring in the language spoken in Novara di Sicilia." .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#northernItalyFeature
+:northernItalyFeature rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf lp:linguisticPhenomenon ;
+                      rdfs:comment "A linguistic phenomenon typical of languages of northern Italy." .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#novaraDiSiciliaFeature
+:novaraDiSiciliaFeature rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf lp:linguisticPhenomenon ;
+                        rdfs:comment "A linguistic phenomena recurring in the language spoken in Novara di Sicilia." .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#sanFratelloFeature
+:sanFratelloFeature rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf lp:linguisticPhenomenon ;
+                    rdfs:comment "A linguistic phenomena recurring in the language spoken in the town of San Fratello, in Sicily." .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#southernItalyFeature
+:southernItalyFeature rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf lp:linguisticPhenomenon ;
+                      rdfs:comment "A linguistic phenomenon typical of languages of southern Italy." .
+
+
+###  https://gallosiciliani.unict.it/ns/galloSicilianFeatures#sperlingaFeature
+:sperlingaFeature rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf lp:linguisticPhenomenon ;
+                  rdfs:comment "A linguistic phenomena recurring in the language spoken in Sperlinga, in Sicily." .
+
+
+###  https://gallosiciliani.unict.it/ns/linguisticPhenomena#linguisticPhenomenon
+lp:linguisticPhenomenon rdf:type owl:ObjectProperty .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
