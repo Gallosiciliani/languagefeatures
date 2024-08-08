@@ -1,21 +1,57 @@
-@prefix : <https://gallosiciliani.unict.it/ns/linguisticPhenomena#> .
+@prefix : <https://gallosiciliani.unict.it/ns/lpont#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ontolex: <https://www.w3.org/ns/lemon/ontolex#> .
-@base <https://gallosiciliani.unict.it/ns/linguisticPhenomena#> .
+@base <https://gallosiciliani.unict.it/ns/lpont#> .
 
-<https://gallosiciliani.unict.it/ns/linguisticPhenomena> rdf:type owl:Ontology ;
-                                                          owl:imports <http://lari-datasets.ilc.cnr.it/lemonEty#> ;
-                                                          rdfs:comment "This ontology provides building blocks to define language features." .
+<https://gallosiciliani.unict.it/ns/lpont> rdf:type owl:Ontology ;
+                                            owl:imports <http://lari-datasets.ilc.cnr.it/lemonEty#> ;
+                                            dcterms:contributor "Daniele Francesco Santamaria" ,
+                                                                "Domenico Cantone" ,
+                                                                "Marianna Nicolosi Asmundo" ,
+                                                                "Salvatore Menza" ,
+                                                                "Vincenzo Nicolò Di Caro" ;
+                                            dcterms:created "2024-08-08"^^xsd:date ;
+                                            dcterms:creator "Cristiano Longo" ;
+                                            dcterms:description <https://creativecommons.org/licenses/by/4.0/> ,
+                                                                """The Linguistic Phenomena Ontology is an Ontolex-lemon extension devoted to represent linguistic phenomena.  We denote as linguistic phenomena those kinds of phenomena which cause modifications of language expressions. In general, a linguistic phenomenon occurs by turning a parent expression into a target expression in the language under consideration, where the parent expression may have been inherited from the parent language, or it may have been borrowed from a foreign language.
+
+In addition, the ontology provides the regex and replacement properties to describe a linguistic phenomenon operatioanally in a machine-actionable way."""@en ;
+                                            dcterms:title "The Linguistic Phenomena Ontology (LiPh)"@en ;
+                                            vann:preferredNamespacePrefix "liph" ;
+                                            vann:preferredNamespaceUri : ;
+                                            rdfs:comment """The Linguistic Phenomena Ontology is an Ontolex-lemon extension devoted to represent linguistic phenomena.  We denote as linguistic phenomena those kinds of phenomena which cause modifications of language expressions. In general, a linguistic phenomenon occurs by turning a parent expression into a target expression in the language under consideration, where the parent expression may have been inherited from the parent language, or it may have been borrowed from a foreign language.
+
+In addition, the ontology provides the regex and replacement properties to describe a linguistic phenomenon operatioanally in a machine-actionable way."""@en ;
+                                            rdfs:label "The Linguistic Phenomena Ontology (LiPh)"@en ;
+                                            owl:versionInfo "" .
 
 #################################################################
 #    Annotation properties
 #################################################################
 
-###  https://gallosiciliani.unict.it/ns/linguisticPhenomena#regex
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+dcterms:license rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespacePrefix
+vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
+
+
+###  https://gallosiciliani.unict.it/ns/lpont#regex
 :regex rdf:type owl:AnnotationProperty ;
        rdfs:comment "Used in conjuction with replacement, it allows one to provide an operational description of a linguistic phenomenon. In particular, regex represent the regular expression which recognizes the parts of the parent strings which may be affected by the phenomenon." ;
        rdfs:label "Regular expression pattern" ;
@@ -23,7 +59,7 @@
        rdfs:domain :linguisticPhenomenon .
 
 
-###  https://gallosiciliani.unict.it/ns/linguisticPhenomena#replacement
+###  https://gallosiciliani.unict.it/ns/lpont#replacement
 :replacement rdf:type owl:AnnotationProperty ;
              rdfs:comment "Used in conjuction with regex, it allows one to provide an operational description of a linguistic phenomenon. In particular, this property define  how parts of the language expression matching the regex have to be replaced. Replacements may contain references to capturing groups defined in regex." ;
              rdfs:label "replacement" ;
@@ -35,7 +71,7 @@
 #    Object Properties
 #################################################################
 
-###  https://gallosiciliani.unict.it/ns/linguisticPhenomena#linguisticPhenomenon
+###  https://gallosiciliani.unict.it/ns/lpont#linguisticPhenomenon
 :linguisticPhenomenon rdf:type owl:ObjectProperty ,
                                owl:TransitiveProperty ,
                                owl:ReflexiveProperty ;
@@ -53,7 +89,7 @@
 <http://www.w3.org/ns/lemon/ontolex#Form> rdfs:subClassOf :LexicalObject .
 
 
-###  https://gallosiciliani.unict.it/ns/linguisticPhenomena#LexicalObject
+###  https://gallosiciliani.unict.it/ns/lpont#LexicalObject
 :LexicalObject rdf:type owl:Class ;
                rdfs:subClassOf [ rdf:type owl:Restriction ;
                                  owl:onProperty <http://www.w3.org/ns/lemon/ontolex#writtenRep> ;
