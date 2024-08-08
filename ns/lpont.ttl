@@ -10,7 +10,7 @@
 @base <https://gallosiciliani.unict.it/ns/lpont#> .
 
 <https://gallosiciliani.unict.it/ns/lpont> rdf:type owl:Ontology ;
-                                            owl:imports <http://lari-datasets.ilc.cnr.it/lemonEty#> ;
+                                            owl:imports <http://www.w3.org/ns/lemon/ontolex> ;
                                             dcterms:contributor "Daniele Francesco Santamaria" ,
                                                                 "Domenico Cantone" ,
                                                                 "Marianna Nicolosi Asmundo" ,
@@ -18,10 +18,10 @@
                                                                 "Vincenzo Nicolò Di Caro" ;
                                             dcterms:created "2024-08-08"^^xsd:date ;
                                             dcterms:creator "Cristiano Longo" ;
-                                            dcterms:description <https://creativecommons.org/licenses/by/4.0/> ,
-                                                                """The Linguistic Phenomena Ontology is an Ontolex-lemon extension devoted to represent linguistic phenomena.  We denote as linguistic phenomena those kinds of phenomena which cause modifications of language expressions. In general, a linguistic phenomenon occurs by turning a parent expression into a target expression in the language under consideration, where the parent expression may have been inherited from the parent language, or it may have been borrowed from a foreign language.
+                                            dcterms:description """The Linguistic Phenomena Ontology is an Ontolex-lemon extension devoted to represent linguistic phenomena.  We denote as linguistic phenomena those kinds of phenomena which cause modifications of language expressions. In general, a linguistic phenomenon occurs by turning a parent expression into a target expression in the language under consideration, where the parent expression may have been inherited from the parent language, or it may have been borrowed from a foreign language.
 
 In addition, the ontology provides the regex and replacement properties to describe a linguistic phenomenon operatioanally in a machine-actionable way."""@en ;
+                                            dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                                             dcterms:title "The Linguistic Phenomena Ontology (LiPh)"@en ;
                                             vann:preferredNamespacePrefix "liph" ;
                                             vann:preferredNamespaceUri : ;
@@ -35,6 +35,10 @@ In addition, the ontology provides the regex and replacement properties to descr
 #    Annotation properties
 #################################################################
 
+###  http://purl.org/dc/terms/contributor
+dcterms:contributor rdf:type owl:AnnotationProperty .
+
+
 ###  http://purl.org/dc/terms/created
 dcterms:created rdf:type owl:AnnotationProperty .
 
@@ -43,8 +47,16 @@ dcterms:created rdf:type owl:AnnotationProperty .
 dcterms:creator rdf:type owl:AnnotationProperty .
 
 
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
 ###  http://purl.org/dc/terms/license
 dcterms:license rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
 
 
 ###  http://purl.org/vocab/vann/preferredNamespacePrefix
