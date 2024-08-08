@@ -29,7 +29,7 @@ In addition, the ontology provides the regex and replacement properties to descr
 
 In addition, the ontology provides the regex and replacement properties to describe a linguistic phenomenon operatioanally in a machine-actionable way."""@en ;
                                             rdfs:label "The Linguistic Phenomena Ontology (LiPh)"@en ;
-                                            owl:versionInfo "" .
+                                            owl:versionInfo "1.0.0" .
 
 #################################################################
 #    Annotation properties
