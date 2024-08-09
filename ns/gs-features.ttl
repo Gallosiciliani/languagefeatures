@@ -23,7 +23,7 @@
                                                   dcterms:title "Gallo-Sicilian features"@en ;
                                                   rdfs:comment "Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily." ;
                                                   rdfs:label "Gallo-Sicilian features" ;
-                                                  owl:versionInfo "0.1.0" .
+                                                  owl:versionInfo "0.2.0" .
 
 #################################################################
 #    Annotation properties
@@ -128,6 +128,30 @@ liph:replacement rdf:type owl:AnnotationProperty .
       rdfs:subPropertyOf :nicosiaFeature ,
                          :northernItalyFeature ;
       rdfs:label "N01b –(voc)LLU > voc+ö" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#N01b_1
+:N01b_1 rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :N01b ;
+        rdfs:label "N01b –(voc)LLU > voc+ö" ;
+        liph:regex "(\\S)àllu$" ;
+        liph:replacement "$1àö" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#N01b_2
+:N01b_2 rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :N01b ;
+        rdfs:label "N01b –(voc)LLU > voc+ö" ;
+        liph:regex "(\\S)éllu$" ;
+        liph:replacement "$1èö" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#N01b_3
+:N01b_3 rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :N01b ;
+        rdfs:label "N01b –(voc)LLU > voc+ö" ;
+        liph:regex "(\\S)óllu$" ;
+        liph:replacement "$1òö" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#N02
@@ -855,11 +879,23 @@ liph:replacement rdf:type owl:AnnotationProperty .
                          :northernItalyFeature ,
                          :novaraDiSiciliaFeature ,
                          :sanFratelloFeature ;
-      rdfs:label "N47a -C+E/I (o sic. ce/i) > [ʒ]" ;
-      liph:regex "c([èéìí])" ,
-                 "c[ei]" ;
-      liph:replacement "sg" ,
-                       "sg$1" .
+      rdfs:label "N47a -C+E/I (o sic. ce/i) > [ʒ]" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#N47a_1
+:N47a_1 rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :N47a ;
+        rdfs:label "N47a -C+E/I (o sic. ce/i) > [ʒ]" ;
+        liph:regex "c[ei]" ;
+        liph:replacement "sg" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#N47a_2
+:N47a_2 rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :N47a ;
+        rdfs:label "N47a -C+E/I (o sic. ce/i) > [ʒ]" ;
+        liph:regex "c([èéìí])" ;
+        liph:replacement "sg$1" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#N47b
@@ -874,11 +910,23 @@ liph:replacement rdf:type owl:AnnotationProperty .
       rdfs:subPropertyOf :nicosiaFeature ,
                          :northernItalyFeature ,
                          :sanFratelloFeature ;
-      rdfs:label "N47c C+E/I > [ts] " ;
-      liph:regex "(^c|([^c])c|cc)([èìíé])" ,
-                 "(^c|([^c])c|cc)[ei]" ;
-      liph:replacement "$2zz" ,
-                       "$2zz$3" .
+      rdfs:label "N47c C+E/I > [ts]" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#N47c_1
+:N47c_1 rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :N47c ;
+        rdfs:label "N47c C+E/I > [ts]" ;
+        liph:regex "(^c|([^c])c|cc)[ei]" ;
+        liph:replacement "$2zz" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#N47c_2
+:N47c_2 rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :N47c ;
+        rdfs:label "N47c C+E/I > [ts]" ;
+        liph:regex "(^c|([^c])c|cc)([èìíé])" ;
+        liph:replacement "$2zz$3" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#N48
@@ -911,6 +959,24 @@ liph:replacement rdf:type owl:AnnotationProperty .
                          :northernItalyFeature ,
                          :novaraDiSiciliaFeature ;
       rdfs:label "N51a G-+E/I > [dz]" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#N51a_1
+:N51a_1 rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :N51a ;
+        rdfs:label "N51a G-+E/I > [dz]" ;
+        liph:regex "g[ei]" ;
+        liph:replacement "ż" ,
+                         "żż" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#N51a_2
+:N51a_2 rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :N51a ;
+        rdfs:label "N51a G-+E/I > [dz]" ;
+        liph:regex "g([èéìí])" ;
+        liph:replacement "ż$1" ,
+                         "żż$1" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#N51b
