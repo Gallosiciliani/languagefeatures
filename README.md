@@ -16,5 +16,5 @@ And, in <code>/examples/nicosia</code>, some example derivations of lexical expr
 of the Gallo-Sicilian variety of Nicosia from their Latin etymons.
 
 Finally, a validator to check whether the derivations in a dataset are compliant
-with the linguistic phenomena definitions provided in their owns ontology is provided as
-<code>liph-0.1-jar-with-dependencies.jar</code>.
+with the linguistic phenomena definitions provided in their owns ontology is available as
+Java ARchive <code>liphtools-1.0-jar-with-dependencies.jar</code>.

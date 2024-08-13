@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>it.unict.gallosiciliani</groupId>
-    <artifactId>liph</artifactId>
+    <artifactId>liphtools</artifactId>
     <version>1.0</version>
 
     <properties>
@@ -105,7 +105,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        it.unict.gallosiciliani.liph.Validator
+                                        it.unict.gallosiciliani.liphtools.liph.Validator
                                     </mainClass>
                                 </manifest>
                             </archive>
