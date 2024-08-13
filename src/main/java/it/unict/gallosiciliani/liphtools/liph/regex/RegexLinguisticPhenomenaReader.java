@@ -2,10 +2,8 @@ package it.unict.gallosiciliani.liphtools.liph.regex;
 
 import it.unict.gallosiciliani.liphtools.liph.IllegalLinguisticPhenomenonDefinition;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QuerySolution;
 import org.apache.jena.rdf.model.Model;
 
 import java.util.ArrayList;
@@ -16,7 +14,6 @@ import java.util.function.Consumer;
 /**
  * Get regex features from SPARQL result set
  */
-@Slf4j
 public class RegexLinguisticPhenomenaReader implements Consumer<RegexFeatureQuerySolution> {
     @Getter
     private final List<RegexLinguisticPhenomenon> features = new ArrayList<>();
