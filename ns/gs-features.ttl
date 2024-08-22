@@ -3,14 +3,14 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix liph: <https://gallosiciliani.unict.it/ns/lpont#> .
+@prefix liph: <https://gallosiciliani.unict.it/ns/liph#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix vann: <http://purl.org/vocab/vann/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @base <https://gallosiciliani.unict.it/ns/gs-features#> .
 
 <https://gallosiciliani.unict.it/ns/gs-features> rdf:type owl:Ontology ;
-                                                  owl:imports <https://gallosiciliani.unict.it/ns/lpont> ;
+                                                  owl:imports <https://gallosiciliani.unict.it/ns/liph> ;
                                                   dcterms:contributor "Daniele Francesco Santamaria" ,
                                                                       "Domenico Cantone" ,
                                                                       "Marianna Nicolosi Asmundo" ,
@@ -29,11 +29,9 @@
 #    Annotation properties
 #################################################################
 
-###  https://gallosiciliani.unict.it/ns/lpont#regex
 liph:regex rdf:type owl:AnnotationProperty .
 
 
-###  https://gallosiciliani.unict.it/ns/lpont#replacement
 liph:replacement rdf:type owl:AnnotationProperty .
 
 
@@ -1511,7 +1509,6 @@ liph:replacement rdf:type owl:AnnotationProperty .
                   rdfs:comment "A linguistic phenomena recurring in the language spoken in Sperlinga, in Sicily." .
 
 
-###  https://gallosiciliani.unict.it/ns/lpont#linguisticPhenomenon
 liph:linguisticPhenomenon rdf:type owl:ObjectProperty .
 
 
