@@ -24,12 +24,12 @@ In addition, the ontology provides the regex and replacement properties to descr
                                             dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                                             dcterms:title "The Linguistic Phenomena Ontology (LiPh)"@en ;
                                             vann:preferredNamespacePrefix "liph" ;
-                                            vann:preferredNamespaceUri : ;
+                                            vann:preferredNamespaceUri : "https://gallosiciliani.unict.it/ns/liph#";
                                             rdfs:comment """The Linguistic Phenomena Ontology is an Ontolex-lemon extension devoted to represent linguistic phenomena.  We denote as linguistic phenomena those kinds of phenomena which cause modifications of language expressions. In general, a linguistic phenomenon occurs by turning a parent expression into a target expression in the language under consideration, where the parent expression may have been inherited from the parent language, or it may have been borrowed from a foreign language.
 
 In addition, the ontology provides the regex and replacement properties to describe a linguistic phenomenon operatioanally in a machine-actionable way."""@en ;
                                             rdfs:label "The Linguistic Phenomena Ontology (LiPh)"@en ;
-                                            owl:versionInfo "1.0.0" .
+                                            owl:versionInfo "1.0.1" .
 
 #################################################################
 #    Annotation properties
