@@ -7,6 +7,10 @@
     <groupId>it.unict.gallosiciliani</groupId>
     <artifactId>liphtools</artifactId>
     <version>1.0</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>liph</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
