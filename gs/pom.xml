@@ -6,7 +6,7 @@
     <parent>
         <groupId>it.unict.gallosiciliani</groupId>
         <artifactId>liphtools</artifactId>
-        <version>1.1</version>
+        <version>1.2.0</version>
     </parent>
 
     <artifactId>gs</artifactId>
@@ -19,6 +19,9 @@
                     <include>gs-features.ttl</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
         </resources>
     </build>
 
@@ -26,7 +29,7 @@
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
             <artifactId>liph</artifactId>
-            <version>1.1</version>
+            <version>1.2.0</version>
         </dependency>
     </dependencies>
 

@@ -3,11 +3,14 @@ package it.unict.gallosiciliani.util;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.RDFParser;
+import org.apache.jena.riot.RDFWriter;
 import org.apache.jena.riot.system.ErrorHandlerFactory;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
@@ -49,5 +52,15 @@ public class OntologyLoader implements AutoCloseable{
     @Override
     public void close() {
         model.close();
+    }
+
+    /**
+     * Just print the ontology
+     * @return the ontology as TTL
+     */
+    public String print(){
+        final StringWriter w = new StringWriter();
+        RDFWriter.source(getModel()).format(RDFFormat.TTL).build().output(w);
+        return w.toString();
     }
 }

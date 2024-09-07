@@ -124,16 +124,6 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
 
 
     /**
-     * Just print the ontology
-     * @return the ontology as TTL
-     */
-    public String print(){
-        final StringWriter w = new StringWriter();
-        RDFWriter.source(getModel()).format(RDFFormat.TTL).build().output(w);
-        return w.toString();
-    }
-
-    /**
      * Attempt to derive target from etymon using the regex features
      * @param etymon
      * @param target

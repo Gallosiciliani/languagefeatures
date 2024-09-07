@@ -19,6 +19,6 @@ public class LinguisticPhenomena extends OntologyLoader {
     public static final String ONTOLEX_WRITTEN_REP_DATA_PROPERTY = ONTOLEX_NS+"writtenRep";
 
     public LinguisticPhenomena() throws IOException {
-        super("lpont.ttl");
+        super("liph.ttl");
     }
 }
