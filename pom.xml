@@ -11,6 +11,7 @@
     <modules>
         <module>util</module>
         <module>liph</module>
+        <module>gs</module>
     </modules>
 
     <properties>
@@ -65,24 +66,4 @@
             <version>2.0.16</version>
         </dependency>
     </dependencies>
-    <build>
-        <resources>
-            <resource>
-                <directory>ns</directory>
-                <includes>
-                    <include>lpont.ttl</include>
-                    <include>gs-features.ttl</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>examples/nicosia</directory>
-                <includes>
-                    <include>ex1.ttl</include>
-                    <include>ex2.ttl</include>
-                    <include>ex3.ttl</include>
-                    <include>ex4.ttl</include>
-                </includes>
-            </resource>
-        </resources>
-    </build>
 </project>

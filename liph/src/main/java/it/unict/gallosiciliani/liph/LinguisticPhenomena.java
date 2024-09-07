@@ -8,7 +8,7 @@ import java.io.IOException;
  * An ontology which allows to define linguistic phenomena
  */
 public class LinguisticPhenomena extends OntologyLoader {
-    public static final String IRI = "https://gallosiciliani.unict.it/ns/lpont";
+    public static final String IRI = "https://gallosiciliani.unict.it/ns/liph";
     public static final String NS = IRI+"#";
     public static final String LINGUISTIC_PHENOMENON_OBJ_PROPERTY =NS+"linguisticPhenomenon";
     public static final String REGEX_ANN_PROPERTY=NS+"regex";

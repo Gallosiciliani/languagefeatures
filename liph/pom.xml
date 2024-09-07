@@ -28,7 +28,7 @@
                 </includes>
             </resource>
             <resource>
-                <directory>examples/nicosia</directory>
+                <directory>../examples/nicosia</directory>
                 <includes>
                     <include>ex1.ttl</include>
                     <include>ex2.ttl</include>
