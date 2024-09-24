@@ -6,7 +6,7 @@
     <parent>
         <groupId>it.unict.gallosiciliani</groupId>
         <artifactId>liphtools</artifactId>
-        <version>1.2.0</version>
+        <version>1.2.2</version>
     </parent>
 
     <artifactId>gs</artifactId>
@@ -28,8 +28,8 @@
     <dependencies>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
-            <artifactId>liph</artifactId>
-            <version>1.2.0</version>
+            <artifactId>derivations</artifactId>
+            <version>1.2.2</version>
         </dependency>
     </dependencies>
 
