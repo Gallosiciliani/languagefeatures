@@ -26,4 +26,10 @@ public interface DerivationPathNode {
      * @return LanguageFeatureTransformation or null
      */
     LinguisticPhenomenon getLinguisticPhenomenon();
+
+    /**
+     * Number of nodes in this derivation
+     * @return derivation length
+     */
+    int length();
 }

@@ -21,6 +21,7 @@ public class DerivationPathNodeImpl implements DerivationPathNode{
     private final String s;
     private final DerivationPathNodeImpl prev;
     private final LinguisticPhenomenon transformation;
+    private final int length;
 
     /**
      * Check whether the given node is a root node of a derivation path
@@ -50,6 +51,7 @@ public class DerivationPathNodeImpl implements DerivationPathNode{
         this.s=s;
         this.prev=prev;
         this.transformation=transformation;
+        length = prev == null ? 1 : prev.length() + 1;
     }
 
     @Override
@@ -65,6 +67,11 @@ public class DerivationPathNodeImpl implements DerivationPathNode{
     @Override
     public LinguisticPhenomenon getLinguisticPhenomenon(){
         return transformation;
+    }
+
+    @Override
+    public int length() {
+        return length;
     }
 
     /**

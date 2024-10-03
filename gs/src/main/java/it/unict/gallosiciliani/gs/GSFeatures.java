@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.gs;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
 import it.unict.gallosiciliani.derivations.NearestDerivation;
+import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
@@ -125,8 +126,8 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
      * @param target desired derivation target
      * @return nearest derivations
      */
-    public NearestDerivation derives(final String etymon, final String target){
-        final NearestDerivation d = new NearestDerivation(target);
+    public NearestShortestDerivation derives(final String etymon, final String target){
+        final NearestShortestDerivation d = new NearestShortestDerivation(target);
         new DerivationPathNodeImpl(etymon).apply(d, regexLinguisticPhenomena);
         return d;
     }
