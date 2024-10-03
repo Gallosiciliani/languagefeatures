@@ -9,5 +9,17 @@
         <version>1.3.0</version>
     </parent>
 
-    <artifactId>util</artifactId>
+    <artifactId>model</artifactId>
+    <properties>
+        <cz.cvut.kbss.jopa.version>1.2.2</cz.cvut.kbss.jopa.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cz.cvut.kbss.jopa</groupId>
+            <artifactId>jopa-impl</artifactId>
+            <version>${cz.cvut.kbss.jopa.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>

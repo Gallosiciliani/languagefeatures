@@ -12,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.jena.rdf.model.Property;
-import org.apache.jena.riot.RDFFormat;
-import org.apache.jena.riot.RDFWriter;
 import org.apache.jena.shared.PropertyNotFoundException;
 import org.apache.jena.vocabulary.RDFS;
 
