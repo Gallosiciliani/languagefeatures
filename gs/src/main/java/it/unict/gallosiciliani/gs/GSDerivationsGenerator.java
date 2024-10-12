@@ -60,13 +60,31 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
     public void accept(final CSVRecord record) {
         final String target = record.get(1);
         if (target.equals("Lemma")) return; //header
-        final String etymon = record.get(6);
-        if (etymon.trim().isEmpty()) return;
+        /*
+        // Latino
+         final String etymon = record.get(6);
+        */
+        // Siciliano
+        final String[] etymons = record.get(7).split("[\\,;]");
+        if (etymons.length==0 || etymons[0].trim().isEmpty()) return;
 
         processed++;
+        boolean complete = false;
+        for(final String etymon : etymons){
+            complete |= derive(etymon.trim(), target);
+        }
+        if (complete) found++;
+    }
+
+    /**
+     * Generate all the derivations starting from etymon and using GS features
+     * @param etymon
+     * @param target
+     * @return true if a complete derivation has been found, false otherwise
+     */
+    private boolean derive(final String etymon, final String target){
         System.out.println("Processing "+etymon+" to "+target);
         final NearestShortestDerivation nearest = gs.derives(etymon, target);
-        if (nearest.getDistance()==0) found++;
         final BigDecimal distanceNormalized = BigDecimal.valueOf(nearest.getDistance()).divide(BigDecimal.valueOf(target.length()), new MathContext(2, RoundingMode.HALF_UP));
 
         for(final DerivationPathNode n : nearest.getDerivation()) {
@@ -76,6 +94,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
                 throw new RuntimeException("unable to write");
             }
         }
+        return nearest.getDistance()==0;
     }
 
     /**

@@ -5,12 +5,13 @@ import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import it.unict.gallosiciliani.util.OntologyCheckUtils;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.RDFParser;
 import org.apache.jena.vocabulary.RDFS;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test for {@link GSFeatures} ontology
  * @author Cristiano Longo
  */
+@Slf4j
 public class GSFeaturesTest {
 
     private static final String[] ALL_PROPERTIES = {
@@ -50,6 +52,23 @@ public class GSFeaturesTest {
         assertTrue(utils.check(), utils.getFailureMessage());
     }
 
+    @Test
+    @Disabled
+    void countProperties() throws IOException {
+        final Query q = QueryFactory.create("SELECT (count(distinct ?f) as ?n) WHERE {"+
+                " {?f <"+RDFS.subPropertyOf+"> <"+ NICOSIA_FEATURE_OBJ_PROPERTY+">}" +
+                " UNION {?f <"+RDFS.subPropertyOf+"> <"+ SPERLINGA_FEATURE_OBJ_PROPERTY+">}" +
+                " UNION {?f <"+RDFS.subPropertyOf+"> <"+ SAN_FRATELLO_FEATURE_OBJ_PROPERTY+">}" +
+                " UNION {?f <"+RDFS.subPropertyOf+"> <"+ NOVARA_DI_SICILIA_FEATURE_OBJ_PROPERTY+">}" +
+                "}");
+        try(final GSFeatures gs = GSFeatures.loadOnline(); final QueryExecution ex = QueryExecution.create(q, gs.getModel())){
+            final int expectedTotFeatures = GSLanguageFeatureCode.values().length;
+            log.info("Features with regex {}", gs.getRegexLinguisticPhenomena().size());
+            final int nPhenomena = ex.execSelect().nextSolution().getLiteral("n").getInt();
+            log.info("Found {} linguistic phenomena", nPhenomena);
+            assertEquals(expectedTotFeatures, nPhenomena);
+        }
+    }
     @Test
     void shouldLoadBaseLoadBaseProperties() throws Exception {
         shouldContainBaseProperties(GSFeatures.loadBase());
