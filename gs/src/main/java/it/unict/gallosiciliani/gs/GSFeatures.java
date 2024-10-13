@@ -1,7 +1,8 @@
 package it.unict.gallosiciliani.gs;
 
-//import it.unict.gallosiciliani.gs.util.GSFeaturesOntologyGenerator;
-//import it.unict.gallosiciliani.languagefeatures.util.*;
+import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
+import it.unict.gallosiciliani.derivations.NearestDerivation;
+import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
@@ -17,7 +18,6 @@ import org.apache.jena.vocabulary.RDFS;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringWriter;
 import java.net.URI;
 import java.util.List;
 import java.util.Locale;
@@ -102,7 +102,6 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
      * @return the label associated to the feature with the speicified code in the give locale
      */
     public String getLabel(final GSLanguageFeatureCode featureCode, final Locale locale) {
-        final String iri = NS+featureCode;
         return getLabel(NS+featureCode, locale);
     }
 
@@ -123,13 +122,13 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
 
     /**
      * Attempt to derive target from etymon using the regex features
-     * @param etymon
-     * @param target
+     * @param etymon derivation source
+     * @param target desired derivation target
      * @return nearest derivations
      */
-/*    public NearestDerivation derives(final String etymon, final String target){
-        final NearestDerivation d = new NearestDerivation(target);
+    public NearestShortestDerivation derives(final String etymon, final String target){
+        final NearestShortestDerivation d = new NearestShortestDerivation(target);
         new DerivationPathNodeImpl(etymon).apply(d, regexLinguisticPhenomena);
         return d;
-    }*/
+    }
 }

@@ -17,6 +17,7 @@
     <modules>
         <module>util</module>
         <module>liph</module>
+        <module>derivations</module>
         <module>gs</module>
         <module>model</module>
     </modules>

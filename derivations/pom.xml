@@ -9,26 +9,11 @@
         <version>1.3.0</version>
     </parent>
 
-    <artifactId>gs</artifactId>
-
-    <build>
-        <resources>
-            <resource>
-                <directory>../ns</directory>
-                <includes>
-                    <include>gs-features.ttl</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-    </build>
-
+    <artifactId>derivations</artifactId>
     <dependencies>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
-            <artifactId>derivations</artifactId>
+            <artifactId>liph</artifactId>
             <version>1.3.0</version>
         </dependency>
     </dependencies>
