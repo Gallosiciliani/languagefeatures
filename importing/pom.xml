@@ -9,27 +9,22 @@
         <version>1.5.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>gs</artifactId>
-
-    <build>
-        <resources>
-            <resource>
-                <directory>../ns</directory>
-                <includes>
-                    <include>gs-features.ttl</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-    </build>
-
+    <artifactId>importing</artifactId>
     <dependencies>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
-            <artifactId>derivations</artifactId>
+            <artifactId>model</artifactId>
             <version>1.5.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.12.0</version>
         </dependency>
     </dependencies>
 
