@@ -1,0 +1,128 @@
+@prefix : <https://gallosiciliani.unict.it/ns/liph#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ontolex: <https://www.w3.org/ns/lemon/ontolex#> .
+@base <https://gallosiciliani.unict.it/ns/liph#> .
+
+<https://gallosiciliani.unict.it/ns/liph> rdf:type owl:Ontology ;
+                                           owl:imports <http://www.w3.org/ns/lemon/ontolex> ;
+                                           dcterms:contributor "Daniele Francesco Santamaria" ,
+                                                               "Domenico Cantone" ,
+                                                               "Marianna Nicolosi Asmundo" ,
+                                                               "Salvatore Menza" ,
+                                                               "Vincenzo Nicolò Di Caro" ;
+                                           dcterms:created "2024-08-08"^^xsd:date ;
+                                           dcterms:creator "Cristiano Longo" ;
+                                           dcterms:description """The Linguistic Phenomena Ontology is an Ontolex-lemon extension devoted to represent linguistic phenomena.  We denote as linguistic phenomena those kinds of phenomena which cause modifications of language expressions. In general, a linguistic phenomenon occurs by turning a parent expression into a target expression in the language under consideration, where the parent expression may have been inherited from the parent language, or it may have been borrowed from a foreign language.
+
+In addition, the ontology provides the regex and replacement properties to describe a linguistic phenomenon operatioanally in a machine-actionable way."""@en ;
+                                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+                                           dcterms:title "The Linguistic Phenomena Ontology (LiPh)"@en ;
+                                           vann:preferredNamespacePrefix "liph" ;
+                                           vann:preferredNamespaceUri "https://gallosiciliani.unict.it/ns/liph#" ;
+                                           rdfs:comment """The Linguistic Phenomena Ontology is an Ontolex-lemon extension devoted to represent linguistic phenomena.  We denote as linguistic phenomena those kinds of phenomena which cause modifications of language expressions. In general, a linguistic phenomenon occurs by turning a parent expression into a target expression in the language under consideration, where the parent expression may have been inherited from the parent language, or it may have been borrowed from a foreign language.
+
+In addition, the ontology provides the regex and replacement properties to describe a linguistic phenomenon operatioanally in a machine-actionable way."""@en ;
+                                           rdfs:label "The Linguistic Phenomena Ontology (LiPh)"@en ;
+                                           owl:versionInfo "1.1.0" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/contributor
+dcterms:contributor rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+dcterms:license rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespacePrefix
+vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
+
+
+###  https://gallosiciliani.unict.it/ns/liph#regex
+:regex rdf:type owl:AnnotationProperty ;
+       rdfs:comment "Used in conjuction with replacement, it allows one to provide an operational description of a linguistic phenomenon. In particular, regex represent the regular expression which recognizes the parts of the parent strings which may be affected by the phenomenon." ;
+       rdfs:label "Regular expression pattern" ;
+       rdfs:range xsd:string ;
+       rdfs:domain :linguisticPhenomenon .
+
+
+###  https://gallosiciliani.unict.it/ns/liph#replacement
+:replacement rdf:type owl:AnnotationProperty ;
+             rdfs:comment "Used in conjuction with regex, it allows one to provide an operational description of a linguistic phenomenon. In particular, this property define  how parts of the language expression matching the regex have to be replaced. Replacements may contain references to capturing groups defined in regex." ;
+             rdfs:label "replacement" ;
+             rdfs:range xsd:string ;
+             rdfs:domain :linguisticPhenomenon .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://gallosiciliani.unict.it/ns/liph#linguisticPhenomenon
+:linguisticPhenomenon rdf:type owl:ObjectProperty ,
+                               owl:TransitiveProperty ,
+                               owl:ReflexiveProperty ;
+                      rdfs:domain :LexicalObject ;
+                      rdfs:range :LexicalObject ;
+                      rdfs:comment "An hypothetical change in the morfology or pronunciation of a language expression. Usually, a procedural description of such a phenomenon can be provided (for example \"replace t with d\"). A linguistic phenomenon can generate several resulting expressions, for example if applied to different parts of source ones." ;
+                      rdfs:label "linguistic phenomenon" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.w3.org/ns/lemon/ontolex#representation
+<http://www.w3.org/ns/lemon/ontolex#representation> rdfs:subPropertyOf :representation .
+
+
+###  https://gallosiciliani.unict.it/ns/liph#representation
+:representation rdf:type owl:DatatypeProperty ;
+                rdfs:domain :LexicalObject ;
+                rdfs:range rdf:langString .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.w3.org/ns/lemon/ontolex#Form
+<http://www.w3.org/ns/lemon/ontolex#Form> rdfs:subClassOf :LexicalObject .
+
+
+###  https://gallosiciliani.unict.it/ns/liph#LexicalObject
+:LexicalObject rdf:type owl:Class ;
+               rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                 owl:onProperty :representation ;
+                                 owl:someValuesFrom rdf:langString
+                               ] ;
+               rdfs:comment "A generic object representing one or more strings, and which may be involved in lexical processes is some way." ;
+               rdfs:label "lexical object" .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
