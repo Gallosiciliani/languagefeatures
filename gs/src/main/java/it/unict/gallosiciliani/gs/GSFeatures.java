@@ -1,10 +1,10 @@
 package it.unict.gallosiciliani.gs;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
-import it.unict.gallosiciliani.derivations.NearestDerivation;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
+import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import it.unict.gallosiciliani.util.OntologyLoader;
@@ -102,15 +102,15 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
      * @return the label associated to the feature with the speicified code in the give locale
      */
     public String getLabel(final GSLanguageFeatureCode featureCode, final Locale locale) {
-        return getLabel(NS+featureCode, locale);
+        return getLabel(NS+featureCode);
     }
 
     @Override
     public String getLabel(final LinguisticPhenomenon linguisticPhenomenon, final Locale locale) {
-        return getLabel(linguisticPhenomenon.getIRI(), locale);
+        return getLabel(linguisticPhenomenon.getIRI());
     }
 
-    private String getLabel(final String featureIRI, final Locale locale) {
+    private String getLabel(final String featureIRI) {
         try {
             final Property p = getModel().getProperty(featureIRI);
             return getModel().getRequiredProperty(p, RDFS.label).getString();
@@ -130,5 +130,14 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
         final NearestShortestDerivation d = new NearestShortestDerivation(target);
         new DerivationPathNodeImpl(etymon).apply(d, regexLinguisticPhenomena);
         return d;
+    }
+
+    /**
+     * Get all the regex features in the ontology which are subclasses of Northern Italy Feature
+     * @return regex features which are subclass of regex features
+     */
+    public List<RegexLinguisticPhenomenon> getRegexNorthernItalyFeatures(){
+        return RegexLinguisticPhenomenaReader.read(getModel(), new RegexFeatureQuery()
+                .setParentProperty(NORTHERN_FEATURE_OBJ_PROPERTY)).getFeatures();
     }
 }

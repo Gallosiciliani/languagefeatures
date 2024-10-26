@@ -12,16 +12,14 @@ import java.util.function.Consumer;
  * Given a target (nicosian) lexema, accepts derivations but save
  * only the nearest and shortest ones
  */
+@Getter
 public class NearestShortestDerivation implements Consumer<DerivationPathNode> {
 
     private final String target;
 
-    @Getter
     private int distance;
-    @Getter
     private int length;
-    @Getter
-    private Set<DerivationPathNode> derivation;
+    private final Set<DerivationPathNode> derivation;
 
     public NearestShortestDerivation(final String target){
         this.target=target;

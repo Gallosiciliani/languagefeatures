@@ -17,10 +17,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static it.unict.gallosiciliani.gs.GSFeatures.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -160,11 +157,9 @@ public class GSFeaturesTest {
 
     void shouldProvideLabelByCodeForGSProperties(final Locale locale) throws IOException {
         try(final GSFeatures languageFeatureLabelProvider = GSFeatures.loadLocal()) {
-            final Set<String> foundLabels = new TreeSet<>();
             for (final GSLanguageFeatureCode code : GSLanguageFeatureCode.values()) {
                 final String label = languageFeatureLabelProvider.getLabel(code, locale);
                 assertNotNull(label, "label for " + code + " not found");
-                //assertTrue(foundLabels.add(label), "duplicate label " + label + " for code " + code);
             }
         }
     }
@@ -196,7 +191,7 @@ public class GSFeaturesTest {
      * @return helper to test the specified feature
      */
     GSFeaturesTestHelper getTestHelper(final GSLanguageFeatureCode featureCode) throws IOException {
-        try(final GSFeatures ont = GSFeatures.loadOnline()) {
+        try(final GSFeatures ont = GSFeatures.loadLocal()) {
             final List<RegexLinguisticPhenomenon> allRegexFeatures = ont.getRegexLinguisticPhenomena();
             assertFalse(allRegexFeatures.isEmpty());
             final String featureIRI = GSFeatures.NS + featureCode;
@@ -1044,4 +1039,23 @@ public class GSFeaturesTest {
                 .derives("1234", "123ö");
     }
 
+    @Test
+    void shouldSelectOnlyNorthernFeatures() throws IOException {
+        final String northernFeaturesQuery = "SELECT ?f WHERE{?f <"+RDFS.subPropertyOf.getURI()+"> <"
+                + NORTHERN_FEATURE_OBJ_PROPERTY+"> ;\n"
+                + "\t<"+LinguisticPhenomena.REGEX_ANN_PROPERTY+"> ?regex}";
+        try(final GSFeatures g=GSFeatures.loadLocal()){
+            try(final QueryExecution e = QueryExecutionFactory.create(northernFeaturesQuery, g.getModel())){
+                final SortedSet<String> expected=new TreeSet<>();
+                e.execSelect().forEachRemaining(querySolution -> expected.add(querySolution.getResource("f").getURI()));
+
+                final SortedSet<String> actual=new TreeSet<>();
+                g.getRegexNorthernItalyFeatures().forEach(phenomenon -> actual.add(phenomenon.getIRI()));
+
+                assertEquals(expected, actual);
+                System.out.println("Found the followings Northern Italy features "+actual);
+            }
+        }
+        //GSFeatures g=new GSFeatures("gstext.ttl");
+    }
 }
