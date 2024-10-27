@@ -7,13 +7,14 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * Given a target (nicosian) lexema, accepts derivations but save
  * only the nearest and shortest ones
  */
 @Getter
-public class NearestShortestDerivation implements Consumer<DerivationPathNode> {
+public class NearestShortestDerivation implements Predicate<DerivationPathNode> {
 
     private final String target;
 
@@ -30,14 +31,17 @@ public class NearestShortestDerivation implements Consumer<DerivationPathNode> {
     }
 
     @Override
-    public void accept(DerivationPathNode n) {
+    public boolean test(DerivationPathNode n) {
         final int newDistance = LevenshteinDistance.getDefaultInstance().apply(n.get(), target);
-        if (newDistance>distance || (newDistance==distance && n.length()>length))
-            return;
+        if (newDistance>distance)
+            return false;
+        if (newDistance==distance && n.length()>length)
+            return true;
         if (newDistance<distance || n.length()<length)
             derivation.clear();
         distance=newDistance;
         length=n.length();
         derivation.add(n);
+        return true;
     }
 }

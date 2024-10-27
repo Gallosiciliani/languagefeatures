@@ -1,9 +1,7 @@
 package it.unict.gallosiciliani.gs;
 
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
-import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
-import it.unict.gallosiciliani.derivations.NearestDerivation;
 import lombok.Getter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * Node of a derivation path from a candidate etymon to strings obtained applying language features
@@ -22,15 +23,6 @@ public class DerivationPathNodeImpl implements DerivationPathNode{
     private final DerivationPathNodeImpl prev;
     private final LinguisticPhenomenon transformation;
     private final int length;
-
-    /**
-     * Check whether the given node is a root node of a derivation path
-     * @param n a {@link DerivationPathNodeImpl}
-     * @return true if n is a root node, false otherwise
-     */
-    public static boolean isRoot(final DerivationPathNodeImpl n){
-        return n.prev()==null;
-    }
 
     /**
      * Create a root node for a new path
@@ -87,20 +79,50 @@ public class DerivationPathNodeImpl implements DerivationPathNode{
         return r;
     }
 
+    @Deprecated
     public void apply(final Consumer<DerivationPathNode> consumer, final List<? extends LinguisticPhenomenon> allTranformations){
-        apply(consumer, 0, allTranformations.toArray(new LinguisticPhenomenon[0]));
+        apply(derivationPathNode -> {
+            consumer.accept(derivationPathNode);
+            return true;
+        }, allTranformations);
     }
 
-    public void apply(final Consumer<DerivationPathNode> consumer, final LinguisticPhenomenon... allTranformations){
+    public void apply(final Predicate<DerivationPathNode> consumer, final List<? extends LinguisticPhenomenon> allTranformations){
         apply(consumer, 0, allTranformations);
     }
 
-    private void apply(final Consumer<DerivationPathNode> consumer, final int i, final LinguisticPhenomenon... allTranformations){
-        if (i==allTranformations.length) {
-            consumer.accept(this);
+    private void applyOld(final Predicate<DerivationPathNode> consumer, final int i, final List<? extends LinguisticPhenomenon> allTranformations){
+        if (i==allTranformations.size()) {
+            consumer.test(this);
             return;
         }
-        final LinguisticPhenomenon t = allTranformations[i];
+        final LinguisticPhenomenon t = allTranformations.get(i);
+        //first create a branch where the current transformation has not been applied
+        apply(consumer,i+1, allTranformations);
+        for(final String derived : t.apply(s)) {
+            //extends the path only if the transformation changed the string
+            final DerivationPathNodeImpl seqNode = s.equals(derived) ? this : new DerivationPathNodeImpl(derived, this, t);
+            seqNode.apply(consumer, i+1, allTranformations);
+        }
+    }
+
+    private void apply(final Predicate<DerivationPathNode> consumer, final int i, final List<? extends LinguisticPhenomenon> allTranformations){
+        if (i==allTranformations.size()) {
+            consumer.test(this);
+            return;
+        }
+        final LinguisticPhenomenon t = allTranformations.get(i);
+        for(final String derived : t.apply(s)) {
+            //extends the path only if the transformation changed the string
+            if (s.equals(derived))
+                apply(consumer, i+i, allTranformations);
+            else {
+                final DerivationPathNodeImpl seqNode=new DerivationPathNodeImpl(derived, this, t);
+                //go on only if the novel derivation is not worse than the current one
+                if (consumer.test(seqNode))
+                    seqNode.apply(consumer, i+1, allTranformations);
+            }
+        }
         //first create a branch where the current transformation has not been applied
         apply(consumer,i+1, allTranformations);
         for(final String derived : t.apply(s)) {

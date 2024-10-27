@@ -17,16 +17,16 @@ import org.apache.commons.csv.CSVPrinter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main implements Consumer<DerivationPathNode>{
+public class Main implements Predicate<DerivationPathNode> {
 
     private int processedEntries=0;
     private long totalProcessingTime=0;
@@ -97,10 +97,14 @@ public class Main implements Consumer<DerivationPathNode>{
         System.out.println((processedEntries++)+": elapsed time "+elapsedTime+", total time "+totalProcessingTime);
     }
 
+
+
     @Override
-    public void accept(final DerivationPathNode derivationPathNode) {
+    public boolean test(final DerivationPathNode derivationPathNode) {
+        boolean notWorse=false;
         for(final NearestShortestDerivation d: derivations)
-            d.accept(derivationPathNode);
+            notWorse|=d.test(derivationPathNode);
+        return notWorse;
     }
 
     /**
@@ -116,5 +120,4 @@ public class Main implements Consumer<DerivationPathNode>{
         final String phenomenonLabel = n.getLinguisticPhenomenon().getIRI().substring(GSFeatures.NS.length());
         return n.get()+"<-"+phenomenonLabel+"--"+toString(n.prev());
     }
-
 }
