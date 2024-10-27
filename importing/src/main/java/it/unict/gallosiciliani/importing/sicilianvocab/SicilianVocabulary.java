@@ -35,10 +35,9 @@ public class SicilianVocabulary implements Consumer<String>{
      * @param consumer consumer that will receive entries
      */
     public static void visit(final Consumer<String> consumer) throws IOException {
-        final ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        final String vocabFilePath=Objects.requireNonNull(classloader.getResource("VS.txt")).toString()
-                .substring("file:".length());
-        try(final Scanner entriesScanner=new Scanner(new File(vocabFilePath), StandardCharsets.UTF_8)){
+        final ClassLoader classloader=Thread.currentThread().getContextClassLoader();
+        try(final InputStream s= Objects.requireNonNull(classloader.getResourceAsStream("VS.txt"));
+            final Scanner entriesScanner=new Scanner(s, StandardCharsets.UTF_8)){
             final SicilianVocabulary v=new SicilianVocabulary(consumer);
             if (entriesScanner.hasNextLine())
                 //remove BOM, if any. See https://stackoverflow.com/questions/4897876/reading-utf-8-bom-marker

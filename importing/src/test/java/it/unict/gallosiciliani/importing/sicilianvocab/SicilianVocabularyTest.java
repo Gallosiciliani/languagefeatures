@@ -24,15 +24,12 @@ public class SicilianVocabularyTest {
     private static final Pattern LOWERCASE_ALPHABETIC_PATTERN = Pattern.compile("[a-zà-ÿ" + CHARS_WITH_DOT_BELOW + " ’]+");
 
     private static class VocabularyEntriesChecker implements StringConsumer {
-        final Pattern withDotBelowPattern = Pattern.compile(".*[" + CHARS_WITH_DOT_BELOW + "].*");
         int acceptedEntries;
 
         @Override
         public void accept(final String s) {
             assertTrue(LOWERCASE_ALPHABETIC_PATTERN.matcher(s).matches(), "\"" + s + "\" is not lowercase and alphabetical");
             acceptedEntries++;
-            if (withDotBelowPattern.matcher(s).matches())
-                System.err.println("With dot below " + s);
         }
     }
 

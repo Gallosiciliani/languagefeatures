@@ -10,9 +10,9 @@ public class UnexpectedPOSStringException extends Exception{
     public static final String[] suggestedNouns={"massa", //see page 337 compensatö (Cam.2) sost.masch.massa
             "ost.masch.", //see page 431
             "ost.femm."}; //see page 478
-    public static String[] suggestedVerbs={"verbö", "verbö pronom. procompl."};
+    public static String[] suggestedVerbs={"verbö", "verbö pronom. procompl.", "impers"};
     public static String[] suggestedIgnored= {"agg", "avv", "congiuz.", "paraverbö", "paraverbö iuss.", "non ref.",
-            "pro", "impers",
+            "pro",
             "prep", //see page 680 nintra da ePOL prep. monoval.
             ". pers. pl.", //parser error: see page 684 "agg. e pron. poss. 1a. pers. pl."
             "congiuz.sub.nonfin.", //see page 715

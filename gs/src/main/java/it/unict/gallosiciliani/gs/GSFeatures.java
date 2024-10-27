@@ -27,6 +27,7 @@ import java.util.Locale;
  * Gallosiciliani project.
  */
 
+@Getter
 @Slf4j
 public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLabelProvider {
     public static String IRI = "https://gallosiciliani.unict.it/ns/gs-features";
@@ -39,7 +40,6 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
     public static String NORTHERN_FEATURE_OBJ_PROPERTY=NS+"northernItalyFeature";
     public static String SOUTHERN_FEATURE_OBJ_PROPERTY=NS+"southernItalyFeature";
 
-    @Getter
     private final List<RegexLinguisticPhenomenon> regexLinguisticPhenomena;
 
     /**
