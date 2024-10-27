@@ -107,10 +107,10 @@ public class DerivationPathNodeImpl implements DerivationPathNode{
     }
 
     private void apply(final Predicate<DerivationPathNode> consumer, final int i, final List<? extends LinguisticPhenomenon> allTranformations){
-        if (i==allTranformations.size()) {
-            consumer.test(this);
-            return;
-        }
+//        if (i==allTranformations.size()) {
+//            consumer.test(this);
+//            return;
+//        }
         final LinguisticPhenomenon t = allTranformations.get(i);
         for(final String derived : t.apply(s)) {
             //extends the path only if the transformation changed the string
@@ -122,13 +122,6 @@ public class DerivationPathNodeImpl implements DerivationPathNode{
                 if (consumer.test(seqNode))
                     seqNode.apply(consumer, i+1, allTranformations);
             }
-        }
-        //first create a branch where the current transformation has not been applied
-        apply(consumer,i+1, allTranformations);
-        for(final String derived : t.apply(s)) {
-            //extends the path only if the transformation changed the string
-            final DerivationPathNodeImpl seqNode = s.equals(derived) ? this : new DerivationPathNodeImpl(derived, this, t);
-            seqNode.apply(consumer, i+1, allTranformations);
         }
     }
 
