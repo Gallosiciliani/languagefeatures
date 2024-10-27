@@ -297,7 +297,7 @@ public class DerivationPathNodeImplTest {
             }
         };
 
-        // sT1s1<-T1--s
+        // X<-T1--s
         final DerivationPathNode expectedDerived1Node = new DerivationPathNode() {
             @Override
             public String get() {
