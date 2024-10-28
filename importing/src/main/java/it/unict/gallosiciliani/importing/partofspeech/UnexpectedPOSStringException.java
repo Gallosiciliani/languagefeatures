@@ -6,6 +6,7 @@ import lombok.Getter;
  * Encountered an unexpected Part of Speech.
  * This fact may be due to either a parsing error or a typo error
  */
+@Getter
 public class UnexpectedPOSStringException extends Exception{
     public static final String[] suggestedNouns={"massa", //see page 337 compensatö (Cam.2) sost.masch.massa
             "ost.masch.", //see page 431
@@ -17,8 +18,8 @@ public class UnexpectedPOSStringException extends Exception{
             ". pers. pl.", //parser error: see page 684 "agg. e pron. poss. 1a. pers. pl."
             "congiuz.sub.nonfin.", //see page 715
             ".", //see page 779 "pösà agg. (f. -àda, pl. -àë) ." the last dot is magenta
+            "impers"
     };
-    @Getter
     private final String posString;
 
     UnexpectedPOSStringException(final String posString){

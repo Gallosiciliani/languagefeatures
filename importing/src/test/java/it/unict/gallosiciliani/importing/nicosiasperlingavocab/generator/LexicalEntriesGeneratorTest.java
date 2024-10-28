@@ -39,11 +39,11 @@ public class LexicalEntriesGeneratorTest {
 
     private static Runnable sendWithIgnored(final LexicalEntriesGenerator pdc, final POS pos){
         return () -> {
-            pdc.pos(POSExamples.IGNORED[0]);
+            pdc.pos(POSExamples.getExamples(POS.IGNORED)[0]);
             pdc.pos(POSExamples.getExamples(pos)[0]);
-            pdc.pos(POSExamples.IGNORED[1]);
+            pdc.pos(POSExamples.getExamples(POS.IGNORED)[1]);
             pdc.pos(POSExamples.getExamples(pos)[1]);
-            pdc.pos(POSExamples.IGNORED[2]);
+            pdc.pos(POSExamples.getExamples(POS.IGNORED)[2]);
         };
     }
 
@@ -52,7 +52,7 @@ public class LexicalEntriesGeneratorTest {
      */
     @Test
     void shouldThrowExceptionOnPOSIgnoredAsFirstEvent(){
-        assertThrows(RuntimeException.class, () -> pdc.pos(POSExamples.IGNORED[0]));
+        assertThrows(RuntimeException.class, () -> pdc.pos(POSExamples.getExamples(POS.IGNORED)[0]));
     }
 
     /**
@@ -60,7 +60,7 @@ public class LexicalEntriesGeneratorTest {
      */
     @Test
     void shouldThrowExceptionOnPOSNounsAsFirstEvent(){
-        assertThrows(RuntimeException.class, () -> pdc.pos(POSExamples.NOUN[0]));
+        assertThrows(RuntimeException.class, () -> pdc.pos(POSExamples.getExamples(POS.NOUN)[0]));
     }
 
     /**
@@ -68,14 +68,14 @@ public class LexicalEntriesGeneratorTest {
      */
     @Test
     void shouldThrowExceptionOnPOSVerbAsFirstEvent(){
-        assertThrows(RuntimeException.class, () -> pdc.pos(POSExamples.VERB[0]));
+        assertThrows(RuntimeException.class, () -> pdc.pos(POSExamples.getExamples(POS.VERB)[0]));
     }
 
 
     @Test
     void shouldIgnoreLemmaWithPosNotRepresentingNounsOrVerbs(){
         pdc.lemma("a lemma");
-        for(final String ignored : POSExamples.IGNORED){
+        for(final String ignored : POSExamples.getExamples(POS.IGNORED)){
             pdc.pos(ignored);
             verifyNoInteractions(utils.getLec());
         }
@@ -89,12 +89,12 @@ public class LexicalEntriesGeneratorTest {
     private void checkIsWorking(){
         final String lemmanoun = "justAnotherLemmaNoun";
         pdc.lemma(lemmanoun);
-        pdc.pos(POSExamples.NOUN[0]);
+        pdc.pos(POSExamples.getExamples(POS.NOUN)[0]);
         utils.assertAcceptedNoun(lemmanoun);
 
         final String lemmaverb = "justAnotherLemmaVerb";
         pdc.lemma(lemmaverb);
-        pdc.pos(POSExamples.VERB[0]);
+        pdc.pos(POSExamples.getExamples(POS.VERB)[0]);
         utils.assertAcceptedVerb(lemmaverb);
     }
 
@@ -150,13 +150,13 @@ public class LexicalEntriesGeneratorTest {
     private void shouldReturnLemmaWhenInterwowenWithIgnored(final POS pos){
         final String lemma = "theLemma";
         pdc.lemma("theLemma");
-        pdc.pos(POSExamples.IGNORED[0]);
+        pdc.pos(POSExamples.getExamples(POS.IGNORED)[0]);
         pdc.pos(POSExamples.getExamples(pos)[0]);
         utils.assertAcceptedEntry(pos,lemma);
 
-        pdc.pos(POSExamples.IGNORED[1]);
+        pdc.pos(POSExamples.getExamples(POS.IGNORED)[1]);
         pdc.pos(POSExamples.getExamples(pos)[1]);
-        pdc.pos(POSExamples.IGNORED[2]);
+        pdc.pos(POSExamples.getExamples(POS.IGNORED)[2]);
 
         checkIsWorking();
     }
@@ -176,9 +176,9 @@ public class LexicalEntriesGeneratorTest {
         for(final String nounsPosStr : POSExamples.getExamples(expectedPOS)){
             final String lemma = "lemmaFor"+nounsPosStr;
             pdc.lemma(lemma);
-            pdc.pos(POSExamples.IGNORED[0]);
+            pdc.pos(POSExamples.getExamples(POS.IGNORED)[0]);
             pdc.pos(nounsPosStr);
-            pdc.pos(POSExamples.IGNORED[1]);
+            pdc.pos(POSExamples.getExamples(POS.IGNORED)[1]);
             utils.assertAcceptedEntry(expectedPOS, lemma);
         }
         checkIsWorking();
@@ -260,8 +260,8 @@ public class LexicalEntriesGeneratorTest {
     // SINGLE FORM, MULTIPLE POS
     @Test
     void shouldCreateMultipleEntriesForDictionaryEntryWithOneFormAndPosNounAndVerb(){
-        shouldCreateMultipleEntriesForDictionaryEntryWithOneFormAndTwoPos(() -> pdc.pos(POSExamples.NOUN[0]), POS.NOUN,
-                () -> pdc.pos(POSExamples.VERB[0]), POS.VERB);
+        shouldCreateMultipleEntriesForDictionaryEntryWithOneFormAndTwoPos(() -> pdc.pos(POSExamples.getExamples(POS.NOUN)[0]),
+                POS.NOUN, () -> pdc.pos(POSExamples.getExamples(POS.VERB)[0]), POS.VERB);
     }
 
     @Test
@@ -272,8 +272,8 @@ public class LexicalEntriesGeneratorTest {
 
     @Test
     void shouldCreateMultipleEntriesForDictionaryEntryWithOneFormAndPosVerbAndNoun(){
-        shouldCreateMultipleEntriesForDictionaryEntryWithOneFormAndTwoPos(() -> pdc.pos(POSExamples.VERB[0]), POS.VERB,
-                () -> pdc.pos(POSExamples.NOUN[0]), POS.NOUN);
+        shouldCreateMultipleEntriesForDictionaryEntryWithOneFormAndTwoPos(() -> pdc.pos(
+                POSExamples.getExamples(POS.VERB)[0]), POS.VERB, () -> pdc.pos(POSExamples.getExamples(POS.NOUN)[0]), POS.NOUN);
     }
 
     @Test
@@ -305,8 +305,9 @@ public class LexicalEntriesGeneratorTest {
 
     @Test
     void shouldCreateMultipleEntriesForDictionaryEntryWithMultipleFormsAndNOunAndVerbPos(){
-        shouldCreateMultipleEntriesForDictionaryEntryWithMultipleFormsAndTwoPos(()-> pdc.pos(POSExamples.NOUN[0]), POS.NOUN,
-                ()-> pdc.pos(POSExamples.VERB[0]), POS.VERB);
+        shouldCreateMultipleEntriesForDictionaryEntryWithMultipleFormsAndTwoPos(()-> pdc.pos(
+                        POSExamples.getExamples(POS.NOUN)[0]), POS.NOUN, ()-> pdc.pos(
+                                POSExamples.getExamples(POS.VERB)[0]), POS.VERB);
     }
 
     @Test
@@ -317,8 +318,9 @@ public class LexicalEntriesGeneratorTest {
 
     @Test
     void shouldCreateMultipleEntriesForDictionaryEntryWithMultipleFormsAndVerbAndNounPos(){
-        shouldCreateMultipleEntriesForDictionaryEntryWithMultipleFormsAndTwoPos(()-> pdc.pos(POSExamples.VERB[0]),
-                POS.VERB, ()-> pdc.pos(POSExamples.NOUN[0]), POS.NOUN);
+        shouldCreateMultipleEntriesForDictionaryEntryWithMultipleFormsAndTwoPos(()-> pdc.pos(
+                        POSExamples.getExamples(POS.VERB)[0]),
+                POS.VERB, ()-> pdc.pos(POSExamples.getExamples(POS.NOUN)[0]), POS.NOUN);
     }
 
     @Test

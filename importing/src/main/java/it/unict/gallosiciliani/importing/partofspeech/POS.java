@@ -19,10 +19,10 @@ public enum POS {
      * @return the corresponding POS
      */
     public static POS get(final String posString) throws UnexpectedPOSStringException {
-        if (hasPrefix(posString, "sost."))
+        if (hasPrefix(posString, "sost.","titolo","solo vocativo"))
             return POS.NOUN;
         //TODO pag.337 lemma="compensatö" other="(Cam.2) sost.masch." pos="massa", pos should be "sost.masch.massa"
-        if (hasPrefix(posString,"verbo"))
+        if (hasPrefix(posString,"verbo","impers."))
             return POS.VERB;
         if (hasPrefix(posString, "agg.", "avv.", "pre-avv.", "congiunz.", "det.", "intens.",
                 "negazione", "paraverbo", "particella", "prep.", "proforma", "pron.", "quantif.",
@@ -37,7 +37,7 @@ public enum POS {
         throw new UnexpectedPOSStringException(posString);
     }
 
-    static boolean hasPrefix(final String posString, final String...prefixes){
+    private static boolean hasPrefix(final String posString, final String...prefixes){
         for(final String prefix: prefixes) {
             if (posString.startsWith(prefix) || posString.startsWith("e "+prefix))
                 return true;
@@ -49,5 +49,4 @@ public enum POS {
         }
         return false;
     }
-
 }

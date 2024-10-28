@@ -11,13 +11,13 @@ public class POSTest {
 
     @Test
     void testNouns(){
-        shouldReturnPOS(POS.NOUN, POSExamples.NOUN);
+        shouldReturnPOS(POS.NOUN);
     }
 
-    void shouldReturnPOS(final POS expected, final String...posStr){
-        for(final String str: posStr)
+    void shouldReturnPOS(final POS expected){
+        for(final String str: POSExamples.getExamples(expected))
             try {
-                assertSame(expected, POS.get(str));
+                assertSame(expected, POS.get(str), "POS string "+str);
             } catch (final UnexpectedPOSStringException e) {
                 throw new RuntimeException(e);
             }
@@ -25,32 +25,32 @@ public class POSTest {
 
     @Test
     void testVerbs(){
-        shouldReturnPOS(POS.VERB, POSExamples.VERB);
+        shouldReturnPOS(POS.VERB);
     }
 
     @Test
     void testIgnored(){
-        shouldReturnPOS(POS.IGNORED, POSExamples.IGNORED);
+        shouldReturnPOS(POS.IGNORED);
     }
 
     @Test
     void testUnexpectedNoun(){
-        shouldThrowExceptionOnUnexpectedPOS(POS.NOUN, UnexpectedPOSStringException.suggestedNouns);
+        shouldThrowExceptionOnUnexpectedPOS(POS.NOUN);
     }
 
     @Test
     void testUnexpectedVerb(){
-        shouldThrowExceptionOnUnexpectedPOS(POS.VERB, UnexpectedPOSStringException.suggestedVerbs);
+        shouldThrowExceptionOnUnexpectedPOS(POS.VERB);
     }
 
     @Test
     void testUnexpectedIgnored(){
-        shouldThrowExceptionOnUnexpectedPOS(POS.IGNORED, UnexpectedPOSStringException.suggestedIgnored);
+        shouldThrowExceptionOnUnexpectedPOS(POS.IGNORED);
     }
 
-    private void shouldThrowExceptionOnUnexpectedPOS(final POS expectedSuggestedPOS, final String[] examples){
-        for(final String posString: examples) {
-            final UnexpectedPOSStringException actual = assertThrows(UnexpectedPOSStringException.class, () -> POS.get(posString));
+    private void shouldThrowExceptionOnUnexpectedPOS(final POS expectedSuggestedPOS){
+        for(final String posString: POSExamples.getUnexpectedExamples(expectedSuggestedPOS)) {
+            final UnexpectedPOSStringException actual = assertThrows(UnexpectedPOSStringException.class, () -> POS.get(posString), "POS String "+posString);
             assertEquals(posString, actual.getPosString());
             assertEquals(expectedSuggestedPOS, actual.getSuggestedPOS());
         }
