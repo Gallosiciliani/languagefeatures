@@ -16,19 +16,21 @@ public class NearestShortestDerivationTest {
 
     private static final String TARGET = "target";
     private static final String ONE_TO_TARGET = "targxt";
+    private static final String TWO_TO_TARGET = "targxy";
+    private static final String THREE_TO_TARGET = "tarzxy";
 
     private final NearestShortestDerivation d;
     private final DerivationPathNode firstDerivation;
 
     NearestShortestDerivationTest(){
         d=new NearestShortestDerivation(TARGET);
-        firstDerivation=createDerivation("source", ONE_TO_TARGET);
+        firstDerivation=createDerivation("source", TWO_TO_TARGET);
         assertTrue(d.test(firstDerivation));
     }
 
     @Test
     void shouldKeepNearestDerivation(){
-        final DerivationPathNode neartestPath=createDerivation("source", TARGET);
+        final DerivationPathNode neartestPath=createDerivation("source", ONE_TO_TARGET);
         assertTrue(d.test(neartestPath));
         final Iterator<DerivationPathNode> actualIt=d.getDerivation().iterator();
         assertSame(actualIt.next(), neartestPath);
@@ -54,7 +56,7 @@ public class NearestShortestDerivationTest {
 
     @Test
     void shouldDiscardLongerDerivations(){
-        assertTrue(d.test(createDerivation("source0", "source1", ONE_TO_TARGET)));
+        assertTrue(d.test(createDerivation("source0", "source1", TWO_TO_TARGET)));
         final Iterator<DerivationPathNode> actualIt=d.getDerivation().iterator();
         assertSame(firstDerivation, actualIt.next());
         assertFalse(actualIt.hasNext());
@@ -62,7 +64,7 @@ public class NearestShortestDerivationTest {
 
     @Test
     void shouldKeepSameDistanceLenghtDerivations(){
-        final DerivationPathNode anotherDerivation=createDerivation("zelem", ONE_TO_TARGET);
+        final DerivationPathNode anotherDerivation=createDerivation("zelem", TWO_TO_TARGET);
         assertTrue(d.test(anotherDerivation));
 
         final Iterator<DerivationPathNode> actualIt=d.getDerivation().iterator();
@@ -75,13 +77,12 @@ public class NearestShortestDerivationTest {
 
     @Test
     void shouldReturnFalseIfTheNovelDerivationIsFartherThanThePreviousOnes(){
-        final String twoToTarget="targxy";
-        assertFalse(d.test(createDerivation("source", twoToTarget)));
+        assertFalse(d.test(createDerivation("source", THREE_TO_TARGET)));
     }
 
     @Test
-    void shouldReturnFalseIfTheNovelDerivationIsNearestThanThePreviousOnes(){
-        assertTrue(d.test(createDerivation("source", "source0", TARGET)));
+    void shouldReturnTrueIfTheNovelDerivationIsNearestThanThePreviousOnesButNonZero(){
+        assertTrue(d.test(createDerivation("source", "source0", ONE_TO_TARGET)));
     }
 
     @Test

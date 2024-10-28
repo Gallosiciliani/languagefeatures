@@ -42,6 +42,6 @@ public class NearestShortestDerivation implements Predicate<DerivationPathNode> 
         distance=newDistance;
         length=n.length();
         derivation.add(n);
-        return true;
+        return newDistance!=0;
     }
 }
