@@ -17,26 +17,15 @@ public class POSState extends ParsingState {
     }
 
     @Override
-    ParsingState blank(final String c) {
-        return withPOSFont(c);
-    }
-
-    @Override
-    ParsingState withLemmaFont(final String c) {
-        consumer.pos(pos.toString().trim());
-        return new LemmaState(consumer, c);
-    }
-
-    @Override
-    ParsingState withPOSFont(String c) {
-        pos.append(c);
-        return this;
-    }
-
-    @Override
-    ParsingState withOtherFont(final String c) {
-        consumer.pos(pos.toString().trim());
-        return new DiscardState(consumer);
+    ParsingState parse(final String c, final ParsedCharType t) {
+        if (c.isBlank() || t==ParsedCharType.WITH_POS_FONT){
+            pos.append(c);
+            return this;
+        }
+        final String posString=pos.toString().trim();
+        if (!posString.isEmpty())
+            consumer.pos(pos.toString().trim());
+        return t==ParsedCharType.WITH_LEMMA_FONT ? new LemmaState(consumer, c) : new DiscardState(consumer);
     }
 
     @Override

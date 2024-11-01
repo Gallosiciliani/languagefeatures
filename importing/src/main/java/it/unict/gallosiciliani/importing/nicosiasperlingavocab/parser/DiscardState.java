@@ -7,34 +7,22 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 class DiscardState extends ParsingState {
-    private final StringBuffer discarded = new StringBuffer();
     DiscardState(final ParsingDataConsumer consumer) {
         super(consumer);
     }
 
     @Override
-    ParsingState withLemmaFont(String c) {
-        return new LemmaState(consumer, c);
-    }
-
-    @Override
-    ParsingState withPOSFont(final String c) {
-        return new POSState(consumer, c);
-    }
-
-    @Override
-    ParsingState blank(final String c) {
-        return withOtherFont(c);
-    }
-
-    @Override
-    ParsingState withOtherFont(final String c) {
-        discarded.append(c);
-        return this;
+    ParsingState parse(final String c, final ParsedCharType t) {
+        if (c.isBlank()) return this;
+        return switch (t) {
+            case WITH_LEMMA_FONT -> new LemmaState(consumer, c);
+            case WITH_POS_FONT -> new POSState(consumer, c);
+            default -> this;
+        };
     }
 
     @Override
     public String toString(){
-        return "OtherState("+discarded+")";
+        return "Discard";
     }
 }

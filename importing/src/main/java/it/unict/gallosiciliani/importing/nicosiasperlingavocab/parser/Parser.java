@@ -9,7 +9,6 @@ import org.apache.pdfbox.text.TextPosition;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Extract all terms from the PDF of Vacabolario di Nicosia e Sperlinga. This parser returns only relevant tokens
@@ -20,12 +19,7 @@ import java.util.Arrays;
 @Slf4j
 public class Parser extends PDFTextStripper implements AutoCloseable{
 
-    //font attributes
-    private static final float[] HIGHLIGHT = {0f, 1f, 0f, 0f};
-    private static final float TYPE_FONT_SIZE = 33.0f;
-    private static final float LEMMA_FONT_SIZE = 38.0f;
-    private static final String LEMMA_FONT = "VNICArialexpo";
-
+    private static final int HEADER_HEIGHT_PX=96;
     private final PDDocument pdf;
 
     private ParsingState currentState;
@@ -76,26 +70,21 @@ public class Parser extends PDFTextStripper implements AutoCloseable{
     protected void processTextPosition(final TextPosition text)
     {
         super.processTextPosition(text);
-        final String c = text.getUnicode();
+
+        //exclude page header
+        if (text.getYDirAdj()<HEADER_HEIGHT_PX) {
+            log.debug("Header char {} with Y position {} {}", text.getUnicode(), text.getYDirAdj(), text.getYDirAdj()+text.getFontSize());
+            return;
+        }
 
         //ignore digits, usually used for superscripts
-        if (isDigit(c))
+        if (isDigit(text.getUnicode()))
             return;
 
-        if (c.isBlank())
-            currentState = currentState.blank(c);
-        else if (isLemmaFont(text))
-            currentState = currentState.withLemmaFont(c);
-        else if (isPOSFont(text))
-            currentState = currentState.withPOSFont(c);
-        else
-            currentState = currentState.withOtherFont(c);
-        log.debug("Transition char {} -> {}",c,currentState);
-    }
-
-    private boolean isLemmaFont(final TextPosition text){
-        return text.getFontSizeInPt()==LEMMA_FONT_SIZE &&
-                text.getFont().getName().endsWith(LEMMA_FONT);
+        final ParsedCharType t=ParsedCharType.get(text,
+                getGraphicsState().getNonStrokingColor().getComponents());
+        currentState=currentState.parse(text.getUnicode(), t);
+        log.debug("Transition char \"{}\" type {} -> {}",text.getUnicode(), t, currentState);
     }
 
     /**
@@ -105,10 +94,5 @@ public class Parser extends PDFTextStripper implements AutoCloseable{
      */
     private boolean isDigit(final String c){
         return Character.isDigit(c.charAt(0));
-    }
-
-    private boolean isPOSFont(final TextPosition text){
-        final float[] nonStrokingColorComponents = getGraphicsState().getNonStrokingColor().getComponents();
-        return Arrays.equals(HIGHLIGHT, nonStrokingColorComponents) && text.getFontSizeInPt()==TYPE_FONT_SIZE;
     }
 }

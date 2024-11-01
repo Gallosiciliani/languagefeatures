@@ -1,7 +1,8 @@
 package it.unict.gallosiciliani.importing.nicosiasperlingavocab.parser;
 
+
 /**
- * Parsing state of the extractor
+ * Parsing state of the extractorhttps://ceur-ws.org/Vol-3809/paper2.pdf
  *
  * @author Cristiano Longo
  */
@@ -14,30 +15,10 @@ abstract class ParsingState {
     }
 
     /**
-     * The current character font is the one expected for lemmas
-     * @param c the current charter
+     * Parse the next char c, which has been recognized as of type t
+     * @param c encountered character
+     * @param t recognized type for the specified character
      * @return destination state
      */
-    abstract ParsingState withLemmaFont(final String c);
-
-    /**
-     * The current character font is the one expected for Part Of Speech
-     * @param c the current charter
-     * @return destination state
-     */
-    abstract ParsingState withPOSFont(final String c);
-
-    /**
-     * The current character is not recognized neither as lemma nor as POS
-     * @param c the current charter
-     * @return destination state
-     */
-    abstract ParsingState withOtherFont(final String c);
-
-    /**
-     * Encountered a blank character
-     * @param c the blank character
-     * @return destination state
-     */
-    abstract ParsingState blank(final String c);
+    abstract ParsingState parse(final String c, final ParsedCharType t);
 }

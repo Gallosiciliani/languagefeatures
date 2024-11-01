@@ -346,38 +346,43 @@ public class LexicalEntriesGeneratorTest {
     }
 
     @Test
-    void testParsingPage126() {
-        pdc.lemma("abetinö");
-        pdc.pos("sost.masch.");
-        utils.assertAcceptedNoun("abetinö");
-        pdc.lemma("àbetö");
-        pdc.pos("sost.masch.");
-        utils.assertAcceptedNoun("àbetö");
-        pdc.lemma("a bìfera");
-        pdc.pos("agg. inv.");
-        pdc.lemma("abìlë");
+    void shouldAvoidDuplicateForms(){
+/*
+cömenazziön,
+mangè page 396 and 443
+nvidè page 704 and 705,
+scömödessë page 900, 901 duplicate entry
+scömödè, page 900, 901
+stè page 986 and 987,
+svëndö page 1007and 1007, verb
+ventïessë page 1056, 1065 verb
+ventïè page 1056, 1065 verb
+ */
+        //page 144
+        pdc.lemma("amörë");
         pdc.pos("sost.pl.");
-        utils.assertAcceptedNoun("abìlë");
-        pdc.lemma("abìtö");
+        utils.assertAcceptedNoun("amörë");
+        pdc.lemma("amörö");
         pdc.pos("sost.masch.");
-        utils.assertAcceptedNoun("abìtö");
-        pdc.lemma("a böca verta");
-        pdc.pos("agg. inv.");
-        pdc.lemma("a böcöë");
-        pdc.lemma("a böcön");
-        pdc.pos("agg. inv.");
-        pdc.lemma("àbölö");
-        pdc.pos("agg. solo masch.");
-        pdc.lemma("abonè");
-        pdc.pos("paraverbo dichiar.");
-        pdc.lemma("abonè");
-        pdc.lemma("a bonè");
-        pdc.lemma("a bonebonè");
-        pdc.pos("avv.preverb.");
-        pdc.lemma("â bönöra");
-        pdc.pos("avv.");
-        utils.verifyNoMoreInteractions();
-    }
+        pdc.lemma("amörö");
+        pdc.pos("sost.masch.massa");
+        pdc.pos("sost.masch. solo sing.");
+        pdc.lemma("amörö");
+        pdc.pos("sost.masch.massa");
+        utils.assertAcceptedNoun("amörö");
 
+        //pag 197 banda
+        pdc.lemma("banda");
+        pdc.pos("sost.femm. non ref.");
+        pdc.pos("non ref.");
+        pdc.lemma("banda");
+        pdc.pos("sost.femm.");
+        pdc.lemma("bandïadörö");
+        pdc.pos("sost.masch.");
+        utils.assertAcceptedNoun("banda","bandïadörö");
+
+        utils.verifyNoMoreInteractions();
+        checkIsWorking();
+    }
 }
 

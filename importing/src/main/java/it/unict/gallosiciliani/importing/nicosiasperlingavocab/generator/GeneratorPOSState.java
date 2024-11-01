@@ -35,7 +35,7 @@ class GeneratorPOSState extends GeneratorState{
      * @return destination state
      */
     final GeneratorState lemma(final String lemma){
-        return new GeneratorLemmaNoPosState(params, lemma);
+        return lemmas.contains(lemma) ? this : new GeneratorLemmaNoPosState(params, lemma);
     }
 
     /**

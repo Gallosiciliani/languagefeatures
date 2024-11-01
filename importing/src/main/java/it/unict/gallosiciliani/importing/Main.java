@@ -14,7 +14,6 @@ import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.math.BigDecimal;
@@ -24,8 +23,6 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main implements Predicate<DerivationPathNode> {
 
     private int processedEntries=0;
@@ -49,17 +46,18 @@ public class Main implements Predicate<DerivationPathNode> {
         try(final PrintStream out=new PrintStream(outFilePath)) {
             final Consumer<LexicalEntry> consumer = lexicalEntry -> {
                 final Form form = lexicalEntry.getCanonicalForm();
-                if (writtenRep.add(form.getWrittenRep()) != formsIri.add(form.getId()))
+                if (writtenRep.add(form.getWrittenRep()) != formsIri.add(form.getId())) {
                     duplicates.add(form.getWrittenRep());
+                    System.err.println("Found duplicate for "+form.getWrittenRep());
+                    //throw new IllegalArgumentException("Found duplicate form for "+form.getWrittenRep());
+                }
                 else emptyDerivations.add(new NearestShortestDerivation(form.getWrittenRep()));
                 out.println(form.getWrittenRep());
             };
             final LexicalEntriesGenerator generator = new LexicalEntriesGenerator(consumer, "http://localhost/nicosiasperlinga#", new POSIndividualProvider());
             try(final Parser parser = new Parser(generator, pdfFilePath)) {
-                for(int i=startPage; i<=endPage; i++){
-                    System.out.println("Page "+i+" of "+endPage);
+                for(int i=startPage; i<=endPage; i++)
                     parser.parsePage(i);
-                }
                 System.out.println("Found " + writtenRep.size() + " forms");
                 System.out.println("Duplicates "+duplicates);
                 return emptyDerivations;
@@ -68,12 +66,13 @@ public class Main implements Predicate<DerivationPathNode> {
     }
 
     public void writeNearestShortestDerivations(final Appendable out) throws IOException {
-        final CSVPrinter printer=new CSVPrinter(out, CSVFormat.DEFAULT);
-        for(final NearestShortestDerivation nearest: derivations){
-            final BigDecimal distanceNormalized = BigDecimal.valueOf(nearest.getDistance()).divide(BigDecimal.valueOf(nearest.getTarget().length()), new MathContext(2, RoundingMode.HALF_UP));
+        try(final CSVPrinter printer=new CSVPrinter(out, CSVFormat.DEFAULT)) {
+            for (final NearestShortestDerivation nearest : derivations) {
+                final BigDecimal distanceNormalized = BigDecimal.valueOf(nearest.getDistance()).divide(BigDecimal.valueOf(nearest.getTarget().length()), new MathContext(2, RoundingMode.HALF_UP));
 
-            for(final DerivationPathNode n : nearest.getDerivation())
+                for (final DerivationPathNode n : nearest.getDerivation())
                     printer.printRecord(nearest.getTarget(), nearest.getDistance(), distanceNormalized, toString(n));
+            }
         }
     }
 
@@ -83,9 +82,9 @@ public class Main implements Predicate<DerivationPathNode> {
             System.out.println(s);
             m.acceptSicilianVocabularyEntry(s);
         });
-        try(final FileWriter w=new FileWriter("derivations.out")){
-            m.writeNearestShortestDerivations(w);
-        }
+//        try(final FileWriter w=new FileWriter("derivations.out")){
+//            m.writeNearestShortestDerivations(w);
+//        }
     }
 
     public void acceptSicilianVocabularyEntry(final String sicilianVocabularyEntry) {

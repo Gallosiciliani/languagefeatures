@@ -14,26 +14,16 @@ class LemmaState extends ParsingState {
     }
 
     @Override
-    ParsingState blank(final String c) {
-        return withLemmaFont(c);
-    }
+    ParsingState parse(final String c, final ParsedCharType t) {
+        if (c.isBlank() || t==ParsedCharType.WITH_LEMMA_FONT){
+            lemma.append(c);
+            return this;
+        }
 
-    @Override
-    ParsingState withLemmaFont(String c) {
-        lemma.append(c);
-        return this;
-    }
-
-    @Override
-    ParsingState withPOSFont(final String c) {
-        consumer.lemma(lemma.toString().trim());
-        return new POSState(consumer, c);
-    }
-
-    @Override
-    ParsingState withOtherFont(final String c) {
         consumer.lemma(lemma.toString().trim().replaceAll("-",""));
-        return isConjunction(c) ? new LemmaConjunctorState(consumer) : new DiscardState(consumer);
+
+        return t==ParsedCharType.WITH_POS_FONT ? new POSState(consumer, c) :
+                isConjunction(c) ? new LemmaConjunctorState(consumer) : new DiscardState(consumer);
     }
 
     /**

@@ -20,8 +20,7 @@ public class SicilianVocabularyTest {
 
     }
 
-    private static final String CHARS_WITH_DOT_BELOW = "ḍṭ";
-    private static final Pattern LOWERCASE_ALPHABETIC_PATTERN = Pattern.compile("[a-zà-ÿ" + CHARS_WITH_DOT_BELOW + " ’]+");
+    private static final Pattern LOWERCASE_ALPHABETIC_PATTERN = Pattern.compile("[a-zà-ṭż ’]+");
 
     private static class VocabularyEntriesChecker implements StringConsumer {
         int acceptedEntries;

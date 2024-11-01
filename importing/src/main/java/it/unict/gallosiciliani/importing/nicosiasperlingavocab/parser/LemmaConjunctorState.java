@@ -9,24 +9,16 @@ public class LemmaConjunctorState extends ParsingState{
     }
 
     @Override
-    ParsingState blank(String c) {
-        //one or more blanks allowed after conjunctor
-        return this;
-    }
-
-    @Override
-    ParsingState withLemmaFont(final String c){
-        consumer.conjunction();
-        return new LemmaState(consumer, c);
-    }
-
-    @Override
-    ParsingState withPOSFont(final String c) {
-        return new POSState(consumer, c);
-    }
-
-    @Override
-    ParsingState withOtherFont(final String c) {
-        return new DiscardState(consumer);
+    ParsingState parse(final String c, final ParsedCharType t) {
+        if (c.isBlank())
+            return this;
+        return switch (t) {
+            case WITH_LEMMA_FONT -> {
+                consumer.conjunction();
+                yield new LemmaState(consumer, c);
+            }
+            case WITH_POS_FONT -> new POSState(consumer, c);
+            default -> new DiscardState(consumer);
+        };
     }
 }

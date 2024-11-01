@@ -11,7 +11,9 @@ public class UnexpectedPOSStringException extends Exception{
     public static final String[] suggestedNouns={"massa", //see page 337 compensatö (Cam.2) sost.masch.massa
             "ost.masch.", //see page 431
             "ost.femm."}; //see page 478
-    public static String[] suggestedVerbs={"verbö", "verbö pronom. procompl.", "impers"};
+    public static String[] suggestedVerbs={"verbö", "verbö pronom. procompl.", "impers",
+            "raverbo dichiar." //see page 710
+    };
     public static String[] suggestedIgnored= {"agg", "avv", "congiuz.", "paraverbö", "paraverbö iuss.", "non ref.",
             "pro",
             "prep", //see page 680 nintra da ePOL prep. monoval.
@@ -23,7 +25,9 @@ public class UnexpectedPOSStringException extends Exception{
     private final String posString;
 
     UnexpectedPOSStringException(final String posString){
+        super("Unexpected POS string \""+posString+"\"");
         this.posString=posString;
+
     }
 
     /**

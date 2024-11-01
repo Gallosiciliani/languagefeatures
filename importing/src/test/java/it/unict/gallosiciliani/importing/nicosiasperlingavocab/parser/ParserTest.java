@@ -60,8 +60,6 @@ public class ParserTest {
 
     private void testParsingPage125(final ParsingDataConsumer c, final InOrder o){
         o.verify(c).lemma("a");
-        o.verify(c).lemma("abentö");
-        o.verify(c).lemma("a");
         o.verify(c).pos("congiunz.sub.fin.");
         o.verify(c).lemma("â");
         o.verify(c).pos("prep.art.");
@@ -96,8 +94,6 @@ public class ParserTest {
     }
 
     private void testParsingPage126(final ParsingDataConsumer c, final InOrder o){
-        o.verify(c).lemma("abetinö");
-        o.verify(c).lemma("â bönöra");
         o.verify(c).lemma("abetinö");
         o.verify(c).pos("sost.masch.");
         o.verify(c).lemma("àbetö");

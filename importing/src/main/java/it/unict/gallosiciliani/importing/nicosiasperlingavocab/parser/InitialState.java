@@ -11,22 +11,11 @@ class InitialState extends ParsingState {
     }
 
     @Override
-    ParsingState withLemmaFont(final String c) {
-        return new LemmaState(consumer, c);
-    }
-
-    @Override
-    ParsingState withPOSFont(final String c) {
-        return new POSState(consumer, c);
-    }
-
-    @Override
-    ParsingState withOtherFont(final String c) {
-        return new DiscardState(consumer);
-    }
-
-    @Override
-    ParsingState blank(final String c) {
-        return this;
+    ParsingState parse(final String c, final ParsedCharType t) {
+        return switch (t) {
+            case WITH_POS_FONT -> throw new UnexpectedParsedCharException(c, t, this);
+            case WITH_LEMMA_FONT -> new LemmaState(consumer, c);
+            default -> new DiscardState(consumer);
+        };
     }
 }
