@@ -37,17 +37,18 @@ class GeneratorLemmaState extends GeneratorState{
      */
     private List<LexicalEntry> generateEntries(final PartOfSpeech partOfSpeechIndividual){
         final List<LexicalEntry> createdEntries=new LinkedList<>();
-        for(final String lemma : lemmas){
-            final LexicalEntry e=new LexicalEntry();
-            final IRIProvider.LexicalEntryIRIProvider iris = params.getIRIProvider().getLexicalEntryIRIs();
-            e.setId(iris.getLexicalEntryIRI());
-            e.setPartOfSpeech(partOfSpeechIndividual);
-            e.setCanonicalForm(new Form());
-            e.getCanonicalForm().setId(iris.getCanonicalFormIRI());
-            e.getCanonicalForm().setWrittenRep(lemma);
-            createdEntries.add(e);
-            params.getConsumer().accept(e);
-        }
+        for(final String lemma : lemmas)
+            if (params.getDuplicatesHandler().handle(lemma)) {
+                final LexicalEntry e = new LexicalEntry();
+                final IRIProvider.LexicalEntryIRIProvider iris = params.getIRIProvider().getLexicalEntryIRIs();
+                e.setId(iris.getLexicalEntryIRI());
+                e.setPartOfSpeech(partOfSpeechIndividual);
+                e.setCanonicalForm(new Form());
+                e.getCanonicalForm().setId(iris.getCanonicalFormIRI());
+                e.getCanonicalForm().setWrittenRep(lemma);
+                createdEntries.add(e);
+                params.getConsumer().accept(e);
+            }
         return createdEntries;
     }
 }

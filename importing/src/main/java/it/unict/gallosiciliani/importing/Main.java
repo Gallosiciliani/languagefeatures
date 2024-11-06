@@ -14,6 +14,7 @@ import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.math.BigDecimal;
@@ -82,14 +83,14 @@ public class Main implements Predicate<DerivationPathNode> {
             System.out.println(s);
             m.acceptSicilianVocabularyEntry(s);
         });
-//        try(final FileWriter w=new FileWriter("derivations.out")){
-//            m.writeNearestShortestDerivations(w);
-//        }
+        try(final FileWriter w=new FileWriter("derivations.out")){
+            m.writeNearestShortestDerivations(w);
+        }
     }
 
     public void acceptSicilianVocabularyEntry(final String sicilianVocabularyEntry) {
         final long startTime=System.currentTimeMillis();
-        new DerivationPathNodeImpl(sicilianVocabularyEntry).apply(this, phenomena);
+        new DerivationPathNodeImpl(sicilianVocabularyEntry).apply(derivations, phenomena);
         final long endTime=System.currentTimeMillis();
         final long elapsedTime=endTime-startTime;
         totalProcessingTime+=elapsedTime;
@@ -102,8 +103,8 @@ public class Main implements Predicate<DerivationPathNode> {
     public boolean test(final DerivationPathNode derivationPathNode) {
         boolean notWorse=false;
         for(final NearestShortestDerivation d: derivations)
-            notWorse|=d.test(derivationPathNode);
-        return notWorse;
+            if (d.test(derivationPathNode)) return true;
+        return false;
     }
 
     /**

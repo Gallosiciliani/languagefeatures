@@ -2,10 +2,7 @@ package it.unict.gallosiciliani.derivations;
 
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.function.Predicate;
 
 /**
@@ -75,6 +72,12 @@ public class DerivationPathNodeImpl implements DerivationPathNode{
         apply(consumer, 0, allTranformations);
     }
 
+    public void apply(final Collection<? extends Predicate<DerivationPathNode>> consumer, final List<? extends LinguisticPhenomenon> allTranformations){
+        for(final Predicate<DerivationPathNode> c: consumer)
+            c.test(this);
+        apply(consumer, 0, allTranformations);
+    }
+
     private void applyOld(final Predicate<DerivationPathNode> consumer, final int i, final List<? extends LinguisticPhenomenon> allTranformations){
         if (i==allTranformations.size()) {
             consumer.test(this);
@@ -108,6 +111,33 @@ public class DerivationPathNodeImpl implements DerivationPathNode{
                 final DerivationPathNodeImpl seqNode=new DerivationPathNodeImpl(derived, this, t);
                 //go on only if the novel derivation is not worse than the current one
                 if (consumer.test(seqNode))
+                    seqNode.apply(consumer, i+1, allTranformations);
+            }
+        }
+    }
+
+    private void apply(final Collection<? extends Predicate<DerivationPathNode>> consumer, final int i, final List<? extends LinguisticPhenomenon> allTranformations){
+        if (i==allTranformations.size())
+            return;
+
+        final LinguisticPhenomenon t = allTranformations.get(i);
+        final Set<String> allDerived=t.apply(s);
+        if (allDerived.isEmpty()){
+            apply(consumer, i+1, allTranformations);
+            return;
+        }
+        for(final String derived : allDerived) {
+            //extends the path only if the transformation changed the string
+            if (s.equals(derived))
+                apply(consumer, i+1, allTranformations);
+            else {
+                final DerivationPathNodeImpl seqNode=new DerivationPathNodeImpl(derived, this, t);
+                //go on only if the novel derivation is not worse than the current one
+                final List<Predicate<DerivationPathNode>> consumerFiltered=new LinkedList<>(consumer);
+                for(final Predicate<DerivationPathNode> c: consumer)
+                    if (c.test(seqNode))
+                        consumerFiltered.add(c);
+                if (!consumerFiltered.isEmpty())
                     seqNode.apply(consumer, i+1, allTranformations);
             }
         }

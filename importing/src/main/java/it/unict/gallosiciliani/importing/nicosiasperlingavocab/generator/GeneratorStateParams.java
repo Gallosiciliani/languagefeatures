@@ -25,4 +25,10 @@ interface GeneratorStateParams{
      * @return POS individuals provider
      */
     POSIndividualProvider getPOSIndividualProvider();
+
+    /**
+     * Detect and handle duplicates
+     * @return a duplicates handler
+     */
+    WellKnownDuplicatesHandler getDuplicatesHandler();
 }

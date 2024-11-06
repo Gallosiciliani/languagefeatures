@@ -6,7 +6,6 @@ import org.apache.commons.text.similarity.LevenshteinDistance;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -31,8 +30,12 @@ public class NearestShortestDerivation implements Predicate<DerivationPathNode> 
     }
 
     @Override
-    public boolean test(DerivationPathNode n) {
+    public boolean test(final DerivationPathNode n) {
+        final long startTime=System.currentTimeMillis();
         final int newDistance = LevenshteinDistance.getDefaultInstance().apply(n.get(), target);
+        final long elapsedTime=System.currentTimeMillis()-startTime;
+        if (elapsedTime>10)
+            System.out.println("LevenshteinDistance elapsed time "+elapsedTime);
         if (newDistance>distance)
             return false;
         if (newDistance==distance && n.length()>length)

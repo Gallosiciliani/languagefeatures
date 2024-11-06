@@ -346,41 +346,17 @@ public class LexicalEntriesGeneratorTest {
     }
 
     @Test
-    void shouldAvoidDuplicateForms(){
-/*
-cömenazziön,
-mangè page 396 and 443
-nvidè page 704 and 705,
-scömödessë page 900, 901 duplicate entry
-scömödè, page 900, 901
-stè page 986 and 987,
-svëndö page 1007and 1007, verb
-ventïessë page 1056, 1065 verb
-ventïè page 1056, 1065 verb
- */
-        //page 144
-        pdc.lemma("amörë");
-        pdc.pos("sost.pl.");
-        utils.assertAcceptedNoun("amörë");
-        pdc.lemma("amörö");
+    void shouldAvoidWellKnownDuplicateLemmas(){
+        pdc.lemma("cömenazziön");
         pdc.pos("sost.masch.");
-        pdc.lemma("amörö");
-        pdc.pos("sost.masch.massa");
-        pdc.pos("sost.masch. solo sing.");
-        pdc.lemma("amörö");
-        pdc.pos("sost.masch.massa");
-        utils.assertAcceptedNoun("amörö");
+        utils.assertAcceptedNoun("cömenazziön");
 
-        //pag 197 banda
-        pdc.lemma("banda");
-        pdc.pos("sost.femm. non ref.");
-        pdc.pos("non ref.");
-        pdc.lemma("banda");
+        pdc.lemma("cömprëndö");
+        pdc.pos("verbo");
+        utils.assertAcceptedVerb("cömprëndö");
+
+        pdc.lemma("cömenazziön");
         pdc.pos("sost.femm.");
-        pdc.lemma("bandïadörö");
-        pdc.pos("sost.masch.");
-        utils.assertAcceptedNoun("banda","bandïadörö");
-
         utils.verifyNoMoreInteractions();
         checkIsWorking();
     }
