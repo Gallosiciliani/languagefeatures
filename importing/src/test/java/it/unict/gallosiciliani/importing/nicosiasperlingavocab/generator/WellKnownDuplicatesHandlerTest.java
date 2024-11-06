@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author Cristiano Longo
  */
 public class WellKnownDuplicatesHandlerTest {
-    private static final String[] expectedDuplicates={};
     private final WellKnownDuplicatesHandler h=new WellKnownDuplicatesHandler();
 
     @Test
