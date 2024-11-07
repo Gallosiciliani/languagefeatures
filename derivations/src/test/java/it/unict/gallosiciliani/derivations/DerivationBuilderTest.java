@@ -11,11 +11,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Test class for {@link DerivationPathNodeImpl}
+ * Test class for {@link DerivationBuilder}
  *
  * @author Cristiano Longo
  */
-public class DerivationPathNodeImplTest {
+public class DerivationBuilderTest {
 
     /**
      * Compare path nodes by the characterizing strings
@@ -30,18 +30,10 @@ public class DerivationPathNodeImplTest {
 
         @Override
         public boolean test(final DerivationPathNode n) {
+            System.out.println(n);
             add(n);
             return true;
         }
-    }
-
-    @Test
-    void shouldConstructorCreateARootNode() {
-        final String l = "alexeme";
-        final DerivationPathNodeImpl actual = new DerivationPathNodeImpl(l);
-        assertEquals(l, actual.get());
-        assertNull(actual.prev());
-        assertNull(actual.getLinguisticPhenomenon());
     }
 
     @Test
@@ -58,7 +50,8 @@ public class DerivationPathNodeImplTest {
 
         final DerivationPathNodeImpl pathRoot = new DerivationPathNodeImpl(initialLexeme);
         final DerivationPathNodesSet actual = new DerivationPathNodesSet();
-        pathRoot.apply(actual, Collections.singletonList(t));
+        new DerivationBuilder(Collections.singletonList(t), Collections.singletonList(actual)).apply(initialLexeme);
+        System.out.println(actual);
         final Iterator<DerivationPathNode> actualIt = actual.iterator();
 
         final DerivationPathNode expectedRoot = new DerivationPathNode() {
@@ -161,8 +154,8 @@ public class DerivationPathNodeImplTest {
 
         final DerivationPathNodeImpl pathRoot = new DerivationPathNodeImpl(initialLexeme);
         final DerivationPathNodesSet actual = new DerivationPathNodesSet();
-        pathRoot.apply(actual, Arrays.asList(T1, T2));
-        System.out.println(actual);
+        new DerivationBuilder(Arrays.asList(T1, T2), Collections.singletonList(actual)).apply(initialLexeme);
+
         //expected paths sT1s1<-T1--s, sT1s1T2s11<-T2--sT1s1<-T1--s, sT1s2<-T1--s
         final Iterator<DerivationPathNode> actualIt = actual.iterator();
 
@@ -272,7 +265,7 @@ public class DerivationPathNodeImplTest {
         when(T2.apply(initialLexeme)).thenReturn(Set.of(derived));
 
         final DerivationPathNodesSet actual = new DerivationPathNodesSet();
-        new DerivationPathNodeImpl(initialLexeme).apply(actual, Arrays.asList(T1, T2));
+        new DerivationBuilder(Arrays.asList(T1, T2), Collections.singletonList(actual)).apply(initialLexeme);
         final Iterator<DerivationPathNode> actualIt = actual.iterator();
 
         final DerivationPathNode expectedRoot = new DerivationPathNode() {

@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.importing;
 
+import it.unict.gallosiciliani.derivations.DerivationBuilder;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
@@ -29,18 +30,20 @@ public class Main implements Predicate<DerivationPathNode> {
     private int processedEntries=0;
     private long totalProcessingTime=0;
     private final List<RegexLinguisticPhenomenon> phenomena;
-    private final Collection<NearestShortestDerivation> derivations;
+    private final List<NearestShortestDerivation> derivations;
+    private final DerivationBuilder derivationBuilder;
 
     Main(final String pdfFilePath, final int startPage, final int endPage) throws IOException {
         derivations=importWholeDictionary(pdfFilePath, startPage, endPage, "nicosiasperlinga-lemmas.txt");
         try(final GSFeatures gs=GSFeatures.loadLocal()){
             phenomena=gs.getRegexNorthernItalyFeatures();
+            derivationBuilder=new DerivationBuilder(phenomena, derivations);
         }
     }
 
-    private static Collection<NearestShortestDerivation> importWholeDictionary(final String pdfFilePath, final int startPage, final int endPage,
+    private static List<NearestShortestDerivation> importWholeDictionary(final String pdfFilePath, final int startPage, final int endPage,
         final String outFilePath) throws IOException {
-        final Collection<NearestShortestDerivation> emptyDerivations=new LinkedList<>();
+        final List<NearestShortestDerivation> emptyDerivations=new LinkedList<>();
         final Set<String> writtenRep = new TreeSet<>();
         final Set<String> formsIri = new TreeSet<>();
         final Set<String> duplicates = new TreeSet<>();
@@ -90,7 +93,7 @@ public class Main implements Predicate<DerivationPathNode> {
 
     public void acceptSicilianVocabularyEntry(final String sicilianVocabularyEntry) {
         final long startTime=System.currentTimeMillis();
-        new DerivationPathNodeImpl(sicilianVocabularyEntry).apply(derivations, phenomena);
+        derivationBuilder.apply(sicilianVocabularyEntry);
         final long endTime=System.currentTimeMillis();
         final long elapsedTime=endTime-startTime;
         totalProcessingTime+=elapsedTime;
