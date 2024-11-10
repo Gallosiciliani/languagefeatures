@@ -1,8 +1,6 @@
 package it.unict.gallosiciliani.model.lemon.lime;
 
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
-import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.annotations.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.jena.vocabulary.DCTerms;

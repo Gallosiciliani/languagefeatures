@@ -13,7 +13,22 @@
                                                                            <http://www.w3.org/ns/lemon/lime> ;
                                                                <http://purl.org/dc/terms/source> :trovatoMenza2020 ;
                                                                rdfs:label "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
-                                                               owl:versionInfo "0.1.0" .
+                                                               owl:versionInfo "0.1.0" ;
+                                                              dcterms:contributor "Daniele Francesco Santamaria" ,
+                                                                                  "Domenico Cantone" ,
+                                                                                  "Marianna Nicolosi Asmundo" ,
+                                                                                  "Salvatore Menza" ,
+                                                                                  "Vincenzo Nicolò Di Caro" ,
+                                                                                  "Alessandro De Angelis",
+                                                                                  "Elvira Assenza",
+                                                                                  "Michele Cosentino",
+                                                                                  "Angela Castiglione";
+                                                              dcterms:created "2024-11-08"^^xsd:date ;
+                                                              dcterms:creator "Cristiano Longo" ;
+                                                              dcterms:description "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
+                                                              dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+                                                              dcterms:title "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
+                                                              rdfs:comment "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" .
 
 
 #################################################################

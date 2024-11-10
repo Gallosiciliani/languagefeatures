@@ -1,6 +1,5 @@
 package it.unict.gallosiciliani.importing.nicosiasperlingavocab.writing;
 
-import it.unict.gallosiciliani.importing.nicosiasperlingavocab.parser.MultiplePagesParser;
 import it.unict.gallosiciliani.importing.nicosiasperlingavocab.parser.Parser;
 import it.unict.gallosiciliani.importing.nicosiasperlingavocab.parser.ParsingDataConsumer;
 import it.unict.gallosiciliani.importing.partofspeech.POS;
@@ -59,7 +58,7 @@ public class POStoCSVwriter implements ParsingDataConsumer{
         try(final PrintStream posCSV=new PrintStream("pos.csv")) {
             final POStoCSVwriter w = new POStoCSVwriter(posCSV);
             try (final Parser parser = new Parser(w, "nicosiasperlinga.pdf")) {
-                new MultiplePagesParser(parser).parsePages(1, 1084);
+                parser.parsePages(1, 1084);
             }
         }
     }

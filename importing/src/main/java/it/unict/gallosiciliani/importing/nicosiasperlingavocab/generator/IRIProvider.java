@@ -6,6 +6,11 @@ package it.unict.gallosiciliani.importing.nicosiasperlingavocab.generator;
  */
 public interface IRIProvider {
 
+    /**
+     * @return the IRI of the lexicon
+     */
+    String getLexiconIRI();
+
     interface LexicalEntryIRIProvider{
         String getLexicalEntryIRI();
         String getCanonicalFormIRI();

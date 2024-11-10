@@ -8,10 +8,9 @@ import lombok.Getter;
  * Provide individuals that has to be used for Part Of Speech
  * @author Cristiano Longo
  */
+@Getter
 public class POSIndividualProvider {
-    @Getter
     private final PartOfSpeech noun;
-    @Getter
     private final PartOfSpeech verb;
 
     public POSIndividualProvider(){

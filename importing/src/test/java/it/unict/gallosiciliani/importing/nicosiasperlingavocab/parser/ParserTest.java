@@ -1,7 +1,6 @@
 package it.unict.gallosiciliani.importing.nicosiasperlingavocab.parser;
 
 import it.unict.gallosiciliani.importing.nicosiasperlingavocab.VocabTestParams;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -140,21 +139,14 @@ public class ParserTest {
     }
 
     @Test
-    @Disabled
-    void testDeBeoEMangePage396() throws IOException {
-        try(final Parser p = new Parser(c, testParams.getPdfFilePath())) {
-            p.parsePage(testParams.getPageNumInTestFile(396));
+    void testParsingMultiplePages() throws IOException {
+        try(final Parser p=new Parser(c, testParams.getPdfFilePath())){
+            p.parsePages(testParams.getPageNumInTestFile(125), testParams.getPageNumInTestFile(126));
             final InOrder o = inOrder(c);
-            o.verify(c).lemma("dê");
-            o.verify(c).pos("prep. art.");
-            o.verify(c).lemma("de àutö e bàsciö");
-            o.verify(c).pos("avv.");
-            o.verify(c).lemma("de banda");
-            o.verify(c).pos("avv.locat.");
-            o.verify(c).lemma("de bëö");
-            o.verify(c).pos("sost.masch.massa [-N]");
-            o.verify(c).lemma("de bëö e mangè");
-            o.verify(c).pos("sost.masch.massa [-N]");
+            testParsingPage125(c,o);
+            testParsingPage126(c,o);
+            o.verifyNoMoreInteractions();
         }
     }
+
 }

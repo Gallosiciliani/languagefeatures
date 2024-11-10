@@ -12,6 +12,11 @@ public class SequentialNatIRIProvider implements IRIProvider{
     }
 
     @Override
+    public String getLexiconIRI() {
+        return namespace+"lexicon";
+    }
+
+    @Override
     public LexicalEntryIRIProvider getLexicalEntryIRIs() {
         final String iri=namespace+"entry"+(n++);
         final String canonicalFormIri=iri+"-canonicalForm";

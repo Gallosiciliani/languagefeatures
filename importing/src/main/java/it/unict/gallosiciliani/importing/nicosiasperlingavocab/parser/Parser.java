@@ -66,6 +66,18 @@ public class Parser extends PDFTextStripper implements AutoCloseable{
         getText(pdf);
     }
 
+    /**
+     * Parse and consume all pages in the specified range
+     * @param startPage first page to be consumed
+     * @param endPage last page to be consumed
+     * @throws IOException if an error occurs reading the document
+     */
+    public void parsePages(final int startPage, final int endPage) throws IOException {
+        for(int i=startPage; i<=endPage; i++) {
+            parsePage(i);
+        }
+    }
+
     @Override
     protected void processTextPosition(final TextPosition text)
     {

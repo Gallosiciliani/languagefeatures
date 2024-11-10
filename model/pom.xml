@@ -10,9 +10,6 @@
     </parent>
 
     <artifactId>model</artifactId>
-    <properties>
-        <cz.cvut.kbss.jopa.version>2.0.5</cz.cvut.kbss.jopa.version>
-    </properties>
 
     <dependencies>
         <dependency>
