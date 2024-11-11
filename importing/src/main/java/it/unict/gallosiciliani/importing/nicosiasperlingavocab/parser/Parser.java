@@ -19,7 +19,7 @@ import java.io.IOException;
 @Slf4j
 public class Parser extends PDFTextStripper implements AutoCloseable{
 
-    private static final int HEADER_HEIGHT_PX=96;
+    private static final int HEADER_HEIGHT_PX=94;
     private final PDDocument pdf;
 
     private ParsingState currentState;

@@ -148,5 +148,4 @@ public class ParserTest {
             o.verifyNoMoreInteractions();
         }
     }
-
 }

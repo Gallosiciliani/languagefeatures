@@ -20,7 +20,8 @@ public class UnexpectedPOSStringException extends Exception{
             ". pers. pl.", //parser error: see page 684 "agg. e pron. poss. 1a. pers. pl."
             "congiuz.sub.nonfin.", //see page 715
             ".", //see page 779 "pösà agg. (f. -àda, pl. -àë) ." the last dot is magenta
-            "impers"
+            "impers",
+            "a pers. sing. masch. e femm." //see page 1028 "tò agg. e pron. poss. (postnom.) 2a pers. sing. masch. e femm. (pl. toë) monoval. (N Agg ) tuo, tua."
     };
     private final String posString;
 

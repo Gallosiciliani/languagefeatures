@@ -22,8 +22,9 @@
                                                                                   "Alessandro De Angelis",
                                                                                   "Elvira Assenza",
                                                                                   "Michele Cosentino",
-                                                                                  "Angela Castiglione";
-                                                              dcterms:created "2024-11-08"^^xsd:date ;
+                                                                                  "Angela Castiglione",
+                                                                                  "Sara Natalia Caudullo";
+                                                              dcterms:created "2024-11-11"^^xsd:date ;
                                                               dcterms:creator "Cristiano Longo" ;
                                                               dcterms:description "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
                                                               dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;

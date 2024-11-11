@@ -6,6 +6,7 @@ import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.model.lemon.lime.Lime;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Comparator;
@@ -24,7 +25,12 @@ public class LexiconOntologyWriter implements Consumer<LexicalEntry> {
     static final Comparator<Form> compareByIRI= (f1, f2) -> f1.getId().compareTo(f2.getId());
     private final EntityManager entityManager;
     private final Lexicon lexicon;
+
+    @Getter
     private final Set<Form> forms=new TreeSet<>(compareByIRI);
+
+    @Getter
+    private int numEntries;
 
     public LexiconOntologyWriter(final EntityManager entityManager, final POSIndividualProvider posProvider){
         this.entityManager=entityManager;
@@ -41,8 +47,6 @@ public class LexiconOntologyWriter implements Consumer<LexicalEntry> {
 
     @Override
     public void accept(final LexicalEntry lexicalEntry) {
-//        entityManager.getTransaction().begin();
-
         if (lexicalEntry.getCanonicalForm()!=null && forms.add(lexicalEntry.getCanonicalForm()))
                 entityManager.persist(lexicalEntry.getCanonicalForm());
 
@@ -54,7 +58,6 @@ public class LexiconOntologyWriter implements Consumer<LexicalEntry> {
         // the following is a workaround
         entityManager.createNativeQuery("INSERT DATA {<"+lexicon.getId()+"> <"+Lime.ENTRY_OBJ_PROPERTY+"> <"+lexicalEntry.getId()+">}")
                 .executeUpdate();
-
-  //      entityManager.getTransaction().commit();
+        numEntries++;
     }
 }

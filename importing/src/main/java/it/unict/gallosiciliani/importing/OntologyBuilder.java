@@ -7,6 +7,7 @@ import it.unict.gallosiciliani.importing.nicosiasperlingavocab.writing.NicosiaSp
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
 import it.unict.gallosiciliani.importing.persistence.EntityManagerFactoryHelper;
 import it.unict.gallosiciliani.importing.persistence.LexiconOntologyWriter;
+import lombok.Getter;
 
 import java.io.IOException;
 
@@ -17,14 +18,17 @@ public class OntologyBuilder implements AutoCloseable {
 
     private final EntityManagerFactoryHelper emf;
     private final EntityManager em;
+
+    @Getter
+    private final LexiconOntologyWriter writer;
     private final LexicalEntriesGenerator entriesGenerator;
 
     OntologyBuilder(final String ontologyFilePath) throws IOException {
         this.emf = new NicosiaSperlingaEntityManagerFactory(ontologyFilePath);
         this.em = emf.createEntityManager();
         final POSIndividualProvider posProvider = new POSIndividualProvider();
-        final LexiconOntologyWriter w = new LexiconOntologyWriter(em, posProvider);
-        entriesGenerator = new LexicalEntriesGenerator(w, NicosiaSperlingaEntityManagerFactory.NS, posProvider);
+        writer = new LexiconOntologyWriter(em, posProvider);
+        entriesGenerator = new LexicalEntriesGenerator(writer, NicosiaSperlingaEntityManagerFactory.NS, posProvider);
     }
 
     public void parse(final String nicosiaSperlingaVocabPDFFile,
@@ -50,6 +54,7 @@ public class OntologyBuilder implements AutoCloseable {
         final String ontologyFilePath=args[3];
         try(final OntologyBuilder o=new OntologyBuilder(ontologyFilePath)){
             o.parse(nicosiaSperlingaVocabPDFFile, startPage, endPage);
+            System.out.println("Generated ontology with "+o.getWriter().getNumEntries()+" entries and "+o.getWriter().getForms().size()+" forms.");
         }
     }
 }
