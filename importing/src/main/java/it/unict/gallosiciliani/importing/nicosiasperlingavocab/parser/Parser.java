@@ -96,7 +96,8 @@ public class Parser extends PDFTextStripper implements AutoCloseable{
         final ParsedCharType t=ParsedCharType.get(text,
                 getGraphicsState().getNonStrokingColor().getComponents());
         currentState=currentState.parse(text.getUnicode(), t);
-        log.debug("Transition char \"{}\" type {} -> {}",text.getUnicode(), t, currentState);
+        final String isDiacritic=text.isDiacritic()?"diacritic":"";
+        log.debug("Transition char \"{}\" {} type {} -> {}",text.getUnicode(),isDiacritic, t, currentState);
     }
 
     /**

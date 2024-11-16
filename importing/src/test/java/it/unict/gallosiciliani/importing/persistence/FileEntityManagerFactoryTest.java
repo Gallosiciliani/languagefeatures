@@ -1,9 +1,7 @@
 package it.unict.gallosiciliani.importing.persistence;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
-import cz.cvut.kbss.ontodriver.jena.connector.StorageConnector;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -16,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FileEntityManagerFactoryTest {
 
     @Test
-    @Disabled
     void shouldCreateTheFile(){
         final String testFilePath="testFileEntityManagerFactory.ttl";
         final File f=new File(testFilePath);
@@ -39,8 +36,6 @@ public class FileEntityManagerFactoryTest {
             assertTrue(f.exists());
             assertTrue(f.length()>0);
             m.close();
-            m.unwrap(StorageConnector.class);
-            System.out.println(f.getAbsolutePath());
         } finally {
             assertTrue(f.exists());
             f.delete();

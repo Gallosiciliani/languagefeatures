@@ -13,17 +13,15 @@ import java.io.IOException;
 /**
  * Test cases for {@link Parser}
  * @author Cristiano Longo
- *
- * NOTE: test is disabled, it requires the nicosiasperlinga.pdf file which cannot be published
  */
 public class ParserTest {
 
-    private final VocabTestParams testParams=VocabTestParams.TEST_FILE;
-//    private final VocabTestParams testParams=VocabTestParams.VOCAB_FILE;
+    private final VocabTestParams testParams = VocabTestParams.TEST_FILE;
+    //    private final VocabTestParams testParams=VocabTestParams.VOCAB_FILE;
     private final ParsingDataConsumer c;
 
-    ParserTest(){
-        c=Mockito.mock(ParsingDataConsumer.class);
+    ParserTest() {
+        c = Mockito.mock(ParsingDataConsumer.class);
     }
 
     /**
@@ -31,7 +29,7 @@ public class ParserTest {
      */
     @Test
     void testPage120() throws IOException {
-        try(final Parser p = new Parser(c, testParams.getPdfFilePath())) {
+        try (final Parser p = new Parser(c, testParams.getPdfFilePath())) {
             p.parsePage(testParams.getPageNumInTestFile(120));
             final InOrder o = inOrder(c);
             o.verify(c).lemma("andè");
@@ -51,15 +49,15 @@ public class ParserTest {
 
     @Test
     void testParsingPage125() throws IOException {
-        try(final Parser p = new Parser(c, testParams.getPdfFilePath())) {
+        try (final Parser p = new Parser(c, testParams.getPdfFilePath())) {
             p.parsePage(testParams.getPageNumInTestFile(125));
             final InOrder o = inOrder(c);
-            testParsingPage125(c,o);
+            testParsingPage125(c, o);
             o.verifyNoMoreInteractions();
         }
     }
 
-    private void testParsingPage125(final ParsingDataConsumer c, final InOrder o){
+    private void testParsingPage125(final ParsingDataConsumer c, final InOrder o) {
         o.verify(c).lemma("a");
         o.verify(c).pos("congiunz.sub.fin.");
         o.verify(c).lemma("â");
@@ -86,15 +84,15 @@ public class ParserTest {
 
     @Test
     void testParsingPage126() throws IOException {
-        try(final Parser p = new Parser(c, testParams.getPdfFilePath())) {
+        try (final Parser p = new Parser(c, testParams.getPdfFilePath())) {
             p.parsePage(testParams.getPageNumInTestFile(126));
             final InOrder o = inOrder(c);
-            testParsingPage126(c,o);
+            testParsingPage126(c, o);
             o.verifyNoMoreInteractions();
         }
     }
 
-    private void testParsingPage126(final ParsingDataConsumer c, final InOrder o){
+    private void testParsingPage126(final ParsingDataConsumer c, final InOrder o) {
         o.verify(c).lemma("abetinö");
         o.verify(c).pos("sost.masch.");
         o.verify(c).lemma("àbetö");
@@ -128,23 +126,23 @@ public class ParserTest {
 
     @Test
     void testParsingPages125and126() throws IOException {
-        try(final Parser p = new Parser(c, testParams.getPdfFilePath())) {
+        try (final Parser p = new Parser(c, testParams.getPdfFilePath())) {
             p.parsePage(testParams.getPageNumInTestFile(125));
             p.parsePage(testParams.getPageNumInTestFile(126));
             final InOrder o = inOrder(c);
-            testParsingPage125(c,o);
-            testParsingPage126(c,o);
+            testParsingPage125(c, o);
+            testParsingPage126(c, o);
             o.verifyNoMoreInteractions();
         }
     }
 
     @Test
     void testParsingMultiplePages() throws IOException {
-        try(final Parser p=new Parser(c, testParams.getPdfFilePath())){
+        try (final Parser p = new Parser(c, testParams.getPdfFilePath())) {
             p.parsePages(testParams.getPageNumInTestFile(125), testParams.getPageNumInTestFile(126));
             final InOrder o = inOrder(c);
-            testParsingPage125(c,o);
-            testParsingPage126(c,o);
+            testParsingPage125(c, o);
+            testParsingPage126(c, o);
             o.verifyNoMoreInteractions();
         }
     }
