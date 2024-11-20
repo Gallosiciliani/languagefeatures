@@ -5,15 +5,19 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix liph: <https://gallosiciliani.unict.it/ns/liph#> .
+@prefix eurio: <http://data.europa.eu/s66#> .
+@prefix lime: <http://www.w3.org/ns/lemon/lime#> .
 @base <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#> .
 
 <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga> rdf:type owl:Ontology ;
                                                                owl:imports <http://purl.org/ontology/bibo/> ,
                                                                            <http://www.geonames.org/ontology> ,
-                                                                           <http://www.w3.org/ns/lemon/lime> ;
+                                                                           <http://www.w3.org/ns/lemon/lime> ,
+                                                                           <https://gallosiciliani.unict.it/ns/liph>;
                                                                <http://purl.org/dc/terms/source> :trovatoMenza2020 ;
                                                                rdfs:label "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
-                                                               owl:versionInfo "0.1.0" ;
+                                                               owl:versionInfo "0.2.0" ;
                                                               dcterms:contributor "Daniele Francesco Santamaria" ,
                                                                                   "Domenico Cantone" ,
                                                                                   "Marianna Nicolosi Asmundo" ,
@@ -23,13 +27,16 @@
                                                                                   "Elvira Assenza",
                                                                                   "Michele Cosentino",
                                                                                   "Angela Castiglione",
-                                                                                  "Sara Natalia Caudullo";
-                                                              dcterms:created "2024-11-11"^^xsd:date ;
+                                                                                  "Sara Natalia Cardullo";
+                                                              dcterms:created "2024-11-19"^^xsd:date ;
                                                               dcterms:creator "Cristiano Longo" ;
-                                                              dcterms:description "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
+                                                              dcterms:description """Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga
+
+This work has been created in the scope of the project PRIN 2022 PNRR \"Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
                                                               dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                                                               dcterms:title "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
-                                                              rdfs:comment "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" .
+                                                              rdfs:comment "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
+                                                              eurio:isResultOf liph:gallosiciliani2023Project .
 
 
 #################################################################
@@ -38,13 +45,14 @@
 
 ###  https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#lexicon
 :lexicon rdf:type owl:NamedIndividual ,
-                  <http://www.w3.org/ns/lemon/lime#Lexicon> ;
+                  lime:Lexicon ;
          dcterms:language <https://glottolog.org/resource/languoid/id/gall1279> ;
-         <http://www.w3.org/ns/lemon/lime#language> "mis" ;
+         lime:language "mis" ;
          dcterms:coverage <https://sws.geonames.org/6539189/>,
             <https://sws.geonames.org/6539191/>;
-         rdfs:label "Nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" .
-
+         lime:linguisticCatalog <http://www.lexinfo.net/ontologies/2.0/lexinfo> ;
+         rdfs:label "Nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
+         dcterms:title "Nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" .
 
 ###  https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#trovatoMenza2020
 :trovatoMenza2020 rdf:type owl:NamedIndividual ,
