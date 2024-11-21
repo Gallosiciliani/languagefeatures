@@ -30,7 +30,7 @@ public class LexiconWithThreeEntries {
      */
     @FunctionalInterface
     interface RetrieveLexiconRequestPerformer{
-        ResultActions perform(final LexiconWithThreeEntries l3e) throws Exception;
+        ResultActions perform(final LexiconWithThreeEntries l3e, final int page) throws Exception;
     }
 
     public static final String LEXICON_ID ="lexicon#lexicon";

@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.webapp;
 
+import it.unict.gallosiciliani.webapp.lexica.PagingProperties;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceProperties;
 import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.net.URI;
 public class WebAppProperties {
     private URI ns;
     private PersistenceProperties persistence;
+    private PagingProperties paging;
 
     /**
      * Get the namespace where {@link Lexicon} instances are defined

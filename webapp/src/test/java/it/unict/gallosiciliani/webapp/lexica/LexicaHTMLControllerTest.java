@@ -10,6 +10,7 @@ import it.unict.gallosiciliani.model.lexinfo.LexInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -43,22 +44,28 @@ public class LexicaHTMLControllerTest {
 
     private final Locale locale = Locale.ITALIAN;
 
-    @Autowired
-    private MessageSource messageSource;
+    private final LexiconPageSelector[] pageSelectors={new LexiconPageSelector("A-B","^[ab].*"),
+            new LexiconPageSelector("C-Z","^[^ab].*")};
 
     @Autowired
-    private MockMvc mockMvc;
+    MessageSource messageSource;
+
+    @Autowired
+    MockMvc mockMvc;
 
     @MockBean
-    private LexicaService lexicaService;
+    LexicaService lexicaService;
 
     @MockBean
-    private WebAppProperties props;
+    WebAppProperties props;
 
     @BeforeEach
-    void setNs(){
-        final URI ns = URI.create(NS);
-        when(props.getNs()).thenReturn(ns);
+    void setPages(){
+        final PagingProperties p= Mockito.mock(PagingProperties.class);
+        when(p.getPages()).thenReturn(pageSelectors);
+        when(props.getPaging()).thenReturn(p);
+//        final URI ns = URI.create(NS);
+//        when(props.getNs()).thenReturn(ns);
     }
     @Test
     void shouldProvideLinksAllLexicaInKB() throws Exception {
@@ -85,10 +92,12 @@ public class LexicaHTMLControllerTest {
 
     private final LexiconWithThreeEntries.RetrieveLexiconRequestPerformer GETperformer = new LexiconWithThreeEntries.RetrieveLexiconRequestPerformer() {
         @Override
-        public ResultActions perform(final LexiconWithThreeEntries l3e) throws Exception {
+        public ResultActions perform(final LexiconWithThreeEntries l3e, int page) throws Exception {
             when(lexicaService.findLexiconByIRI(l3e.lexicon.getId())).thenReturn(l3e.lexicon);
-            when(lexicaService.findAllEntriesAlphabeticallyOrdered(l3e.lexicon, EntrySelector.ALL)).thenReturn(l3e.entriesSorted);
+            when(lexicaService.findEntries(l3e.lexicon, EntrySelector.ALL, pageSelectors[page].getSelector()))
+                    .thenReturn(l3e.entriesSorted);
             return mockMvc.perform(get("/lexica/lexicon").param("id", l3e.lexicon.getId())
+                            .param("page", Integer.toString(page))
                             .accept(MediaType.TEXT_HTML).locale(locale))
                     .andExpect(status().isOk());
         }
@@ -97,14 +106,16 @@ public class LexicaHTMLControllerTest {
     private final LexiconWithThreeEntries.RetrieveLexiconRequestPerformer POSTperformer = createPostPerformer(EntrySelector.ALL);
 
     private LexiconWithThreeEntries.RetrieveLexiconRequestPerformer createPostPerformer(final EntrySelector selector){
-        return l3e -> {
+        return (l3e, page) -> {
             when(lexicaService.findLexiconByIRI(l3e.lexicon.getId())).thenReturn(l3e.lexicon);
-            when(lexicaService.findAllEntriesAlphabeticallyOrdered(l3e.lexicon, selector)).thenReturn(l3e.entriesSorted);
+            when(lexicaService.findEntries(l3e.lexicon, EntrySelector.ALL, pageSelectors[page].getSelector()))
+                    .thenReturn(l3e.entriesSorted);
 
             return mockMvc.perform(post("/lexica/lexicon")
                     .param("id", l3e.lexicon.getId())
                     .param("pos", selector.getPos())
                     .param("featureType", selector.getFeatureType())
+                    .param("page", Integer.toString(page))
                     .accept(MediaType.TEXT_HTML).locale(locale)).andExpect(status().isOk());
         };
     }
@@ -112,13 +123,16 @@ public class LexicaHTMLControllerTest {
     @Test
     public void shouldGetSelectAllEntries() throws Exception {
         final LexiconWithThreeEntries l3e = new LexiconWithThreeEntries();
-        GETperformer.perform(l3e);
+        GETperformer.perform(l3e, 0);
 
         final ArgumentCaptor<Lexicon> lexiconArgumentCaptor = ArgumentCaptor.forClass(Lexicon.class);
         final ArgumentCaptor<EntrySelector> entrySelectorArgumentCaptor = ArgumentCaptor.forClass(EntrySelector.class);
-        verify(lexicaService).findAllEntriesAlphabeticallyOrdered(lexiconArgumentCaptor.capture(), entrySelectorArgumentCaptor.capture());
+        final ArgumentCaptor<String> lemmaRegexSelectorArgumentCaptor=ArgumentCaptor.forClass(String.class);
+        verify(lexicaService).findEntries(lexiconArgumentCaptor.capture(), entrySelectorArgumentCaptor.capture(),
+                lemmaRegexSelectorArgumentCaptor.capture());
         assertSame(l3e.lexicon, lexiconArgumentCaptor.getValue());
         assertEquals(EntrySelector.ALL, entrySelectorArgumentCaptor.getValue());
+        assertEquals(pageSelectors[0].getSelector(), lemmaRegexSelectorArgumentCaptor.getValue());
     }
 
     @Test
@@ -128,14 +142,16 @@ public class LexicaHTMLControllerTest {
         expectedSelector.setPos(LexInfo.NOUN_INDIVIDUAL);
         //expectedSelector.setFeatureType(gskb.getHasNorthernItalyFeatureClass());
 
-        createPostPerformer(expectedSelector).perform(l3e);
+        createPostPerformer(expectedSelector).perform(l3e, 0);
 
         final ArgumentCaptor<Lexicon> lexiconArgumentCaptor = ArgumentCaptor.forClass(Lexicon.class);
         final ArgumentCaptor<EntrySelector> entrySelectorArgumentCaptor = ArgumentCaptor.forClass(EntrySelector.class);
-        verify(lexicaService).findAllEntriesAlphabeticallyOrdered(lexiconArgumentCaptor.capture(), entrySelectorArgumentCaptor.capture());
+        final ArgumentCaptor<String> lemmaRegexSelectorArgumentCaptor=ArgumentCaptor.forClass(String.class);
+        verify(lexicaService).findEntries(lexiconArgumentCaptor.capture(), entrySelectorArgumentCaptor.capture(), lemmaRegexSelectorArgumentCaptor.capture());
         assertSame(l3e.lexicon, lexiconArgumentCaptor.getValue());
         assertEquals(expectedSelector.getPos(), entrySelectorArgumentCaptor.getValue().getPos());
         //assertEquals(expectedSelector.getFeatureType(), entrySelectorArgumentCaptor.getValue().getFeatureType());
+        assertEquals(pageSelectors[0].getSelector(), lemmaRegexSelectorArgumentCaptor.getValue());
     }
 
     @Test
@@ -150,7 +166,7 @@ public class LexicaHTMLControllerTest {
 
     private void shouldShowLexiconTitle(final LexiconWithThreeEntries.RetrieveLexiconRequestPerformer retriever) throws Exception {
         final LexiconWithThreeEntries l3e = new LexiconWithThreeEntries();
-        retriever.perform(l3e).andExpect(xpath("//h1").string(l3e.lexicon.getTitle()));
+        retriever.perform(l3e, 0).andExpect(xpath("//h1").string(l3e.lexicon.getTitle()));
     }
 
 
@@ -168,13 +184,15 @@ public class LexicaHTMLControllerTest {
         final LexiconWithThreeEntries l3e = new LexiconWithThreeEntries();
         final String nounLabel = messageSource.getMessage("galloitailici.kb.lexica.pos.noun", new Object[0], locale);
         final String verbLabel = messageSource.getMessage("galloitailici.kb.lexica.pos.verb", new Object[0], locale);
-        retriever.perform(l3e)
+        retriever.perform(l3e, 0)
                 .andExpect(xpath("//form/following-sibling::p")
                         .string(messageSource.getMessage("galloitalici.kb.lexica.selection.numentries", new Object[]{3}, locale)))
                 .andExpect(xpath("//tbody[1]/tr[1]/th")
                         .string(l3e.entryA.getCanonicalForm().getWrittenRep()+" ("+nounLabel+")"))
                 .andExpect(xpath("//tbody[2]/tr[1]/th")
-                        .string(l3e.entryB.getCanonicalForm().getWrittenRep()+" ("+verbLabel+")"))
+                        .string(l3e.entryB.getCanonicalForm().getWrittenRep()+" ("+verbLabel+")"));
+
+        retriever.perform(l3e, 1)
                 .andExpect(xpath("//tbody[3]/tr[1]/th")
                         .string(l3e.entryC.getCanonicalForm().getWrittenRep()+" ("+nounLabel+")"));
 
@@ -189,7 +207,7 @@ public class LexicaHTMLControllerTest {
         linkA.setEtySource(null);
         linkA.setEtySubTarget(null);
         final String etymologyLabel = messageSource.getMessage("galloitalici.kb.lexica.etymology", new Object[0], locale);
-        GETperformer.perform(l3e)
+        GETperformer.perform(l3e, 0)
                 .andExpect(xpath("//tbody[1]/tr/th[text()='"+etymologyLabel+"']/following-sibling::td")
                         .string(messageSource.getMessage("galloitalici.kb.lexica.etymology.na", new Object[0], locale)));
     }
@@ -200,7 +218,7 @@ public class LexicaHTMLControllerTest {
         final Form etymonForm = setSimpleLatinEtymon(l3e.entryA);
         final String expectedEtymon = etymonForm.getName();
         final String etymologyLabel = messageSource.getMessage("galloitalici.kb.lexica.etymology", new Object[0], locale);
-        GETperformer.perform(l3e)
+        GETperformer.perform(l3e, 0)
                 .andExpect(xpath("//tbody[1]/tr/th[text()='"+etymologyLabel+"']/following-sibling::td/ul/li[1]")
                         .string(expectedEtymon));
     }
@@ -236,7 +254,7 @@ public class LexicaHTMLControllerTest {
         etymonForm.setSeeAlso(expectedEtymonURI);
         final String etymologyLabel = messageSource.getMessage("galloitalici.kb.lexica.etymology", new Object[0], locale);
 
-        GETperformer.perform(l3e)
+        GETperformer.perform(l3e, 0)
                 .andExpect(xpath("//tbody[1]/tr/"+
                         "th[text()='"+etymologyLabel+"']/following-sibling::td/ul/li[1]/"+
                         "a[@href='"+expectedEtymonURI+"']")
@@ -269,7 +287,7 @@ public class LexicaHTMLControllerTest {
     private void shouldShowAllLatinEtymonComponents(final String fullEtymon, final String[] components, final String[] componentsNormalized) throws Exception {
         final LexiconWithThreeEntries l3e = new LexiconWithThreeEntries();
         final Form[] forms = l3e.setEtymonSubcomponents(LexiconWithThreeEntries.Entry.A, fullEtymon, components, componentsNormalized);
-        checkExpectedEtymonSubcomponent(GETperformer.perform(l3e), "1", 0, forms);
+        checkExpectedEtymonSubcomponent(GETperformer.perform(l3e, 0), "1", 0, forms);
     }
 
     private ResultActions checkExpectedEtymonSubcomponent(final ResultActions r, final String entryNum, final int componentNum, final Form[] expectedComponents) throws Exception {
@@ -315,7 +333,7 @@ public class LexicaHTMLControllerTest {
         expectedSelector.setPos(LexInfo.NOUN_INDIVIDUAL);
 //        expectedSelector.setFeatureType(gskb.getHasNorthernItalyFeatureClass());
 
-        createPostPerformer(expectedSelector).perform(l3e)
+        createPostPerformer(expectedSelector).perform(l3e, 0)
             .andExpect(xpath("//select[@name='pos']/option[@selected]/@value").string(expectedSelector.getPos()));
 //                .andExpect(xpath("//select[@name='featureType']/option[@selected]/@value").string(expectedSelector.getFeatureType()));
     }
