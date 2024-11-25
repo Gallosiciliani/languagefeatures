@@ -24,4 +24,10 @@ public class EntrySelector {
      * Select entries with some features of the specified type
      */
     private String featureType = ANY_SELECTOR;
+
+    /**
+     * Page number. It refers to pages in application.properties and
+     * stored as {@link LexiconPageSelector} instances.
+     */
+    private int page = 0;
 }

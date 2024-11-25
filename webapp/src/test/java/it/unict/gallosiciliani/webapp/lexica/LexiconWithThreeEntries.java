@@ -30,10 +30,8 @@ public class LexiconWithThreeEntries {
      */
     @FunctionalInterface
     interface RetrieveLexiconRequestPerformer{
-        ResultActions perform(final LexiconWithThreeEntries l3e, final int page) throws Exception;
+        ResultActions perform(final LexiconWithThreeEntries l3e) throws Exception;
     }
-
-    public static final String LEXICON_ID ="lexicon#lexicon";
 
     //Identifiers of lexical entries in the scope of the lexicon namespace
     public static final String ENTRY_A_ID = "y";
@@ -46,10 +44,19 @@ public class LexiconWithThreeEntries {
     public final LexicalEntry entryB = new LexicalEntry();
     public final LexicalEntry entryC = new LexicalEntry();
 
+    public final LexiconPageSelector[] pageSelectors={new LexiconPageSelector("A-B","^[ab].*"),
+            new LexiconPageSelector("C-Z","^[^ab].*")};
+
+    public final String[] pageLabels={"A-B", "C-Z"};
     /**
      * All entries, alphabetically sorted
      */
     public final List<LexicalEntry> entriesSorted = new ArrayList<>(3);
+
+    /**
+     * Entries on the first page, alphabetically sorted
+     */
+    public final List<LexicalEntry> pageABEntries = new ArrayList<>(3);
 
     /**
      *
@@ -74,6 +81,9 @@ public class LexiconWithThreeEntries {
         entriesSorted.add(entryA);
         entriesSorted.add(entryB);
         entriesSorted.add(entryC);
+
+        pageABEntries.add(entryA);
+        pageABEntries.add(entryB);
     }
 
     public LexiconWithThreeEntries(){
@@ -178,5 +188,4 @@ public class LexiconWithThreeEntries {
         }
         return res;
     }
-
 }

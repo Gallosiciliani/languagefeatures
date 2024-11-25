@@ -5,6 +5,7 @@ import it.unict.gallosiciliani.webapp.TestUtil;
 import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.model.lexinfo.LexInfo;
+import it.unict.gallosiciliani.webapp.WebAppProperties;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,8 @@ public class LexicaServiceTest {
     LexicaService lexicaService;
     @Autowired
     PlatformTransactionManager txManager;
+    @Autowired
+    WebAppProperties props;
 
     private final TestUtil util=new TestUtil();
 
@@ -70,17 +73,27 @@ public class LexicaServiceTest {
     }
 
     @Test
+    void shouldReturnPageLabels(){
+        final String[] actualLabels=lexicaService.getPageLabels();
+        final LexiconPageSelector[] expectedPages=props.getPaging().getPages();
+        for(int i=0; i<expectedPages.length; i++)
+            assertEquals(expectedPages[i].getLabel(), actualLabels[i]);
+    }
+
+    @Test
     void shouldReturnEntriesInPagesAndSortedByLemma(){
         final LexiconWithThreeEntries lexiconWithThreeEntries = new LexiconWithThreeEntries();
         lexiconWithThreeEntries.persist(entityManager, txManager);
         try {
-            final Iterator<LexicalEntry> actualPageABIt = lexicaService.findEntries(lexiconWithThreeEntries.lexicon, EntrySelector.ALL, "^[ab].*")
+            final EntrySelector s=new EntrySelector();
+            final Iterator<LexicalEntry> actualPageABIt = lexicaService.findEntries(lexiconWithThreeEntries.lexicon, s)
                     .iterator();
             util.checkEquals(lexiconWithThreeEntries.entryA, actualPageABIt.next());
             util.checkEquals(lexiconWithThreeEntries.entryB, actualPageABIt.next());
             assertFalse(actualPageABIt.hasNext());
 
-            final Iterator<LexicalEntry> actualPageCIt = lexicaService.findEntries(lexiconWithThreeEntries.lexicon, EntrySelector.ALL, "^[^ab].*")
+            s.setPage(1);
+            final Iterator<LexicalEntry> actualPageCIt = lexicaService.findEntries(lexiconWithThreeEntries.lexicon, s)
                     .iterator();
             util.checkEquals(lexiconWithThreeEntries.entryC, actualPageCIt.next());
             assertFalse(actualPageCIt.hasNext());
@@ -100,11 +113,13 @@ public class LexicaServiceTest {
         try {
             final EntrySelector selector = new EntrySelector();
             selector.setPos(LexInfo.NOUN_INDIVIDUAL);
-            final Iterator<LexicalEntry> actualPageABIt = lexicaService.findEntries(lexiconWithThreeEntries.lexicon, selector, "^[ab].*")
+            final Iterator<LexicalEntry> actualPageABIt = lexicaService.findEntries(lexiconWithThreeEntries.lexicon, selector)
                     .iterator();
             util.checkEquals(lexiconWithThreeEntries.entryA, actualPageABIt.next());
             assertFalse(actualPageABIt.hasNext());
-            final Iterator<LexicalEntry> actualPageCIt = lexicaService.findEntries(lexiconWithThreeEntries.lexicon, selector, "^[^ab].*")
+
+            selector.setPage(1);
+            final Iterator<LexicalEntry> actualPageCIt = lexicaService.findEntries(lexiconWithThreeEntries.lexicon, selector)
                     .iterator();
             util.checkEquals(lexiconWithThreeEntries.entryC, actualPageCIt.next());
             assertFalse(actualPageCIt.hasNext());

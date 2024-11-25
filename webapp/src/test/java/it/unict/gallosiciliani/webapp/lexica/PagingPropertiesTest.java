@@ -20,9 +20,9 @@ public class PagingPropertiesTest {
     void shouldDetectProperties(){
         final LexiconPageSelector[] actualSelectors=webAppProperties.getPaging().getPages();
         assertEquals(2, actualSelectors.length);
-        assertEquals("A-L", actualSelectors[0].getLabel());
-        assertEquals("^[a-l].*", actualSelectors[0].getSelector());
-        assertEquals("M-Z", actualSelectors[1].getLabel());
+        assertEquals("A-B", actualSelectors[0].getLabel());
+        assertEquals("^[a-b].*", actualSelectors[0].getSelector());
+        assertEquals("C-Z", actualSelectors[1].getLabel());
 
     }
 }

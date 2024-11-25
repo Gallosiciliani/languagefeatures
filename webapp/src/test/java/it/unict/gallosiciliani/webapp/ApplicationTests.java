@@ -1,9 +1,9 @@
 package it.unict.gallosiciliani.webapp;
 
+import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.MessageSource;
 
 import java.nio.charset.Charset;
 
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class ApplicationTests {
 
 	@Autowired
-	private WebAppProperties props;
+	WebAppProperties props;
 
 	@Test
 	void contextLoads() {
@@ -28,5 +28,10 @@ class ApplicationTests {
 	@Test
 	void ensureDefaultCharsetIsUTF8(){
 		assertEquals("UTF-8", Charset.defaultCharset().displayName());
+	}
+
+	@Test
+	void ensureUsingInMemoryStorage(){
+		assertEquals(JenaOntoDriverProperties.IN_MEMORY, props.getPersistence().getJenaStorageType());
 	}
 }
