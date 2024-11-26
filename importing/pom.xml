@@ -6,7 +6,7 @@
     <parent>
         <groupId>it.unict.gallosiciliani</groupId>
         <artifactId>liphtools</artifactId>
-        <version>1.6.0-SNAPSHOT</version>
+        <version>1.6.0</version>
     </parent>
 
     <artifactId>importing</artifactId>
@@ -14,12 +14,12 @@
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
             <artifactId>model</artifactId>
-            <version>1.6.0-SNAPSHOT</version>
+            <version>1.6.0</version>
         </dependency>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
             <artifactId>gs</artifactId>
-            <version>1.6.0-SNAPSHOT</version>
+            <version>1.6.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
