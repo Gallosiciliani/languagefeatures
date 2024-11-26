@@ -9,6 +9,23 @@
 </head>
 <body>
     <div class="container" th:fragment="header(title)">
+        <!-- see https://getbootstrap.com/docs/4.1/components/navbar/ -->
+        <div class="container-fluid" style="background-color: #2b65af">
+            <div class="row align-items-center">
+                <div class="col" style="border-right: solid 1px white">
+                    <img class="img-fluid"  th:src="@{/eu.png}" alt="Finanziato dall'Unione Europea NextGenerationEU" />
+                </div>
+                <div class="col" style="border-right: solid 1px white">
+                    <img class="img-fluid" style="padding: 5%" th:src="@{/mur.png}" alt="Ministero dell'Università e della Ricerca" />
+                </div>
+                <div class="col" style="border-right: solid 1px white">
+                    <img class="img-fluid" th:src="@{/italiadomani.png}" alt="Italiadomani Piano nazionale di ripresa e resilenza" />
+                </div>
+                <div class="col">
+                    <img class="img-fluid" th:src="@{/unict.png}" alt="Università di Catania" />
+                </div>
+            </div>
+        </div>
         <h1 th:text="${title}">Page title missing</h1>
     </div>
 <ul>
