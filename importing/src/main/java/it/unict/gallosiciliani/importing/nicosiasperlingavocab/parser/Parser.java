@@ -48,7 +48,7 @@ public class Parser extends PDFTextStripper implements AutoCloseable{
         addOperator(new SetNonStrokingColorN(this));
         setSortByPosition(true);
         pdf=Loader.loadPDF(new File(pdfFilePath));
-        this.currentState=new InitialState(consumer);
+        this.currentState=new InitialState(new AccentedWithDiacriticsCorrector(consumer));
     }
 
     @Override

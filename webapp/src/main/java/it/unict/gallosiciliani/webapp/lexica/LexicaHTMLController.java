@@ -21,7 +21,7 @@ import java.util.Locale;
 @Slf4j
 public class LexicaHTMLController {
 
-   @Autowired
+    @Autowired
     LexicaService lexicaService;
 
     @Autowired
@@ -56,7 +56,7 @@ public class LexicaHTMLController {
         model.addAttribute("lexicontitle", l.getTitle());
         model.addAttribute("lexicon", lexicon);
         model.addAttribute("selector", selector);
-//        model.addAttribute("gskb", new GSKB(webAppProperties));
+        model.addAttribute("pages", lexicaService.getPageLabels());
 
         final EntrySummarizer summarizer = entrySummarizerObjectProvider.getObject(locale);
         final List<EntrySummary> entries = summarizer.summarize(lexicaService.findEntries(l, selector));
