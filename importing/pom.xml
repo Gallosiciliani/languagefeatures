@@ -47,7 +47,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        it.unict.gallosiciliani.importing.Main
+                                        it.unict.gallosiciliani.importing.OntologyBuilder
                                     </mainClass>
                                 </manifest>
                             </archive>
