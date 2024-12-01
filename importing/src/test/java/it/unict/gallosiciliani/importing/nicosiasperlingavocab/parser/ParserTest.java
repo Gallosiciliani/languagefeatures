@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 public class ParserTest {
 
-    private final VocabTestParams testParams=VocabTestParams.TEST_FILE;
+    private final VocabTestParams testParams=VocabTestParams.TEST_120_126;
 //    private final VocabTestParams testParams=VocabTestParams.VOCAB_FILE;
     private final ParsingDataConsumer c;
 
@@ -146,6 +146,25 @@ public class ParserTest {
             testParsingPage125(c,o);
             testParsingPage126(c,o);
             o.verifyNoMoreInteractions();
+        }
+    }
+
+    /**
+     * The page with accented letters with diacritics
+     */
+    @Test
+    void testPage514() throws IOException {
+        try(final Parser p = new Parser(c, VocabTestParams.TEST_514.getPdfFilePath())) {
+            p.parsePage(VocabTestParams.TEST_514.getPageNumInTestFile(514));
+            final InOrder o = inOrder(c);
+            o.verify(c).lemma("götaö");
+            o.verify(c).pos("sost.masch.massa");
+            o.verify(c).lemma("götarösö");
+            o.verify(c).pos("agg.");
+            o.verify(c).lemma("gotë");
+            o.verify(c).lemma("gö̀tera");
+            o.verify(c).pos("sost.femm. solo sing.");
+//            o.verifyNoMoreInteractions();
         }
     }
 }

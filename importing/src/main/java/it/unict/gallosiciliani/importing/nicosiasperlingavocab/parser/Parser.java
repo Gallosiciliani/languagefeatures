@@ -9,6 +9,8 @@ import org.apache.pdfbox.text.TextPosition;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.HexFormat;
 
 /**
  * Extract all terms from the PDF of Vacabolario di Nicosia e Sperlinga. This parser returns only relevant tokens
@@ -46,7 +48,7 @@ public class Parser extends PDFTextStripper implements AutoCloseable{
         addOperator(new SetNonStrokingColorN(this));
         setSortByPosition(true);
         pdf=Loader.loadPDF(new File(pdfFilePath));
-        this.currentState=new InitialState(consumer);
+        this.currentState=new InitialState(new AccentedWithDiacriticsCorrector(consumer));
     }
 
     @Override
@@ -96,7 +98,12 @@ public class Parser extends PDFTextStripper implements AutoCloseable{
         final ParsedCharType t=ParsedCharType.get(text,
                 getGraphicsState().getNonStrokingColor().getComponents());
         currentState=currentState.parse(text.getUnicode(), t);
-        log.debug("Transition char \"{}\" type {} -> {}",text.getUnicode(), t, currentState);
+        log.debug("Transition char \"{}\" ({}, codes {}) type {} -> {}",text.getUnicode(), getBytesString(text.getUnicode()), text.getCharacterCodes(), t, currentState);
+    }
+
+    private String getBytesString(final String unicodeChar){
+        final byte[] bytes=unicodeChar.getBytes(StandardCharsets.UTF_8);
+        return HexFormat.of().formatHex(bytes);
     }
 
     /**

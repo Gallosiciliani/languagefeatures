@@ -20,7 +20,7 @@ public class ParserConsumerIntegrationTest {
 
     private final LexicalEntryConsumerTestUtils utils;
     private final LexicalEntriesGenerator generator;
-    private final VocabTestParams vocab = VocabTestParams.TEST_FILE;
+    private final VocabTestParams vocab = VocabTestParams.TEST_120_126;
 
     ParserConsumerIntegrationTest(){
         final String ns="https://gallosiciliani.unict.it/test#";
