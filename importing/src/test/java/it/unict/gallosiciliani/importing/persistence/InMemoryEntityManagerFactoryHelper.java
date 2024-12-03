@@ -10,9 +10,9 @@ import java.util.Map;
  *
  * @author Cristiano Longo
  */
-class InMemoryEntityManagerFactoryHelper extends EntityManagerFactoryHelper {
+public class InMemoryEntityManagerFactoryHelper extends EntityManagerFactoryHelper {
 
-    InMemoryEntityManagerFactoryHelper() {
+    public InMemoryEntityManagerFactoryHelper() {
         super(Map.of(JenaOntoDriverProperties.JENA_STORAGE_TYPE, JenaOntoDriverProperties.IN_MEMORY,
                 JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, "http://test.org/ontology"));
     }

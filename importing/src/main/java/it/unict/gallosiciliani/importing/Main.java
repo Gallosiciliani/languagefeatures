@@ -2,12 +2,11 @@ package it.unict.gallosiciliani.importing;
 
 import it.unict.gallosiciliani.derivations.DerivationBuilder;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
-import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.gs.GSFeatures;
-import it.unict.gallosiciliani.importing.nicosiasperlingavocab.generator.LexicalEntriesGenerator;
+import it.unict.gallosiciliani.importing.pdf.generator.LexicalEntriesGenerator;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
-import it.unict.gallosiciliani.importing.nicosiasperlingavocab.parser.Parser;
+import it.unict.gallosiciliani.importing.pdf.parser.Parser;
 import it.unict.gallosiciliani.importing.sicilianvocab.SicilianVocabulary;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;

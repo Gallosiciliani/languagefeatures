@@ -4,8 +4,10 @@ import lombok.Getter;
 
 /**
  * Language features used in the Gallosiciliani project
+ * Use features IRI instead
  */
 @Getter
+@Deprecated
 public enum GSLanguageFeatureCode {
     N01a,
     N01b,
@@ -86,6 +88,5 @@ public enum GSLanguageFeatureCode {
     N62,
     S01, S02, S03, S04, S05, S06, S07, S08, S09, S10, S11, S13a, S13b, S14, S15, S16, S17, S18, S21, S22a, S22b,
     X01, X03, X04, X05, D01a, D01b, D02, D04a, D04b,
-    D04c, D04d, N64, N46a, N01b_1, N01b_2, N01b_3, N47c_1, N47c_2, N47a_1, N47a_2, N51a_1, N51a_2;
-
+    D04c, D04d, N64, N46a, N01b_1, N01b_2, N01b_3, N47c_1, N47c_2, N47a_1, N47a_2, N51a_1, N51a_2
 }
