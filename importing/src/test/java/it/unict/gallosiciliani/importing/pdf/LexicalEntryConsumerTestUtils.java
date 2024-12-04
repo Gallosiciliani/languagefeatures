@@ -2,10 +2,11 @@ package it.unict.gallosiciliani.importing.pdf;
 
 import it.unict.gallosiciliani.importing.partofspeech.POS;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
-import it.unict.gallosiciliani.importing.pdf.generator.IRIProvider;
-import it.unict.gallosiciliani.importing.pdf.generator.SequentialNatIRIProvider;
+import it.unict.gallosiciliani.importing.iri.IRIProvider;
+import it.unict.gallosiciliani.importing.iri.SequentialIRIProvider;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.model.lexinfo.LexInfo;
 import lombok.Getter;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
@@ -71,7 +72,7 @@ public class LexicalEntryConsumerTestUtils {
         o=inOrder(lec);
         this.ns=ns;
         this.posProvider=posProvider;
-        this.expectedIRIProvider=new SequentialNatIRIProvider(ns);
+        this.expectedIRIProvider=new SequentialIRIProvider(ns);
     }
 
     public void assertAcceptedEntries(final Expected...expected){
@@ -90,7 +91,7 @@ public class LexicalEntryConsumerTestUtils {
      * @param numExpected number of expected entries
      * @return accepted entries
      */
-    private List<LexicalEntry> capture(final int numExpected){
+    public List<LexicalEntry> capture(final int numExpected){
         final ArgumentCaptor<LexicalEntry> actualEntryCaptor = ArgumentCaptor.forClass(LexicalEntry.class);
         o.verify(lec, times(numExpected)).accept(actualEntryCaptor.capture());
         return actualEntryCaptor.getAllValues();
@@ -115,8 +116,8 @@ public class LexicalEntryConsumerTestUtils {
      */
     private void checkPOS(final POS expectedPOS, final LexicalEntry actual){
         switch (expectedPOS){
-            case NOUN -> assertSame(posProvider.getNoun(), actual.getPartOfSpeech());
-            case VERB -> assertSame(posProvider.getVerb(), actual.getPartOfSpeech());
+            case NOUN -> assertEquals(LexInfo.NOUN_INDIVIDUAL, actual.getPartOfSpeech().getId());
+            case VERB -> assertSame(LexInfo.VERB_INDIVIDUAL, actual.getPartOfSpeech().getId());
             default -> throw new IllegalArgumentException("Test error: unexpected POS "+expectedPOS);
         }
 

@@ -1,5 +1,7 @@
 package it.unict.gallosiciliani.importing.pdf.generator;
 
+import it.unict.gallosiciliani.importing.iri.IRIProvider;
+import it.unict.gallosiciliani.importing.iri.SequentialIRIProvider;
 import it.unict.gallosiciliani.importing.pdf.parser.ParsingDataConsumer;
 import it.unict.gallosiciliani.importing.partofspeech.POS;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
@@ -47,7 +49,7 @@ public class LexicalEntriesGenerator implements ParsingDataConsumer{
 
     public LexicalEntriesGenerator(final Consumer<LexicalEntry> consumer, final String namespace,
                                    final POSIndividualProvider posIndividualProvider){
-        this(consumer, new SequentialNatIRIProvider(namespace), posIndividualProvider);
+        this(consumer, new SequentialIRIProvider(namespace), posIndividualProvider);
     }
 
     @Override

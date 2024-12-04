@@ -3,7 +3,7 @@ package it.unict.gallosiciliani.importing.pdf;
 import it.unict.gallosiciliani.importing.api.LexiconConverter;
 import it.unict.gallosiciliani.importing.api.LexiconConverterFactory;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
-import it.unict.gallosiciliani.importing.pdf.generator.IRIProvider;
+import it.unict.gallosiciliani.importing.iri.IRIProvider;
 import it.unict.gallosiciliani.importing.pdf.generator.LexicalEntriesGenerator;
 import it.unict.gallosiciliani.importing.pdf.parser.Parser;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
@@ -17,12 +17,7 @@ import java.util.function.Consumer;
  */
 public class PDFLexiconConverter implements LexiconConverter {
 
-    public static final LexiconConverterFactory FACTORY = new LexiconConverterFactory() {
-        @Override
-        public LexiconConverter build(Consumer<LexicalEntry> consumer, IRIProvider iris, POSIndividualProvider posIndividualProvider) {
-            return new PDFLexiconConverter(consumer, iris, posIndividualProvider, 121, 1084);
-        }
-    };
+    public static final LexiconConverterFactory FACTORY = (consumer, iris, posIndividualProvider) -> new PDFLexiconConverter(consumer, iris, posIndividualProvider, 121, 1084);
 
     private final LexicalEntriesGenerator entriesGenerator;
     private final int startPage;

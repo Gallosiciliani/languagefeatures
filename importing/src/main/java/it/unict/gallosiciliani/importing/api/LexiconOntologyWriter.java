@@ -6,6 +6,7 @@ import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.model.lemon.lime.Lime;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.model.owl.Thing;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +23,7 @@ import java.util.function.Consumer;
 @Slf4j
 public class LexiconOntologyWriter implements Consumer<LexicalEntry> {
 
-    static final Comparator<Form> compareByIRI= (f1, f2) -> f1.getId().compareTo(f2.getId());
+    static final Comparator<Form> compareByIRI= Comparator.comparing(Thing::getId);
     private final EntityManager entityManager;
     private final Lexicon lexicon;
 
@@ -49,8 +50,10 @@ public class LexiconOntologyWriter implements Consumer<LexicalEntry> {
     public void accept(final LexicalEntry lexicalEntry) {
         if (lexicalEntry.getCanonicalForm()!=null && forms.add(lexicalEntry.getCanonicalForm()))
                 entityManager.persist(lexicalEntry.getCanonicalForm());
+        //TODO etymology forms
 
         entityManager.persist(lexicalEntry);
+
 
         lexicon.getEntry().add(lexicalEntry);
         // Cause concurrent modification exception, see https://github.com/kbss-cvut/jopa/issues/274

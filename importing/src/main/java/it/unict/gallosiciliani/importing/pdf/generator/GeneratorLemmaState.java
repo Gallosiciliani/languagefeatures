@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.importing.pdf.generator;
 
+import it.unict.gallosiciliani.importing.iri.LexicalEntryIRIProvider;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.model.lexinfo.PartOfSpeech;
@@ -40,7 +41,7 @@ class GeneratorLemmaState extends GeneratorState{
         for(final String lemma : lemmas)
             if (params.getDuplicatesHandler().handle(lemma)) {
                 final LexicalEntry e = new LexicalEntry();
-                final IRIProvider.LexicalEntryIRIProvider iris = params.getIRIProvider().getLexicalEntryIRIs();
+                final LexicalEntryIRIProvider iris = params.getIRIProvider().getLexicalEntryIRIs();
                 e.setId(iris.getLexicalEntryIRI());
                 e.setPartOfSpeech(partOfSpeechIndividual);
                 e.setCanonicalForm(new Form());

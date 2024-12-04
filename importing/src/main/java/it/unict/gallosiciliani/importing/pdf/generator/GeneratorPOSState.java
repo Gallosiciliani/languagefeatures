@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.importing.pdf.generator;
 
+import it.unict.gallosiciliani.importing.iri.LexicalEntryIRIProvider;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.model.lexinfo.PartOfSpeech;
 
@@ -45,7 +46,7 @@ class GeneratorPOSState extends GeneratorState{
      */
     protected final void generateAdditionalEntries(final PartOfSpeech posIndividual){
         for(final LexicalEntry createdEntry : createdEntries){
-            IRIProvider.LexicalEntryIRIProvider iris = params.getIRIProvider().getLexicalEntryIRIs();
+            LexicalEntryIRIProvider iris = params.getIRIProvider().getLexicalEntryIRIs();
             final LexicalEntry newEntry = new LexicalEntry();
             newEntry.setId(iris.getLexicalEntryIRI());
             newEntry.setPartOfSpeech(posIndividual);
