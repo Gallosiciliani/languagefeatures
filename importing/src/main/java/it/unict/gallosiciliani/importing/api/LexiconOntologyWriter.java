@@ -6,6 +6,7 @@ import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.model.lemon.lime.Lime;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.model.lemonety.Etymology;
 import it.unict.gallosiciliani.model.owl.Thing;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -48,12 +49,11 @@ public class LexiconOntologyWriter implements Consumer<LexicalEntry> {
 
     @Override
     public void accept(final LexicalEntry lexicalEntry) {
-        if (lexicalEntry.getCanonicalForm()!=null && forms.add(lexicalEntry.getCanonicalForm()))
-                entityManager.persist(lexicalEntry.getCanonicalForm());
-        //TODO etymology forms
+        for(final Form f: getAllForms(lexicalEntry))
+            if (forms.add(f))
+                entityManager.persist(f);
 
         entityManager.persist(lexicalEntry);
-
 
         lexicon.getEntry().add(lexicalEntry);
         // Cause concurrent modification exception, see https://github.com/kbss-cvut/jopa/issues/274
@@ -62,5 +62,23 @@ public class LexiconOntologyWriter implements Consumer<LexicalEntry> {
         entityManager.createNativeQuery("INSERT DATA {<"+lexicon.getId()+"> <"+Lime.ENTRY_OBJ_PROPERTY+"> <"+lexicalEntry.getId()+">}")
                 .executeUpdate();
         numEntries++;
+    }
+
+    /**
+     * Get all the forms in a lexical entry
+     * @param lexicalEntry the lexical entry
+     * @return all forms in the lexical entry
+     */
+    public Set<Form> getAllForms(final LexicalEntry lexicalEntry){
+        final Set<Form> res=new TreeSet<>(compareByIRI);
+        if (lexicalEntry.getCanonicalForm()!=null)
+            res.add(lexicalEntry.getCanonicalForm());
+        if (lexicalEntry.getEtymology()==null)
+            return res;
+        for(final Etymology etymology: lexicalEntry.getEtymology()){
+            if (etymology.getStartingLink()!=null)
+                res.addAll(etymology.getStartingLink().getEtySubSource());
+        }
+        return res;
     }
 }

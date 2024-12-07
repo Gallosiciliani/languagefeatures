@@ -4,6 +4,7 @@ import cz.cvut.kbss.jopa.model.EntityManager;
 import it.unict.gallosiciliani.importing.csv.CSVLexiconConverter;
 import it.unict.gallosiciliani.importing.iri.IRIProvider;
 import it.unict.gallosiciliani.importing.iri.SequentialIRIProvider;
+import it.unict.gallosiciliani.importing.pdf.PDFLexiconConverter;
 import it.unict.gallosiciliani.importing.pdf.writing.NicosiaSperlingaEntityManagerFactory;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
 import it.unict.gallosiciliani.importing.persistence.EntityManagerFactoryHelper;
@@ -33,10 +34,12 @@ public class OntologyBuilder implements LexiconConverter, AutoCloseable {
     }
 
     public static void main(final String[] args) throws Exception {
-        final String nicosiaSperlingaVocabPDFFile=args[0];
+        final String nicosiaSperlingaVocabFile=args[0];
         final String ontologyFilePath=args[1];
-        try(final OntologyBuilder o=new OntologyBuilder(ontologyFilePath, CSVLexiconConverter.FACTORY)){
-            o.read(nicosiaSperlingaVocabPDFFile);
+        final LexiconConverterFactory converterFactory=nicosiaSperlingaVocabFile.endsWith(".pdf") ?
+                PDFLexiconConverter.FACTORY : CSVLexiconConverter.FACTORY;
+        try(final OntologyBuilder o=new OntologyBuilder(ontologyFilePath, converterFactory)){
+            o.read(nicosiaSperlingaVocabFile);
             System.out.println("Generated ontology with "+o.getWriter().getNumEntries()+" entries and "+o.getWriter().getForms().size()+" forms.");
         }
     }

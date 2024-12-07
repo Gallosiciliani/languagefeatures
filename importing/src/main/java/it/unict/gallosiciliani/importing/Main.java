@@ -28,14 +28,13 @@ public class Main implements Predicate<DerivationPathNode> {
 
     private int processedEntries=0;
     private long totalProcessingTime=0;
-    private final List<RegexLinguisticPhenomenon> phenomena;
     private final List<NearestShortestDerivation> derivations;
     private final DerivationBuilder derivationBuilder;
 
     Main(final String pdfFilePath, final int startPage, final int endPage) throws IOException {
         derivations=importWholeDictionary(pdfFilePath, startPage, endPage, "nicosiasperlinga-lemmas.txt");
         try(final GSFeatures gs=GSFeatures.loadLocal()){
-            phenomena=gs.getRegexNorthernItalyFeatures();
+            final List<RegexLinguisticPhenomenon> phenomena = gs.getRegexNorthernItalyFeatures();
             derivationBuilder=new DerivationBuilder(phenomena, derivations);
         }
     }
@@ -88,6 +87,8 @@ public class Main implements Predicate<DerivationPathNode> {
         try(final FileWriter w=new FileWriter("derivations.out")){
             m.writeNearestShortestDerivations(w);
         }
+        System.out.println("Processed "+m.processedEntries+" entries");
+        System.out.println("Total processing time "+m.totalProcessingTime);
     }
 
     public void acceptSicilianVocabularyEntry(final String sicilianVocabularyEntry) {
@@ -103,7 +104,6 @@ public class Main implements Predicate<DerivationPathNode> {
 
     @Override
     public boolean test(final DerivationPathNode derivationPathNode) {
-        boolean notWorse=false;
         for(final NearestShortestDerivation d: derivations)
             if (d.test(derivationPathNode)) return true;
         return false;

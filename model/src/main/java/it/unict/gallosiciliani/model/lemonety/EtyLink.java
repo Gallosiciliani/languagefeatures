@@ -1,6 +1,5 @@
 package it.unict.gallosiciliani.model.lemonety;
 
-import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.FetchType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
@@ -22,16 +21,16 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = false, exclude = {"etySource", "etyTarget"})
 public class EtyLink extends Thing {
 
-    @OWLObjectProperty(iri = LemonEty.NS+"etySource", cascade = CascadeType.PERSIST)
+    @OWLObjectProperty(iri = LemonEty.NS+"etySource")
     private LexicalEntry etySource;
 
-    @OWLObjectProperty(iri = LemonEty.NS+"etyTarget", cascade = {})
+    @OWLObjectProperty(iri = LemonEty.NS+"etyTarget")
     private LexicalEntry etyTarget;
 
-    @OWLObjectProperty(iri = LemonEty.NS+"etySubSource", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OWLObjectProperty(iri = LemonEty.NS+"etySubSource", fetch = FetchType.EAGER)
     private Set<Form> etySubSource = new HashSet<>();
 
-    @OWLObjectProperty(iri = LemonEty.NS+"etySubTarget", cascade = {})
+    @OWLObjectProperty(iri = LemonEty.NS+"etySubTarget")
     private Form etySubTarget;
 
     @Override
