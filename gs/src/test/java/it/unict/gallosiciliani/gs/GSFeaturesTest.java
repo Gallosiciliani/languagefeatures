@@ -1,22 +1,13 @@
 package it.unict.gallosiciliani.gs;
 
-import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
-import it.unict.gallosiciliani.util.OntologyCheckUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.jena.query.*;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.riot.RDFLanguages;
-import org.apache.jena.riot.RDFParser;
-import org.apache.jena.vocabulary.RDFS;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.util.*;
 
 import static it.unict.gallosiciliani.gs.GSFeatures.*;
@@ -29,152 +20,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 public class GSFeaturesTest {
 
-    private static final String[] ALL_PROPERTIES = {
-            NICOSIA_FEATURE_OBJ_PROPERTY,
-            NOVARA_DI_SICILIA_FEATURE_OBJ_PROPERTY,
-            SAN_FRATELLO_FEATURE_OBJ_PROPERTY,
-            SPERLINGA_FEATURE_OBJ_PROPERTY,
-            NORTHERN_FEATURE_OBJ_PROPERTY,
-            SOUTHERN_FEATURE_OBJ_PROPERTY
-    };
-
-    private void shouldContainBaseProperties(final GSFeatures g) throws Exception {
-        shouldContainBaseProperties(g.getModel());
-    }
-
-    private void shouldContainBaseProperties(final Model m) throws Exception {
-        final OntologyCheckUtils utils = new OntologyCheckUtils(m);
-        for(final String expectedProperty : ALL_PROPERTIES)
-            utils.objectPropertyExists(expectedProperty);
-        assertTrue(utils.check(), utils.getFailureMessage());
-    }
-
     @Test
-    @Disabled
-    void countProperties() throws IOException {
-        final Query q = QueryFactory.create("SELECT (count(distinct ?f) as ?n) WHERE {"+
-                " {?f <"+RDFS.subPropertyOf+"> <"+ NICOSIA_FEATURE_OBJ_PROPERTY+">}" +
-                " UNION {?f <"+RDFS.subPropertyOf+"> <"+ SPERLINGA_FEATURE_OBJ_PROPERTY+">}" +
-                " UNION {?f <"+RDFS.subPropertyOf+"> <"+ SAN_FRATELLO_FEATURE_OBJ_PROPERTY+">}" +
-                " UNION {?f <"+RDFS.subPropertyOf+"> <"+ NOVARA_DI_SICILIA_FEATURE_OBJ_PROPERTY+">}" +
-                "}");
-        try(final GSFeatures gs = GSFeatures.loadOnline(); final QueryExecution ex = QueryExecution.create(q, gs.getModel())){
-            final int expectedTotFeatures = GSLanguageFeatureCode.values().length;
-            log.info("Features with regex {}", gs.getRegexLinguisticPhenomena().size());
-            final int nPhenomena = ex.execSelect().nextSolution().getLiteral("n").getInt();
-            log.info("Found {} linguistic phenomena", nPhenomena);
-            assertEquals(expectedTotFeatures, nPhenomena);
-        }
-    }
-    @Test
-    void shouldLoadBaseLoadBaseProperties() throws Exception {
-        shouldContainBaseProperties(GSFeatures.loadBase());
-    }
-
-    @Test
-    void shouldLoadOnlineLoadBaseProperties() throws Exception {
-        shouldContainBaseProperties(GSFeatures.loadLocal());
-    }
-
-    @Test
-    void testReturningOntologyAsStr() throws Exception {
-        try(final GSFeatures g = GSFeatures.loadLocal()) {
-            final Model actual = RDFParser.create().fromString(g.getOntologyAsStr())
-                    .lang(RDFLanguages.TTL)
-                    .toModel();
-            shouldContainBaseProperties(actual);
-        }
-    }
-
-    @Test
-    void testLoadingFeaturesFromCSV() throws IOException {
-        final String csv = "N01b –(voc)LLU > voc+ö,nic,,,\"caö, beö, moö, ëö, gaö, vs. S18 \"\n"+
-        "N02 -ANU/-ANE > [ˈɛã],,sfr,,mèan ‘mano’\n"+
-        "N03a -ĀRE > à,,,nov,mangià ‘mangiare’\n"+
-        "N03b -ĀRE > [ɛ(r(o̝))],nic,sfr,,\"nic. mangè, sfr. abrusger ‘bruciare’\"\n"+
-                "S01 Ĕ(N) tonica > [ɛ(n)],nic,sfr,,\"nic. centö ‘cento’, capela ‘cappella’, sfr. fenestra, tèner ‘tenero’ \"\n"+
-                "X01 Ē/Ĭ tonica > [e̝],nic,,,\"sëda ‘seta’, césgerö (vs. céisgerö) ‘cecio’\"";
-
-        try(final GSFeatures g = GSFeatures.loadBase(); final Reader csvReader = new StringReader(csv)) {
-            g.loadFeatures(csvReader);
-            System.out.println(g.print());
-
-            checkFeature(g.getModel(), GSLanguageFeatureCode.N01b, "N01b –(voc)LLU > voc+ö",
-                    NORTHERN_FEATURE_OBJ_PROPERTY,
-                    NICOSIA_FEATURE_OBJ_PROPERTY);
-            checkFeature(g.getModel(), GSLanguageFeatureCode.N02, "N02 -ANU/-ANE > [ˈɛã]",
-                    NORTHERN_FEATURE_OBJ_PROPERTY, SAN_FRATELLO_FEATURE_OBJ_PROPERTY);
-            checkFeature(g.getModel(), GSLanguageFeatureCode.N03a, "N03a -ĀRE > à", NORTHERN_FEATURE_OBJ_PROPERTY,
-                    NOVARA_DI_SICILIA_FEATURE_OBJ_PROPERTY);
-            checkFeature(g.getModel(), GSLanguageFeatureCode.N03b, "N03b -ĀRE > [ɛ(r(o̝))]", NORTHERN_FEATURE_OBJ_PROPERTY,
-                    NICOSIA_FEATURE_OBJ_PROPERTY, SAN_FRATELLO_FEATURE_OBJ_PROPERTY);
-            checkFeature(g.getModel(), GSLanguageFeatureCode.S01, "S01 Ĕ(N) tonica > [ɛ(n)]", SOUTHERN_FEATURE_OBJ_PROPERTY,
-                    NICOSIA_FEATURE_OBJ_PROPERTY, SAN_FRATELLO_FEATURE_OBJ_PROPERTY);
-            checkFeature(g.getModel(), GSLanguageFeatureCode.X01, "X01 Ē/Ĭ tonica > [e̝]", NICOSIA_FEATURE_OBJ_PROPERTY, LinguisticPhenomena.LINGUISTIC_PHENOMENON_OBJ_PROPERTY);
-        }
-    }
-
-    /**
-     * Check a GS feature is reported in the ontology as expected
-     * @param model the ontology
-     * @param featureCode code of the feature
-     * @param expectedLabel expected label
-     * @param expectedSuperproperties expected set of super-properties
-     */
-    private void checkFeature(final Model model,
-                              final GSLanguageFeatureCode featureCode,
-                              final String expectedLabel,
-                              final String...expectedSuperproperties){
-        final String featureIRI = GSFeatures.NS+featureCode;
-        final StringBuilder s = new StringBuilder("ASK {<"+featureIRI+"> <"+ RDFS.label.getURI() +"> \""+expectedLabel+"\" ;\n");
-        for(int i = 0; i<expectedSuperproperties.length; i++){
-            final char patternConjuctor = i==expectedSuperproperties.length - 1 ? '.' : ';';
-            s.append("<").append(RDFS.subPropertyOf.getURI()).append("> <").append(expectedSuperproperties[i])
-                    .append("> ").append(patternConjuctor).append("\n");
-        }
-
-        final Set<String> expectedNonSuperproperties = new TreeSet<>(List.of(ALL_PROPERTIES));
-        expectedNonSuperproperties.removeAll(List.of(expectedSuperproperties));
-        for(final String nonSuperproperty : expectedNonSuperproperties)
-            s.append("FILTER NOT EXISTS {<").append(featureIRI).append("> <").append(RDFS.subPropertyOf.getURI()).append("> <")
-                    .append(nonSuperproperty).append("> }.\n");
-        s.append("}");
-
-        try(final QueryExecution queryEx = QueryExecutionFactory.create(s.toString(), model)){
-            assertTrue(queryEx.execAsk());
-        }
-    }
-
-    @Test
-    void shouldProvideLabelByCodeForGSPropertiesEN() throws IOException {
-        shouldProvideLabelByCodeForGSProperties(Locale.ENGLISH);
-    }
-
-    @Test
-    void shouldProvideLabelByCodeForGSPropertiesIT() throws IOException {
-        shouldProvideLabelByCodeForGSProperties(Locale.ITALIAN);
-    }
-
-    void shouldProvideLabelByCodeForGSProperties(final Locale locale) throws IOException {
-        try(final GSFeatures languageFeatureLabelProvider = GSFeatures.loadLocal()) {
-            for (final GSLanguageFeatureCode code : GSLanguageFeatureCode.values()) {
-                final String label = languageFeatureLabelProvider.getLabel(code, locale);
-                assertNotNull(label, "label for " + code + " not found");
-            }
-        }
-    }
-
-    @Test
-    void shouldProvideLabelForPhenomenaEN() throws IOException {
+    void shouldProvideLabelForPhenomena() throws IOException {
         final Locale locale = Locale.ENGLISH;
         try(final GSFeatures gs = GSFeatures.loadLocal()) {
-            for(final LinguisticPhenomenon p : gs.getRegexLinguisticPhenomena()){
-                final GSLanguageFeatureCode code = GSLanguageFeatureCode.valueOf(p.getIRI().substring(NS.length()));
-                final String expected = gs.getLabel(code, locale);
-                assertEquals(expected, gs.getLabel(p, locale));
-            }
+            for(final LinguisticPhenomenon p : gs.getRegexLinguisticPhenomena())
+                assertNotNull(gs.getLabel(p, locale), "label for " + p + " not found");
         }
-        shouldProvideLabelByCodeForGSProperties(Locale.ENGLISH);
     }
 
     @Test
@@ -186,876 +38,710 @@ public class GSFeaturesTest {
     }
 
     /**
-     * Get an helper to test the feature with the given code.
-     * @param featureCode final feature code
+     * Get a helper to test the feature with the IRI.
+     * @param featureIRI final feature code
      * @return helper to test the specified feature
      */
-    GSFeaturesTestHelper getTestHelper(final GSLanguageFeatureCode featureCode) throws IOException {
+    private RegexLinguisticPhenomenonChecker getChecker(final String featureIRI, final String...replacement) throws IOException {
         try(final GSFeatures ont = GSFeatures.loadLocal()) {
-            final List<RegexLinguisticPhenomenon> allRegexFeatures = ont.getRegexLinguisticPhenomena();
+            final RegexFeatureQuery q=new RegexFeatureQuery().ignoreDeprecated();
+            final List<RegexLinguisticPhenomenon> allRegexFeatures = RegexLinguisticPhenomenaReader.read(ont.getModel(), q).getFeatures();
             assertFalse(allRegexFeatures.isEmpty());
-            final String featureIRI = GSFeatures.NS + featureCode;
             for (final LinguisticPhenomenon f : allRegexFeatures)
                 if (featureIRI.equals(f.getIRI()))
-                    return new GSFeaturesTestHelper(f);
-            throw new IllegalArgumentException("Unable to get feature " + featureCode);
+                    return new RegexLinguisticPhenomenonChecker(f, replacement);
+            throw new IllegalArgumentException("Unable to get feature " + featureIRI);
         }
     }
 
     /**
-     * N03b -Āre>è
+     * f1 -c-  > -g-
      */
     @Test
-    void testN03b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N03b).notApply("xxxarjuyyy")
-                .derives("123àre456", "123è456")
-                .derives("123àre", "123è");
+    void testF1() throws IOException {
+        getChecker(NS+"f1","g").betweenVowels(true, "c");
     }
 
     /**
-     * N04b -ARIU > ìa
+     * f2 -cr- > -gr-
      */
     @Test
-    void testN04b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N04b).notApply("xxxarjuyyy")
-                .derives("bördönàrju", "bördönìa");
+    void testF2() throws IOException{
+        getChecker(NS+"f2","gr").betweenVowels(true, "cr");
+
     }
 
     /**
-     * N04c -ARIU > àiru
+     * -p-  > -v-
      */
     @Test
-    void testN04c() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N04c)
-                .notApply("xxxàrjuyyy")
-                .derives("pàrju", "pàirö");
+    void testF3() throws IOException{
+        getChecker(NS+"f3","v").betweenVowels(true, "p");
     }
 
     /**
-     * N01b –aLLU > a+ö
+     * -pr- > -vr-
      */
     @Test
-    void testN01b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N01b_1)
-                .notApply("xxxàlluyyy")
-                .notApply("àllu")
-                .derives("càllu", "càö");
-        getTestHelper(GSLanguageFeatureCode.N01b_2)
-                .notApply("éllu")
-                .derives("béllu", "bèö");
-        getTestHelper(GSLanguageFeatureCode.N01b_3)
-                .notApply("xxxólluyyy")
-                .notApply("óllu")
-                .derives("móllu", "mòö");
+    void testF4() throws IOException{
+        getChecker(NS+"f4","vr").betweenVowels(true, "pr");
     }
 
     /**
-     *  –ALU > àö
+     * -t- > -d-
      */
     @Test
-    void testN56b() throws IOException{
-        getTestHelper(GSLanguageFeatureCode.N56b)
-                .notApply("123àlu456")
-                .notApply("àlu456")
-                .notApply("123àle456")
-                .notApply("àle456")
-                .derives("123àlu", "123àö")
-                .derives("123àle", "123àö");
-
+    void testF5() throws IOException{
+        getChecker(NS+"f5","d").betweenVowels(true, "t");
     }
 
     /**
-     * N22c troncamento
+     * -itu > -ì
      */
     @Test
-    void testN22c() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N22c)
-                .notApply("xxxmuyyy").notApply("mu").derives("xyzmu", "xyzm")
-                .notApply("xxxnuyyy").notApply("nu").derives("xyznu","xyzn")
-                .notApply("xxxneyyy").notApply("ne").derives("xyzne", "xyzn")
-                .notApply("xxxmeyyy").notApply("me").derives("xyzme", "xyzm");
+    void testF6() throws IOException{
+        getChecker(NS+"f6","ì").atTheEnd(true, "itu");
     }
 
     /**
-     * D04a D04a PTJ > [tts]
+     * -atu > -à
      */
     @Test
-    void testD04a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.D04a).derives("xxxptjyyy",
-                "xxxzziyyy", "xxxzzïyyy");
+    void testF7() throws IOException{
+        getChecker(NS+"f7","à").atTheEnd(true, "atu");
     }
-
 
     /**
-     * D04b PTJ > [tʃ]
+     * -utu > -ù
      */
     @Test
-    void testD04b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.D04b).derives("xxxptjyyy",
-                "xxxciyyy", "xxxcïyyy");
+    void testF8() throws IOException{
+        getChecker(NS+"f8","ù").atTheEnd(true, "utu");
     }
 
     /**
-     * S22a TJ > [ʒ]
+     * -iti > - ë̀
      */
     @Test
-    void testS22a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S22a).derives("xxxtjyyy", "xxxsgyyy");
+    void testF9() throws IOException{
+        getChecker(NS+"f9","ë̀").atTheEnd(true, "iti");
     }
 
-    // TODO ['S22b KS > [ʒ]', 'sg', 'xx'],
     /**
-     * D02  CL > cr
+     * -ṭṛ- > -ir-
      */
     @Test
-    void testD02() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.D02).derives("xxxclyyy", "xxxcryyy");
+    void testF10() throws IOException{
+        getChecker(NS+"f10", "ir").betweenVowels(true, "ṭṛ");
     }
 
-
     /**
-     * N47c C-+E/I>ts
+     * -dr- > -ir-
      */
     @Test
-    void testN47c() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N47c_1)
-                .derives("123cce456","123zz456")
-                .derives("123cci456","123zz456")
-                .derives("123ce456","123zz456")
-                .derives("123ci456","123zz456");
-        getTestHelper(GSLanguageFeatureCode.N47c_2)
-                .derives("ccè456", "zzè456")
-                .derives("123ccè456", "123zzè456")
-                .derives("ccì456", "zzì456")
-                .derives("123ccì456", "123zzì456")
-                .derives("ccí456", "zzí456")
-                .derives("123ccí456", "123zzí456")
-                .derives("ccé456", "zzé456")
-                .derives("123ccé456", "123zzé456")
-                .derives("cè456", "zzè456")
-                .derives("123cè456", "123zzè456")
-                .derives("cì456", "zzì456")
-                .derives("123cì456", "123zzì456")
-                .derives("cí456", "zzí456")
-                .derives("123cí456", "123zzí456");
+    void testF11() throws IOException{
+        getChecker(NS+"f11", "ir").betweenVowels(true, "dr");
     }
 
     /**
-     * N47a C-+E/I>ʒ
+     * -l- > --
      */
     @Test
-    void testN47a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N47a_1)
-                .derives("123cexyz","123sgxyz")
-                .derives("123cixyz","123sgxyz");
-        getTestHelper(GSLanguageFeatureCode.N47a_2)
-                .derives("123cè456","123sgè456")
-                .derives("123cé456","123sgé456")
-                .derives("123cì456","123sgì456")
-                .derives("123cí456","123sgí456");
+    void testF12() throws IOException{
+        getChecker(NS+"f12","").betweenVowels(true, "l");
     }
 
     /**
-     * X04 mm > mb
+     * -ani > -an
      */
     @Test
-    void testX04() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.X04)
-                .derives("123mm456", "123mb456");
+    void testF13() throws IOException{
+        getChecker(NS+"f13","an").atTheEnd(true, "ani");
     }
 
     /**
-     * X05 nn > nd
+     * -uni > -ö̀n
      */
     @Test
-    void testX05() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.X05)
-                .derives("123nn456", "123nd456");
+    void testF14() throws IOException{
+        getChecker(NS+"f14","ö̀n").atTheEnd(true, "uni");
     }
 
     /**
-     * N10g À > ei
+     * -eni > -en
      */
     @Test
-    void testN10g() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N10g).inOpenSyllable('à', "èi");
+    void testF15() throws IOException{
+        getChecker(NS+"f15","en").atTheEnd(true, "eni");
     }
 
     /**
-     * N10h À > eö/eu
+     * -inu > -in
      */
     @Test
-    void testN10h() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N10h)
-                .inOpenSyllable('à', "èö", "èu");
+    void testF16() throws IOException{
+        getChecker(NS+"f16","in").atTheEnd(true, "inu");
     }
 
     /**
-     * N11a Ĕ > jɛ aperta sill
+     * -unu > -un
      */
     @Test
-    void testN11a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N11a)
-                .inOpenSyllable('é', "iè");
+    void testF17() throws IOException{
+        getChecker(NS+"f17","un").atTheEnd(true, "unu");
     }
 
     /**
-     * N12a Ĭ > ëi', 'éi', 'í'
+     * -chi- / -chì- / -chj- / -chï- > -ghj- / -ghï-
      */
     @Test
-    void testN12a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N12a)
-                .inOpenSyllable('è', "éi");
+    void testF18() throws IOException{
+        getChecker(NS+"f18","ghj","ghï").betweenVowels(true, "chi","chì","chj","chï");
     }
 
     /**
-     * N11b Ĕ > jɛ chiusa sill
+     * -spr- / spr- > -sbr- / sbr-
      */
     @Test
-    void testN11b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N11b)
-                .derives("123é456", "123iè456");
+    void testF19() throws IOException{
+        getChecker(NS+"f19","sbr").betweenVowels(false, "spr").atTheBeginning(false, "spr");
     }
 
-    // TODO  non lo capisco            ['N16d Ŏ (+ N) tonico > ön', 'ón', 'ó.n', 'ó.'],
-    // TODO  non lo capisco           ['N16d Ŏ (+ N) tonico > ön', 'ón', 'ón', 'ó'],
-
     /**
-     * N16a Ŏ tonico > wɔ aperta sillaba
+     * -tt- > -it-
      */
     @Test
-    void testN16a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N16a)
-                .inOpenSyllable('ó', "uò");
+    void testF20() throws IOException{
+        getChecker(NS+"f20","it").betweenVowels(true, "tt");
     }
 
     /**
-     * N16b Ŏ tonico > wɔ chiusa sillaba
+     * -tt- > -t-
      */
     @Test
-    void testN16b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N16b)
-                .derives("123ó456", "123uò456");
+    void testF21() throws IOException{
+        getChecker(NS+"f21","t").betweenVowels(true, "tt");
     }
 
     /**
-     * N17 Ō/Ŭ tonico > öu
+     * -dd- > -d-
      */
     @Test
-    void testN17() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N17)
-                .inOpenSyllable('ò', "óu")
-                .inOpenSyllable('ú', "óu");
+    void testF22() throws IOException{
+        getChecker(NS+"f22","d").betweenVowels(true, "dd");
     }
 
     /**
-     * N18 Ō tonico > [o̝]
+     * -pp- > -p-
      */
     @Test
-    void testN18a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N18a)
-                .derives("123ò456", "123ó456")
-                .derives("123ú456", "123ó456");
-
+    void testF23() throws IOException{
+        getChecker(NS+"f23","p").betweenVowels(true, "pp");
     }
 
     /**
-     * N20b Ū tonico > ö analog.
+     * -bb- > -b-
      */
     @Test
-    void testN20B() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N20b)
-                .derives("123ù456", "123ó456");
+    void testF24() throws IOException{
+        getChecker(NS+"f24","b").betweenVowels(true, "bb");
     }
 
     /**
-     * N45 SPL>sbr
+     * -cc- > -c-
      */
     @Test
-    void testN45() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N45)
-                .derives("123spl456", "123sbr456");
+    void testF25() throws IOException{
+        getChecker(NS+"f25","c").betweenVowels(true, "cc");
     }
 
     /**
-     * N24b BL > br
+     * -cca- > -chè
      */
     @Test
-    void testN24b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N24b)
-                .notApply("123bl456")
-                .derives("bl456", "br456");
+    void testF26() {
+        fail("-cca- > -chè, verificare se si applica solo alla fine della parola");
+        //getChecker(NS+"f26","chè").betweenVowels("cc");
     }
 
     /**
-     * S18 LL > ḍḍ
+     * -gg- > -g- / gh
      */
     @Test
-    void testS18() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S18)
-                .derives("123ll456", "123dd456");
+    void testF27() throws IOException{
+        getChecker(NS+"f27","g","gh").betweenVowels(true, "gg");
     }
 
     /**
-     * X03 L- > ḍḍ
+     * -gga- > -ghè
      */
     @Test
-    void textX03() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.X03)
-                .notApply("123l456")
-                .derives("l456", "dd456");
-
+    void testF28() {
+        fail("-gga- > -ghè");
     }
 
     /**
-     * N24c BL->dʒ
+     * -cchi- / -cchì- / -cchï- / -cchj- > -chj- / -chï-
      */
     @Test
-    void testN24c() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N24c)
-                .notApply("123bl456")
-                .derives("bl456", "gi456", "ge456");
+    void testF29() throws IOException{
+        getChecker(NS+"f29","chj","chï")
+                .betweenVowels(true, "cchi","cchì","cchï","cchj");
     }
 
-    // TODO non lo capisco ['N26 BR->br', 'br', '#br'],
+
     /**
-     * CL-/PL- > [tʃ]
+     * -gghi- / -gghì / -gghï- / -gghj- > -ghj- / -ghï-
      */
     @Test
-    void testN27() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N27)
-                .notApply("123cl456")
-                .derives("cl456", "ci456")
-                .notApply("123pl456")
-                .derives("pl456", "ci456");
+    void testF30() throws IOException{
+        getChecker(NS+"f30","ghj","ghï")
+                .betweenVowels(true, "gghi","gghì","gghï","gghj");
     }
 
     /**
-     * N34 GL->dʒ
+     * -ff- > f-
      */
     @Test
-    void testN34() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N34)
-                .notApply("123gl456")
-                .derives("gl456", "gi456",
-                        "ge456",
-                        "gì456",
-                        "gè456",
-                        "gé456");
+    void testF31() throws IOException{
+        fail("-ff- > f-");
     }
 
-    // TODO non lo capisco              ['N35 GR->gr-', 'gr', '#gr'],
     /**
-     * N42b PL->pr-
+     * -vv- > v-
      */
     @Test
-    void testN42b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N42b)
-                .notApply("123pl456")
-                .derives("pl456", "pr456");
+    void testF32() throws IOException{
+        fail("-vv- > v-");
     }
 
     /**
-     * N28b -CL-/-TL->ghj
+     * -ss- > -s-
      */
     @Test
-    void testN28b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N28b)
-                .notApply("123cl").notApply("cl456").derives("123cl456", "123ghj456")
-                .notApply("123tl").notApply("tl456").derives("123tl456", "123ghj456");
+    void testF33() throws IOException{
+        getChecker(NS+"f33","s").betweenVowels(true, "ss");
     }
 
     /**
-     * N29a -CT->it
+     * żż > ẕẕ
      */
     @Test
-    void testN29a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N29a)
-                .notApply("123ct").notApply("ct456").derives("123ct456", "123it456");
+    void testF34() throws IOException{
+        getChecker(NS+"f34","ẕẕ").replacing("żż");
     }
 
     /**
-     * N29b -CT->tʃ
+     * -cci- / -ccï-  > -ci- / -cï-
      */
     @Test
-    void testN29b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N29b)
-                .derives("123ct456", "123ci456");
+    void testF35() throws IOException{
+        getChecker(NS+"f35","ci","cï").betweenVowels(true, "cci","ccï");
     }
 
-    // TODO non lo capisco              ['N31 DR>dr', 'dr', 'dr'],
     /**
-     * N30a NDC>ndz
+     * -cce- > -ce-
      */
     @Test
-    void testN30a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N30a)
-                .derives("123ndc456", "123nż456");
+    void testF36() throws IOException{
+        getChecker(NS+"f36","ce").betweenVowels(true, "cce");
     }
 
     /**
-     * N30b DC>dz
+     * -ggi- / -ggì / -ggï- > -gi- / -gì / -gï-
      */
     @Test
-    void testN30b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N30b)
-                .derives("123dc456", "123ż456");
+    void testF37() throws IOException{
+        getChecker(NS+"f37","gi","gì","gï")
+                .betweenVowels(true, "ggi","ggì","ggï");
     }
 
     /**
-     * N32 DV>v
+     * -gge- /-ggè- > -ge- / -gè-
      */
     @Test
-    void testN32() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N32)
-                .derives("123dv456", "123v456");
+    void testF38() throws IOException{
+        getChecker(NS+"f38","ge","gè")
+                .betweenVowels(true, "gge","ggè");
     }
 
     /**
-     * N33 FL>ʃ
+     * mm > m
      */
     @Test
-    void testN33() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N33)
-                .derives("123fl456", "123sce456", "123sci456");
+    void testF39() throws IOException{
+        getChecker(NS+"f39","m").replacing("mm");
     }
-
-    // TODO non lo capisco              ['N37 MB->mb', 'mb', 'mb'],
-    // TODO non lo capisco             ['N38 ND->nd', 'nd', 'nd'],
-    // TODO non lo capisco             ['N39 NS->ns', 'ns', 'ns'],
 
     /**
-     * N41 NV->mb
+     * nn > n
      */
     @Test
-    void testN41() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N41)
-                .derives("123nv456", "123mb456");
+    void testF40() throws IOException{
+        getChecker(NS+"f40","n").replacing("nn");
     }
-    // TODO non lo capisco ['N41 NV->nv', 'nv', 'nv'],
 
     /**
-     * N43 -PL->dʒ-
+     * l- > dd-
      */
     @Test
-    void testN43() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N43)
-                .notApply("123pl").notApply("pl456")
-                .notApply("123ge").notApply("ge456")
-                .notApply("123gi").notApply("gi456")
-                .notApply("123gì").notApply("gì456")
-                .notApply("123gè").notApply("gè456")
-                .notApply("123gé").notApply("gé456")
-                .derives("123pl456", "123ge456", "123gi456",
-                        "123gì456", "123gè456", "123gé456");
+    void testF41() throws IOException{
+        getChecker(NS+"f41","dd").atTheBeginning(true, "l");
     }
 
     /**
-     * N44 SJ>ʒ
+     * -ll- > -
      */
     @Test
-    void testN44() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N44)
-                .derives("123sj456", "123sg456");
+    void testF42() throws IOException{
+        getChecker(NS+"f42","").betweenVowels(true, "ll");
     }
 
-    //TODO non lo capisco              ['N46a B->b', 'b', '#b'],
-    //TODO non lo capisco              ['N46c -B->-b-', 'b', '-b-'],
-
     /**
-     * N49 G- +A/O/U > [g]
+     * -ḍḍ- > -
      */
     @Test
-    void testN49() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N49)
-                .notApply("123g456")
-                .derives("g456", "gà456");
+    void testF43() throws IOException{
+        getChecker(NS+"f43","").betweenVowels(true, "ḍḍ");
     }
 
     /**
-     * N51a G-+E/I > [dz]
+     * -ḍḍr- > -dr-
      */
     @Test
-    void testN51a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N51a_1)
-                .derives("123ge456", "123żż456", "123ż456")
-                .derives("ge456", "żż456", "ż456")
-                .derives("123gi456", "123żż456", "123ż456")
-                .derives("gi456", "żż456", "ż456");
-        getTestHelper(GSLanguageFeatureCode.N51a_2)
-                .derives("gè456", "żżè456", "żè456")
-                .derives("123gè456", "123żżè456", "123żè456")
-                .derives("gé456", "żżé456", "żé456")
-                .derives("123gé456", "123żżé456", "123żé456")
-                .derives("gì456", "żżì456", "żì456")
-                .derives("123gì456", "123żżì456", "123żì456")
-                .derives("gí456", "żżí456", "żí456")
-                .derives("123gí456", "123żżí456", "123żí456");
+    void testF44() throws IOException{
+        getChecker(NS+"f44","dr").betweenVowels(true, "ḍḍr");
     }
-// TODO non lo capisco                  ['N51b G-+E/I > [dʒ]', 'g', '#ge', ],
 
     /**
-     * N51b G-+E/I > [dʒ]
+     * -ṭṭṛ- > -tr-
      */
     @Test
-    void testN51b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N51b)
-                .notApply("123gi456")
-                .notApply("123ge456")
-                .derives("gi456", "g456")
-                .derives("ge456", "g456");
+    void testF45() throws IOException{
+        getChecker(NS+"f45","tr").betweenVowels(true, "ṭṭṛ");
     }
 
     /**
-     * D04c PJ > pj
+     * -si- / -sì- / -sï- > sge / sgë / sgi / sgì / sgï
      */
     @Test
-    void testD04c() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.D04c)
-                .precededByVowelExt('p','j',"pi");
+    void testF46() throws IOException{
+        getChecker(NS+"f46","sge","sgë","sgi","sgì","sgï").betweenVowels(true, "si","sì","sï");
     }
 
     /**
-     * D04d PJ > tʃ
+     * -ce- / -cè- / -ci- / -cì- / -cï- > sge / sgè / sgë / sgi / sgì / sgï
      */
     @Test
-    void testD04d() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.D04d)
-                .precededByVowelExt('p','j',"ci");
+    void testF47() throws IOException{
+        getChecker(NS+"f47","sge","sgè","sgë","sgi","sgì","sgï")
+                .betweenVowels(true, "ce","cè","ci","cì","cï");
     }
 
     /**
-     * N54c5 Leniz TR>[ir]
+     * -si / -sï > sge / sgë / sgi / sgï
      */
     @Test
-    void testN54c5() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N54c5).lenitionFollowedByR( 't', 'i');
+    void testF48() throws IOException{
+        getChecker(NS+"f48","sge","sgë","sgi","sgï")
+                .atTheEnd(true, "si","sï");
     }
 
     /**
-     * N54c6 Leniz TR>[rr]
+     * -ce / -ci / -cï > sge / sgë / sgi / sgï
      */
     @Test
-    void testN54c6() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N54c6).lenitionFollowedByR('t', 'r');
+    void testF49() throws IOException{
+        getChecker(NS+"f49","sge","sgë","sgi","sgï")
+                .atTheEnd(true, "ce","ci","cï");
     }
 
     /**
-     * N54a3 Leniz CR>gr
+     * nce / ncè / nci / ncì / ncï > nze / nzè / nzi / nzì / nzï
      */
     @Test
-    void testN54a3() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N54a3).lenitionFollowedByR('c', 'g');
+    void testF50() throws IOException{
+        getChecker(NS+"f50","nze","nzè","nzi","nzì","nzï")
+                .replacing("nce","ncè","nci","ncì","ncï");
     }
 
     /**
-     * N54b5 Leniz PR>vr
+     * nge / ngè / ngi / ngì / ngï >  nẕe / nẕè / nẕi / nẕì / nẕï
      */
     @Test
-    void testN54b5() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N54b5).lenitionFollowedByR('p', 'v');
+    void testF51() throws IOException{
+        getChecker(NS+"f51","nẕe","nẕè","nẕi","nẕì","nẕï")
+                .replacing("nge","ngè","ngi","ngì","ngï");
     }
 
     /**
-     * N54a1 leniz -C- > [g]
+     * -rce- / -rcè / -rci-/ -rcì- / -rcï- > -rze- / -rzè- / -rzi- / -rzì- / -rzï-
      */
     @Test
-    void testN54a1() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N54a1)
-                .lenitionFollowedByR('c', 'g')
-                .lenitionFollowedByR('q', 'g');
+    void testF52() throws IOException{
+        getChecker(NS+"f52","rze","rzè","rzi","rzì","rzï")
+                .betweenVowels(true, "rce","rcè","rci","rcì","rcï");
     }
 
     /**
-     * N54b1 leniz -P- > [b]
+     * ce- / cè- / ci- / cì- / cï- > zze- / zzè- /zzi- / zzì- / zzï-
      */
     @Test
-    void testN54b1() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N54b1).lenition('p', 'b');
+    void testF53() throws IOException{
+        getChecker(NS+"f53","zze","zzè","zzi","zzì","zzï")
+                .atTheBeginning(true, "ce","cè","ci","cì","cï");
     }
 
     /**
-     * N54b3 leniz -P- > [v]
+     * ge- / gè- / gi- / gì- / gï- > zze- / zze- / ẕẕi- / ẕẕì- / zzï-
      */
     @Test
-    void testN54b3() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N54b3).lenition('p', 'v');
+    void testF54() throws IOException{
+        getChecker(NS+"f54","zze","zze","ẕẕi","ẕẕì","zzï")
+                .atTheBeginning(true, "ge","gè","gi","gì","gï");
     }
 
     /**
-     * N54c1 leniz -T- > [d]
+     * se- / sè- / si- / sì- > zze- /zzè- / zzi- / zzì-
      */
     @Test
-    void testN54c1() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N54c1)
-                .lenition('t', 'd');
+    void testF55() throws IOException{
+        getChecker(NS+"f55","zze","zzè","zzi","zzì")
+                .atTheBeginning(true, "se","sè","si","sì");
     }
 
     /**
-     * N54c2 leniz -T- > [r]
+     * mm > mb
      */
     @Test
-    void testN54c2() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N54c2).lenition('t', 'r');
+    void testF56() throws IOException{
+        getChecker(NS+"f56","mb")
+                .replacing("mm");
     }
 
     /**
-     * N55a L- > [r]
+     * nn > nd
      */
     @Test
-    void testN55a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N55a)
-                .notApply("123l456")
-                .derives("l456", "r456");
+    void testF57() throws IOException{
+        getChecker(NS+"f57","nd")
+                .replacing("nn");
     }
 
     /**
-     * S01 Ĕ(N) tonica > [ɛ(n)]
+     * e / è  > ie / iè
      */
     @Test
-    void testS01() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S01)
-                .derives("123én456", "123èn456");
+    void testF58() throws IOException{
+        getChecker(NS+"f58","ie","iè")
+                .replacing("e","è");
     }
 
     /**
-     * S02 Ē Ĭ toniche > i
+     * o / ò > uo / uò
      */
     @Test
-    void testS02() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S02)
-                .derives("123è456", "123ì456")
-                .derives("123í456", "123ì456");
+    void testF59() throws IOException{
+        getChecker(NS+"f59","uo","uò")
+                .replacing("o","ò");
     }
 
     /**
-     * S03 Ē toniche > [ɛ]
+     * i / ì > ë  / ë̀
      */
     @Test
-    void testS03() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S03)
-                .derives("123í456", "123è456");
+    void testF60() throws IOException{
+        getChecker(NS+"f60","ë","ë̀")
+                .replacing("i","ì");
     }
-// TODO non lo capisco                 ['S03 Ē toniche > [ɛ]', 'è', 'è'],
-// TODO non lo capisco                   ['S03 Ē toniche > [ɛ]', 'è', 'è.'],
 
     /**
-     * S04 Ŏ tonica in aperta sill> [ɔ]
+     * i / ì > i
      */
     @Test
-    void testS04() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S04)
-                .inOpenSyllable('ó', "ò");
+    void testF61() throws IOException{
+        getChecker(NS+"f61","i")
+                .replacing("ì");
     }
 
     /**
-     * S05 Ō tonici > ù
+     * u / ù > ö / ö̀
      */
     @Test
-    void testS05() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S05)
-                .notApply("ò456")
-                .derives("123ò456", "123ù456")
-                .derives("123ò", "123ù")
-                .notApply("ú456")
-                .derives("123ú456", "123ù456")
-                .derives("123ú", "123ù");
+    void testF62() throws IOException{
+        getChecker(NS+"f62","ö","ö̀")
+                .replacing("u","ù");
     }
-
-    // TODO non lo capisco                ['S06 Ō tonico > [ɔ]', 'ò', 'ò.'],
-    // TODO non lo capisco                 ['S06 Ō tonico > [ɔ]', 'ò', 'ò'],
 
     /**
-     * S09 -CL-/-TL->chj
+     * ù > u
      */
     @Test
-    void testS09() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S09)
-                .notApply("123cl").notApply("cl456").derives("123cl456", "123chj456")
-                .notApply("123tl").notApply("tl456").derives("123tl456", "123chj456");
+    void testF63() throws IOException{
+        getChecker(NS+"f63","u")
+                .replacing("ù");
     }
 
     /**
-     * S10 CT>t
+     * i > e
      */
     @Test
-    void testS10() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S10)
-                .derives("123ct456", "123t456");
+    void testF64() throws IOException{
+        getChecker(NS+"f64","e")
+                .replacing("i");
     }
 
     /**
-     * S13a GL- > gr
+     * u > e
      */
     @Test
-    void testS13a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S13a)
-                .notApply("123gl456")
-                .derives("gl456", "gr456");
+    void testF65() throws IOException{
+        getChecker(NS+"f65","e")
+                .replacing("u");
     }
 
     /**
-     * S13b GL- > [j]
+     * -i > -ö
      */
     @Test
-    void testS13b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S13b)
-                .notApply("123gl456")
-                .derives("gl456", "i456");
+    void testF66() throws IOException{
+        fail("nel contesto -ö il trattino indica sempre una consonante.");
     }
 
     /**
-     * S14 -GL- > ghj
+     * a- > -
      */
     @Test
-    void testS14() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S14)
-                .derives("123gl456", "123ghj456");
+    void testF67() throws IOException{
+        getChecker(NS+"f67","")
+                .atTheBeginning(true, "a");
     }
 
     /**
-     * S15 GR- > r-
+     * -cari- > -chè
      */
     @Test
-    void testS15() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S15)
-                .notApply("123gr456")
-                .derives("gr456", "r456");
+    void testF68() throws IOException{
+        fail("-cari- > -chè");
     }
 
     /**
-     * S16 G+E/I > [j]
+     * -càrisi > -chessë
      */
     @Test
-    void testS16() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S16)
-                .derives("123ge456", "123i456")
-                .derives("123gè456", "123i456")
-                .derives("123gé456", "123i456")
-                .derives("123gi456", "123i456")
-                .derives("123gì456", "123i456")
-                .derives("123gí456", "123i456");
+    void testF69() throws IOException{
+        getChecker(NS+"f69", "chessë").atTheEnd(true, "càrisi");
     }
 
     /**
-     * S17 LJ > ghj
+     * -gari > -ghè
      */
     @Test
-    void testS17() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S17)
-                .derives("123lj456", "123ghj456");
+    void testF70() throws IOException{
+        getChecker(NS+"f70", "ghè").atTheEnd(true, "gari");
     }
 
     /**
-     * S21 PL > chj
+     * -gàrisi > -ghessë
      */
     @Test
-    void testS21() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.S21)
-                .derives("123pl456", "123chj456");
+    void testF71() throws IOException{
+        getChecker(NS+"f71", "ghessë").atTheEnd(true, "gàrisi");
     }
 
     /**
-     * X01 Ē/Ĭ tonica> [e̝]
+     * -ari > -è
      */
     @Test
-    void testX01() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.X01)
-                .notApply("è456")
-                .derives("123è456", "123é456")
-                .derives("123è", "123é")
-                .notApply("í456")
-                .derives("123í456", "123é456")
-                .derives("123í", "123é");
+    void testF72() throws IOException{
+        getChecker(NS+"f72", "è").atTheEnd(true, "ari");
     }
 
     /**
-     * D01a -CJ- > [tts]
+     * -àrisi > -essë
      */
     @Test
-    void testD01a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.D01a)
-                .notApply("123cj").notApply("cj456")
-                .derives("123cj456", "123zz456");
+    void testF73() throws IOException{
+        getChecker(NS+"f73", "essë").atTheEnd(true, "àrisi");
     }
 
     /**
-     * D01b -CJ- > [tʃ]
+     * -iari > -è
      */
     @Test
-    void testD01b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.D01b)
-                .notApply("123cj").notApply("cj456")
-                .derives("123cj456", "123ci456");
+    void testF74() throws IOException{
+        getChecker(NS+"f74", "è").atTheEnd(true, "iari");
     }
 
-
     /**
-     * N64 -e > -ö/a metapl tipo forta",
+     * -iàrisi > -essë
      */
     @Test
-    void testN64() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N64)
-                .notApply("123e456")
-                .notApply("e456")
-                .derives("123e", "123ö", "123a");
-
+    void testF75() throws IOException{
+        getChecker(NS+"f75", "essë").atTheEnd(true, "iàrisi");
     }
 
+    /**
+     * v- > b-
+     */
+    @Test
+    void testF76() throws IOException{
+        getChecker(NS+"f76", "b").atTheBeginning(true, "v");
+    }
 
     /**
-     * N13a * > -e -ə finale
+     * bb- > b-
      */
     @Test
-    void testN13a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N13a)
-                .derives("1234", "123e");
+    void testF77() throws IOException{
+        getChecker(NS+"f77", "b").atTheBeginning(true, "bb");
     }
 
     /**
-     * N13b -ə- mediano
+     * r- > br-
      */
     @Test
-    void testN13b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N13b)
-                .derives("1234", "12e4", "1e34");
+    void testF78() throws IOException{
+        getChecker(NS+"f78", "br").atTheBeginning(true, "r");
     }
 
     /**
-     * N19a -ö- atono interno
+     * i- > g- /gi-
      */
     @Test
-    void testN19a() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N19a)
-                .derives("1234", "12ö4", "1ö34");
+    void testF79() throws IOException{
+        getChecker(NS+"f79", "g","gi").atTheBeginning(true, "i");
     }
 
     /**
-     * N19b -ö finale
+     * r- > gr-
      */
     @Test
-    void testN19b() throws IOException {
-        getTestHelper(GSLanguageFeatureCode.N19b)
-                .derives("1234", "123ö");
+    void testF80() throws IOException{
+        getChecker(NS+"f80", "gr").atTheBeginning(true, "r");
     }
 
+    /**
+     * ṭṛ > tr
+     */
     @Test
-    void shouldSelectOnlyNorthernFeatures() throws IOException {
-        final String northernFeaturesQuery = "SELECT ?f WHERE{?f <"+RDFS.subPropertyOf.getURI()+"> <"
-                + NORTHERN_FEATURE_OBJ_PROPERTY+"> ;\n"
-                + "\t<"+LinguisticPhenomena.REGEX_ANN_PROPERTY+"> ?regex}";
-        try(final GSFeatures g=GSFeatures.loadLocal()){
-            try(final QueryExecution e = QueryExecutionFactory.create(northernFeaturesQuery, g.getModel())){
-                final SortedSet<String> expected=new TreeSet<>();
-                e.execSelect().forEachRemaining(querySolution -> expected.add(querySolution.getResource("f").getURI()));
+    void testF81() throws IOException{
+        getChecker(NS+"f81", "tr").replacing("ṭṛ");
+    }
 
-                final SortedSet<String> actual=new TreeSet<>();
-                g.getRegexNorthernItalyFeatures().forEach(phenomenon -> actual.add(phenomenon.getIRI()));
+    /**
+     * ṭṭṛ > ttr
+     */
+    @Test
+    void testF82() throws IOException{
+        getChecker(NS+"f82", "ttr").replacing("ṭṭṛ");
+    }
 
-                assertEquals(expected, actual);
-                System.out.println("Found the followings Northern Italy features "+actual);
-            }
-        }
-        //GSFeatures g=new GSFeatures("gstext.ttl");
+    /**
+     * ṣṭṛ > str
+     */
+    @Test
+    void testF83() throws IOException{
+        getChecker(NS+"f83", "str").replacing("ṣṭṛ");
     }
 }

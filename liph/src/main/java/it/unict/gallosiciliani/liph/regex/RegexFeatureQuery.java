@@ -4,6 +4,7 @@ import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDFS;
 
 import java.util.LinkedList;
@@ -18,7 +19,8 @@ public class RegexFeatureQuery {
     private static final String REGEX_VAR = "regex";
     private static final String REPLACEMENT_VAR = "replacement";
 
-    private String parentPropertyIRI=null;
+    private String parentPropertyIRI;
+    private boolean ignoreDeprecated;
 
     /**
      * Execute the query against the specified model
@@ -26,7 +28,8 @@ public class RegexFeatureQuery {
      * @return query results
      */
     public List<RegexFeatureQuerySolution> exec(final Model model){
-        try(final QueryExecution e = QueryExecutionFactory.create(buildQueryString(), model)){
+        final String query=buildQueryString();
+        try(final QueryExecution e = QueryExecutionFactory.create(query, model)){
             final List<RegexFeatureQuerySolution> result=new LinkedList<>();
             e.execSelect().forEachRemaining(querySolution -> result.add(new RegexFeatureQuerySolution(){
                 @Override
@@ -59,6 +62,15 @@ public class RegexFeatureQuery {
     }
 
     /**
+     * Ignore phenomena marked as deprecated
+     * @return this query
+     */
+    public RegexFeatureQuery ignoreDeprecated(){
+        ignoreDeprecated=true;
+        return this;
+    }
+
+    /**
      * Build the query string
      * @return the query string
      */
@@ -67,6 +79,7 @@ public class RegexFeatureQuery {
                 "?"+ FEATURE_IRI_VAR+" <"+ LinguisticPhenomena.REGEX_ANN_PROPERTY+"> ?"+ RegexFeatureQuery.REGEX_VAR+" ."+
                 "?"+ FEATURE_IRI_VAR+" <"+ LinguisticPhenomena.REPLACEMENT_ANN_PROPERTY+"> ?"+ RegexFeatureQuery.REPLACEMENT_VAR+
                 (parentPropertyIRI==null ? "" : " . ?"+FEATURE_IRI_VAR+" <"+ RDFS.subPropertyOf.getURI()+"> <"+parentPropertyIRI+">")+
+                (ignoreDeprecated ? " . FILTER NOT EXISTS { ?"+FEATURE_IRI_VAR+" <"+ OWL.deprecated.getURI()+"> true }":"")+
                 "} ORDER BY ?"+ FEATURE_IRI_VAR;
     }
 }

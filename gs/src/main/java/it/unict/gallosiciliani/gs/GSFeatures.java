@@ -1,7 +1,6 @@
 package it.unict.gallosiciliani.gs;
 
 import it.unict.gallosiciliani.derivations.DerivationBuilder;
-import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
@@ -95,16 +94,6 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
      */
     public void loadFeatures(final Reader csvFileReader) throws IOException {
         CSVParser.parse(csvFileReader, CSVFormat.DEFAULT).forEach(new GSFeaturesOntologyGenerator(getModel()));
-    }
-
-    /**
-     * Get the label for the specified feature
-     * @param featureCode code characterizing the feature
-     * @param locale label local
-     * @return the label associated to the feature with the speicified code in the give locale
-     */
-    public String getLabel(final GSLanguageFeatureCode featureCode, final Locale locale) {
-        return getLabel(NS+featureCode);
     }
 
     @Override
