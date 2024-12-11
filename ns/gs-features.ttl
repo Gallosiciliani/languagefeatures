@@ -2167,6 +2167,14 @@ liph:replacement rdf:type owl:AnnotationProperty .
      liph:replacement "e" .
 
 
+###  https://gallosiciliani.unict.it/ns/gs-features#f66
+:f66 rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf liph:linguisticPhenomenon ;
+     rdfs:label "-i > -ö" ;
+     liph:regex "(.)i$" ;
+     liph:replacement "$1ö" .
+
+
 ###  https://gallosiciliani.unict.it/ns/gs-features#f67
 :f67 rdf:type owl:ObjectProperty ;
      rdfs:subPropertyOf liph:linguisticPhenomenon ;

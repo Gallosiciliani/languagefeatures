@@ -605,7 +605,15 @@ public class GSFeaturesTest {
      */
     @Test
     void testF66() throws IOException{
-        fail("nel contesto -ö il trattino indica sempre una consonante.");
+        final RegexLinguisticPhenomenonChecker c = getChecker(NS+"f66", "ö");
+        c.notApply("i456");
+        c.notApply("123i456");
+        for(final char v: RegexLinguisticPhenomenonChecker.VOWELS.toCharArray()){
+            c.notApply("123"+v+"i");
+        }
+        final SortedSet<String> expected=new TreeSet<>();
+        expected.add("123ö");
+        c.derives("123i", expected);
     }
 
     /**
