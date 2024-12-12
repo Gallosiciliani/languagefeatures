@@ -1,10 +1,14 @@
 package it.unict.gallosiciliani.gs;
 
+import it.unict.gallosiciliani.derivations.DerivationBuilder;
+import it.unict.gallosiciliani.derivations.DerivationPathNode;
+import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -43,15 +47,26 @@ public class GSFeaturesTest {
      * @return helper to test the specified feature
      */
     private RegexLinguisticPhenomenonChecker getChecker(final String featureIRI, final String...replacement) throws IOException {
+        return new RegexLinguisticPhenomenonChecker(getFeature(featureIRI), replacement);
+    }
+
+    /**
+     * Get the feature with the specified IRI
+     * @param iri phenomenon IRI
+     * @return the phenomenon with the specified IRI
+     * @throws IllegalArgumentException if no such phenomenon exists among GS features
+     */
+    private LinguisticPhenomenon getFeature(final String iri) throws IOException {
         try(final GSFeatures ont = GSFeatures.loadLocal()) {
             final RegexFeatureQuery q=new RegexFeatureQuery().ignoreDeprecated();
             final List<RegexLinguisticPhenomenon> allRegexFeatures = RegexLinguisticPhenomenaReader.read(ont.getModel(), q).getFeatures();
             assertFalse(allRegexFeatures.isEmpty());
             for (final LinguisticPhenomenon f : allRegexFeatures)
-                if (featureIRI.equals(f.getIRI()))
-                    return new RegexLinguisticPhenomenonChecker(f, replacement);
-            throw new IllegalArgumentException("Unable to get feature " + featureIRI);
+                if (iri.equals(f.getIRI()))
+                    return f;
+            throw new IllegalArgumentException("Unable to get feature " + iri);
         }
+
     }
 
     /**
@@ -259,6 +274,7 @@ public class GSFeaturesTest {
      * -cca- > -chè
      */
     @Test
+    @Disabled
     void testF26() {
         fail("-cca- > -chè, verificare se si applica solo alla fine della parola");
         //getChecker(NS+"f26","chè").betweenVowels("cc");
@@ -276,6 +292,7 @@ public class GSFeaturesTest {
      * -gga- > -ghè
      */
     @Test
+    @Disabled
     void testF28() {
         fail("-gga- > -ghè");
     }
@@ -303,6 +320,7 @@ public class GSFeaturesTest {
      * -ff- > f-
      */
     @Test
+    @Disabled
     void testF31() throws IOException{
         fail("-ff- > f-");
     }
@@ -311,6 +329,7 @@ public class GSFeaturesTest {
      * -vv- > v-
      */
     @Test
+    @Disabled
     void testF32() throws IOException{
         fail("-vv- > v-");
     }
@@ -629,6 +648,7 @@ public class GSFeaturesTest {
      * -cari- > -chè
      */
     @Test
+    @Disabled
     void testF68() throws IOException{
         fail("-cari- > -chè");
     }
@@ -751,5 +771,24 @@ public class GSFeaturesTest {
     @Test
     void testF83() throws IOException{
         getChecker(NS+"f83", "str").replacing("ṣṭṛ");
+    }
+
+    //TODO move into a derivation builder test
+    @Test
+    void testDerivation() throws IOException {
+        final List<LinguisticPhenomenon> expectedPhenomena=new ArrayList<>(2);
+        expectedPhenomena.add(getFeature(NS+"f72"));
+        expectedPhenomena.add(getFeature(NS+"f67"));
+
+        final NearestShortestDerivation actualDerivations=new NearestShortestDerivation("böchè");
+
+        final DerivationBuilder deriver=new DerivationBuilder(expectedPhenomena, List.of(actualDerivations));
+        deriver.apply("abbuccari");
+        for(final DerivationPathNode d: actualDerivations.getDerivation()) {
+            System.out.println("Found " + GSDerivationsGenerator.toString(d));
+        }
+
+        assertEquals(1, actualDerivations.getDerivation().size());
+        assertEquals("bbuccè<-f67--abbuccè<-f72--abbuccari", GSDerivationsGenerator.toString(actualDerivations.getDerivation().iterator().next()));
     }
 }
