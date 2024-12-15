@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.importing.pdf.parser;
 
 import it.unict.gallosiciliani.importing.pdf.VocabTestParams;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -149,6 +150,51 @@ public class ParserTest {
         }
     }
 
+    /**
+     * The page with accented letters with diacritics and
+     * with underlined z
+     *
+     */
+    @Test
+    @Disabled
+    void testParsingPage585() throws IOException {
+        try(final Parser p = new Parser(c, VocabTestParams.TEST_585.getPdfFilePath())) {
+            p.parsePage(VocabTestParams.TEST_585.getPageNumInTestFile(585));
+            final InOrder o = inOrder(c);
+            o.verify(c).lemma("mbiẕẕarrìscessë");
+            o.verify(c).pos("verbo pronom");
+            o.verify(c).lemma("mbiẕẕarrìsciö");
+            o.verify(c).pos("verbo");
+            o.verify(c).lemma("mböcadörö");
+            o.verify(c).pos("sost.masch.");
+            o.verify(c).lemma("mböcamöschë");
+            o.verify(c).pos("sost.masch. inv.");
+            o.verify(c).lemma("mböchessë");
+            o.verify(c).pos("verbo pronom.");
+            o.verify(c).lemma("mböchessë");
+            o.verify(c).pos("verbo pronom.");
+            o.verify(c).lemma("mböcönada");
+            o.verify(c).pos("sost.femm.");
+            o.verify(c).lemma("mböddörönè");
+            o.verify(c).pos("verbo");
+            o.verify(c).lemma("mböddörönù");
+            o.verify(c).pos("agg.");
+            o.verify(c).lemma("mböfölìsciö");
+            o.verify(c).pos("verbo");
+            o.verify(c).lemma("mböfölönè");
+            o.verify(c).pos("verbo");
+            o.verify(c).lemma("mböfölönù");
+            o.verify(c).pos("agg.");
+            o.verify(c).lemma("mböïnà");
+            o.verify(c).pos("agg.");
+            o.verify(c).lemma("mböïnessë");
+            o.verify(c).pos("verbo pronom.");
+            o.verify(c).lemma("mbömbö");
+            o.verify(c).pos("sost.masch.");
+            o.verify(c).lemma("mbö̀rdessë");
+            o.verify(c).pos("verbo pronom.");
+        }
+    }
     /**
      * The page with accented letters with diacritics
      */

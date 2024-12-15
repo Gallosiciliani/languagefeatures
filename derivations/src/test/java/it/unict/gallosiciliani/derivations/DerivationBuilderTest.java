@@ -48,7 +48,6 @@ public class DerivationBuilderTest {
         final LinguisticPhenomenon t = mock(LinguisticPhenomenon.class);
         when(t.apply(initialLexeme)).thenReturn(derived);
 
-        final DerivationPathNodeImpl pathRoot = new DerivationPathNodeImpl(initialLexeme);
         final DerivationPathNodesSet actual = new DerivationPathNodesSet();
         new DerivationBuilder(Collections.singletonList(t), Collections.singletonList(actual)).apply(initialLexeme);
         System.out.println(actual);
@@ -143,16 +142,15 @@ public class DerivationBuilderTest {
         when(T1.toString()).thenReturn("T1");
 
         final String derived11 = "sT1s1T2s11";
-        final String derived12 = derived1;
+        @SuppressWarnings("UnnecessaryLocalVariable") final String derived12 = derived1;
         final LinguisticPhenomenon T2 = mock(LinguisticPhenomenon.class);
         when(T2.apply(derived1)).thenReturn(Set.of(derived11, derived12));
         when(T2.toString()).thenReturn("T2");
 
-        final String derived21 = derived2;
+        @SuppressWarnings("UnnecessaryLocalVariable") final String derived21 = derived2;
         when(T2.apply(derived2)).thenReturn(Set.of(derived21));
 
 
-        final DerivationPathNodeImpl pathRoot = new DerivationPathNodeImpl(initialLexeme);
         final DerivationPathNodesSet actual = new DerivationPathNodesSet();
         new DerivationBuilder(Arrays.asList(T1, T2), Collections.singletonList(actual)).apply(initialLexeme);
 

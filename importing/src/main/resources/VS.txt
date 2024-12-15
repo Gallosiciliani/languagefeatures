@@ -4634,6 +4634,7 @@ ammuccapassuluna
 ammuccapatazzi
 (4) ammuccari
 ammuccariàri
+ammucciàrisi
 (3) ammuccata
 (2) ammuccatu
 ammuccatura
@@ -100685,6 +100686,7 @@ tòzzuru
 (2) ṭṛìplici
 ṭṛipò
 ṭṛipodi
+ṭṛipòdinu
 ṭṛipodu
 ṭṛipòranu
 ṭṛiporu
@@ -106059,6 +106061,7 @@ vïatiḍḍṛu
 vïaṭṛi
 vïatu
 viàtu
+viaturi
 vïàuṭṛi
 vïàviṭṛi
 vïàvuṭṛi

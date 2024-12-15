@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.contentstream.operator.color.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
 
@@ -81,6 +83,11 @@ public class Parser extends PDFTextStripper implements AutoCloseable{
     }
 
     @Override
+    protected void processAnnotation(PDAnnotation a, PDAppearanceStream s) throws IOException {
+        System.out.println("---- annotation "+a);
+        super.processAnnotation(a,s);
+    }
+    @Override
     protected void processTextPosition(final TextPosition text)
     {
         super.processTextPosition(text);
@@ -94,6 +101,9 @@ public class Parser extends PDFTextStripper implements AutoCloseable{
         //ignore digits, usually used for superscripts
         if (isDigit(text.getUnicode()))
             return;
+
+        if (isUnderlined(text))
+            log.info("--------------- underlined {}", text.getUnicode());
 
         final ParsedCharType t=ParsedCharType.get(text,
                 getGraphicsState().getNonStrokingColor().getComponents());
@@ -113,5 +123,14 @@ public class Parser extends PDFTextStripper implements AutoCloseable{
      */
     private boolean isDigit(final String c){
         return Character.isDigit(c.charAt(0));
+    }
+
+    /**
+     * Get whether the specified character is underlined
+     * @param p the position of the character
+     * @return true if it is underlined, false otherwise
+     */
+    private boolean isUnderlined(final TextPosition p){
+        return false;
     }
 }

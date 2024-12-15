@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.gs;
 
 import it.unict.gallosiciliani.derivations.DerivationBuilder;
+import it.unict.gallosiciliani.derivations.DerivationPrinter;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
@@ -20,6 +21,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 
 public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseable{
@@ -27,6 +29,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
     private final GSFeatures gs;
     private final CSVPrinter printer;
     private final List<? extends LinguisticPhenomenon> phenomena;
+    private final DerivationPrinter derivationPrinter;
     @Getter
     private int processed;
 
@@ -43,6 +46,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
         gs = GSFeatures.loadLocal();
         printer = new CSVPrinter(out, CSVFormat.DEFAULT);
         phenomena=RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
+        derivationPrinter=new DerivationPrinter(gs);
     }
 
     public static void main(final String[] args) throws IOException {
@@ -102,11 +106,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
      * @return a string el <-- phenomenon -- el ... el <-- phenomenon -- el
      */
     private String toString(final DerivationPathNode n){
-        if (n.prev()==null)
-            return n.get();
-        //here we are assuming that the phenomenon is in GSFeatures
-        final String phenomenonLabel = n.getLinguisticPhenomenon().getIRI().substring(GSFeatures.NS.length());
-        return n.get()+"<-"+phenomenonLabel+"--"+toString(n.prev());
+        return derivationPrinter.print(n, Locale.ENGLISH);
     }
 
     @Override

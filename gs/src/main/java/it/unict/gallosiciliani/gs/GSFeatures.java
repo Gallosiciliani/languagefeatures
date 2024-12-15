@@ -10,14 +10,11 @@ import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import it.unict.gallosiciliani.util.OntologyLoader;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.shared.PropertyNotFoundException;
 import org.apache.jena.vocabulary.RDFS;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
@@ -34,14 +31,19 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
     public static String IRI = "https://gallosiciliani.unict.it/ns/gs-features";
     public static String NS = IRI+"#";
 
-    public static final String NICOSIA_FEATURE_OBJ_PROPERTY = NS+"nicosiaFeature";
-    public static final String NOVARA_DI_SICILIA_FEATURE_OBJ_PROPERTY = NS+"novaraDiSiciliaFeature";
-    public static final String SAN_FRATELLO_FEATURE_OBJ_PROPERTY = NS+"sanFratelloFeature";
-    public static final String SPERLINGA_FEATURE_OBJ_PROPERTY = NS+"sperlingaFeature";
-    public static String NORTHERN_FEATURE_OBJ_PROPERTY=NS+"northernItalyFeature";
-    public static String SOUTHERN_FEATURE_OBJ_PROPERTY=NS+"southernItalyFeature";
+    private static String NORTHERN_FEATURE_OBJ_PROPERTY=NS+"northernItalyFeature";
 
     private final List<RegexLinguisticPhenomenon> regexLinguisticPhenomena;
+
+    /**
+     * Provide local identifiers as linguistic phenomena labels
+     */
+    public static final LinguisticPhenomenonLabelProvider LABEL_PROVIDER_ID=new LinguisticPhenomenonLabelProvider() {
+        @Override
+        public String getLabel(LinguisticPhenomenon linguisticPhenomenon, Locale locale) {
+            return linguisticPhenomenon.getIRI().substring(NS.length());
+        }
+    };
 
     /**
      * Private constructor, use factory methods.
@@ -87,15 +89,6 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
         return new GSFeatures("gs-features.ttl");
     }
 
-    /**
-     * Load into this ontology a set of GS Features described in a CSV file
-     * @param csvFileReader reader for the CSV file containing features
-     * @throws IOException on read error
-     */
-    public void loadFeatures(final Reader csvFileReader) throws IOException {
-        CSVParser.parse(csvFileReader, CSVFormat.DEFAULT).forEach(new GSFeaturesOntologyGenerator(getModel()));
-    }
-
     @Override
     public String getLabel(final LinguisticPhenomenon linguisticPhenomenon, final Locale locale) {
         return getLabel(linguisticPhenomenon.getIRI());
@@ -128,6 +121,7 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
      * Get all the regex features in the ontology which are subclasses of Northern Italy Feature
      * @return regex features which are subclass of regex features
      */
+    @Deprecated
     public List<RegexLinguisticPhenomenon> getRegexNorthernItalyFeatures(){
         return RegexLinguisticPhenomenaReader.read(getModel(), new RegexFeatureQuery()
                 .setParentProperty(NORTHERN_FEATURE_OBJ_PROPERTY)).getFeatures();

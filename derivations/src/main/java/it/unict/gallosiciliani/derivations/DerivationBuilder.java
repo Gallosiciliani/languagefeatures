@@ -1,12 +1,13 @@
 package it.unict.gallosiciliani.derivations;
 
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
+@Slf4j
 public class DerivationBuilder {
     private final List<? extends LinguisticPhenomenon> phenomena;
     private final List<? extends Predicate<DerivationPathNode>> consumers;
@@ -30,6 +31,7 @@ public class DerivationBuilder {
      */
     private void apply(final DerivationPathNode currentNode, final List<? extends LinguisticPhenomenon> phenomena,
                        final List<? extends Predicate<DerivationPathNode>> consumers, final boolean inhibitConsuming){
+
         final List<? extends Predicate<DerivationPathNode>> remainingConsumers=inhibitConsuming ?
                 consumers: filter(consumers, currentNode);
 
@@ -52,7 +54,9 @@ public class DerivationBuilder {
 
     private List<? extends Predicate<DerivationPathNode>> filter(final List<? extends Predicate<DerivationPathNode>> consumers,
                                                                 final DerivationPathNode currentNode){
-        return consumers.stream().filter(c -> c.test(currentNode)).toList();
+        consumers.forEach(c -> c.test(currentNode));
+        return consumers;
+//                return consumers.stream().filter(c -> c.test(currentNode)).toList();
     }
 
 
