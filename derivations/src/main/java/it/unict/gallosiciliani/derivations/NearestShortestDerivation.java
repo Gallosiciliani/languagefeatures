@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.derivations;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import java.util.*;
@@ -11,6 +12,7 @@ import java.util.function.Predicate;
  * only the nearest and shortest ones
  */
 @Getter
+@Slf4j
 public class NearestShortestDerivation implements Predicate<DerivationPathNode> {
 
     private final String target;
@@ -29,13 +31,11 @@ public class NearestShortestDerivation implements Predicate<DerivationPathNode> 
 
     @Override
     public boolean test(final DerivationPathNode n) {
-        final long startTime=System.currentTimeMillis();
         final int newDistance = LevenshteinDistance.getDefaultInstance().apply(n.get(), target);
-        final long elapsedTime=System.currentTimeMillis()-startTime;
-        if (elapsedTime>10)
-            System.out.println("LevenshteinDistance elapsed time "+elapsedTime);
         if (newDistance>distance)
-            return false;
+            //check if this derivation is going worst or better
+            return n.prev()==null ||
+                    LevenshteinDistance.getDefaultInstance().apply(n.prev().get(), target)>=newDistance;
         if (newDistance==distance && n.length()>length)
             return true;
         if (newDistance<distance || n.length()<length)

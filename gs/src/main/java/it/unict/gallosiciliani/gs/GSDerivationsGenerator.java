@@ -78,8 +78,8 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
 
     /**
      * Generate all the derivations starting from etymon and using GS features
-     * @param etymon
-     * @param target
+     * @param etymon candidate etymon
+     * @param target expected final lexical expression
      * @return true if a complete derivation has been found, false otherwise
      */
     private boolean derive(final String etymon, final String target){

@@ -84,7 +84,7 @@ public class Main implements Predicate<DerivationPathNode> {
             System.out.println(s);
             m.acceptSicilianVocabularyEntry(s);
         });
-        try(final FileWriter w=new FileWriter("derivations.out")){
+        try(final FileWriter w=new FileWriter("derivations.csv")){
             m.writeNearestShortestDerivations(w);
         }
         System.out.println("Processed "+m.processedEntries+" entries");
@@ -97,7 +97,7 @@ public class Main implements Predicate<DerivationPathNode> {
         final long endTime=System.currentTimeMillis();
         final long elapsedTime=endTime-startTime;
         totalProcessingTime+=elapsedTime;
-        System.out.println((processedEntries++)+": elapsed time "+elapsedTime+", total time "+totalProcessingTime);
+        System.out.println((processedEntries++)+": elapsed time "+elapsedTime+", total time "+totalProcessingTime+". Filtering time "+derivationBuilder.getFilteringTime());
     }
 
 
