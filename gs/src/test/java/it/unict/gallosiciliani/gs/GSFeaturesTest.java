@@ -786,8 +786,19 @@ public class GSFeaturesTest {
      * ṭṛ > tr
      */
     @Test
-    void testF81() throws IOException{
+    void testDeretr1() throws IOException{
         getChecker(NS+"deretr.1", "tr").replacing("ṭṛ");
+    }
+
+    /**
+     * ṭṛ > tr
+     */
+    @Test
+    void testDeretr1Trazzera() throws IOException{
+        final LinguisticPhenomenon deretr1=getFeature(NS+"deretr.1");
+        final Set<String> actual0=deretr1.apply("ṭṛazziera");
+        assertEquals(1, actual0.size());
+        assertEquals("trazziera", actual0.iterator().next());
     }
 
     /**

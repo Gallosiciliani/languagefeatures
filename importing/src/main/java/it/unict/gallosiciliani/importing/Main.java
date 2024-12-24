@@ -8,6 +8,8 @@ import it.unict.gallosiciliani.importing.pdf.generator.LexicalEntriesGenerator;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
 import it.unict.gallosiciliani.importing.pdf.parser.Parser;
 import it.unict.gallosiciliani.importing.sicilianvocab.SicilianVocabulary;
+import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
+import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
@@ -34,7 +36,7 @@ public class Main implements Predicate<DerivationPathNode> {
     Main(final String pdfFilePath, final int startPage, final int endPage) throws IOException {
         derivations=importWholeDictionary(pdfFilePath, startPage, endPage, "nicosiasperlinga-lemmas.txt");
         try(final GSFeatures gs=GSFeatures.loadLocal()){
-            final List<RegexLinguisticPhenomenon> phenomena = gs.getRegexNorthernItalyFeatures();
+            final List<RegexLinguisticPhenomenon> phenomena= RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
             derivationBuilder=new DerivationBuilder(phenomena, derivations);
         }
     }

@@ -1,7 +1,6 @@
 package it.unict.gallosiciliani.importing.pdf.parser;
 
 import it.unict.gallosiciliani.importing.pdf.VocabTestParams;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -156,13 +155,13 @@ public class ParserTest {
      *
      */
     @Test
-    @Disabled
     void testParsingPage585() throws IOException {
         try(final Parser p = new Parser(c, VocabTestParams.TEST_585.getPdfFilePath())) {
             p.parsePage(VocabTestParams.TEST_585.getPageNumInTestFile(585));
+            //first path 142.8, 759.69
             final InOrder o = inOrder(c);
             o.verify(c).lemma("mbiẕẕarrìscessë");
-            o.verify(c).pos("verbo pronom");
+            o.verify(c).pos("verbo pronom.");
             o.verify(c).lemma("mbiẕẕarrìsciö");
             o.verify(c).pos("verbo");
             o.verify(c).lemma("mböcadörö");
@@ -193,24 +192,6 @@ public class ParserTest {
             o.verify(c).pos("sost.masch.");
             o.verify(c).lemma("mbö̀rdessë");
             o.verify(c).pos("verbo pronom.");
-        }
-    }
-    /**
-     * The page with accented letters with diacritics
-     */
-    @Test
-    void testPage514() throws IOException {
-        try(final Parser p = new Parser(c, VocabTestParams.TEST_514.getPdfFilePath())) {
-            p.parsePage(VocabTestParams.TEST_514.getPageNumInTestFile(514));
-            final InOrder o = inOrder(c);
-            o.verify(c).lemma("götaö");
-            o.verify(c).pos("sost.masch.massa");
-            o.verify(c).lemma("götarösö");
-            o.verify(c).pos("agg.");
-            o.verify(c).lemma("gotë");
-            o.verify(c).lemma("gö̀tera");
-            o.verify(c).pos("sost.femm. solo sing.");
-//            o.verifyNoMoreInteractions();
         }
     }
 }

@@ -32,7 +32,7 @@ public class PDFLexiconConverter implements LexiconConverter {
      * @param startPage page of the pdf file where to start (base 1)
      * @param endPage last page of the pdf file to be processed (base 1)
      */
-    PDFLexiconConverter(final Consumer<LexicalEntry> consumer,
+    public PDFLexiconConverter(final Consumer<LexicalEntry> consumer,
                                final IRIProvider iris,
                                final POSIndividualProvider posIndividualProvider,
                                final int startPage,

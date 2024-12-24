@@ -46,7 +46,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
         gs = GSFeatures.loadLocal();
         printer = new CSVPrinter(out, CSVFormat.DEFAULT);
         phenomena=RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
-        derivationPrinter=new DerivationPrinter(gs);
+        derivationPrinter=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
     }
 
     public static void main(final String[] args) throws IOException {

@@ -24,6 +24,7 @@ public class DerivationBuilder {
         filteringTime=0;
         final DerivationPathNode rootNode=new DerivationPathNodeImpl(src);
         apply(rootNode, phenomena, consumers, false);
+//        applyNoFilter(rootNode, phenomena);
     }
 
     /**
@@ -53,6 +54,34 @@ public class DerivationBuilder {
         for(final String intermediateForm: currentPhenomenon.apply(currentNode.get())){
             final DerivationPathNode nextNode=new DerivationPathNodeImpl(intermediateForm, currentNode, currentPhenomenon);
             apply(nextNode, remainingPhenomena, remainingConsumers, false);
+        }
+    }
+
+    /**
+     *
+     * @param currentNode derivation
+     * @param phenomena the list of phenomena still to be applied
+     */
+    private void applyNoFilter(final DerivationPathNode currentNode, final List<? extends LinguisticPhenomenon> phenomena){
+
+        if (phenomena.isEmpty()){
+            final long filteringTimeBegin=System.currentTimeMillis();
+            consumers.forEach(c->c.test(currentNode));
+            filteringTime=System.currentTimeMillis()-filteringTimeBegin;
+            return;
+        }
+
+        final LinguisticPhenomenon currentPhenomenon=phenomena.get(0);
+        //notice that the following list is backed by the original one
+        final List<? extends LinguisticPhenomenon> remainingPhenomena= phenomena.size()>1 ?
+                phenomena.subList(1, phenomena.size()) : Collections.emptyList();
+
+        //case phenomenon not applied
+        applyNoFilter(currentNode, remainingPhenomena);
+        //case phenomenon applied
+        for(final String intermediateForm: currentPhenomenon.apply(currentNode.get())){
+            final DerivationPathNode nextNode=new DerivationPathNodeImpl(intermediateForm, currentNode, currentPhenomenon);
+            applyNoFilter(nextNode, remainingPhenomena);
         }
     }
 

@@ -32,10 +32,11 @@ public class NearestShortestDerivation implements Predicate<DerivationPathNode> 
     @Override
     public boolean test(final DerivationPathNode n) {
         final int newDistance = LevenshteinDistance.getDefaultInstance().apply(n.get(), target);
-        if (newDistance>distance)
+        if (newDistance>distance) {
             //check if this derivation is going worst or better
-            return n.prev()==null ||
-                    LevenshteinDistance.getDefaultInstance().apply(n.prev().get(), target)>=newDistance;
+            return n.prev() == null ||
+                    LevenshteinDistance.getDefaultInstance().apply(n.prev().get(), target) >= newDistance;
+        }
         if (newDistance==distance && n.length()>length)
             return true;
         if (newDistance<distance || n.length()<length)

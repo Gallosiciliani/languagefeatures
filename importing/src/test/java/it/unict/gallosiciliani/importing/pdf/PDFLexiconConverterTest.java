@@ -21,20 +21,23 @@ public class PDFLexiconConverterTest {
     }
 
     @Test
-    void testParsingPage514() throws IOException {
+    void testParsingPage585() throws IOException {
         final PDFLexiconConverter converter=new PDFLexiconConverter(utils.getLec(),utils.getExpectedIRIProvider(),
-                utils.getPosProvider(), VocabTestParams.TEST_514.getPageNumInTestFile(514), VocabTestParams.TEST_514.getPageNumInTestFile(514));
-        converter.read(VocabTestParams.TEST_514.getPdfFilePath());
-        utils.assertAcceptedEntries(new ExpectedNoun("götaö"),
-                new ExpectedNoun("gö̀tera"),
-                new ExpectedNoun("gòterë"),
-                new ExpectedNoun("gotö"),
-                new ExpectedNoun("göugagnö"),
-                new ExpectedNoun("gövernantë"),
-                new ExpectedVerb("gövernè"),
-                new ExpectedNoun("gövernö"),
-                new ExpectedNoun("gracialuora"),
-                new ExpectedNoun("grada"));
+                utils.getPosProvider(), VocabTestParams.TEST_585.getPageNumInTestFile(585), VocabTestParams.TEST_585.getPageNumInTestFile(585));
+        converter.read(VocabTestParams.TEST_585.getPdfFilePath());
+        utils.assertAcceptedEntries(
+                new ExpectedVerb("mbiẕẕarrìscessë"),
+                new ExpectedVerb("mbiẕẕarrìsciö"),
+                new ExpectedNoun("mböcadörö"),
+                new ExpectedNoun("mböcamöschë"),
+                new ExpectedVerb("mböchessë"),
+                new ExpectedNoun("mböcönada"),
+                new ExpectedVerb("mböddörönè"),
+                new ExpectedVerb("mböfölìsciö"),
+                new ExpectedVerb("mböfölönè"),
+                new ExpectedVerb("mböïnessë"),
+                new ExpectedNoun("mbömbö"),
+                new ExpectedVerb("mbö̀rdessë"));
         utils.verifyNoMoreInteractions();
     }
 

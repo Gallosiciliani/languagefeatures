@@ -11,30 +11,17 @@ import java.util.Set;
  * Analogously, ë̀ is recognized as é.
  * This corrector replace ó with ö̀ and é with ë̀ in all lemmas except these two.
  */
-class AccentedWithDiacriticsCorrector implements ParsingDataConsumer {
-
-    private final ParsingDataConsumer consumer;
+class AccentedWithDiacriticsCorrector extends LemmaCorrector {
     private final Set<String> preserveAccentedO= Set.of("póverö", "cónciö");
 
     AccentedWithDiacriticsCorrector(final ParsingDataConsumer consumer){
-        this.consumer=consumer;
+        super(consumer);
     }
 
     @Override
-    public void lemma(final String lemma) {
+    String handleLemma(String lemma) {
         if (preserveAccentedO.contains(lemma))
-            consumer.lemma(lemma);
-        else
-            consumer.lemma(lemma.replaceAll("ó","ö̀").replaceAll("é", "ë̀"));
-    }
-
-    @Override
-    public void pos(String pos) {
-        consumer.pos(pos);
-    }
-
-    @Override
-    public void conjunction() {
-        consumer.conjunction();
+            return lemma;
+        return lemma.replaceAll("ó","ö̀").replaceAll("é", "ë̀");
     }
 }

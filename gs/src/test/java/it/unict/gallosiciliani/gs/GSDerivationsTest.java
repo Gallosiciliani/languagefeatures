@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -39,6 +40,33 @@ public class GSDerivationsTest {
     @Disabled
     void testTrepuodeno() throws IOException{
         testDerivation("trepuòdenö","ṭṛipòdinu","ditt.2","vocal.7","deretr.1");
+    }
+
+    @Test
+    @Disabled
+    void testTrazziera() throws IOException {
+        testDerivation("trazziera", "ṭṛazzera", NS+"ditt.1",NS+"deretr.1");
+    }
+
+    @Test
+    @Disabled
+    void performanceTest() throws IOException {
+        final Predicate<DerivationPathNode> dummyConsumer=n->true;
+        final String src="abbaḍḍuttulïari";
+        final List<NearestShortestDerivation> targets=new LinkedList<>();
+        //10204 451831
+        //1000 42699
+        for(int i=0; i<10204; i++)
+            targets.add(new NearestShortestDerivation("lemma"+i));
+        try(final GSFeatures gs=GSFeatures.loadLocal()) {
+            final List<? extends LinguisticPhenomenon> gsFeatures = RegexLinguisticPhenomenaReader.read(gs.getModel(),
+                    new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
+            final long startTime=System.currentTimeMillis();
+            new DerivationBuilder(gsFeatures, targets).apply(src);
+            final long endTime=System.currentTimeMillis();
+            System.out.println("Elapsed "+(endTime-startTime)+" deriving "+src);
+            //Elapsed 857 deriving abbaḍḍuttulïari
+        }
     }
 
     private void testDerivation(final String lemma,
@@ -69,4 +97,8 @@ public class GSDerivationsTest {
         }
         return res;
     }
+//    abbaḍḍuttulïari
+//63: elapsed time 763275, total time 1828405. Filtering time 19
+
+
 }
