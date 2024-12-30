@@ -28,7 +28,7 @@
                                                                                   "Michele Cosentino",
                                                                                   "Angela Castiglione",
                                                                                   "Sara Natalia Cardullo";
-                                                              dcterms:created "2024-11-19"^^xsd:date ;
+                                                              dcterms:created "2024-12-30"^^xsd:date ;
                                                               dcterms:creator "Cristiano Longo" ;
                                                               dcterms:description """Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga
 

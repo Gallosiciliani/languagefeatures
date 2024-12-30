@@ -6,7 +6,6 @@ import org.apache.pdfbox.contentstream.operator.color.*;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HexFormat;
 
@@ -34,7 +33,7 @@ class Tokenizer extends PDFTextStripper {
         addOperator(new SetNonStrokingColor(this));
         addOperator(new SetNonStrokingColorN(this));
         setSortByPosition(true);
-        this.currentState=new InitialState(new AccentedWithDiacriticsCorrector(consumer));
+        this.currentState=new InitialState(new AccentedWithDiacriticsCorrector(new RemoveSpuriousDotsCorrector(consumer)));
     }
 
     @Override
