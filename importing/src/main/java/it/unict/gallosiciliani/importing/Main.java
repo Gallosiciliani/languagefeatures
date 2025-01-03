@@ -99,7 +99,7 @@ public class Main implements Predicate<DerivationPathNode> {
         final long endTime=System.currentTimeMillis();
         final long elapsedTime=endTime-startTime;
         totalProcessingTime+=elapsedTime;
-        System.out.println((processedEntries++)+": elapsed time "+elapsedTime+", total time "+totalProcessingTime+". Filtering time "+derivationBuilder.getFilteringTime());
+        System.out.println((processedEntries++)+": elapsed time "+elapsedTime+", total time "+totalProcessingTime+".");
     }
 
 

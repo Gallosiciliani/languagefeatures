@@ -4,7 +4,6 @@ import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -22,10 +21,12 @@ public class DerivationBuilderTest {
      */
     private static final Comparator<DerivationPathNode> COMPARATOR = Comparator.comparing(DerivationPathNode::get);
 
-    private static class DerivationPathNodesSet extends TreeSet<DerivationPathNode> implements Predicate<DerivationPathNode> {
+    private static class DerivationPathNodesSet extends TreeSet<DerivationPathNode> implements DerivationsToTargetContainer {
 
-        DerivationPathNodesSet() {
+        private final String target;
+        DerivationPathNodesSet(String target) {
             super(COMPARATOR);
+            this.target=target;
         }
 
         @Override
@@ -34,13 +35,26 @@ public class DerivationBuilderTest {
             add(n);
             return true;
         }
+
+        @Override
+        public String getTarget() {
+            return target;
+        }
+
+        @Override
+        public Collection<DerivationPathNode> getDerivation() {
+            return this;
+        }
     }
 
     @Test
-    void shouldApplyCreateNewPathsUsingTransformation() {
-        final String initialLexeme = "s";
-        final String derived1 = "s1";
-        final String derived2 = "s2";
+    void shouldApplySelectShortestDerivations() {
+        final String target="xy";
+        final String initialLexeme = "ss";
+        final String derived1 = "st";
+        final String derived2 = "ts";
+        //initial lexeme, derived1 and derived2 are all at distance 2 from the target
+        //so that all the possible derivations are candidates, but the first one is shortest
         final Set<String> derived = new TreeSet<>();
         derived.add(derived1);
         derived.add(derived2);
@@ -48,9 +62,51 @@ public class DerivationBuilderTest {
         final LinguisticPhenomenon t = mock(LinguisticPhenomenon.class);
         when(t.apply(initialLexeme)).thenReturn(derived);
 
-        final DerivationPathNodesSet actual = new DerivationPathNodesSet();
+        final DerivationPathNodesSet actual = new DerivationPathNodesSet(target);
         new DerivationBuilder(Collections.singletonList(t), Collections.singletonList(actual)).apply(initialLexeme);
-        System.out.println(actual);
+        final Iterator<DerivationPathNode> actualIt = actual.iterator();
+
+        checkEquals(new DerivationPathNode() {
+            @Override
+            public String get() {
+                return initialLexeme;
+            }
+
+            @Override
+            public DerivationPathNode prev() {
+                return null;
+            }
+
+            @Override
+            public LinguisticPhenomenon getLinguisticPhenomenon() {
+                return null;
+            }
+
+            @Override
+            public int length() {
+                return 0;
+            }
+        }, actualIt.next());
+        assertFalse(actualIt.hasNext());
+    }
+
+    @Test
+    void shouldApplyCreateNewPathsUsingTransformation() {
+        final String target="xy";
+        final String initialLexeme = "ss";
+        final String derived1 = "xs";
+        final String derived2 = "sy";
+        //initial lexeme is at distance 2, whereas derived1 and derived2 are both at distance 1 from the target
+        //so these last ones are selected
+        final Set<String> derived = new TreeSet<>();
+        derived.add(derived1);
+        derived.add(derived2);
+
+        final LinguisticPhenomenon t = mock(LinguisticPhenomenon.class);
+        when(t.apply(initialLexeme)).thenReturn(derived);
+
+        final DerivationPathNodesSet actual = new DerivationPathNodesSet(target);
+        new DerivationBuilder(Collections.singletonList(t), Collections.singletonList(actual)).apply(initialLexeme);
         final Iterator<DerivationPathNode> actualIt = actual.iterator();
 
         final DerivationPathNode expectedRoot = new DerivationPathNode() {
@@ -75,7 +131,6 @@ public class DerivationBuilderTest {
             }
         };
 
-        checkEquals(expectedRoot, actualIt.next());
         checkEquals(new DerivationPathNode() {
             @Override
             public String get() {
@@ -151,7 +206,7 @@ public class DerivationBuilderTest {
         when(T2.apply(derived2)).thenReturn(Set.of(derived21));
 
 
-        final DerivationPathNodesSet actual = new DerivationPathNodesSet();
+        final DerivationPathNodesSet actual = new DerivationPathNodesSet("x");
         new DerivationBuilder(Arrays.asList(T1, T2), Collections.singletonList(actual)).apply(initialLexeme);
 
         //expected paths sT1s1<-T1--s, sT1s1T2s11<-T2--sT1s1<-T1--s, sT1s2<-T1--s
@@ -262,7 +317,7 @@ public class DerivationBuilderTest {
         final LinguisticPhenomenon T2 = mock(LinguisticPhenomenon.class);
         when(T2.apply(initialLexeme)).thenReturn(Set.of(derived));
 
-        final DerivationPathNodesSet actual = new DerivationPathNodesSet();
+        final DerivationPathNodesSet actual = new DerivationPathNodesSet("x");
         new DerivationBuilder(Arrays.asList(T1, T2), Collections.singletonList(actual)).apply(initialLexeme);
         final Iterator<DerivationPathNode> actualIt = actual.iterator();
 

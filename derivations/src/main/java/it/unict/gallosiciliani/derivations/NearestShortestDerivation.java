@@ -5,21 +5,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 /**
  * Given a target (nicosian) lexema, accepts derivations but save
  * only the nearest and shortest ones
  */
-@Getter
 @Slf4j
-public class NearestShortestDerivation implements Predicate<DerivationPathNode> {
+public class NearestShortestDerivation implements DerivationsToTargetContainer {
 
+    @Getter
     private final String target;
+    @Getter
+    private final Collection<DerivationPathNode> derivation;
 
+    @Getter
     private int distance;
     private int length;
-    private final Collection<DerivationPathNode> derivation;
 
     public NearestShortestDerivation(final String target){
         this.target=target;
