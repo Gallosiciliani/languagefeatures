@@ -1,7 +1,5 @@
 package it.unict.gallosiciliani.derivations;
 
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
-
 /**
  * Strategy to decide if a derivation should proceed or must stop. Also, handle death derivation branches.
  * @author Cristiano Longo
