@@ -2,7 +2,6 @@ package it.unict.gallosiciliani.derivations.strategy;
 
 import it.unict.gallosiciliani.derivations.ComparatorByString;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;

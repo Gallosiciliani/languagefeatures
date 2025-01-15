@@ -11,7 +11,7 @@ public class DerivationCollectionsMatcher implements ArgumentMatcher<Collection<
     private final Collection<DerivationMatcher> matchers;
 
     public DerivationCollectionsMatcher(final Collection<DerivationPathNode> expected){
-        matchers=expected.stream().map((d)->new DerivationMatcher(d)).toList();
+        matchers=expected.stream().map(DerivationMatcher::new).toList();
     }
 
     public DerivationCollectionsMatcher(DerivationPathNode...expectedDerivations){

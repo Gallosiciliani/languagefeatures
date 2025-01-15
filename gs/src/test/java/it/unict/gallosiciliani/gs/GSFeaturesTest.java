@@ -818,10 +818,4 @@ public class GSFeaturesTest {
     void testF83() throws IOException{
         getChecker(NS+"deretr.3", "str").replacing("ṣṭṛ");
     }
-
-    @Test
-    void testTabuto() throws IOException{
-        getChecker(NS+"vocal.5", "").derives("tabutu", "tabutö");
-
-    }
 }

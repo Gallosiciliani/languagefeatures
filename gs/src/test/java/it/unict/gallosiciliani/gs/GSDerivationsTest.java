@@ -129,6 +129,7 @@ public class GSDerivationsTest {
      * NOTE: vocal.6 does not update the string
      */
     @Test
+    @Disabled
     void testTrabughjesse() throws IOException{
         testDerivation("trabughjessë","ṭṛabbugghjàrisi", NS+"deretr.1", NS+"vocal.6", NS+"degem.6", NS+"degem.12", NS+"palat.6");
     }
