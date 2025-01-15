@@ -15,7 +15,7 @@ public class NotFartherStrategySelector implements TargetedDerivationStrategySel
 
     @Getter
     private final Collection<DerivationStrategy> selectedStrategies;
-    private int distance;
+    private final int distance;
 
     public NotFartherStrategySelector(final TargetedDerivationStrategy initialContent){
         selectedStrategies=new LinkedList<>();

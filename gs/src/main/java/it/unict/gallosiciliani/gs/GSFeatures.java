@@ -1,24 +1,15 @@
 package it.unict.gallosiciliani.gs;
 
-import it.unict.gallosiciliani.derivations.DerivationBuilder;
-import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
-import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import it.unict.gallosiciliani.util.OntologyLoader;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.shared.PropertyNotFoundException;
-import org.apache.jena.vocabulary.RDFS;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * An ontology for all the language features defined in the
@@ -27,7 +18,7 @@ import java.util.Locale;
 
 @Getter
 @Slf4j
-public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLabelProvider {
+public class GSFeatures extends OntologyLoader{
     public static String IRI = "https://gallosiciliani.unict.it/ns/gs-features";
     public static String NS = IRI+"#";
 
@@ -36,12 +27,7 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
     /**
      * Provide local identifiers as linguistic phenomena labels
      */
-    public static final LinguisticPhenomenonLabelProvider LABEL_PROVIDER_ID=new LinguisticPhenomenonLabelProvider() {
-        @Override
-        public String getLabel(LinguisticPhenomenon linguisticPhenomenon, Locale locale) {
-            return linguisticPhenomenon.getIRI().substring(NS.length());
-        }
-    };
+    public static final LinguisticPhenomenonLabelProvider LABEL_PROVIDER_ID= (linguisticPhenomenon, locale) -> linguisticPhenomenon.getIRI().substring(NS.length());
 
     /**
      * Private constructor, use factory methods.
@@ -85,20 +71,5 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
      */
     public static GSFeatures loadLocal() throws IOException {
         return new GSFeatures("gs-features.ttl");
-    }
-
-    @Override
-    @Deprecated
-    public String getLabel(final LinguisticPhenomenon linguisticPhenomenon, final Locale locale) {
-        return getLabel(linguisticPhenomenon.getIRI());
-    }
-
-    private String getLabel(final String featureIRI) {
-        try {
-            final Property p = getModel().getProperty(featureIRI);
-            return getModel().getRequiredProperty(p, RDFS.label).getString();
-        } catch (final PropertyNotFoundException e){
-            throw new IllegalArgumentException("Unable to get label for phenomenon "+featureIRI);
-        }
     }
 }

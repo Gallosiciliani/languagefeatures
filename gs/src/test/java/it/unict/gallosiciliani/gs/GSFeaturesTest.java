@@ -5,7 +5,6 @@ import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +26,7 @@ public class GSFeaturesTest {
         final Locale locale = Locale.ENGLISH;
         try(final GSFeatures gs = GSFeatures.loadLocal()) {
             for(final LinguisticPhenomenon p : gs.getRegexLinguisticPhenomena())
-                assertNotNull(gs.getLabel(p, locale), "label for " + p + " not found");
+                assertNotNull(LABEL_PROVIDER_ID.getLabel(p, locale), "label for " + p + " not found");
         }
     }
 

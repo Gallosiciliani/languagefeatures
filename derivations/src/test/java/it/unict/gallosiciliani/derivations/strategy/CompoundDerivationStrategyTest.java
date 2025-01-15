@@ -23,7 +23,6 @@ public class CompoundDerivationStrategyTest {
         /* SCENARIO
          * The linguistic phenomenon p derives y and z from x.
          */
-        final LinguisticPhenomenon p = mock(LinguisticPhenomenon.class);
         final DerivationPathNode x = mock(DerivationPathNode.class);
         when(x.toString()).thenReturn("x");
         final DerivationPathNode xy = mock(DerivationPathNode.class);

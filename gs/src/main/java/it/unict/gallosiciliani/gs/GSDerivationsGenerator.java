@@ -86,12 +86,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
     private boolean derive(final String etymon, final String target){
         System.out.println("Processing "+etymon+" to "+target);
         final NearestShortestDerivation c=new NearestShortestDerivation(target);
-        final DerivationStrategyFactory strategyFactory=new DerivationStrategyFactory() {
-            @Override
-            public DerivationStrategy build(final DerivationPathNode initialDerivation) {
-                return new TargetedDerivationStrategy(initialDerivation,c,selectorFactory);
-            }
-        };
+        final DerivationStrategyFactory strategyFactory= initialDerivation -> new TargetedDerivationStrategy(initialDerivation,c,selectorFactory);
         final DerivationBuilder b=new DerivationBuilder(phenomena, strategyFactory);
         b.apply(etymon);
         final BigDecimal distanceNormalized = BigDecimal.valueOf(c.getDistance()).divide(BigDecimal.valueOf(target.length()), new MathContext(2, RoundingMode.HALF_UP));

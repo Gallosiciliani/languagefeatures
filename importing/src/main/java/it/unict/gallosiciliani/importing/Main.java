@@ -5,7 +5,6 @@ import it.unict.gallosiciliani.derivations.DerivationBuilder;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.derivations.strategy.NearestStrategySelector;
-import it.unict.gallosiciliani.derivations.strategy.NotFartherStrategySelector;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.importing.pdf.generator.LexicalEntriesGenerator;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
