@@ -31,8 +31,6 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
     public static String IRI = "https://gallosiciliani.unict.it/ns/gs-features";
     public static String NS = IRI+"#";
 
-    private static String NORTHERN_FEATURE_OBJ_PROPERTY=NS+"northernItalyFeature";
-
     private final List<RegexLinguisticPhenomenon> regexLinguisticPhenomena;
 
     /**
@@ -90,6 +88,7 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
     }
 
     @Override
+    @Deprecated
     public String getLabel(final LinguisticPhenomenon linguisticPhenomenon, final Locale locale) {
         return getLabel(linguisticPhenomenon.getIRI());
     }
@@ -101,29 +100,5 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonLa
         } catch (final PropertyNotFoundException e){
             throw new IllegalArgumentException("Unable to get label for phenomenon "+featureIRI);
         }
-    }
-
-
-    /**
-     * Attempt to derive target from etymon using the regex features
-     * @param etymon derivation source
-     * @param target desired derivation target
-     * @return nearest derivations
-     */
-    @Deprecated
-    public NearestShortestDerivation derives(final String etymon, final String target){
-        final NearestShortestDerivation d = new NearestShortestDerivation(target);
-        new DerivationBuilder(regexLinguisticPhenomena, Collections.singletonList(d)).apply(etymon);
-        return d;
-    }
-
-    /**
-     * Get all the regex features in the ontology which are subclasses of Northern Italy Feature
-     * @return regex features which are subclass of regex features
-     */
-    @Deprecated
-    public List<RegexLinguisticPhenomenon> getRegexNorthernItalyFeatures(){
-        return RegexLinguisticPhenomenaReader.read(getModel(), new RegexFeatureQuery()
-                .setParentProperty(NORTHERN_FEATURE_OBJ_PROPERTY)).getFeatures();
     }
 }

@@ -1,9 +1,6 @@
 package it.unict.gallosiciliani.derivations;
 
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,118 +12,105 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class NearestShortestDerivationTest {
 
-    private static final String TARGET = "target";
-    private static final String ONE_TO_TARGET = "targxt";
-    private static final String TWO_TO_TARGET = "targxy";
-    private static final String THREE_TO_TARGET = "tarzxy";
-
     private final NearestShortestDerivation d;
-    private final DerivationPathNode firstDerivation;
 
     NearestShortestDerivationTest(){
-        d=new NearestShortestDerivation(TARGET);
-        firstDerivation=createDerivation("source", TWO_TO_TARGET);
-        assertTrue(d.test(firstDerivation));
+        d=new NearestShortestDerivation("t");
     }
 
     @Test
-    void shouldKeepNearestDerivation(){
-        final DerivationPathNode neartestPath=createDerivation("source", ONE_TO_TARGET);
-        assertTrue(d.test(neartestPath));
+    void shouldKeepNearestDerivationSameLenght(){
+        final TargetedDerivation expected=createDerivation(1,2);
+        d.accept(expected);
+        d.accept(createDerivation(2, 2));
         final Iterator<DerivationPathNode> actualIt=d.getDerivation().iterator();
-        assertSame(actualIt.next(), neartestPath);
+        assertSame(actualIt.next(), expected.getDerivation());
+        assertFalse(actualIt.hasNext(), ""+d.getDerivation());
+    }
+
+    private void shouldKeepNearestDerivation(final int currentDerivationLength, final int newDerivationLength){
+        final TargetedDerivation expected=createDerivation(1,currentDerivationLength);
+        shouldKeepDerivation(expected, createDerivation(2, newDerivationLength));
+    }
+
+    private void shouldKeepDerivation(final TargetedDerivation existing, final TargetedDerivation toDiscard){
+        d.accept(existing);
+        d.accept(toDiscard);
+        final Iterator<DerivationPathNode> actualIt=d.getDerivation().iterator();
+        assertSame(actualIt.next(), existing.getDerivation());
         assertFalse(actualIt.hasNext(), ""+d.getDerivation());
     }
 
     @Test
-    void shouldKeepSameDistanceBugShorterDerivation(){
-        final DerivationPathNode shorterPath=createDerivation(ONE_TO_TARGET);
-        assertTrue(d.test(shorterPath));
+    void shouldKeepNearestDerivationAlsoIfLonger(){
+        shouldKeepNearestDerivation(2,1);
+    }
+
+    @Test
+    void shouldKeepNearestDerivationCaseShorter(){
+        shouldKeepNearestDerivation(1,2);
+    }
+
+    @Test
+    void shouldKeepSameDistanceButShorterDerivation(){
+        final TargetedDerivation expected=createDerivation(1, 2);
+        final TargetedDerivation longer=createDerivation(1, 3);
+        shouldKeepDerivation(expected, longer);
+    }
+
+    @Test
+    void shouldReplaceFartherDerivationAlsoWithLonger(){
+        final TargetedDerivation farther=createDerivation(2, 2);
+        final TargetedDerivation closerButLonger=createDerivation(1, 3);
+        shouldReplaceDerivation(farther, closerButLonger);
+    }
+
+    @Test
+    void shouldReplaceFartherDerivationWithSameLength(){
+        final TargetedDerivation farther=createDerivation(2, 2);
+        final TargetedDerivation closer=createDerivation(1, 2);
+        shouldReplaceDerivation(farther, closer);
+    }
+
+    @Test
+    void shouldReplaceFartherDerivationWithCloserAndShorter(){
+        final TargetedDerivation farther=createDerivation(2, 2);
+        final TargetedDerivation closer=createDerivation(1, 1);
+        shouldReplaceDerivation(farther, closer);
+    }
+
+    @Test
+    void shouldReplaceDerivationWithSameDistanceButShorter(){
+        final TargetedDerivation farther=createDerivation(2, 2);
+        final TargetedDerivation closer=createDerivation(2, 1);
+        shouldReplaceDerivation(farther, closer);
+    }
+
+    private void shouldReplaceDerivation(final TargetedDerivation existing, final TargetedDerivation better){
+        d.accept(existing);
+        d.accept(better);
         final Iterator<DerivationPathNode> actualIt=d.getDerivation().iterator();
-        assertSame(actualIt.next(), shorterPath);
-        assertFalse(actualIt.hasNext());
+        assertSame(actualIt.next(), better.getDerivation());
+        assertFalse(actualIt.hasNext(), ""+d.getDerivation());
     }
 
-    @Test
-    @Disabled
-    void shouldDiscardFartherDerivations(){
-        assertFalse(d.test(createDerivation("another source")));
-        final Iterator<DerivationPathNode> actualIt=d.getDerivation().iterator();
-        assertSame(firstDerivation, actualIt.next());
-        assertFalse(actualIt.hasNext());
-    }
-
-    @Test
-    void shouldDiscardLongerDerivations(){
-        assertTrue(d.test(createDerivation("source0", "source1", TWO_TO_TARGET)));
-        final Iterator<DerivationPathNode> actualIt=d.getDerivation().iterator();
-        assertSame(firstDerivation, actualIt.next());
-        assertFalse(actualIt.hasNext());
-    }
-
-    @Test
-    void shouldKeepSameDistanceLenghtDerivations(){
-        final DerivationPathNode anotherDerivation=createDerivation("zelem", TWO_TO_TARGET);
-        assertTrue(d.test(anotherDerivation));
-
-        final Iterator<DerivationPathNode> actualIt=d.getDerivation().iterator();
-        final DerivationPathNode actual1=actualIt.next();
-        final DerivationPathNode actual2=actualIt.next();
-        assertFalse(actualIt.hasNext());
-        assertSame(firstDerivation, actual1);
-        assertSame(anotherDerivation, actual2);
-    }
-
-    @Test
-    void shouldReturnFalseIfTheNovelDerivationIsFartherThanThePreviousOnes(){
-        assertFalse(d.test(createDerivation("source", TWO_TO_TARGET, THREE_TO_TARGET)));
-    }
-
-    @Test
-    void shouldReturnTrueIfTheNovelDerivationIsNearestThanThePreviousOnesButNonZero(){
-        assertTrue(d.test(createDerivation("source", "source0", ONE_TO_TARGET)));
-    }
-
-    @Test
-    void shouldReturnTrueIfNovelDerivationHasTheSameNonZeroDistanceThanThePreviousOnes(){
-        final String anotherOneToTarget="targey";
-        assertTrue(d.test(createDerivation("source", anotherOneToTarget)));
-    }
-
-    private DerivationPathNode createDerivation(final String...forms) {
-        return createDerivation(forms.length-1, forms);
-    }
-
-    private DerivationPathNode createDerivation(final int i, final String...forms){
-        final DerivationPathNode prev=i==0? null: createDerivation(i-1, forms);
-        return new DerivationPathNode() {
+    private TargetedDerivation createDerivation(final int distance, final int length){
+        final DerivationPathNode d=createDerivation(length);
+        return new TargetedDerivation() {
             @Override
-            public String get() {
-                return forms[i];
+            public DerivationPathNode getDerivation() {
+                return d;
             }
 
             @Override
-            public DerivationPathNode prev() {
-                return prev;
+            public int getDistance() {
+                return distance;
             }
-
-            @Override
-            public LinguisticPhenomenon getLinguisticPhenomenon() {
-                return null;
-            }
-
-            @Override
-            public int length() {
-                return i+1;
-            }
-
-            @Override
-            public String toString(){
-                if (prev==null)
-                    return forms[i];
-                return forms[i]+"<-"+prev;
-            }
-
         };
+    }
+
+    private DerivationPathNode createDerivation(final int length){
+        return length==1 ? new DerivationPathNodeImpl("x0") : //node string is not relevant
+            new DerivationPathNodeImpl("x"+(length-1), createDerivation(length-1), null); //also the phenomenon is not relevant
     }
 }

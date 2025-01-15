@@ -1,9 +1,7 @@
 package it.unict.gallosiciliani.gs;
 
-import it.unict.gallosiciliani.derivations.DerivationBuilder;
-import it.unict.gallosiciliani.derivations.DerivationPrinter;
-import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
-import it.unict.gallosiciliani.derivations.DerivationPathNode;
+import it.unict.gallosiciliani.derivations.*;
+import it.unict.gallosiciliani.derivations.strategy.*;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
@@ -19,7 +17,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -29,6 +26,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
     private final GSFeatures gs;
     private final CSVPrinter printer;
     private final List<? extends LinguisticPhenomenon> phenomena;
+    private final TargetedDerivationStrategySelectorFactory selectorFactory;
     private final DerivationPrinter derivationPrinter;
     @Getter
     private int processed;
@@ -37,26 +35,29 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
     private int found;
 
     /**
-     *
-     * @param out where the resulting CSV rows will be appended
-     *
+     * @param out             where the resulting CSV rows will be appended
+     * @param selectorFactory factory that influences for derivation strategies
      * @throws IOException on I/O error
      */
-    GSDerivationsGenerator(final Appendable out) throws IOException {
+    GSDerivationsGenerator(final Appendable out, final TargetedDerivationStrategySelectorFactory selectorFactory) throws IOException {
         gs = GSFeatures.loadLocal();
         printer = new CSVPrinter(out, CSVFormat.DEFAULT);
         phenomena=RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
+        this.selectorFactory=selectorFactory;
         derivationPrinter=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
     }
 
     public static void main(final String[] args) throws IOException {
-        //final String csvFilePath = args[1];
-        final String csvFilePath = "testbed.csv";
+        final String srcFilePath = args[0];
+        final String dstFilePath = args[1];
+//        final String csvFilePath = "testbed.csv";
+        final TargetedDerivationStrategySelectorFactory strategyFactory=args.length>2 && "fast".equals(args[2]) ?
+                NearestStrategySelector.FACTORY : NotFartherStrategySelector.FACTORY;
 
-        System.out.println("Loading lexemes and etymons from "+csvFilePath);
-        try (final FileReader csvReader = new FileReader(csvFilePath);
-             final FileWriter writer = new FileWriter("derivations.csv");
-             final GSDerivationsGenerator generator = new GSDerivationsGenerator(writer)) {
+        System.out.println("Loading lexemes and etymons from "+srcFilePath);
+        try (final FileReader csvReader = new FileReader(srcFilePath);
+             final FileWriter writer = new FileWriter(dstFilePath);
+             final GSDerivationsGenerator generator = new GSDerivationsGenerator(writer, strategyFactory)) {
             CSVParser.parse(csvReader, CSVFormat.DEFAULT.builder().setSkipHeaderRecord(true).build()).forEach(generator);
             System.out.println("Processed "+generator.getProcessed()+" pairs");
             System.out.println(generator.getFound()+" complete derivations found");
@@ -85,7 +86,13 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
     private boolean derive(final String etymon, final String target){
         System.out.println("Processing "+etymon+" to "+target);
         final NearestShortestDerivation c=new NearestShortestDerivation(target);
-        final DerivationBuilder b=new DerivationBuilder(phenomena, Collections.singletonList(c));
+        final DerivationStrategyFactory strategyFactory=new DerivationStrategyFactory() {
+            @Override
+            public DerivationStrategy build(final DerivationPathNode initialDerivation) {
+                return new TargetedDerivationStrategy(initialDerivation,c,selectorFactory);
+            }
+        };
+        final DerivationBuilder b=new DerivationBuilder(phenomena, strategyFactory);
         b.apply(etymon);
         final BigDecimal distanceNormalized = BigDecimal.valueOf(c.getDistance()).divide(BigDecimal.valueOf(target.length()), new MathContext(2, RoundingMode.HALF_UP));
 

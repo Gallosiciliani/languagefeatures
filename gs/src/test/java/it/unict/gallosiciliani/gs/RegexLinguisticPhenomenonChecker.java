@@ -129,6 +129,15 @@ public class RegexLinguisticPhenomenonChecker {
     }
 
     /**
+     * Test that the transformation of the source string produce the specified derived strings, may be among others
+     * @param src source string
+     * @param expected expected derived string
+     */
+    public void derives(final String src, final String expected){
+        assertTrue(phenomenon.apply(src).contains(expected));
+    }
+
+    /**
      * Test rules of the for src -> replacement with no additional constraints
      * @param src the part to be replaced
      */

@@ -5,6 +5,7 @@ import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -616,6 +617,8 @@ public class GSFeaturesTest {
     void testVocal5() throws IOException{
         getChecker(NS+"vocal.5","ö","ö̀")
                 .replacing("u","ù");
+        getChecker(NS+"vocal.5","ö","ö̀")
+                .derives("buffeta", new TreeSet<>(Set.of("böffeta", "bö̀ffeta")));
     }
 
     /**
@@ -815,5 +818,11 @@ public class GSFeaturesTest {
     @Test
     void testF83() throws IOException{
         getChecker(NS+"deretr.3", "str").replacing("ṣṭṛ");
+    }
+
+    @Test
+    void testTabuto() throws IOException{
+        getChecker(NS+"vocal.5", "").derives("tabutu", "tabutö");
+
     }
 }

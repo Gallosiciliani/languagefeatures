@@ -1,30 +1,39 @@
 package it.unict.gallosiciliani.derivations;
 
+import it.unict.gallosiciliani.derivations.strategy.DerivationStrategy;
+import it.unict.gallosiciliani.derivations.strategy.DerivationStrategyFactory;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Build all valuable derivations, valuable in the sense of a specific strategy,
+ * by applying a set of {@link it.unict.gallosiciliani.liph.LinguisticPhenomena}
+ */
 @Slf4j
 public class DerivationBuilder {
     private final List<? extends LinguisticPhenomenon> phenomena;
-    private final Collection<? extends DerivationsToTargetContainer> consumers;
+    private final DerivationStrategyFactory strategyFactory;
 
-    public DerivationBuilder(final List<? extends LinguisticPhenomenon> phenomena, final Collection<? extends DerivationsToTargetContainer> consumers){
+
+    public DerivationBuilder(final List<? extends LinguisticPhenomenon> phenomena, final DerivationStrategyFactory strategyFactory){
         this.phenomena=phenomena;
-        this.consumers=consumers;
+        this.strategyFactory=strategyFactory;
     }
 
     public void apply(final String src){
         final DerivationPathNode rootNode=new DerivationPathNodeImpl(src);
-        final DerivationStrategy strategy=new DerivationsToMultipleTargetsStrategy(rootNode, consumers);
+        final DerivationStrategy strategy=strategyFactory.build(rootNode);
         apply(strategy, phenomena);
     }
 
     private void apply(final DerivationStrategy strategy, final List<? extends LinguisticPhenomenon> phenomena){
         if (phenomena.isEmpty()){
+//            System.out.println(print(strategy, null, this.phenomena.size())+" DONE");
             strategy.end();
             return;
         }
@@ -34,19 +43,11 @@ public class DerivationBuilder {
                 phenomena.subList(1, phenomena.size()) : Collections.emptyList();
         final DerivationPathNode currentNode=strategy.getDerivation();
 
-        //case phenomenon not applied
-        apply(strategy, remainingPhenomena);
-        //case phenomenon applied
-        boolean activeDerivationPath=false;
-        for(final String intermediateForm: currentPhenomenon.apply(currentNode.get())){
-            final DerivationPathNode nextNode=new DerivationPathNodeImpl(intermediateForm, currentNode, currentPhenomenon);
-            final DerivationStrategy nextStrategy=strategy.extend(nextNode);
-            if (nextStrategy.goOn()) {
-                apply(nextStrategy, remainingPhenomena);
-                activeDerivationPath=true;
-            }
-            if (!activeDerivationPath)
-                strategy.end();
-        }
+        final List<DerivationPathNode> branches=currentPhenomenon.apply(currentNode.get()).stream().<DerivationPathNode>map((f)->new DerivationPathNodeImpl(f, currentNode, currentPhenomenon)).toList();
+        final Collection<DerivationStrategy> strategies=strategy.branch(branches);
+
+//        System.out.println(print(strategy, currentPhenomenon, this.phenomena.size()-phenomena.size())+" BEGIN");
+        strategies.forEach((s)-> apply(s, remainingPhenomena));
+//        System.out.println(print(strategy, currentPhenomenon,this.phenomena.size()-phenomena.size())+" END");
     }
 }

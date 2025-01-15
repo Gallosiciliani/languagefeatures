@@ -2,7 +2,6 @@ package it.unict.gallosiciliani.derivations;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import java.util.*;
 
@@ -31,20 +30,13 @@ public class NearestShortestDerivation implements DerivationsToTargetContainer {
     }
 
     @Override
-    public boolean test(final DerivationPathNode n) {
-        final int newDistance = LevenshteinDistance.getDefaultInstance().apply(n.get(), target);
-        if (newDistance>distance) {
-            //check if this derivation is going worst or better
-            return n.prev() == null ||
-                    LevenshteinDistance.getDefaultInstance().apply(n.prev().get(), target) >= newDistance;
-        }
-        if (newDistance==distance && n.length()>length)
-            return true;
-        if (newDistance<distance || n.length()<length)
+    public void accept(final TargetedDerivation d) {
+        if (d.getDistance()>distance || d.getDistance()==distance && d.getDerivation().length()>length)
+            return;
+        if (d.getDistance()<distance || d.getDerivation().length()<length)
             derivation.clear();
-        distance=newDistance;
-        length=n.length();
-        derivation.add(n);
-        return newDistance!=0;
+        distance=d.getDistance();
+        length=d.getDerivation().length();
+        derivation.add(d.getDerivation());
     }
 }

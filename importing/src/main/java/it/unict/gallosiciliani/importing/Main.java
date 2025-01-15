@@ -1,8 +1,11 @@
 package it.unict.gallosiciliani.importing;
 
+import it.unict.gallosiciliani.derivations.strategy.CompoundDerivationStrategyFactory;
 import it.unict.gallosiciliani.derivations.DerivationBuilder;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
+import it.unict.gallosiciliani.derivations.strategy.NearestStrategySelector;
+import it.unict.gallosiciliani.derivations.strategy.NotFartherStrategySelector;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.importing.pdf.generator.LexicalEntriesGenerator;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
@@ -16,17 +19,14 @@ import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
-public class Main implements Predicate<DerivationPathNode> {
+public class Main {
 
     private int processedEntries=0;
     private long totalProcessingTime=0;
@@ -37,12 +37,28 @@ public class Main implements Predicate<DerivationPathNode> {
         derivations=importWholeDictionary(pdfFilePath, startPage, endPage, "nicosiasperlinga-lemmas.txt");
         try(final GSFeatures gs=GSFeatures.loadLocal()){
             final List<RegexLinguisticPhenomenon> phenomena= RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
-            derivationBuilder=new DerivationBuilder(phenomena, derivations);
+            derivationBuilder=new DerivationBuilder(phenomena, new CompoundDerivationStrategyFactory(derivations, NearestStrategySelector.FACTORY));
+        }
+    }
+
+    Main(final String entriesFilePath) throws IOException {
+        derivations=importDictionaryEntriesFromFile(entriesFilePath);
+        try(final GSFeatures gs=GSFeatures.loadLocal()){
+            final List<RegexLinguisticPhenomenon> phenomena= RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
+            derivationBuilder=new DerivationBuilder(phenomena, new CompoundDerivationStrategyFactory(derivations, NearestStrategySelector.FACTORY));
+        }
+    }
+
+    private static List<NearestShortestDerivation> importDictionaryEntriesFromFile(final String entriesFilePath) throws IOException {
+        final List<NearestShortestDerivation> emptyDerivations=new LinkedList<>();
+        try(final BufferedReader reader=new BufferedReader(new FileReader(entriesFilePath))){
+            reader.lines().forEach((lemma)->emptyDerivations.add(new NearestShortestDerivation(lemma)));
+            return emptyDerivations;
         }
     }
 
     private static List<NearestShortestDerivation> importWholeDictionary(final String pdfFilePath, final int startPage, final int endPage,
-        final String outFilePath) throws IOException {
+                                                                         final String outFilePath) throws IOException {
         final List<NearestShortestDerivation> emptyDerivations=new LinkedList<>();
         final Set<String> writtenRep = new TreeSet<>();
         final Set<String> formsIri = new TreeSet<>();
@@ -81,7 +97,7 @@ public class Main implements Predicate<DerivationPathNode> {
     }
 
     public static void main(String[] args) throws IOException {
-        final Main m=new Main(args[0],121, 1084);
+        final Main m=args[0].endsWith(".pdf") ? new Main(args[0],121, 1084) : new Main(args[0]);
         SicilianVocabulary.visit(s -> {
             System.out.println(s);
             m.acceptSicilianVocabularyEntry(s);
@@ -100,15 +116,6 @@ public class Main implements Predicate<DerivationPathNode> {
         final long elapsedTime=endTime-startTime;
         totalProcessingTime+=elapsedTime;
         System.out.println((processedEntries++)+": elapsed time "+elapsedTime+", total time "+totalProcessingTime+".");
-    }
-
-
-
-    @Override
-    public boolean test(final DerivationPathNode derivationPathNode) {
-        for(final NearestShortestDerivation d: derivations)
-            if (d.test(derivationPathNode)) return true;
-        return false;
     }
 
     /**
