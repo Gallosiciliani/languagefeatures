@@ -22,6 +22,7 @@ public class TargetedDerivationStrategy implements DerivationStrategy, TargetedD
     private final int distance;
     private final DerivationsToTargetContainer consumer;
     private final TargetedDerivationStrategySelectorFactory selectorFactory;
+    private boolean consumed;
 
     // base case
     public TargetedDerivationStrategy(final DerivationPathNode initialDerivation,
@@ -56,6 +57,9 @@ public class TargetedDerivationStrategy implements DerivationStrategy, TargetedD
 
     @Override
     public final void end() {
+        if (consumed)
+            return;
+        consumed=true;
         if (prev==null || distance<prev.distance)
             consumer.accept(this);
         else prev.end();
