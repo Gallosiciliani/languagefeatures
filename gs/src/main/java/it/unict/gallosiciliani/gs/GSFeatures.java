@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.gs;
 
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
+import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import it.unict.gallosiciliani.util.OntologyLoader;
@@ -36,7 +37,7 @@ public class GSFeatures extends OntologyLoader{
      */
     private GSFeatures(final String classpathResource) throws IOException {
         super(classpathResource);
-        regexLinguisticPhenomena = RegexLinguisticPhenomenaReader.read(getModel()).getFeatures();
+        regexLinguisticPhenomena = RegexLinguisticPhenomenaReader.read(getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
     }
 
     /**

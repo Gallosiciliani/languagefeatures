@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.gs;
 
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
+import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaConflictsDetector;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,20 @@ public class GSFeaturesTest {
         }
     }
 
+    @Test
+    @Disabled
+    void checkRegexConflicts() throws IOException {
+        try(final GSFeatures gs = GSFeatures.loadLocal()) {
+            final RegexLinguisticPhenomenaConflictsDetector d = new RegexLinguisticPhenomenaConflictsDetector();
+            gs.getRegexLinguisticPhenomena().forEach(d);
+            for(final Map.Entry<RegexLinguisticPhenomenon, Set<RegexLinguisticPhenomenon>> conflict: d.getConflicts().entrySet()){
+                final RegexLinguisticPhenomenon p=conflict.getKey();
+                for(final RegexLinguisticPhenomenon q: conflict.getValue())
+                    System.out.println("Detected conflict "+p.getIRI()+" "+q.getIRI());
+            }
+            assertTrue(d.getConflicts().isEmpty());
+        }
+    }
     /**
      * Get a helper to test the feature with the IRI.
      * @param featureIRI final feature code
