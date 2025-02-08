@@ -23,11 +23,11 @@
 
 This work has been created in the scope of the project PRIN 2022 PNRR “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
                                                   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-                                                  dcterms:modified "2024-11-19"^^xsd:date ;
+                                                  dcterms:modified "2025-02-06" ;
                                                   dcterms:title "Gallo-Sicilian features"@en ;
                                                   rdfs:comment "Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily." ;
                                                   rdfs:label "Gallo-Sicilian features" ;
-                                                  owl:versionInfo "0.5.0" .
+                                                  owl:versionInfo "0.6.0" .
 
 #################################################################
 #    Annotation properties
@@ -1677,118 +1677,117 @@ liph:replacement rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.1
 :assib.1 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :assib ;
-         rdfs:label "-si- / -sì- / -sï- > sge / sgë / sgi / sgì / sgï" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])s[iìï]([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1sge$2" ,
-                          "$1sgi$2" ,
-                          "$1sgë$2" ,
-                          "$1sgì$2" ,
-                          "$1sgï$2" .
+         rdfs:label "si >  sge / sgë / sgi" ;
+         liph:regex "si" ;
+         liph:replacement "sge" ,
+                          "sgi" ,
+                          "sgë" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.10
 :assib.10 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :assib ;
+          rdfs:label "nge / ngè / ngi / ngì / ngï >  nẕe / nẕè / nẕi / nẕì / nẕï" ;
+          liph:regex "ng([eèiìï])" ;
+          liph:replacement "nẕ$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.11
+:assib.11 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :assib ;
+          rdfs:label "-rce- / -rcè / -rci-/ -rcì- / -rcï- > -rze- / -rzè- / -rzi- / -rzì- / -rzï-" ;
+          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])rc([eiìï].+|è$)" ;
+          liph:replacement "$1rz$2" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.12
+:assib.12 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :assib ;
+          rdfs:label "ce- / cè- / ci- / cì- / cï- > zze- / zzè- /zzi- / zzì- / zzï-" ;
+          liph:regex "^c([eèiìï].)" ;
+          liph:replacement "zz$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.13
+:assib.13 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :assib ;
+          rdfs:label "ge- / gè- / gi- / gì- / gï- > zze- / zze- / ẕẕi- / ẕẕì- / zzï-" ;
+          liph:regex "^g([eèiìï].)" ;
+          liph:replacement "ẕẕ$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.14
+:assib.14 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :assib ;
           rdfs:label "se- / sè- / si- / sì- > zze- /zzè- / zzi- / zzì-" ;
-          liph:regex "^s[eèiì](.)" ;
-          liph:replacement "zze$1" ,
-                           "zzi$1" ,
-                           "zzè$1" ,
-                           "zzì$1" .
+          liph:regex "^s([eèiì].)" ;
+          liph:replacement "zz$1" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.2
 :assib.2 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :assib ;
-         rdfs:label "-ce- / -cè- / -ci- / -cì- / -cï- > sge / sgè / sgë / sgi / sgì / sgï" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])c[eèiìï]([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1sge$2" ,
-                          "$1sgi$2" ,
-                          "$1sgè$2" ,
-                          "$1sgë$2" ,
-                          "$1sgì$2" ,
-                          "$1sgï$2" .
+         rdfs:label "sì > sgì" ;
+         liph:regex "sì" ;
+         liph:replacement "sgì" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.3
 :assib.3 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :assib ;
-         rdfs:label "-si / -sï > sge / sgë / sgi / sgï" ;
-         liph:regex "(.)s[iï]$" ;
-         liph:replacement "$1sge" ,
-                          "$1sgi" ,
-                          "$1sgë" ,
-                          "$1sgï" .
+         rdfs:label "sï > sgï" ;
+         liph:regex "sï" ;
+         liph:replacement "sgï" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.4
 :assib.4 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :assib ;
-         rdfs:label "-ce / -ci / -cï > sge / sgë / sgi / sgï" ;
-         liph:regex "(.)c[eiï]$" ;
-         liph:replacement "$1sge" ,
-                          "$1sgi" ,
-                          "$1sgë" ,
-                          "$1sgï" .
+         rdfs:label "ce > sge" ;
+         liph:regex "ce" ;
+         liph:replacement "sge" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.5
 :assib.5 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :assib ;
-         rdfs:label "nce / ncè / nci / ncì / ncï > nze / nzè / nzi / nzì / nzï" ;
-         liph:regex "nc[eèiìï]" ;
-         liph:replacement "nze" ,
-                          "nzi" ,
-                          "nzè" ,
-                          "nzì" ,
-                          "nzï" .
+         rdfs:label "cè > sgè" ;
+         liph:regex "cè" ;
+         liph:replacement "sgè" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.6
 :assib.6 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :assib ;
-         rdfs:label "nge / ngè / ngi / ngì / ngï >  nẕe / nẕè / nẕi / nẕì / nẕï" ;
-         liph:regex "ng[eèiìï]" ;
-         liph:replacement "nẕe" ,
-                          "nẕi" ,
-                          "nẕè" ,
-                          "nẕì" ,
-                          "nẕï" .
+         rdfs:label "ci > sge / sgë / sgi" ;
+         liph:regex "ci" ;
+         liph:replacement "sge" ,
+                          "sgi" ,
+                          "sgë" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.7
 :assib.7 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :assib ;
-         rdfs:label "-rce- / -rcè / -rci-/ -rcì- / -rcï- > -rze- / -rzè- / -rzi- / -rzì- / -rzï-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])rc[eèiìï]([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1rze$2" ,
-                          "$1rzi$2" ,
-                          "$1rzè$2" ,
-                          "$1rzì$2" ,
-                          "$1rzï$2" .
+         rdfs:label "cì > sgì" ;
+         liph:regex "cì" ;
+         liph:replacement "sgì" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.8
 :assib.8 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :assib ;
-         rdfs:label "ce- / cè- / ci- / cì- / cï- > zze- / zzè- /zzi- / zzì- / zzï-" ;
-         liph:regex "^c[eèiìï](.)" ;
-         liph:replacement "zze$1" ,
-                          "zzi$1" ,
-                          "zzè$1" ,
-                          "zzì$1" ,
-                          "zzï$1" .
+         rdfs:label "cï > sgï" ;
+         liph:regex "cï" ;
+         liph:replacement "sgï" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.9
 :assib.9 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :assib ;
-         rdfs:label "ge- / gè- / gi- / gì- / gï- > zze- / zze- / ẕẕi- / ẕẕì- / zzï-" ;
-         liph:regex "^g[eèiìï](.)" ;
-         liph:replacement "zze$1" ,
-                          "zzï$1" ,
-                          "ẕẕi$1" ,
-                          "ẕẕì$1" .
+         rdfs:label "nce / ncè / nci / ncì / ncï > nze / nzè / nzi / nzì / nzï" ;
+         liph:regex "nc([eèiìï])" ;
+         liph:replacement "nz$1" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#degem
@@ -1805,187 +1804,164 @@ liph:replacement rdf:type owl:AnnotationProperty .
          liph:replacement "$1it$2" .
 
 
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.10
+:degem.10 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :degem ;
+          rdfs:label "-ggari > -ghè" ;
+          liph:regex "ggari$" ;
+          liph:replacement "ghè" .
+
+
 ###  https://gallosiciliani.unict.it/ns/gs-features#degem.11
 :degem.11 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :degem ;
-          rdfs:label "-cchi- / -cchì- / cchï- /- cchj- > -chj- / -chï-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])(cchi|cchì|cchï|cchj)([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1chj$3" ,
-                           "$1chï$3" .
+          rdfs:label "ff > f" ;
+          liph:regex "ff" ;
+          liph:replacement "f" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#degem.12
 :degem.12 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :degem ;
-          rdfs:label "-gghi- / -gghì / -gghï- / -gghj- > -ghj- / -ghï-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])(gghi|gghì|gghï|gghj)([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1ghj$3" ,
-                           "$1ghï$3" .
+          rdfs:label "vv > v" ;
+          liph:regex "vv" ;
+          liph:replacement "v" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.13
+:degem.13 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :degem ;
+          rdfs:label "ss- > s-" ;
+          liph:regex "^ss" ;
+          liph:replacement "s" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#degem.15
 :degem.15 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "-ss- > -s-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ss([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1s$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.17
-:degem.17 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :degem ;
           rdfs:label "żż > ẕẕ" ;
           liph:regex "żż" ;
           liph:replacement "ẕẕ" .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.18
-:degem.18 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "-cci- / -ccï-  > -ci- / -cï-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])(cci|ccï)([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1ci$3" ,
-                           "$1cï$3" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.19
-:degem.19 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "-cce- > -ce-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])cce([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1ce$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.2
-:degem.2 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :degem ;
-         rdfs:label "-tt- > -t-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])tt([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1t$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.20
-:degem.20 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "-ggi- / -ggì / -ggï- > -gi- / -gì / -gï-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])(ggi|ggì|ggï)([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1gi$3" ,
-                           "$1gì$3" ,
-                           "$1gï$3" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.21
-:degem.21 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "-gge- /-ggè- > -ge- / -gè-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])(gge|ggè)([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1ge$3" ,
-                           "$1gè$3" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.23
-:degem.23 rdf:type owl:ObjectProperty ;
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.16
+:degem.16 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :degem ;
           rdfs:label "mm > m" ;
           liph:regex "mm" ;
           liph:replacement "m" .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.24
-:degem.24 rdf:type owl:ObjectProperty ;
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.17
+:degem.17 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :degem ;
           rdfs:label "nn > n" ;
           liph:regex "nn" ;
           liph:replacement "n" .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.25
-:degem.25 rdf:type owl:ObjectProperty ;
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.18
+:degem.18 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :degem ;
           rdfs:label "l- > dd-" ;
           liph:regex "^l" ;
           liph:replacement "dd" .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.26
-:degem.26 rdf:type owl:ObjectProperty ;
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.19
+:degem.19 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :degem ;
           rdfs:label "-ll- > -" ;
           liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ll([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
           liph:replacement "$1$2" .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.27
-:degem.27 rdf:type owl:ObjectProperty ;
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.2
+:degem.2 rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :degem ;
+         rdfs:label "tt > t" ;
+         liph:regex "tt" ;
+         liph:replacement "t" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.20
+:degem.20 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :degem ;
           rdfs:label "-ḍḍ- > -" ;
           liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ḍḍ([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
           liph:replacement "$1$2" .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.29
-:degem.29 rdf:type owl:ObjectProperty ;
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.22
+:degem.22 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :degem ;
-          rdfs:label "-ḍḍr- > -dr-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ḍḍr([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1dr$2" .
+          rdfs:label "ḍḍr > dr" ;
+          liph:regex "ḍḍr" ;
+          liph:replacement "dr" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.23
+:degem.23 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :degem ;
+          rdfs:label "ṭṭṛ > tr" ;
+          liph:regex "ṭṭṛ" ;
+          liph:replacement "tr" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#degem.3
 :degem.3 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :degem ;
-         rdfs:label "-dd- > -d-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])dd([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1d$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.30
-:degem.30 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "-ṭṭṛ- > -tr-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ṭṭṛ([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1tr$2" .
+         rdfs:label "dd > d" ;
+         liph:regex "dd" ;
+         liph:replacement "d" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#degem.4
 :degem.4 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :degem ;
-         rdfs:label "-ḍḍ- > -dd-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ḍḍ([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1dd$2" .
+         rdfs:label "ḍḍ > dd" ;
+         liph:regex "ḍḍ" ;
+         liph:replacement "dd" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#degem.5
 :degem.5 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :degem ;
-         rdfs:label "-pp- > -p-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])pp([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1p$2" .
+         rdfs:label "pp > p" ;
+         liph:regex "pp" ;
+         liph:replacement "p" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#degem.6
 :degem.6 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :degem ;
-         rdfs:label "-bb- > -b-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])bb([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1b$2" .
+         rdfs:label "bb > b" ;
+         liph:regex "bb" ;
+         liph:replacement "b" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#degem.7
 :degem.7 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :degem ;
-         rdfs:label "-cc- > -c-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])cc([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1c$2" .
+         rdfs:label "cc > c" ;
+         liph:regex "cc" ;
+         liph:replacement "c" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.8
+:degem.8 rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :degem ;
+         rdfs:label "-ccari > -chè" ;
+         liph:regex "ccari$" ;
+         liph:replacement "chè" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#degem.9
 :degem.9 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :degem ;
-         rdfs:label "-gg- > -g- / gh" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])gg([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1g$2" ,
-                          "$1gh$2" .
+         rdfs:label "gg > g but not in -ggari" ;
+         liph:regex "gg([^a]|a[^r]|ar[^i]|ari.+)" ;
+         liph:replacement "g$1" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#deretr
@@ -2050,18 +2026,16 @@ liph:replacement rdf:type owl:AnnotationProperty .
 :ditt.1 rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf :ditt ;
         rdfs:label "e / è  > ie / iè" ;
-        liph:regex "[eè]" ;
-        liph:replacement "ie" ,
-                         "iè" .
+        liph:regex "([eè])" ;
+        liph:replacement "i$1" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#ditt.2
 :ditt.2 rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf :ditt ;
         rdfs:label "o / ò > uo / uò" ;
-        liph:regex "[oò]" ;
-        liph:replacement "uo" ,
-                         "uò" .
+        liph:regex "([oò])" ;
+        liph:replacement "u$1" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#elim
@@ -2121,7 +2095,7 @@ liph:replacement rdf:type owl:AnnotationProperty .
 :leniz.1 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :leniz ;
          rdfs:label "-c-  > -g-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])c([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])c([aàáäeèéëë̀iìíïoòóöö̀uùúüh])" ;
          liph:replacement "$1g$2" .
 
 
@@ -2160,9 +2134,9 @@ liph:replacement rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/gs-features#leniz.14
 :leniz.14 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :leniz ;
-          rdfs:label "-uni > -ö̀n" ;
+          rdfs:label "-uni > -ön" ;
           liph:regex "(.)uni$" ;
-          liph:replacement "$1ö̀n" .
+          liph:replacement "$1ön" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#leniz.15
@@ -2209,9 +2183,9 @@ liph:replacement rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/gs-features#leniz.20
 :leniz.20 rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :leniz ;
-          rdfs:label "-spr- / spr- > -sbr- / sbr-" ;
-          liph:regex "^spr|([aàáäeèéëë̀iìíïoòóöö̀uùúü])spr([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1sbr$2" .
+          rdfs:label "spr / sbr > sbr" ;
+          liph:regex "spr" ;
+          liph:replacement "sbr" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#leniz.3
@@ -2297,6 +2271,14 @@ liph:replacement rdf:type owl:AnnotationProperty .
        rdfs:label "palatalizzazione di /a/"@it .
 
 
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.1
+:palat.1 rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :palat ;
+         rdfs:label "-cari > -chè" ;
+         liph:regex "(.)cari$" ;
+         liph:replacement "$1chè" .
+
+
 ###  https://gallosiciliani.unict.it/ns/gs-features#palat.2
 :palat.2 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :palat ;
@@ -2324,16 +2306,16 @@ liph:replacement rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/gs-features#palat.5
 :palat.5 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :palat ;
-         rdfs:label "-ari > -è" ;
-         liph:regex "(.)ari$" ;
+         rdfs:label "-ari > -è (if not preceded by c, g, i)" ;
+         liph:regex "([^cgi])ari$" ;
          liph:replacement "$1è" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#palat.6
 :palat.6 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :palat ;
-         rdfs:label "-àrisi > -essë" ;
-         liph:regex "(.)àrisi$" ;
+         rdfs:label "-àrisi > -essë (if not preceded by c, g, i)" ;
+         liph:regex "([^cgi])àrisi$" ;
          liph:replacement "$1essë" .
 
 
@@ -2383,10 +2365,18 @@ liph:replacement rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2
 :vocal.2 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :vocal ;
-         rdfs:label "i / ì > ë  / ë̀" ;
-         liph:regex "[iì]" ;
-         liph:replacement "ë̀" ,
-                          "ë" .
+         rdfs:label "i > ë" ;
+         liph:regex "i" ;
+         liph:replacement "ë" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2bis
+:vocal.2bis rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :vocal ;
+            rdfs:label "ì > ë | é (= ë̀)" ;
+            liph:regex "ì" ;
+            liph:replacement "ë̀" ,
+                             "ë" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.3
@@ -2400,10 +2390,18 @@ liph:replacement rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.5
 :vocal.5 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :vocal ;
-         rdfs:label "u / ù > ö / ö̀" ;
-         liph:regex "[uù]" ;
-         liph:replacement "ö̀" ,
-                          "ö" .
+         rdfs:label "u > ö" ;
+         liph:regex "u" ;
+         liph:replacement "ö" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.5bis
+:vocal.5bis rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :vocal ;
+            rdfs:label "ù > ö | ó  (= ö̀)̀" ;
+            liph:regex "ù" ;
+            liph:replacement "ö̀" ,
+                             "ö" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.6
@@ -2434,8 +2432,8 @@ liph:replacement rdf:type owl:AnnotationProperty .
 :vocal.9 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :vocal ;
          rdfs:label "-i > -ö" ;
-         liph:regex "([^aàáäeèéëë̀iìíïoòóöö̀uùúü])i$" ;
-         liph:replacement "$1ö" .
+         liph:regex "i$" ;
+         liph:replacement "ö" .
 
 
 ###  https://gallosiciliani.unict.it/ns/liph#linguisticPhenomenon

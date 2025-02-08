@@ -18,6 +18,42 @@ public class RegexLinguisticPhenomenonChecker {
         this.replacements=replacements;
     }
 
+    public RegexLinguisticPhenomenonChecker notEndingprecededByVowel(final String...src){
+        for(final String s: src) {
+            final String consonant = "X";
+            notApply("123" + consonant + s + "456");
+            notApply("123" + consonant + s);
+            notApply(consonant + s);
+            notApply(s+"456");
+            for (final char cprev : VOWELS.toCharArray()) {
+                    final SortedSet<String> expected = new TreeSet<>();
+                    for (final String r : replacements)
+                        expected.add("123" + cprev + r + "456");
+                    derives("123" + cprev + s + "456", expected);
+                    notApply("123"+cprev+s);
+            }
+        }
+        return this;
+    }
+
+    public RegexLinguisticPhenomenonChecker endingPrecededByVowel(final String...src){
+        for(final String s: src) {
+            final String consonant = "X";
+            notApply("123" + consonant + s + "456");
+            notApply("123" + consonant + s);
+            notApply(consonant + s);
+            notApply(s+"456");
+            for (final char cprev : VOWELS.toCharArray()) {
+                final SortedSet<String> expected = new TreeSet<>();
+                for (final String r : replacements)
+                    expected.add("123" + cprev + r);
+                derives("123" + cprev + s, expected);
+                notApply("123"+cprev+s+"456");
+            }
+        }
+        return this;
+    }
+
     /**
      * Test transformations with rules of the form -s- -> -replacement-
      * where - are placeholders for vowels.
@@ -113,10 +149,13 @@ public class RegexLinguisticPhenomenonChecker {
 
     /**
      * Test that the feature transformation does not change the src string
+     *
      * @param src test string
+     * @return this checker
      */
-    public void notApply(final String src){
+    public RegexLinguisticPhenomenonChecker notApply(final String src){
         assertTrue(phenomenon.apply(src).isEmpty(), "Expected empty but it was "+phenomenon.apply(src));
+        return this;
     }
 
     /**
@@ -139,12 +178,15 @@ public class RegexLinguisticPhenomenonChecker {
 
     /**
      * Test rules of the for src -> replacement with no additional constraints
+     *
      * @param src the part to be replaced
+     * @return this checker
      */
-    public void replacing(final String...src){
+    public RegexLinguisticPhenomenonChecker replacing(final String...src){
         atTheBeginning(false, src);
         inside(false, src);
         atTheEnd(false, src);
+        return this;
     }
 
 

@@ -37,6 +37,8 @@ public class LexicaService {
      * @return all the individuals of class {@link Lexicon} in the knowledge base
      */
     public List<Lexicon> findAllLexica(){
+        entityManager.createNativeQuery("SELECT ?x WHERE { ?x a <"+ Lime.LEXICON_CLASS+"> . } ORDER BY ?x",
+                Object.class).getResultList();
         return entityManager.createNativeQuery("SELECT ?x WHERE { ?x a <"+ Lime.LEXICON_CLASS+"> . } ORDER BY ?x",
                         Lexicon.class).getResultList();
     }
