@@ -14,7 +14,6 @@ import it.unict.gallosiciliani.webapp.WebAppProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
 import java.util.List;
@@ -37,8 +36,6 @@ public class LexicaService {
      * @return all the individuals of class {@link Lexicon} in the knowledge base
      */
     public List<Lexicon> findAllLexica(){
-        entityManager.createNativeQuery("SELECT ?x WHERE { ?x a <"+ Lime.LEXICON_CLASS+"> . } ORDER BY ?x",
-                Object.class).getResultList();
         return entityManager.createNativeQuery("SELECT ?x WHERE { ?x a <"+ Lime.LEXICON_CLASS+"> . } ORDER BY ?x",
                         Lexicon.class).getResultList();
     }
@@ -48,7 +45,6 @@ public class LexicaService {
      * @param iri lexicon IRI
      * @return the lexicon with the specified IRI, if any. Null, otherwise.
      */
-    @Transactional
     public Lexicon findLexiconByIRI(final String iri){
         return entityManager.find(Lexicon.class, iri);
     }
@@ -74,7 +70,6 @@ public class LexicaService {
      * @param selector         selection criteria
      * @return entries of the lexicon
      */
-    @Transactional
     public List<LexicalEntry> findEntries(final Lexicon persistedLexicon,
                                           final EntrySelector selector){
         final String selectByPOSPattern = EntrySelector.ALL.getPos().equals(selector.getPos()) ? "" : "?x <"+LexInfo.PART_OF_SPEECH_OBJ_PROPERTY+"> ?pos .";

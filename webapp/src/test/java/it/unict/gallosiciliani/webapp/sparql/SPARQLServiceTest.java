@@ -8,7 +8,6 @@ import org.apache.jena.vocabulary.DCTerms;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import java.io.IOException;
 
@@ -21,13 +20,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest( webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class SPARQLServiceTest {
     @Autowired
-    private SPARQLService sparqlService;
+    SPARQLService sparqlService;
 
     @Autowired
-    private PlatformTransactionManager txManager;
-
-    @Autowired
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
     /**
      * Assuming that in the knowledge base there are the three default lexica.
@@ -46,7 +42,7 @@ public class SPARQLServiceTest {
                 l2.getId()+"\r\n"+
                 l3.getId()+"\r\n";
 
-        PersistenceTestUtils.build().persist(l1).persist(l2).persist(l3).execute(txManager, entityManager);
+        PersistenceTestUtils.build().persist(l1).persist(l2).persist(l3).execute(entityManager);
 
         try {
             final String actual = sparqlService.performSelectQuery("SELECT ?x where {" +
@@ -54,7 +50,7 @@ public class SPARQLServiceTest {
                     "} ORDER BY ?x");
             assertEquals(expected, actual);
         }finally {
-            PersistenceTestUtils.build().remove(l3).remove(l2).remove(l1).execute(txManager, entityManager);
+            PersistenceTestUtils.build().remove(l3).remove(l2).remove(l1).execute(entityManager);
         }
     }
 
@@ -78,7 +74,7 @@ public class SPARQLServiceTest {
                 l2.getId()+","+l2.getTitle()+"\r\n"+
                 l3.getId()+","+l3.getTitle()+"\r\n";
 
-        PersistenceTestUtils.build().persist(l1).persist(l2).persist(l3).execute(txManager, entityManager);
+        PersistenceTestUtils.build().persist(l1).persist(l2).persist(l3).execute(entityManager);
         try {
             final String actual = sparqlService.performSelectQuery("SELECT ?x ?title where {" +
                     "?x a <" + Lime.LEXICON_CLASS + "> ." +
@@ -86,7 +82,7 @@ public class SPARQLServiceTest {
                     "} ORDER BY ?x");
             assertEquals(expected, actual);
         } finally {
-            PersistenceTestUtils.build().remove(l3).remove(l2).remove(l1).execute(txManager, entityManager);
+            PersistenceTestUtils.build().remove(l3).remove(l2).remove(l1).execute(entityManager);
         }
     }
 

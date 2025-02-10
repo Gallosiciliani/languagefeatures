@@ -9,7 +9,6 @@ import it.unict.gallosiciliani.model.lemonety.Etymology;
 import it.unict.gallosiciliani.model.lexinfo.LexInfo;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,15 +126,14 @@ public class LexiconWithThreeEntries {
      * @param entityManager the entity manager
      *                      <p>
      *                      This method must be run inside a transaction
-     * @param txManager transaction manager
      */
-    public void persist(final EntityManager entityManager, PlatformTransactionManager txManager){
+    public void persist(final EntityManager entityManager){
         new PersistenceTestUtils().persist(lexInfo.noun)
                 .persist(lexInfo.verb)
                         .add(persist(entryC))
                                 .add(persist(entryA))
                                         .add(persist(entryB))
-                                                .persist(lexicon).execute(txManager, entityManager);
+                                                .persist(lexicon).execute(entityManager);
     }
 
     private PersistenceTestUtils persist(final LexicalEntry e){
@@ -145,12 +143,11 @@ public class LexiconWithThreeEntries {
     /**
      * Remove the lexicon from the knowledge base using the specified entity manager
      *
-     * @param txManager Transaction Manager
      * @param entityManager the entity manager
      *                      <p>
      *                      This method must be run inside a transaction
      */
-    public void cleanup(final PlatformTransactionManager txManager, final EntityManager entityManager){
+    public void cleanup(final EntityManager entityManager){
         new PersistenceTestUtils()
                 .remove(lexicon)
                 .remove(entryB)
@@ -158,7 +155,7 @@ public class LexiconWithThreeEntries {
                 .remove(entryC)
                 .remove(lexInfo.verb)
                 .remove(lexInfo.noun)
-                .execute(txManager, entityManager);
+                .execute(entityManager);
     }
 
     /**

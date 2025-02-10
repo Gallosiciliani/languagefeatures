@@ -29,14 +29,14 @@ public class SPARQLHTMLControllerTest {
     @MockBean
     SPARQLService sparqlService;
 
-    @MockBean
-    WebAppProperties props;
+//    @MockBean
+//    WebAppProperties props;
 
-    @BeforeEach
-    void setNs(){
-        final URI ns = URI.create(NS);
-        when(props.getNs()).thenReturn(ns);
-    }
+//    @BeforeEach
+//    void setNs(){
+//        final URI ns = URI.create(NS);
+//        when(props.getNs()).thenReturn(ns);
+//    }
 
     @Test
     void shouldReturnFormWithPostEmptyField() throws Exception {

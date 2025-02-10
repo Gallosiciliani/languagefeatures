@@ -19,21 +19,38 @@
 
     <groupId>it.unict.gallosiciliani</groupId>
     <artifactId>webapp</artifactId>
-    <version>1.8.2</version>
+    <version>1.9.0</version>
     <build>
+        <finalName>webapp</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>../ns/lexica</directory>
+                <includes>
+                    <include>nicosiaesperlinga.ttl</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 
     <dependencies>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
             <artifactId>model</artifactId>
-            <version>1.8.2</version>
+            <version>1.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>it.unict.gallosiciliani</groupId>
+            <artifactId>util</artifactId>
+            <version>1.9.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -47,11 +64,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.ledsoft</groupId>
-            <artifactId>jopa-spring-transaction</artifactId>
-            <version>0.3.1</version>
         </dependency>
 
     </dependencies>

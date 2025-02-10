@@ -7,10 +7,6 @@ import it.unict.gallosiciliani.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.model.lemonety.Etymology;
 import it.unict.gallosiciliani.model.lexinfo.PartOfSpeech;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -134,14 +130,10 @@ public class PersistenceTestUtils {
     /**
      * Execute all actions in a dedicated transaction and using the specified entity manager
      */
-    public void execute(final PlatformTransactionManager txManager, final EntityManager entityManager) {
-        new TransactionTemplate(txManager).execute(new TransactionCallbackWithoutResult() {
-
-            @Override
-            protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
-                for(final Action action : actions)
-                    action.execute(entityManager);
-            }
-        });
+    public void execute(final EntityManager entityManager) {
+        entityManager.getTransaction().begin();
+        for(final Action action : actions)
+            action.execute(entityManager);
+        entityManager.getTransaction().commit();
     }
 }

@@ -1,5 +1,10 @@
 package it.unict.gallosiciliani.gs;
 
+import it.unict.gallosiciliani.derivations.DerivationBuilder;
+import it.unict.gallosiciliani.derivations.strategy.CompoundDerivationStrategyFactory;
+import it.unict.gallosiciliani.derivations.strategy.DerivationStrategyFactory;
+import it.unict.gallosiciliani.derivations.strategy.NotFartherStrategySelector;
+import it.unict.gallosiciliani.derivations.strategy.TargetedDerivationStrategySelectorFactory;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaConflictsDetector;

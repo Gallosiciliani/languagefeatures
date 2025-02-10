@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.Iterator;
 
@@ -25,8 +24,6 @@ public class LexicaServiceTest {
     EntityManager entityManager;
     @Autowired
     LexicaService lexicaService;
-    @Autowired
-    PlatformTransactionManager txManager;
     @Autowired
     WebAppProperties props;
 
@@ -47,7 +44,7 @@ public class LexicaServiceTest {
         c.setTitle("lexicon3");
 
 
-        PersistenceTestUtils.build().persist(c).persist(a).persist(b).execute(txManager, entityManager);
+        PersistenceTestUtils.build().persist(c).persist(a).persist(b).execute(entityManager);
         try{
             final Iterator<Lexicon> actualLexicaIt=lexicaService.findAllLexica().iterator();
             util.checkEquals(a, actualLexicaIt.next());
@@ -55,7 +52,7 @@ public class LexicaServiceTest {
             util.checkEquals(c, actualLexicaIt.next());
             assertFalse(actualLexicaIt.hasNext());
         } finally {
-            PersistenceTestUtils.build().remove(b).remove(a).remove(c).execute(txManager, entityManager);
+            PersistenceTestUtils.build().remove(b).remove(a).remove(c).execute(entityManager);
         }
 
     }
@@ -63,12 +60,12 @@ public class LexicaServiceTest {
     @Test
     void shouldGetLexiconByIRI(){
         final LexiconWithThreeEntries t=new LexiconWithThreeEntries();
-        t.persist(entityManager, txManager);
+        t.persist(entityManager);
         try{
             final Lexicon actual = lexicaService.findLexiconByIRI(t.lexicon.getId());
             util.checkEquals(t.lexicon, actual);
         } finally {
-            t.cleanup(txManager, entityManager);
+            t.cleanup(entityManager);
         }
     }
 
@@ -83,7 +80,7 @@ public class LexicaServiceTest {
     @Test
     void shouldReturnEntriesInPagesAndSortedByLemma(){
         final LexiconWithThreeEntries lexiconWithThreeEntries = new LexiconWithThreeEntries();
-        lexiconWithThreeEntries.persist(entityManager, txManager);
+        lexiconWithThreeEntries.persist(entityManager);
         try {
             final EntrySelector s=new EntrySelector();
             final Iterator<LexicalEntry> actualPageABIt = lexicaService.findEntries(lexiconWithThreeEntries.lexicon, s)
@@ -98,7 +95,7 @@ public class LexicaServiceTest {
             util.checkEquals(lexiconWithThreeEntries.entryC, actualPageCIt.next());
             assertFalse(actualPageCIt.hasNext());
         } finally {
-            lexiconWithThreeEntries.cleanup(txManager, entityManager);
+            lexiconWithThreeEntries.cleanup(entityManager);
         }
     }
 
@@ -109,7 +106,7 @@ public class LexicaServiceTest {
         lexiconWithThreeEntries.entryB.setPartOfSpeech(lexiconWithThreeEntries.lexInfo.verb);
         lexiconWithThreeEntries.entryC.setPartOfSpeech(lexiconWithThreeEntries.lexInfo.noun);
 
-        lexiconWithThreeEntries.persist(entityManager, txManager);
+        lexiconWithThreeEntries.persist(entityManager);
         try {
             final EntrySelector selector = new EntrySelector();
             selector.setPos(LexInfo.NOUN_INDIVIDUAL);
@@ -124,7 +121,7 @@ public class LexicaServiceTest {
             util.checkEquals(lexiconWithThreeEntries.entryC, actualPageCIt.next());
             assertFalse(actualPageCIt.hasNext());
         } finally {
-            lexiconWithThreeEntries.cleanup(txManager, entityManager);
+            lexiconWithThreeEntries.cleanup(entityManager);
         }
     }
 
