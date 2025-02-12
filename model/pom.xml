@@ -11,7 +11,7 @@
 
     <artifactId>model</artifactId>
     <properties>
-        <cz.cvut.kbss.jopa.version>2.1.0</cz.cvut.kbss.jopa.version>
+        <cz.cvut.kbss.jopa.version>2.2.0</cz.cvut.kbss.jopa.version>
     </properties>
 
     <dependencies>
@@ -31,6 +31,12 @@
                     <artifactId>log4j-slf4j2-impl</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!-- see https://github.com/kbss-cvut/jopa/wiki/Spring-and-Spring-Boot -->
+        <dependency>
+            <groupId>com.github.ledsoft</groupId>
+            <artifactId>jopa-spring-boot-loader</artifactId>
+            <version>0.0.1</version>
         </dependency>
     </dependencies>
 </project>

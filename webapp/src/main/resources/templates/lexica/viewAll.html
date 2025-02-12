@@ -9,7 +9,7 @@
         <div class="container">
             <ul class="list-group">
                 <li class="list-group-item" th:each="lexicon : ${lexica}">
-                    <a th:href="@{${lexicon.id}}" th:text="${lexicon.title}"></a>
+                    <a th:href="@{lexicon(id=${lexicon.id})}" th:text="${lexicon.title}"></a>
                 </li>
             </ul>
         </div>

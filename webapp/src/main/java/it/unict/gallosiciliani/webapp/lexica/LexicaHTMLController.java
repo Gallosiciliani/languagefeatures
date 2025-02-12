@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -33,10 +32,6 @@ public class LexicaHTMLController {
     @GetMapping(value={"/"})
     public String viewAll(Model model){
         final List<Lexicon> lexica = lexicaService.findAllLexica();
-        for(final Lexicon l : lexica){
-            final String internalIRI = UriComponentsBuilder.fromPath("lexicon").queryParam("id", URI.create(l.getId())).toUriString();
-            l.setId(internalIRI);
-        }
         model.addAttribute("lexica", lexica);
         return "lexica/viewAll";
     }

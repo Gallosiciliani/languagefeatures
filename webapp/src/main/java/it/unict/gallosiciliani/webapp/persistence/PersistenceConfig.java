@@ -7,14 +7,13 @@ import cz.cvut.kbss.jopa.model.JOPAPersistenceProperties;
 import cz.cvut.kbss.jopa.model.JOPAPersistenceProvider;
 import cz.cvut.kbss.ontodriver.jena.JenaDataSource;
 import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
-import cz.cvut.kbss.ontodriver.jena.connector.ConnectorFactory;
 import it.unict.gallosiciliani.util.OntologyLoader;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.query.Dataset;
-import org.apache.jena.query.DatasetFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import com.github.ledsoft.jopa.loader.BootAwareClasspathScanner;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,7 +44,8 @@ public class PersistenceConfig {
         //props.put(JOPAPersistenceProperties.LANG, "en");
         // Persistence provider name
         props.put(JOPAPersistenceProperties.JPA_PERSISTENCE_PROVIDER, JOPAPersistenceProvider.class.getName());
-
+        // see https://github.com/kbss-cvut/jopa/wiki/Spring-and-Spring-Boot
+        props.put(JOPAPersistenceProperties.CLASSPATH_SCANNER_CLASS, BootAwareClasspathScanner.class.getName());
         return Persistence.createEntityManagerFactory("gallosiciliani", props);
     }
 
@@ -56,6 +56,7 @@ public class PersistenceConfig {
             try(final OntologyLoader loader=new OntologyLoader("nicosiaesperlinga.ttl")){
                 m.getTransaction().begin();
                 m.unwrap(Dataset.class).getDefaultModel().add(loader.getModel());
+                m.flush();
                 m.getTransaction().commit();
             }
         return m;
