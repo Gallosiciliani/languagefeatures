@@ -44,4 +44,9 @@ public class RegexLinguisticPhenomenon implements LinguisticPhenomenon {
     public void addReplacement(final String replacement){
         replacements.add(replacement);
     }
+
+    @Override
+    public String toString(){
+        return iri;
+    }
 }

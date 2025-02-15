@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{base :: head}"></head>
+<body>
+<div class="container">
+    <div class="container" th:replace="~{base :: header (title=#{galloitalici.kb.derivation.title})}">
+    </div>
+
+    <div class="container">
+        <form th:object="${derivationForm}" method="post">
+            <div class="row">
+                <label class="col-form-label col-2" for="lemmaField" th:text="#{galloitalici.kb.derivation.lemma}">Lemma</label>
+                <div class="col">
+                    <input id="lemmaField" type="text" class="form-control" th:field="*{lemma}" />
+                </div>
+            </div>
+            <div class="row">
+                <label for="etymonField" class="col-form-label col-2" th:text="#{galloitalici.kb.derivation.etymon}">Etymon</label>
+                <div class="col">
+                    <input id="etymonField" type="text" class="form-control" th:field="*{etymon}" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <button id="submit" name="submit" type="submit" class="btn btn-primary"  th:text="#{galloitalici.kb.derivation.sumbmit}">submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container" th:if="${not #lists.isEmpty(derivationForm.derivations)}">
+        <h2 th:text="#{galloitalici.kb.derivation.found}">Derivations</h2>
+        <ul id="derivations" th:if="${not #lists.isEmpty(derivationForm.derivations)}">
+            <li th:each="d : ${derivationForm.derivations}" th:text="${d}">derivation</li>
+        </ul>
+    </div>
+</div>
+<!-- bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

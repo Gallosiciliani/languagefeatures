@@ -14,6 +14,8 @@ import java.util.Locale;
 
 /**
  * Provide and manage all the Lexica in the knowledge base
+ *
+ * @author Cristiano Longo
  */
 @Controller
 @RequestMapping("/lexica")
@@ -30,14 +32,14 @@ public class LexicaHTMLController {
      * Show the list of all the lexica in the knowledge base
      */
     @GetMapping(value={"/"})
-    public String viewAll(Model model){
+    String viewAll(Model model){
         final List<Lexicon> lexica = lexicaService.findAllLexica();
         model.addAttribute("lexica", lexica);
         return "lexica/viewAll";
     }
 
     @GetMapping(value={"/lexicon"})
-    public String viewLexicon(final @RequestParam URI id,
+    String viewLexicon(final @RequestParam URI id,
                               final Model model,
                               final Locale locale){
         return viewLexiconInternal(id.toString(), EntrySelector.ALL, model, locale);
@@ -62,7 +64,7 @@ public class LexicaHTMLController {
     }
 
     @PostMapping(value={"/lexicon"})
-    public String viewLexicon(final @RequestParam URI id,
+    String viewLexicon(final @RequestParam URI id,
                               final @ModelAttribute EntrySelector selector,
                               final Model model,
                               final Locale locale){

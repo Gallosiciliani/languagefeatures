@@ -24,18 +24,18 @@ public class RegexLinguisticPhenomenaConflictsDetector implements Consumer<Regex
         final Automaton ap = new RegExp(p.getRegex().pattern()).toAutomaton();
         for(final RegexLinguisticPhenomenon q: accepted){
             final Automaton aq = new RegExp(q.getRegex().pattern()).toAutomaton();
-            final Automaton i=ap.intersection(aq);
-            if (!ap.intersection(aq).isEmpty())
-                getConflicting(p).add(q);
+            if (!ap.intersection(aq).isEmpty()) {
+                final Set<RegexLinguisticPhenomenon> conflictingWithQ=conflicts.get(q);
+                conflictingWithQ.add(p);
+                conflicts.put(p, conflictingWithQ);
+            }
+        }
+        //no conflicts detected
+        if (!conflicts.containsKey(p)){
+            Set<RegexLinguisticPhenomenon> conflictingWithP=new TreeSet<>(LinguisticPhenomena.COMPARATOR_BY_IRI);
+            conflictingWithP.add(p);
+            conflicts.put(p, conflictingWithP);
         }
         accepted.add(p);
-    }
-
-    private Set<RegexLinguisticPhenomenon> getConflicting(final RegexLinguisticPhenomenon p) {
-        final Set<RegexLinguisticPhenomenon> existing = conflicts.get(p);
-        if (existing != null) return existing;
-        final Set<RegexLinguisticPhenomenon> novel = new TreeSet<>(LinguisticPhenomena.COMPARATOR_BY_IRI);
-        conflicts.put(p, novel);
-        return novel;
     }
 }
