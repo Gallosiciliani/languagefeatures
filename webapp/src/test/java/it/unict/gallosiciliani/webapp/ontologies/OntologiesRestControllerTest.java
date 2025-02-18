@@ -1,0 +1,76 @@
+package it.unict.gallosiciliani.webapp.ontologies;
+
+import it.unict.gallosiciliani.gs.GSFeatures;
+import it.unict.gallosiciliani.liph.LinguisticPhenomena;
+import it.unict.gallosiciliani.util.OntologyLoader;
+import it.unict.gallosiciliani.webapp.persistence.GSABox;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+
+@WebMvcTest(value={OntologiesRestController.class})
+public class OntologiesRestControllerTest {
+    @Autowired
+    MockMvc mockMvc;
+
+    @MockBean
+    LinguisticPhenomena liph;
+
+    @MockBean
+    GSFeatures gsFeatures;
+
+    @MockBean
+    GSABox abox;
+
+    @Test
+    void testAutowire(){
+        assertNotNull(liph);
+    }
+
+    @Test
+    void shouldReturnLiphOntologyTTL() throws Exception {
+        shouldReturnOntologyInTTLFormat("/ns/liph", liph);
+    }
+
+    @Test
+    void shouldReturnGSFeaturesOntologyTTL() throws Exception {
+        shouldReturnOntologyInTTLFormat("/ns/gs-features", gsFeatures);
+    }
+
+    @Test
+    void shouldReturnAboxTTL() throws Exception {
+        shouldReturnOntologyInTTLFormat("/ns/lexica", abox);
+        shouldReturnOntologyInTTLFormat("/ns/lexica/", abox);
+        shouldReturnOntologyInTTLFormat("/ns/lexica/nicosiaesperlinga", abox);
+    }
+
+    @Test
+    void shouldLexicaRedirectToAboxHTMLPage() throws Exception {
+        mockMvc.perform(get("/ns/lexica")
+                .accept("text/html")).andExpect(redirectedUrl("/lexica/"));
+        mockMvc.perform(get("/ns/lexica/")
+                .accept("text/html")).andExpect(redirectedUrl("/lexica/"));
+    }
+
+    /**
+     * Test that the ontology is returned as a raw file when the mime-type requested is TTL
+     * @param path relative path for the request
+     * @param o the mock for the ontology loader
+     */
+    private void shouldReturnOntologyInTTLFormat(final String path, final OntologyLoader o) throws Exception {
+        final String expectedFile="test";
+        when(o.getOntologyAsStr()).thenReturn(expectedFile);
+        mockMvc.perform(get(path)
+                        .accept("text/turtle")).andExpect(status().isOk())
+                .andExpect(content().contentType("text/turtle;charset=UTF-8"))
+                .andExpect(content().string(expectedFile));
+    }
+}

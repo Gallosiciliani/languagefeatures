@@ -31,7 +31,7 @@ public class LexicaHTMLController {
     /**
      * Show the list of all the lexica in the knowledge base
      */
-    @GetMapping(value={"/"})
+    @GetMapping(value={"","/"})
     String viewAll(Model model){
         final List<Lexicon> lexica = lexicaService.findAllLexica();
         model.addAttribute("lexica", lexica);

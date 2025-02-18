@@ -7,7 +7,6 @@ import cz.cvut.kbss.jopa.model.JOPAPersistenceProperties;
 import cz.cvut.kbss.jopa.model.JOPAPersistenceProvider;
 import cz.cvut.kbss.ontodriver.jena.JenaDataSource;
 import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
-import it.unict.gallosiciliani.util.OntologyLoader;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.query.Dataset;
@@ -22,6 +21,11 @@ import java.util.Map;
 @Configuration
 @Slf4j
 public class PersistenceConfig {
+
+    @Bean
+    GSABox abox() throws IOException {
+        return new GSABox();
+    }
 
     @Bean
     public EntityManagerFactory entityManagerFactory(){
@@ -50,15 +54,14 @@ public class PersistenceConfig {
     }
 
     @Bean(name = "entityManager")
-    public EntityManager entityManager(final EntityManagerFactory factory, final WebAppProperties props) throws IOException {
+    public EntityManager entityManager(final EntityManagerFactory factory, final WebAppProperties props, final GSABox abox) throws IOException {
         final EntityManager m=factory.createEntityManager();
-        if (props.isLoadData())
-            try(final OntologyLoader loader=new OntologyLoader("nicosiaesperlinga.ttl")){
-                m.getTransaction().begin();
-                m.unwrap(Dataset.class).getDefaultModel().add(loader.getModel());
-                m.flush();
-                m.getTransaction().commit();
-            }
+        if (props.isLoadData()) {
+            m.getTransaction().begin();
+            m.unwrap(Dataset.class).getDefaultModel().add(abox.getModel());
+            m.flush();
+            m.getTransaction().commit();
+        }
         return m;
     }
 }
