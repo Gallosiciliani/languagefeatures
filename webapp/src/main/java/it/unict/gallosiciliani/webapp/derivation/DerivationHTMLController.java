@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.webapp.derivation;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPrinter;
+import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -38,11 +40,13 @@ public class DerivationHTMLController {
     @PostMapping(value={"/",""})
     String derive(final @ModelAttribute DerivatioForm derivationForm,
                          final Model model,
-                         final Locale locale){
+                         final Locale locale) throws IOException {
         model.addAttribute("derivationForm", derivationForm);
-        final Collection<DerivationPathNode> derivations= derivationService
-                .derives(derivationForm.getEtymon(), derivationForm.getLemma())
-                .getDerivation();
+        final NearestShortestDerivation result=derivationForm.getEtymon()!=null &&
+                !derivationForm.getEtymon().isBlank() ?
+                    derivationService.derives(derivationForm.getEtymon(), derivationForm.getLemma()) :
+                    derivationService.findSicilianEtymon(derivationForm.getLemma());
+        final Collection<DerivationPathNode> derivations= result.getDerivation();
         final DerivationPrinter printer=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
         final List<String> derivationsAsStr=derivations.stream().map((n)->printer.print(n, locale)).toList();
         derivationForm.setDerivations(derivationsAsStr);

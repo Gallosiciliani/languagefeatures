@@ -19,6 +19,7 @@
         <module>derivations</module>
         <module>gs</module>
         <module>model</module>
+        <module>sicilian</module>
         <module>importing</module>
         <module>webapp</module>
     </modules>

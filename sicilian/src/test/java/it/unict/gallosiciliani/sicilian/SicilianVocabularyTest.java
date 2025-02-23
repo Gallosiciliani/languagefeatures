@@ -1,4 +1,4 @@
-package it.unict.gallosiciliani.importing.sicilianvocab;
+package it.unict.gallosiciliani.sicilian;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;

@@ -1,11 +1,10 @@
-package it.unict.gallosiciliani.importing.sicilianvocab;
+package it.unict.gallosiciliani.sicilian;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 

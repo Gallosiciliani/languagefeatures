@@ -1,13 +1,16 @@
 package it.unict.gallosiciliani.webapp.derivation;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
+import it.unict.gallosiciliani.derivations.DerivationPrinter;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
 import java.util.Iterator;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -23,9 +26,15 @@ public class DerivationServiceTest {
 
     @Test
     void shouldReturnNearestShortestDerivations(){
-        final NearestShortestDerivation actual=derivationService.derives("abbuccari", "böchè");
-        final Iterator<DerivationPathNode> actuaIt=actual.getDerivation().iterator();
-        new DerivationChecker(actuaIt.next())
+        checkBocheDerivations(derivationService.derives("abbuccari", "böchè"));
+    }
+
+    private void checkBocheDerivations(final NearestShortestDerivation actual){
+        final Iterator<DerivationPathNode> actualIt=actual.getDerivation().iterator();
+        final DerivationPrinter printer=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
+        final DerivationPathNode actual1=actualIt.next();
+        System.out.println("Derivation 1: "+printer.print(actual1, Locale.ENGLISH));
+        new DerivationChecker(actual1)
                 .inner("böchè", GSFeatures.NS+"vocal.5")
                 .inner("buchè", GSFeatures.NS+"elim.2")
                 .inner("bbuchè", GSFeatures.NS+"degem.8")
@@ -33,14 +42,27 @@ public class DerivationServiceTest {
                 .last("abbuccari");
 
         //two derivations found
-        new DerivationChecker(actuaIt.next())
+        final DerivationPathNode actual2=actualIt.next();
+        System.out.println("Derivation 2: "+printer.print(actual2, Locale.ENGLISH));
+        printer.print(actual2, Locale.ENGLISH);
+        new DerivationChecker(actual2)
                 .inner("böchè", GSFeatures.NS+"vocal.5")
                 .inner("buchè", GSFeatures.NS+"degem.8")
                 .inner("buccari", GSFeatures.NS+"degem.6")
                 .inner("bbuccari", GSFeatures.NS+"afer.1")
                 .last("abbuccari");
 
-        assertFalse(actuaIt.hasNext());
+        assertFalse(actualIt.hasNext());
+    }
+
+    @Test
+    void shouldFindLemmaEtymon() throws IOException {
+        final NearestShortestDerivation actual = derivationService.findSicilianEtymon("abentö");
+        final Iterator<DerivationPathNode> actualIt=actual.getDerivation().iterator();
+        new DerivationChecker(actualIt.next())
+                .inner("abentö", GSFeatures.NS+"vocal.5")
+                .inner("abentu", GSFeatures.NS+"degem.6")
+                .last("abbentu");
     }
 
 }

@@ -12,11 +12,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 
 import java.util.List;
 import java.util.Locale;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -38,6 +38,35 @@ public class DerivationHTMLControllerTest {
     @MockBean
     DerivationService derivationService;
 
+    private final String lemma="expectedLemma";
+    private final String etymon="expectedEtymon";
+    private final DerivationPathNode d0;
+    private final DerivationPathNode d1;
+    private final NearestShortestDerivation expectedDerivations;
+
+    DerivationHTMLControllerTest(){
+        final LinguisticPhenomenon p=mock(LinguisticPhenomenon.class);
+        when(p.getIRI()).thenReturn(GSFeatures.NS+"p");
+
+        final LinguisticPhenomenon q=mock(LinguisticPhenomenon.class);
+        when(q.getIRI()).thenReturn(GSFeatures.NS+"q");
+
+        d0=mock(DerivationPathNode.class);
+        when(d0.get()).thenReturn(lemma);
+        when(d0.getLinguisticPhenomenon()).thenReturn(p);
+        when(d0.prev()).thenReturn(new DerivationPathNodeImpl(etymon));
+
+        d1=mock(DerivationPathNode.class);
+        when(d1.get()).thenReturn(lemma);
+        when(d1.getLinguisticPhenomenon()).thenReturn(q);
+        when(d1.prev()).thenReturn(new DerivationPathNodeImpl(etymon));
+
+
+        expectedDerivations=mock(NearestShortestDerivation.class);
+        when(expectedDerivations.getDerivation()).thenReturn(List.of(d0, d1));
+
+    }
+
     @Test
     void shouldGetTheEmptyForm() throws Exception {
         mockMvc.perform(get("/derivation/").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
@@ -49,47 +78,31 @@ public class DerivationHTMLControllerTest {
 
     @Test
     void shouldReportSubmittedLemmaAndEtymon() throws Exception {
-        final String expectedLemma = "expectedLemma";
-        final String expectedEtymon = "expectedEtymon";
-        when(derivationService.derives(any(), any())).thenReturn(new NearestShortestDerivation(expectedLemma));
-        mockMvc.perform(post("/derivation/").param("lemma", expectedLemma).param("etymon", expectedEtymon))
+        when(derivationService.derives(etymon, lemma)).thenReturn(expectedDerivations);
+        mockMvc.perform(post("/derivation/").param("lemma", lemma).param("etymon", etymon))
                 .andExpect(status().isOk())
-                .andExpect(xpath("//input[@name='lemma']/@value").string(expectedLemma))
-                .andExpect(xpath("//input[@name='etymon']/@value").string(expectedEtymon));
+                .andExpect(xpath("//input[@name='lemma']/@value").string(lemma))
+                .andExpect(xpath("//input[@name='etymon']/@value").string(etymon));
     }
 
     @Test
-    void shouldReportDerivations() throws Exception {
-        final String lemma = "aLemma";
-        final String etymon = "eEtymon";
-
-        final LinguisticPhenomenon p=mock(LinguisticPhenomenon.class);
-        when(p.getIRI()).thenReturn(GSFeatures.NS+"p");
-
-        final LinguisticPhenomenon q=mock(LinguisticPhenomenon.class);
-        when(q.getIRI()).thenReturn(GSFeatures.NS+"q");
-
-        final DerivationPathNode d0=mock(DerivationPathNode.class);
-        when(d0.get()).thenReturn(lemma);
-        when(d0.getLinguisticPhenomenon()).thenReturn(p);
-        when(d0.prev()).thenReturn(new DerivationPathNodeImpl(etymon));
-
-        final DerivationPathNode d1=mock(DerivationPathNode.class);
-        when(d1.get()).thenReturn(lemma);
-        when(d1.getLinguisticPhenomenon()).thenReturn(q);
-        when(d1.prev()).thenReturn(new DerivationPathNodeImpl(etymon));
-
-
-        final NearestShortestDerivation expectedDerivations=mock(NearestShortestDerivation.class);
-        when(expectedDerivations.getDerivation()).thenReturn(List.of(d0, d1));
-
+    void shouldReportDerivationsFromEtymonToLemma() throws Exception {
         when(derivationService.derives(etymon, lemma)).thenReturn(expectedDerivations);
+        checkDerivations(post("/derivation/").param("lemma", lemma).param("etymon", etymon));
+    }
 
+    @Test
+    void shouldFindEtymonForLemma() throws Exception {
+        when(derivationService.findSicilianEtymon(lemma)).thenReturn(expectedDerivations);
+        checkDerivations(post("/derivation/").param("lemma", lemma).param("etymon", ""));
+    }
+
+    private void checkDerivations(final RequestBuilder request) throws Exception {
         final DerivationPrinter printer=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
         final String d0AsStr=printer.print(d0, locale);
         final String d1AsStr=printer.print(d1, locale);
 
-        mockMvc.perform(post("/derivation/").param("lemma", lemma).param("etymon", etymon))
+        mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(xpath("//ul[@id='derivations']/li[1]").string(d0AsStr))
                 .andExpect(xpath("//ul[@id='derivations']/li[2]").string(d1AsStr))

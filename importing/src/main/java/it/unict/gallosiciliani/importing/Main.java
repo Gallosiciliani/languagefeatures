@@ -5,11 +5,12 @@ import it.unict.gallosiciliani.derivations.DerivationBuilder;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.derivations.strategy.NearestStrategySelector;
+import it.unict.gallosiciliani.derivations.strategy.NotFartherStrategySelector;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.importing.pdf.generator.LexicalEntriesGenerator;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
 import it.unict.gallosiciliani.importing.pdf.parser.Parser;
-import it.unict.gallosiciliani.importing.sicilianvocab.SicilianVocabulary;
+import it.unict.gallosiciliani.sicilian.SicilianVocabulary;
 import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
@@ -36,7 +37,7 @@ public class Main {
         derivations=importWholeDictionary(pdfFilePath, startPage, endPage, "nicosiasperlinga-lemmas.txt");
         try(final GSFeatures gs=GSFeatures.loadLocal()){
             final List<RegexLinguisticPhenomenon> phenomena= RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
-            derivationBuilder=new DerivationBuilder(phenomena, new CompoundDerivationStrategyFactory(derivations, NearestStrategySelector.FACTORY));
+            derivationBuilder=new DerivationBuilder(phenomena, new CompoundDerivationStrategyFactory(derivations, NotFartherStrategySelector.FACTORY));
         }
     }
 
