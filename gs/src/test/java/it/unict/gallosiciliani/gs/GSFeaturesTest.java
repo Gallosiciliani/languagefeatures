@@ -1,10 +1,5 @@
 package it.unict.gallosiciliani.gs;
 
-import it.unict.gallosiciliani.derivations.DerivationBuilder;
-import it.unict.gallosiciliani.derivations.strategy.CompoundDerivationStrategyFactory;
-import it.unict.gallosiciliani.derivations.strategy.DerivationStrategyFactory;
-import it.unict.gallosiciliani.derivations.strategy.NotFartherStrategySelector;
-import it.unict.gallosiciliani.derivations.strategy.TargetedDerivationStrategySelectorFactory;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaConflictsDetector;
@@ -70,16 +65,6 @@ public class GSFeaturesTest {
 
     private RegexLinguisticPhenomenonCheckerFactory getChecker(final String featureIRI) throws IOException {
         return new RegexLinguisticPhenomenonCheckerFactory(getFeature(featureIRI));
-    }
-
-    /**
-     * Test that the given phenomenon replace the occurrences of src with replcamente
-     * @param featureIRI final feature code
-     * @param src the string to be replaced
-     * @param replacement the replacement string
-     */
-    private void checkReplacing(final String featureIRI, final String src, final String replacement) throws IOException {
-        getChecker(featureIRI, replacement).replacing(src);
     }
 
     /**
@@ -242,14 +227,80 @@ public class GSFeaturesTest {
         getChecker(NS+"leniz.17","un").atTheEnd(true, "unu");
     }
 
-    // leniz.19 -s- / s- > -s- / s-
+    /*
+     * Leniz 19 -chi- | -chì- | -chj- | -chï- > -ghj- | -ghï-
+     */
 
     /**
-     * -chi- / -chì- / -chj- / -chï- > -ghj- / -ghï-
+     * -chi- > -ghj-
+     * @throws IOException if not exists
      */
     @Test
-    void testLeniz19() throws IOException{
-        getChecker(NS+"leniz.19","ghj","ghï").betweenVowels(true, "chi","chì","chj","chï");
+    void testLeniz19a() throws IOException{
+       getChecker(NS+"leniz.19.a", "ghj").betweenVowels(true, "chi");
+    }
+
+    /**
+     * -chi- > -ghï-
+     * @throws IOException if not exists
+     */
+    @Test
+    void testLeniz19b() throws IOException{
+        getChecker(NS+"leniz.19.b", "ghï").betweenVowels(true, "chi");
+    }
+
+    /**
+     * -chì- > -ghj-
+     * @throws IOException if not exists
+     */
+    @Test
+    void testLeniz19c() throws IOException{
+        getChecker(NS+"leniz.19.c", "ghj").betweenVowels(true, "chì");
+    }
+
+    /**
+     * -chì- > -ghï-
+     * @throws IOException if not exists
+     */
+    @Test
+    void testLeniz19d() throws IOException{
+        getChecker(NS+"leniz.19.d", "ghï").betweenVowels(true, "chì");
+    }
+
+    /**
+     * -chj- > -ghj-
+     * @throws IOException if not exists
+     */
+    @Test
+    void testLeniz19e() throws IOException{
+        getChecker(NS+"leniz.19.e", "ghj").betweenVowels(true, "chj");
+    }
+
+    /**
+     * -chj- > -ghï-
+     * @throws IOException if not exists
+     */
+    @Test
+    void testLeniz19f() throws IOException{
+        getChecker(NS+"leniz.19.f", "ghï").betweenVowels(true, "chj");
+    }
+
+    /**
+     * -chï- > -ghj-
+     * @throws IOException if not exists
+     */
+    @Test
+    void testLeniz19g() throws IOException{
+        getChecker(NS+"leniz.19.g", "ghj").betweenVowels(true, "chï");
+    }
+
+    /**
+     * -chï- > -ghï-
+     * @throws IOException if not exists
+     */
+    @Test
+    void testLeniz19h() throws IOException{
+        getChecker(NS+"leniz.19.h", "ghï").betweenVowels(true, "chï");
     }
 
     /**
@@ -316,7 +367,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem7() throws IOException{
-        getChecker(NS+"degem.7","c").replacing("cc");
+        getChecker(NS+"degem.7","c").atTheBeginning(false, "cc")
+                .inside(false, "cc").notApply("123ccari");
     }
 
     /**
@@ -441,12 +493,35 @@ public class GSFeaturesTest {
 
     //ASSIBILAZIONE
 
+    /*
+     * assib.1 si >  sge / sgë / sgi
+     */
+
     /**
-     * si >  sge / sgë / sgi
+     * si > sge
+     * @throws IOException missing phenomenon
      */
     @Test
-    void testAssib1() throws IOException{
-        getChecker(NS+"assib.1","sge","sgë","sgi").replacing("si");
+    void testAssib1a() throws IOException{
+        getChecker(NS+"assib.1.a","sge").replacing("si");
+    }
+
+    /**
+     * si > sgë
+     * @throws IOException missing phenomenon
+     */
+    @Test
+    void testAssib1b() throws IOException{
+        getChecker(NS+"assib.1.b","sgë").replacing("si");
+    }
+
+    /**
+     * si > sgi
+     * @throws IOException missing phenomenon
+     */
+    @Test
+    void testAssib1c() throws IOException{
+        getChecker(NS+"assib.1.c","sgi").replacing("si");
     }
 
     /**
@@ -484,17 +559,42 @@ public class GSFeaturesTest {
                 .replacing("cè");
     }
 
+    /*
+     * Assib.6 ci > sge | sgë | sgi
+     */
     /**
-     * ci > sge / sgë / sgi
+     * ci > sge
+     * @throws IOException on missing phenomenon
      */
     @Test
-    void testAssib6() throws IOException{
-        getChecker(NS+"assib.6","sge", "sgë", "sgi")
+    void testAssib6a() throws IOException{
+        getChecker(NS+"assib.6.a","sge")
                 .replacing("ci");
     }
 
     /**
-     * cì > sgì
+     * ci > sgë
+     * @throws IOException on missing phenomenon
+     */
+    @Test
+    void testAssib6b() throws IOException{
+        getChecker(NS+"assib.6.b","sgë")
+                .replacing("ci");
+    }
+
+    /**
+     * ci > sgë
+     * @throws IOException on missing phenomenon
+     */
+    @Test
+    void testAssib6c() throws IOException{
+        getChecker(NS+"assib.6.c", "sgi")
+                .replacing("ci");
+    }
+
+    /**
+     * cì > sgi
+     * @throws IOException on missing phenomenon
      */
     @Test
     void testAssib7() throws IOException{
@@ -541,8 +641,6 @@ public class GSFeaturesTest {
 
     /**
      * -rce- / -rcè / -rci-/ -rcì- / -rcï- > -rze- / -rzè / -rzi- / -rzì- / -rzï-
-     *
-     * ([aàáäeèéëë̀iìíïoòóöö̀uùúü])rc([eiìï].+|è$)
      */
     @Test
     void testAssib11() throws IOException{
@@ -640,18 +738,29 @@ public class GSFeaturesTest {
 
     /**
      * i > ë
+     * @throws IOException on missing phenomenon
      */
     @Test
-    void testVocal2() throws IOException{
-        getChecker(NS+"vocal.2", "ë").replacing("i");
+    void testVocal2a() throws IOException{
+        getChecker(NS+"vocal.2.a", "ë").replacing("i");
     }
 
     /**
-     * ì > ë | é (= ë̀)
+     * ì > ë
+     * @throws IOException on missing phenomenon
      */
     @Test
-    void testVocal2Bis() throws IOException{
-        getChecker(NS+"vocal.2bis", "ë", "ë̀").replacing("ì");
+    void testVocal2b() throws IOException{
+        getChecker(NS+"vocal.2.b", "ë").replacing("ì");
+    }
+
+    /**
+     * ì > ë̀
+     * @throws IOException on missing phenomenon
+     */
+    @Test
+    void testVocal2c() throws IOException{
+        getChecker(NS+"vocal.2.c",  "ë̀").replacing("ì");
     }
 
     /**
@@ -665,18 +774,29 @@ public class GSFeaturesTest {
 
     /**
      * u > ö
+     * @throws IOException on missing phenomenon
      */
     @Test
-    void testVocal5() throws IOException{
-        getChecker(NS+"vocal.5", "ö").replacing("u");
+    void testVocal5a() throws IOException{
+        getChecker(NS+"vocal.5.a", "ö").replacing("u");
     }
 
     /**
-     * ù > ö | ó  (= ö̀)̀
+     * ù > ö
+     * @throws IOException on missing phenomenon
      */
     @Test
-    void testVocal5Bis() throws IOException{
-        getChecker(NS+"vocal.5bis", "ö","ö̀").replacing("ù");
+    void testVocal5b() throws IOException{
+        getChecker(NS+"vocal.5.b", "ö").replacing("ù");
+    }
+
+    /**
+     * ù > ö̀
+     * @throws IOException on missing phenomenon
+     */
+    @Test
+    void testVocal5c() throws IOException{
+        getChecker(NS+"vocal.5.c", "ö̀").replacing("ù");
     }
 
     /**
@@ -824,12 +944,26 @@ public class GSFeaturesTest {
         getChecker(NS+"elim.3", "br").atTheBeginning(true, "r");
     }
 
+    /*
+     * elim.4 i- > g-|gi-
+     */
+
     /**
-     * i- > g- /gi-
+     * i- > g-
+     * @throws IOException on missing phenomenon
      */
     @Test
-    void testElim4() throws IOException{
-        getChecker(NS+"elim.4", "g","gi").atTheBeginning(true, "i");
+    void testElim4a() throws IOException{
+        getChecker(NS+"elim.4.a", "g").atTheBeginning(true, "i");
+    }
+
+    /**
+     * i- > gi-
+     * @throws IOException on missing phenomenon
+     */
+    @Test
+    void testElim4b() throws IOException{
+        getChecker(NS+"elim.4.b", "gi").atTheBeginning(true, "i");
     }
 
     /**

@@ -32,21 +32,11 @@ public class DerivationServiceTest {
     private void checkBocheDerivations(final NearestShortestDerivation actual){
         final Iterator<DerivationPathNode> actualIt=actual.getDerivation().iterator();
         final DerivationPrinter printer=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
-        final DerivationPathNode actual1=actualIt.next();
-        System.out.println("Derivation 1: "+printer.print(actual1, Locale.ENGLISH));
-        new DerivationChecker(actual1)
-                .inner("böchè", GSFeatures.NS+"vocal.5")
-                .inner("buchè", GSFeatures.NS+"elim.2")
-                .inner("bbuchè", GSFeatures.NS+"degem.8")
-                .inner("bbuccari",GSFeatures.NS+"afer.1")
-                .last("abbuccari");
-
-        //two derivations found
-        final DerivationPathNode actual2=actualIt.next();
-        System.out.println("Derivation 2: "+printer.print(actual2, Locale.ENGLISH));
-        printer.print(actual2, Locale.ENGLISH);
-        new DerivationChecker(actual2)
-                .inner("böchè", GSFeatures.NS+"vocal.5")
+        final DerivationPathNode actualDerivation=actualIt.next();
+        System.out.println("Derivation 2: "+printer.print(actualDerivation, Locale.ENGLISH));
+        printer.print(actualDerivation, Locale.ENGLISH);
+        new DerivationChecker(actualDerivation)
+                .inner("böchè", GSFeatures.NS+"vocal.5.a")
                 .inner("buchè", GSFeatures.NS+"degem.8")
                 .inner("buccari", GSFeatures.NS+"degem.6")
                 .inner("bbuccari", GSFeatures.NS+"afer.1")
@@ -60,7 +50,7 @@ public class DerivationServiceTest {
         final NearestShortestDerivation actual = derivationService.findSicilianEtymon("abentö");
         final Iterator<DerivationPathNode> actualIt=actual.getDerivation().iterator();
         new DerivationChecker(actualIt.next())
-                .inner("abentö", GSFeatures.NS+"vocal.5")
+                .inner("abentö", GSFeatures.NS+"vocal.5.a")
                 .inner("abentu", GSFeatures.NS+"degem.6")
                 .last("abbentu");
     }

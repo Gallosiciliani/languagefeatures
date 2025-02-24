@@ -12,10 +12,10 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
 /**
- * Test for {@link DerivationBuilder}
+ * Test for {@link DerivationBuilderWithStrategy}
  * @author Cristiano Longo
  */
-public class DerivationBuilderTest {
+public class DerivationBuilderWithStrategyTest {
 
     private final TestDerivations d=new TestDerivations();
 
@@ -41,7 +41,7 @@ public class DerivationBuilderTest {
 
         final DerivationStrategyFactory f=Mockito.mock(DerivationStrategyFactory.class);
         when(f.build(argThat(new DerivationMatcher(d.s)))).thenReturn(strategyForS);
-        final DerivationBuilder b=new DerivationBuilder(List.of(d.p,d.q), f);
+        final DerivationBuilderWithStrategy b=new DerivationBuilderWithStrategy(List.of(d.p,d.q), f);
         b.apply(d.s.get());
 
         verify(strategyForS, never()).end();
