@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.importing.pdf.writing;
 
-import it.unict.gallosiciliani.importing.persistence.FileEntityManagerFactoryHelper;
+import it.unict.gallosiciliani.model.persistence.FileEntityManagerFactoryHelper;
 
 import java.io.IOException;
 import java.io.InputStream;

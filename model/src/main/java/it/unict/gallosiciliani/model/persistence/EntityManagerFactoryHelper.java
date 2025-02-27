@@ -1,4 +1,4 @@
-package it.unict.gallosiciliani.importing.persistence;
+package it.unict.gallosiciliani.model.persistence;
 
 import cz.cvut.kbss.jopa.Persistence;
 import cz.cvut.kbss.jopa.model.EntityManager;
@@ -42,6 +42,8 @@ public class EntityManagerFactoryHelper implements AutoCloseable{
         props.put(JOPAPersistenceProperties.SCAN_PACKAGE, "it.unict.gallosiciliani.model");
         props.put(JOPAPersistenceProperties.JPA_PERSISTENCE_PROVIDER, JOPAPersistenceProvider.class.getName());
         props.put(JOPAPersistenceProperties.DATA_SOURCE_CLASS, JenaDataSource.class.getName());
+//        props.put(JOPAPersistenceProperties.CLASSPATH_SCANNER_CLASS, BootAwareClasspathScanner.class.getName());
+//        props.put(JenaOntoDriverProperties.JENA_ISOLATION_STRATEGY, JenaOntoDriverProperties.READ_COMMITTED);
 //        // View transactional changes during transaction
 //        props.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
 

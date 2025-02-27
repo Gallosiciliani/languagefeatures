@@ -2,9 +2,9 @@ package it.unict.gallosiciliani.importing.api;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
-import it.unict.gallosiciliani.importing.persistence.EntityManagerFactoryHelper;
-import it.unict.gallosiciliani.importing.persistence.FileEntityManagerFactoryHelper;
-import it.unict.gallosiciliani.importing.persistence.InMemoryEntityManagerFactoryHelper;
+import it.unict.gallosiciliani.model.persistence.EntityManagerFactoryHelper;
+import it.unict.gallosiciliani.model.persistence.FileEntityManagerFactoryHelper;
+import it.unict.gallosiciliani.model.persistence.InMemoryEntityManagerFactoryHelper;
 import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.model.lemon.lime.Lime;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;

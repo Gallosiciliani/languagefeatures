@@ -1,4 +1,4 @@
-package it.unict.gallosiciliani.importing.persistence;
+package it.unict.gallosiciliani.model.persistence;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;

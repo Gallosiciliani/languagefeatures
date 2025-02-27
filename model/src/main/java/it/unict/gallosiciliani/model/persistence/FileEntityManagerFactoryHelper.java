@@ -1,4 +1,4 @@
-package it.unict.gallosiciliani.importing.persistence;
+package it.unict.gallosiciliani.model.persistence;
 
 import cz.cvut.kbss.jopa.model.JOPAPersistenceProperties;
 import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;

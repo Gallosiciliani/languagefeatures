@@ -12,27 +12,27 @@
 
 <https://gallosiciliani.unict.it/ns/gs-features> rdf:type owl:Ontology ;
                                                   owl:imports <https://gallosiciliani.unict.it/ns/liph> ;
-                                                  dcterms:contributor "Daniele Francesco Santamaria" ,
+                                                  dcterms:contributor "Alessandro De Angelis" ,
+                                                                      "Angela Castiglione" ,
+                                                                      "Daniele Francesco Santamaria" ,
                                                                       "Domenico Cantone" ,
+                                                                      "Elvira Assenza" ,
                                                                       "Marianna Nicolosi Asmundo" ,
+                                                                      "Michele Cosentino" ,
                                                                       "Salvatore Menza" ,
-                                                                      "Vincenzo Nicolò Di Caro" ,
-                                                                      "Alessandro De Angelis",
-                                                                      "Elvira Assenza",
-                                                                      "Michele Cosentino",
-                                                                      "Angela Castiglione",
-                                                                      "Sara Natalia Cardullo";
+                                                                      "Sara Natalia Cardullo" ,
+                                                                      "Vincenzo Nicolò Di Caro" ;
                                                   dcterms:created "2024-08-08"^^xsd:date ;
                                                   dcterms:creator "Cristiano Longo" ;
                                                   dcterms:description """Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily.
 
 This work has been created in the scope of the project PRIN 2022 PNRR “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
                                                   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-                                                  dcterms:modified "2025-02-24" ;
+                                                  dcterms:modified "2025-02-27" ;
                                                   dcterms:title "Gallo-Sicilian features"@en ;
                                                   rdfs:comment "Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily." ;
                                                   rdfs:label "Gallo-Sicilian features" ;
-                                                  owl:versionInfo "0.7.0" .
+                                                  owl:versionInfo "0.8.0" .
 
 #################################################################
 #    Annotation properties
@@ -1784,11 +1784,7 @@ liph:replacement rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.6
 :assib.6 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :assib ;
-         rdfs:label "ci > sge | sgë | sgi" ;
-         liph:regex "ci" ;
-         liph:replacement "sge" ,
-                          "sgi" ,
-                          "sgë" .
+         rdfs:label "ci > sge | sgë | sgi" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.6.a

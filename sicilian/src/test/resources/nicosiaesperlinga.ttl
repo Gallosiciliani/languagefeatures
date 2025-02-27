@@ -1,0 +1,40 @@
+PREFIX :        <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX eurio:   <http://data.europa.eu/s66#>
+PREFIX lime:    <http://www.w3.org/ns/lemon/lime#>
+PREFIX liph:    <https://gallosiciliani.unict.it/ns/liph#>
+PREFIX owl:     <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:     <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+:lexicon  rdf:type              lime:Lexicon , owl:NamedIndividual;
+        lime:entry              :entry0 , :entry1.
+
+:entry0  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entry0-canonicalForm .
+
+:entry0-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "entry0" .
+
+:entry1  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entry1-canonicalForm .
+
+:entry1-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "entry1" .
+
+:entry2  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entry2-canonicalForm .
+
+:entry2-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "entry2" .

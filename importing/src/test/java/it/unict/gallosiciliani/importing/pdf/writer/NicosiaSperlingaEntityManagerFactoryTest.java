@@ -8,7 +8,7 @@ import cz.cvut.kbss.jopa.model.JOPAPersistenceProvider;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
 import cz.cvut.kbss.ontodriver.jena.JenaDataSource;
 import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
-import it.unict.gallosiciliani.importing.persistence.FileEntityManagerFactoryHelper;
+import it.unict.gallosiciliani.model.persistence.FileEntityManagerFactoryHelper;
 import it.unict.gallosiciliani.importing.pdf.writing.NicosiaSperlingaEntityManagerFactory;
 import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.model.lemon.lime.Lime;
