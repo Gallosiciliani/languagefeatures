@@ -1,6 +1,8 @@
 package it.unict.gallosiciliani.sicilian;
 
 import it.unict.gallosiciliani.derivations.*;
+import it.unict.gallosiciliani.derivations.strategy.CompoundDerivationStrategyFactory;
+import it.unict.gallosiciliani.derivations.strategy.NearestStrategySelector;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -27,12 +29,14 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
     SicilianToNicosiaESperlingaDerivations() throws IOException {
         try (final GSFeatures gs = GSFeatures.loadLocal(); final NicosiaESperlinga nicosiaESperlinga=new NicosiaESperlinga()) {
             derivations=nicosiaESperlinga.getAllForms().map((f)->new NearestShortestDerivation(f.getWrittenRep())).toList();
-            derivationBuilder = new BruteForceDerivationBuilder(gs.getRegexLinguisticPhenomena(), derivations);
+            derivationBuilder=new DerivationBuilderWithStrategy(gs.getRegexLinguisticPhenomena(), new CompoundDerivationStrategyFactory(derivations, NearestStrategySelector.FACTORY));
+            //            derivationBuilder = new BruteForceDerivationBuilder(gs.getRegexLinguisticPhenomena(), derivations);
         }
     }
 
     @Override
     public void accept(final String sicilianVocabularyEntry) {
+        System.out.println("Processing "+sicilianVocabularyEntry);
         final long startTime=System.currentTimeMillis();
         derivationBuilder.apply(sicilianVocabularyEntry);
         final long endTime=System.currentTimeMillis();
