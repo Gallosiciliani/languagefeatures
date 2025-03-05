@@ -1,6 +1,8 @@
 package it.unict.gallosiciliani.sicilian;
 
 import it.unict.gallosiciliani.derivations.*;
+import it.unict.gallosiciliani.derivations.strategy.NearestStrategySelector;
+import it.unict.gallosiciliani.derivations.strategy.NotFartherStrategySelector;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -24,10 +26,10 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
     private int processedEntries=0;
     private long totalProcessingTime=0;
 
-    SicilianToNicosiaESperlingaDerivations() throws IOException {
+    SicilianToNicosiaESperlingaDerivations(final DerivationBuilderFactory derivationBuilderFactory) throws IOException {
         try (final GSFeatures gs = GSFeatures.loadLocal(); final NicosiaESperlinga nicosiaESperlinga=new NicosiaESperlinga()) {
             derivations=nicosiaESperlinga.getAllForms().map((f)->new NearestShortestDerivation(f.getWrittenRep())).toList();
-            derivationBuilder = new BruteForceDerivationBuilder(gs.getRegexLinguisticPhenomena(), derivations);
+            derivationBuilder=derivationBuilderFactory.build(gs.getRegexLinguisticPhenomena(), derivations);
         }
     }
 
@@ -60,7 +62,9 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
     }
 
     public static void main(final String[] args) throws IOException {
-        final SicilianToNicosiaESperlingaDerivations d=new SicilianToNicosiaESperlingaDerivations();
+        final DerivationBuilderFactory derivationBuilderFactory=args.length<2 ? BruteForceDerivationBuilder.FACTORY
+                : "nearest".equals(args[1]) ? NearestStrategySelector.DERIVATION_BUILDER_FACTORY : NotFartherStrategySelector.DERIVATION_BUILDER_FACTORY;
+        final SicilianToNicosiaESperlingaDerivations d=new SicilianToNicosiaESperlingaDerivations(derivationBuilderFactory);
         SicilianVocabulary.visit(d);
         try(final FileWriter w=new FileWriter(args[0])){
             d.writeNearestShortestDerivations(w);

@@ -6,6 +6,13 @@ import org.apache.commons.text.similarity.LevenshteinDistance;
 import java.util.List;
 
 public class BruteForceDerivationBuilder implements DerivationBuilder{
+
+    public static final DerivationBuilderFactory FACTORY=new DerivationBuilderFactory() {
+        @Override
+        public DerivationBuilder build(List<? extends LinguisticPhenomenon> phenomena, List<NearestShortestDerivation> targets) {
+            return new BruteForceDerivationBuilder(phenomena, targets);
+        }
+    };
     private final List<? extends LinguisticPhenomenon> phenomena;
     private final List<NearestShortestDerivation> targets;
 
@@ -17,23 +24,31 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
     @Override
     public void apply(final String src){
         final DerivationPathNode currentDerivation=new DerivationPathNodeImpl(src);
-        apply(currentDerivation, 0);
+        System.out.println(apply(currentDerivation, 0)+" derivations for "+src);
     }
 
-    private void apply(final DerivationPathNode currentDerivation, final int currentPhenomenaIndex) {
+    /**
+     *
+     * @param currentDerivation
+     * @param currentPhenomenaIndex
+     * @return number of leafs of the derivation tree rooted in the current derivation
+     */
+    private int apply(final DerivationPathNode currentDerivation, final int currentPhenomenaIndex) {
         if (currentPhenomenaIndex==phenomena.size()){
             submitToTargets(currentDerivation);
-            return;
+            return 1;
         }
 
+
         //current phenomenon not applied
-        apply(currentDerivation, currentPhenomenaIndex+1);
+        int leafs=apply(currentDerivation, currentPhenomenaIndex+1);
         //current phenomenon applied
         final LinguisticPhenomenon currentPhenomenon= phenomena.get(currentPhenomenaIndex);
         for(final String derivedString : currentPhenomenon.apply(currentDerivation.get())){
             final DerivationPathNode newDerivation=new DerivationPathNodeImpl(derivedString, currentDerivation, currentPhenomenon);
-            apply(newDerivation, currentPhenomenaIndex+1);
+            leafs+=apply(newDerivation, currentPhenomenaIndex+1);
         }
+        return leafs;
     }
 
     private void submitToTargets(final DerivationPathNode derivation){

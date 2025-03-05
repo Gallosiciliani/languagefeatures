@@ -1,5 +1,7 @@
 package it.unict.gallosiciliani.derivations.strategy;
 
+import it.unict.gallosiciliani.derivations.DerivationBuilderFactory;
+import it.unict.gallosiciliani.derivations.DerivationBuilderWithStrategyFactory;
 import lombok.Getter;
 
 import java.util.Collection;
@@ -12,6 +14,7 @@ import java.util.LinkedList;
 public class NotFartherStrategySelector implements TargetedDerivationStrategySelector {
 
     public static TargetedDerivationStrategySelectorFactory FACTORY= NotFartherStrategySelector::new;
+    public static DerivationBuilderFactory DERIVATION_BUILDER_FACTORY=new DerivationBuilderWithStrategyFactory(FACTORY);
 
     @Getter
     private final Collection<DerivationStrategy> selectedStrategies;
