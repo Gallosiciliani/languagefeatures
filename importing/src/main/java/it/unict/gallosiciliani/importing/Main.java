@@ -1,8 +1,8 @@
 package it.unict.gallosiciliani.importing;
 
-import it.unict.gallosiciliani.derivations.BruteForceDerivationBuilder;
-import it.unict.gallosiciliani.derivations.DerivationPathNode;
-import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
+import it.unict.gallosiciliani.derivations.*;
+import it.unict.gallosiciliani.derivations.strategy.CompoundDerivationStrategyFactory;
+import it.unict.gallosiciliani.derivations.strategy.NearestStrategySelector;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.importing.pdf.generator.LexicalEntriesGenerator;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
@@ -28,15 +28,14 @@ public class Main {
     private int processedEntries=0;
     private long totalProcessingTime=0;
     private final List<NearestShortestDerivation> derivations;
-    private final BruteForceDerivationBuilder derivationBuilder;
+    private final DerivationBuilder derivationBuilder;
 //    private final DerivationBuilderWithStrategy derivationBuilder;
 
     Main(final String pdfFilePath, final int startPage, final int endPage) throws IOException {
         derivations=importWholeDictionary(pdfFilePath, startPage, endPage, "nicosiasperlinga-lemmas.txt");
         try(final GSFeatures gs=GSFeatures.loadLocal()){
             final List<RegexLinguisticPhenomenon> phenomena= RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
-//            derivationBuilder=new DerivationBuilderWithStrategy(phenomena, new CompoundDerivationStrategyFactory(derivations, NotFartherStrategySelector.FACTORY));
-            derivationBuilder=new BruteForceDerivationBuilder(phenomena, derivations);
+            derivationBuilder=new DerivationBuilderWithStrategy(phenomena, new CompoundDerivationStrategyFactory(derivations, NearestStrategySelector.FACTORY));
         }
     }
 
@@ -44,8 +43,7 @@ public class Main {
         derivations=importDictionaryEntriesFromFile(entriesFilePath);
         try(final GSFeatures gs=GSFeatures.loadLocal()){
             final List<RegexLinguisticPhenomenon> phenomena= RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
-//            derivationBuilder=new DerivationBuilderWithStrategy(phenomena, new CompoundDerivationStrategyFactory(derivations, NearestStrategySelector.FACTORY));
-            derivationBuilder=new BruteForceDerivationBuilder(phenomena, derivations);
+            derivationBuilder=new DerivationBuilderWithStrategy(phenomena, new CompoundDerivationStrategyFactory(derivations, NearestStrategySelector.FACTORY));
         }
     }
 

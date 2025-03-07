@@ -1,17 +1,11 @@
 package it.unict.gallosiciliani.sicilian;
 
 import it.unict.gallosiciliani.derivations.*;
-import it.unict.gallosiciliani.derivations.strategy.NearestStrategySelector;
-import it.unict.gallosiciliani.derivations.strategy.NotFartherStrategySelector;
 import it.unict.gallosiciliani.gs.GSFeatures;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
+import it.unict.gallosiciliani.model.lemon.ontolex.Form;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -21,15 +15,16 @@ import java.util.function.Consumer;
  */
 public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> {
 
-    private final List<NearestShortestDerivation> derivations;
-    private final DerivationBuilder derivationBuilder;
+    private final BruteForceDerivationBuilder derivationBuilder;
     private int processedEntries=0;
     private long totalProcessingTime=0;
 
-    SicilianToNicosiaESperlingaDerivations(final DerivationBuilderFactory derivationBuilderFactory) throws IOException {
+    SicilianToNicosiaESperlingaDerivations() throws IOException {
         try (final GSFeatures gs = GSFeatures.loadLocal(); final NicosiaESperlinga nicosiaESperlinga=new NicosiaESperlinga()) {
-            derivations=nicosiaESperlinga.getAllForms().map((f)->new NearestShortestDerivation(f.getWrittenRep())).toList();
-            derivationBuilder=derivationBuilderFactory.build(gs.getRegexLinguisticPhenomena(), derivations);
+            //derivations=nicosiaESperlinga.getAllForms().map((f)->new NearestShortestDerivation(f.getWrittenRep())).toList();
+            final List<String> lemmas=nicosiaESperlinga.getAllForms().map(Form::getWrittenRep).toList();
+            derivationBuilder=new BruteForceDerivationBuilder(gs.getRegexLinguisticPhenomena(), lemmas);
+//                    derivationBuilderFactory.build(gs.getRegexLinguisticPhenomena(), lemmas);
         }
     }
 
@@ -50,21 +45,20 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
      * @throws IOException if unable to write to the output stream
      */
     public void writeNearestShortestDerivations(final Appendable out) throws IOException {
-        final DerivationPrinter derivationPrinter=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
-        try(final CSVPrinter printer=new CSVPrinter(out, CSVFormat.DEFAULT)) {
-            for (final NearestShortestDerivation nearest : derivations) {
-                final BigDecimal distanceNormalized = BigDecimal.valueOf(nearest.getDistance()).divide(BigDecimal.valueOf(nearest.getTarget().length()), new MathContext(2, RoundingMode.HALF_UP));
-
-                for (final DerivationPathNode n : nearest.getDerivation())
-                    printer.printRecord(nearest.getTarget(), nearest.getDistance(), distanceNormalized, derivationPrinter.print(n, Locale.ENGLISH));
-            }
-        }
+        derivationBuilder.write(out, GSFeatures.LABEL_PROVIDER_ID, Locale.ENGLISH);
+//        final DerivationPrinter derivationPrinter=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
+//        try(final CSVPrinter printer=new CSVPrinter(out, CSVFormat.DEFAULT)) {
+//            for (final NearestShortestDerivation nearest : derivations) {
+//                final BigDecimal distanceNormalized = BigDecimal.valueOf(nearest.getDistance()).divide(BigDecimal.valueOf(nearest.getTarget().length()), new MathContext(2, RoundingMode.HALF_UP));
+//
+//                for (final DerivationPathNode n : nearest.getDerivation())
+//                    printer.printRecord(nearest.getTarget(), nearest.getDistance(), distanceNormalized, derivationPrinter.print(n, Locale.ENGLISH));
+//            }
+//        }
     }
 
     public static void main(final String[] args) throws IOException {
-        final DerivationBuilderFactory derivationBuilderFactory=args.length<2 ? BruteForceDerivationBuilder.FACTORY
-                : "nearest".equals(args[1]) ? NearestStrategySelector.DERIVATION_BUILDER_FACTORY : NotFartherStrategySelector.DERIVATION_BUILDER_FACTORY;
-        final SicilianToNicosiaESperlingaDerivations d=new SicilianToNicosiaESperlingaDerivations(derivationBuilderFactory);
+        final SicilianToNicosiaESperlingaDerivations d=new SicilianToNicosiaESperlingaDerivations();
         SicilianVocabulary.visit(d);
         try(final FileWriter w=new FileWriter(args[0])){
             d.writeNearestShortestDerivations(w);

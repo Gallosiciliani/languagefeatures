@@ -1,24 +1,25 @@
 package it.unict.gallosiciliani.derivations;
 
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
-import org.apache.commons.text.similarity.LevenshteinDistance;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
+import java.util.Locale;
 
 public class BruteForceDerivationBuilder implements DerivationBuilder{
 
-    public static final DerivationBuilderFactory FACTORY=new DerivationBuilderFactory() {
-        @Override
-        public DerivationBuilder build(List<? extends LinguisticPhenomenon> phenomena, List<NearestShortestDerivation> targets) {
-            return new BruteForceDerivationBuilder(phenomena, targets);
-        }
-    };
     private final List<? extends LinguisticPhenomenon> phenomena;
-    private final List<NearestShortestDerivation> targets;
+    private final ShortestDerivationMap targets;
 
-    public BruteForceDerivationBuilder(final List<? extends LinguisticPhenomenon> phenomena, final List<NearestShortestDerivation> targets){
+    public BruteForceDerivationBuilder(final List<? extends LinguisticPhenomenon> phenomena, final List<String> targets){
         this.phenomena=phenomena;
-        this.targets=targets;
+        this.targets=new ShortestDerivationMap(targets);
     }
 
     @Override
@@ -35,7 +36,7 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
      */
     private int apply(final DerivationPathNode currentDerivation, final int currentPhenomenaIndex) {
         if (currentPhenomenaIndex==phenomena.size()){
-            submitToTargets(currentDerivation);
+            targets.accept(currentDerivation);
             return 1;
         }
 
@@ -51,21 +52,15 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
         return leafs;
     }
 
-    private void submitToTargets(final DerivationPathNode derivation){
-        targets.forEach((t)->{
-            final int distance= LevenshteinDistance.getDefaultInstance().apply(t.getTarget(), derivation.get());
-            final TargetedDerivation d=new TargetedDerivation() {
-                @Override
-                public DerivationPathNode getDerivation() {
-                    return derivation;
-                }
-
-                @Override
-                public int getDistance() {
-                    return distance;
-                }
-            };
-            t.accept(d);
-        });
+    /**
+     * write a set of rows representing the current derivations for the target lemmas.
+     *
+     * @param out                     the output stream
+     * @param phenomenonLabelProvider to print phenomena
+     * @param locale locale
+     * @throws IOException if unable to write to the output stream
+     */
+    public void write(final Appendable out, final LinguisticPhenomenonLabelProvider phenomenonLabelProvider, final Locale locale) throws IOException {
+        targets.write(out, phenomenonLabelProvider, locale);
     }
 }
