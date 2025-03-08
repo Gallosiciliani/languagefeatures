@@ -30,6 +30,12 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
 
     @Override
     public void accept(final String sicilianVocabularyEntry) {
+        final int numwords=sicilianVocabularyEntry.split("\\s").length;
+        if (numwords>1){
+            System.err.println("IGNORED "+sicilianVocabularyEntry);
+            return;
+        }
+
         final long startTime=System.currentTimeMillis();
         derivationBuilder.apply(sicilianVocabularyEntry);
         final long endTime=System.currentTimeMillis();
@@ -44,8 +50,8 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
      * @param out the output stream
      * @throws IOException if unable to write to the output stream
      */
-    public void writeNearestShortestDerivations(final Appendable out) throws IOException {
-        derivationBuilder.write(out, GSFeatures.LABEL_PROVIDER_ID, Locale.ENGLISH);
+    public int writeNearestShortestDerivations(final Appendable out) throws IOException {
+        return derivationBuilder.write(out, GSFeatures.LABEL_PROVIDER_ID, Locale.ENGLISH);
 //        final DerivationPrinter derivationPrinter=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
 //        try(final CSVPrinter printer=new CSVPrinter(out, CSVFormat.DEFAULT)) {
 //            for (final NearestShortestDerivation nearest : derivations) {
@@ -61,11 +67,12 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
         final SicilianToNicosiaESperlingaDerivations d=new SicilianToNicosiaESperlingaDerivations();
         SicilianVocabulary.visit(d);
         try(final FileWriter w=new FileWriter(args[0])){
-            d.writeNearestShortestDerivations(w);
+            final int n=d.writeNearestShortestDerivations(w);
+            w.flush();
+            System.out.println("Processed "+d.processedEntries+" entries");
+            System.out.println("Total processing time "+d.totalProcessingTime);
+            System.out.println("Found etymon for "+n+" lemmas");
         }
-        System.out.println("Processed "+d.processedEntries+" entries");
-        System.out.println("Total processing time "+d.totalProcessingTime);
-
     }
 
 }

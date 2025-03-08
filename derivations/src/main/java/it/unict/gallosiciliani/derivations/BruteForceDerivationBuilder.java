@@ -2,13 +2,8 @@ package it.unict.gallosiciliani.derivations;
 
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,8 +25,8 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
 
     /**
      *
-     * @param currentDerivation
-     * @param currentPhenomenaIndex
+     * @param currentDerivation derivation branch
+     * @param currentPhenomenaIndex next phenomenon
      * @return number of leafs of the derivation tree rooted in the current derivation
      */
     private int apply(final DerivationPathNode currentDerivation, final int currentPhenomenaIndex) {
@@ -60,7 +55,7 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
      * @param locale locale
      * @throws IOException if unable to write to the output stream
      */
-    public void write(final Appendable out, final LinguisticPhenomenonLabelProvider phenomenonLabelProvider, final Locale locale) throws IOException {
-        targets.write(out, phenomenonLabelProvider, locale);
+    public int write(final Appendable out, final LinguisticPhenomenonLabelProvider phenomenonLabelProvider, final Locale locale) throws IOException {
+        return targets.write(out, phenomenonLabelProvider, locale);
     }
 }

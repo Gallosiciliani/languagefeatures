@@ -1,13 +1,7 @@
 package it.unict.gallosiciliani.derivations;
 
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -37,13 +31,20 @@ public class ShortestDerivationMap implements Consumer<DerivationPathNode> {
      * @param out                     the output stream
      * @param phenomenonLabelProvider to print phenomena
      * @param locale    locale
+     * @return number of lemmas with an etymon
      * @throws IOException if unable to write to the output stream
      */
-    public void write(final Appendable out, final LinguisticPhenomenonLabelProvider phenomenonLabelProvider, final Locale locale) throws IOException {
+    public int write(final Appendable out, final LinguisticPhenomenonLabelProvider phenomenonLabelProvider, final Locale locale) throws IOException {
         final DerivationPrinter derivationPrinter=new DerivationPrinter(phenomenonLabelProvider);
-        for(final ShortestDerivation entry: lemmaToDerivations.values())
-            for(final DerivationPathNode d: entry.getDerivation())
-                derivationPrinter.print(d,locale);
+        int n=0;
+        for(final ShortestDerivation entry: lemmaToDerivations.values()) {
+            if (entry.getDerivation().isEmpty())
+                continue;
+            n++;
+            for (final DerivationPathNode d : entry.getDerivation())
+                out.append(derivationPrinter.print(d, locale)).append("\n");
+        }
+        return n;
     }
 
 }

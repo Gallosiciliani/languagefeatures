@@ -39,9 +39,10 @@ public class SicilianVocabulary implements Consumer<String>{
         try(final InputStream s= Objects.requireNonNull(classloader.getResourceAsStream("VS.txt"));
             final Scanner entriesScanner=new Scanner(s, StandardCharsets.UTF_8)){
             final SicilianVocabulary v=new SicilianVocabulary(consumer);
-            if (entriesScanner.hasNextLine())
+            if (entriesScanner.hasNextLine()) {
                 //remove BOM, if any. See https://stackoverflow.com/questions/4897876/reading-utf-8-bom-marker
                 v.accept(entriesScanner.nextLine().replace("\uFEFF", ""));
+            }
 
             while(entriesScanner.hasNextLine()){
                 v.accept(entriesScanner.nextLine());
