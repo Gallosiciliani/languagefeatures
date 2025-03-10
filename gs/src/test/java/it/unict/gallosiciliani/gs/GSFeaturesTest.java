@@ -59,7 +59,7 @@ public class GSFeaturesTest {
      * @param featureIRI final feature code
      * @return helper to test the specified feature
      */
-    private RegexLinguisticPhenomenonChecker getChecker(final String featureIRI, final String...replacement) throws IOException {
+    private RegexLinguisticPhenomenonChecker getChecker(final String featureIRI, final String replacement) throws IOException {
         return getChecker(featureIRI).build(replacement);
     }
 
@@ -196,11 +196,11 @@ public class GSFeaturesTest {
     }
 
     /**
-     * -uni > -ön
+     * -uni > -ön
      */
     @Test
     void testLeniz14() throws IOException{
-        getChecker(NS+"leniz.14","ön").atTheEnd(true, "uni");
+        getChecker(NS+"leniz.14","ön").atTheEnd(true, "uni");
     }
 
     /**
