@@ -17,7 +17,7 @@
                                                                            <https://gallosiciliani.unict.it/ns/liph>;
                                                                <http://purl.org/dc/terms/source> :trovatoMenza2020 ;
                                                                rdfs:label "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
-                                                               owl:versionInfo "0.2.0" ;
+                                                               owl:versionInfo "0.5.0" ;
                                                               dcterms:contributor "Daniele Francesco Santamaria" ,
                                                                                   "Domenico Cantone" ,
                                                                                   "Marianna Nicolosi Asmundo" ,
@@ -29,6 +29,7 @@
                                                                                   "Angela Castiglione",
                                                                                   "Sara Natalia Cardullo";
                                                               dcterms:created "2024-12-30"^^xsd:date ;
+                                                              dcterms:modified "2025-03-11"^^xsd:date ;
                                                               dcterms:creator "Cristiano Longo" ;
                                                               dcterms:description """Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga
 
@@ -52,7 +53,9 @@ This work has been created in the scope of the project PRIN 2022 PNRR \"Contact-
             <https://sws.geonames.org/6539191/>;
          lime:linguisticCatalog <http://www.lexinfo.net/ontologies/2.0/lexinfo> ;
          rdfs:label "Nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
-         dcterms:title "Nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" .
+         dcterms:title "Nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
+         lime:entry :entryManual0, :entryManual1, :entryManual2, :entryManual3, :entryManual4, :entryManual5,
+            :entryManual6 .
 
 ###  https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#trovatoMenza2020
 :trovatoMenza2020 rdf:type owl:NamedIndividual ,
@@ -61,6 +64,85 @@ This work has been created in the scope of the project PRIN 2022 PNRR \"Contact-
                   dcterms:title "Vocabolario del dialetto galloitalico di Nicosia e Sperlinga" ;
                   rdfs:label "Vocabolario del dialetto galloitalico di Nicosia e Sperlinga" .
 
+# The parser is not able to recognize some entries because they are reported with a different font w.r.t. the most part of lemmas.
+# see https://github.com/Gallosiciliani/languagefeatures/issues/15
+# Such lemmas are manually reported here.
 
+:entryManual0  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#verb>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual0-canonicalForm .
+
+:entryManual0-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "nziteghjë" .
+
+:entryManual1  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#verb>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual1-canonicalForm .
+
+:entryManual1-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "pözzessë" .
+
+:entryManual2  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#verb>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual2-canonicalForm .
+
+:entryManual2-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "sbaghjèghjela" .
+
+:entryManual3  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#verb>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual3-canonicalForm .
+
+:entryManual3-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "stöghjè" .
+
+:entryManual4  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#noun>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual4-canonicalForm .
+
+:entryManual4-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "tëla" .
+
+:entryManual5  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#noun>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual5-canonicalForm .
+
+:entryManual5-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "travönëtö" .
+
+:entryManual6  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#noun>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual6-canonicalForm .
+
+:entryManual6-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "trazziera" .
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

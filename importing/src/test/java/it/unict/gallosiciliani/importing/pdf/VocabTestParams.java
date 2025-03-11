@@ -12,9 +12,6 @@ public class VocabTestParams {
     public static VocabTestParams TEST_120_126 = new VocabTestParams("nicosiasperlinga-120-126.pdf", 120);
     public static VocabTestParams TEST_585 = new VocabTestParams("nicosiaesperlinga-vocab-585.pdf", 585);
 
-    // original vocabulary PDF file
-    public static VocabTestParams VOCAB_FILE = new VocabTestParams("nicosiasperlinga.pdf", 1);
-
     private final String pdfFileName;
     private final int offset;
 

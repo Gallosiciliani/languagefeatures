@@ -32,7 +32,7 @@ class LemmaState extends ParsingState {
      * @return true if the character is a conjunction
      */
     private boolean isConjunction(final String c){
-        return "o".equals(c) || "e".equals(c);
+        return "o".equals(c) || "e".equals(c) || ",".equals(c);
     }
 
     @Override
