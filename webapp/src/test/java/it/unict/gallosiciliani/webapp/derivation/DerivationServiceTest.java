@@ -37,8 +37,8 @@ public class DerivationServiceTest {
         printer.print(actualDerivation, Locale.ENGLISH);
         new DerivationChecker(actualDerivation)
                 .inner("böchè", GSFeatures.NS+"vocal.5.a")
-                .inner("buchè", GSFeatures.NS+"degem.8")
-                .inner("buccari", GSFeatures.NS+"degem.6")
+                .inner("buchè", GSFeatures.NS+"elim.2")
+                .inner("bbuchè", GSFeatures.NS+"degem.8")
                 .inner("bbuccari", GSFeatures.NS+"afer.1")
                 .last("abbuccari");
 
