@@ -358,7 +358,10 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem6() throws IOException{
-        getChecker(NS+"degem.6","b").replacing("bb");
+        getChecker(NS+"degem.6","b")
+                .inside(false, "bb")
+                .atTheEnd(false, "bb")
+                .notApply("bb456");
     }
 
     /**
