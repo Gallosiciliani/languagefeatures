@@ -105,5 +105,4 @@ public class LexicaService {
         log.error("Invalid page requested {}", page);
         return webAppProperties.getPaging().getPages()[0].getSelector();
     }
-
 }
