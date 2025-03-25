@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  * @author Cristiano Longo
  */
 public class NicosiaESperlingaTest {
+
     @Test
     void shouldReturnAllForms() throws IOException {
         try(final NicosiaESperlinga n=new NicosiaESperlinga()) {

@@ -2,11 +2,16 @@ package it.unict.gallosiciliani.webapp.persistence;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.Query;
+import cz.cvut.kbss.jopa.vocabulary.RDFS;
+import it.unict.gallosiciliani.liph.LinguisticPhenomena;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.model.lemonety.Etymology;
 import it.unict.gallosiciliani.model.lexinfo.PartOfSpeech;
+import it.unict.gallosiciliani.model.liph.LexicalObject;
+import it.unict.gallosiciliani.model.owl.Thing;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -56,7 +61,7 @@ public class PersistenceTestUtils {
         return this;
     }
 
-    public PersistenceTestUtils persist(final Form form){
+    public PersistenceTestUtils persist(final LexicalObject form){
         actions.add((final EntityManager entityManager) -> entityManager.persist(form));
         return this;
     }
@@ -64,6 +69,35 @@ public class PersistenceTestUtils {
     public PersistenceTestUtils persist(final Etymology etymology){
         actions.add((final EntityManager entityManager) -> entityManager.persist(etymology));
         return this;
+    }
+
+    public PersistenceTestUtils persist(final LinguisticPhenomenon p){
+        return updateQuery("INSERT DATA {"+
+                "\t<"+p.getIRI()+"> <"+ RDFS.SUB_PROPERTY_OF +"> <"+ LinguisticPhenomena.LINGUISTIC_PHENOMENON_OBJ_PROPERTY +">}");
+    }
+
+    /**
+     * Persist an assertion
+     *
+     * @param subject statement subject
+     * @param popertyIRI statement property
+     * @param object statement object
+     * @return this object
+     */
+    public PersistenceTestUtils persist(final Thing subject, final String popertyIRI, final Thing object){
+        return updateQuery("INSERT DATA {<"+subject.getId()+"> <"+popertyIRI+"> <"+object.getId()+">}");
+    }
+
+    /**
+     * Persist an assertion
+     *
+     * @param src assertion subject
+     * @param p asserted property
+     * @param dst assertion object
+     * @return this object
+     */
+    public PersistenceTestUtils persist(final LexicalObject src, final LinguisticPhenomenon p, final LexicalObject dst){
+        return persist(src, p.getIRI(), dst);
     }
 
     public PersistenceTestUtils remove(final PartOfSpeech pos) {
@@ -111,9 +145,7 @@ public class PersistenceTestUtils {
     }
 
     public PersistenceTestUtils refresh(final Object o) {
-        actions.add((final EntityManager entityManager) -> {
-            entityManager.refresh(o);
-        });
+        actions.add((final EntityManager entityManager) -> entityManager.refresh(o));
         return this;
     }
 

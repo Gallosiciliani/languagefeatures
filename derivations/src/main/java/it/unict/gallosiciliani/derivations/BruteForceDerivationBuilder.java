@@ -2,10 +2,13 @@ package it.unict.gallosiciliani.derivations;
 
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class BruteForceDerivationBuilder implements DerivationBuilder{
 
@@ -47,15 +50,37 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
         return leafs;
     }
 
+
     /**
      * write a set of rows representing the current derivations for the target lemmas.
      *
      * @param out                     the output stream
      * @param phenomenonLabelProvider to print phenomena
-     * @param locale locale
+     * @param locale    locale
+     * @return number of lemmas with an etymon
      * @throws IOException if unable to write to the output stream
      */
     public int write(final Appendable out, final LinguisticPhenomenonLabelProvider phenomenonLabelProvider, final Locale locale) throws IOException {
-        return targets.write(out, phenomenonLabelProvider, locale);
+        final DerivationPrinter derivationPrinter=new DerivationPrinter(phenomenonLabelProvider);
+        int n=0;
+        try(final CSVPrinter printer=new CSVPrinter(out, CSVFormat.DEFAULT)) {
+            for(final ShortestDerivation entry: targets.getDerivations()) {
+                if (entry.getDerivation().isEmpty())
+                    continue;
+                n++;
+                final String lemma=entry.getDerivation().iterator().next().get();
+                final String missedPhenomena=getMissedPhenomena(lemma, phenomenonLabelProvider, locale);
+                for (final DerivationPathNode d : entry.getDerivation())
+                    printer.printRecord(derivationPrinter.print(d, locale), missedPhenomena);
+            }
+        }
+        return n;
     }
+
+    private String getMissedPhenomena(final String lemma, final LinguisticPhenomenonLabelProvider phenomenonLabelProvider, final Locale locale){
+        return phenomena.stream().filter((p)->!p.apply(lemma).isEmpty())
+                .map(p -> phenomenonLabelProvider.getLabel(p, locale))
+                .collect(Collectors.joining(" "));
+    }
+
 }

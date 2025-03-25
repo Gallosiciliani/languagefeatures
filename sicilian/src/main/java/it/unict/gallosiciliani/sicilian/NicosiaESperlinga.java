@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.sicilian;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
+import cz.cvut.kbss.jopa.model.query.TypedQuery;
 import it.unict.gallosiciliani.model.lemon.lime.Lime;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.model.lemon.ontolex.Ontolex;
@@ -50,6 +51,7 @@ public class NicosiaESperlinga extends OntologyLoader {
                 "\t<"+LEXICON_IRI+"> <"+Lime.ENTRY_OBJ_PROPERTY+"> ?e. \n"+
                 "\t?e <"+Ontolex.CANONICAL_FORM_OBJ_PROPERTY+"> ?f .\n"+
                 "}";
-        return entityManager.createNativeQuery(formsQuery, Form.class).getResultStream();
+        final TypedQuery<Form> query=entityManager.createNativeQuery(formsQuery, Form.class);
+        return query.getResultStream();
     }
 }

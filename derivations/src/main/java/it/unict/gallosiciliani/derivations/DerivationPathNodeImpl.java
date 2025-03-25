@@ -27,7 +27,7 @@ public class DerivationPathNodeImpl implements DerivationPathNode{
      * @param prev previous part of the path
      * @param transformation transformation which produced the string
      */
-    DerivationPathNodeImpl(final String s, final DerivationPathNode prev, final LinguisticPhenomenon transformation){
+    public DerivationPathNodeImpl(final String s, final DerivationPathNode prev, final LinguisticPhenomenon transformation){
         this.s=s;
         this.prev=prev;
         this.transformation=transformation;

@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.sicilian;
 
 import it.unict.gallosiciliani.derivations.*;
 import it.unict.gallosiciliani.gs.GSFeatures;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import it.unict.gallosiciliani.model.lemon.ontolex.Form;
 
 import java.io.FileWriter;
@@ -15,6 +16,7 @@ import java.util.function.Consumer;
  */
 public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> {
 
+    private final List<? extends LinguisticPhenomenon> eligiblePhenomena;
     private final BruteForceDerivationBuilder derivationBuilder;
     private int processedEntries=0;
     private long totalProcessingTime=0;
@@ -23,7 +25,8 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
         try (final GSFeatures gs = GSFeatures.loadLocal(); final NicosiaESperlinga nicosiaESperlinga=new NicosiaESperlinga()) {
             //derivations=nicosiaESperlinga.getAllForms().map((f)->new NearestShortestDerivation(f.getWrittenRep())).toList();
             final List<String> lemmas=nicosiaESperlinga.getAllForms().map(Form::getWrittenRep).toList();
-            derivationBuilder=new BruteForceDerivationBuilder(gs.getRegexLinguisticPhenomena(), lemmas);
+            eligiblePhenomena=gs.getRegexLinguisticPhenomena();
+            derivationBuilder=new BruteForceDerivationBuilder(eligiblePhenomena, lemmas);
 //                    derivationBuilderFactory.build(gs.getRegexLinguisticPhenomena(), lemmas);
         }
     }
@@ -68,7 +71,6 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
         SicilianVocabulary.visit(d);
         try(final FileWriter w=new FileWriter(args[0])){
             final int n=d.writeNearestShortestDerivations(w);
-            w.flush();
             System.out.println("Processed "+d.processedEntries+" entries");
             System.out.println("Total processing time "+d.totalProcessingTime);
             System.out.println("Found etymon for "+n+" lemmas");

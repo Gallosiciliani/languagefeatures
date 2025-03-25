@@ -5,6 +5,7 @@ import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.EntityManagerFactory;
 import cz.cvut.kbss.jopa.model.JOPAPersistenceProperties;
 import cz.cvut.kbss.jopa.model.JOPAPersistenceProvider;
+import cz.cvut.kbss.ontodriver.config.OntoDriverProperties;
 import cz.cvut.kbss.ontodriver.jena.JenaDataSource;
 import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
@@ -28,6 +29,11 @@ public class PersistenceConfig {
     }
 
     @Bean
+    TBox tbox() throws IOException{
+        return new TBox();
+    }
+
+    @Bean
     public EntityManagerFactory entityManagerFactory(){
 
         final Map<String, String> props = new HashMap<>();
@@ -39,6 +45,7 @@ public class PersistenceConfig {
         props.put(JenaOntoDriverProperties.JENA_STORAGE_TYPE, JenaOntoDriverProperties.IN_MEMORY);
         props.put(JenaOntoDriverProperties.JENA_ISOLATION_STRATEGY, JenaOntoDriverProperties.READ_COMMITTED);
         // Use Jena's rule-based RDFS reasoner
+        props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, OWLFBRuleReasonerFactoryWithTbox.class.getName());
         //props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, OWLFBRuleReasonerFactoryWithTbox.class.getName());
         // View transactional changes during transaction
         //props.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
@@ -54,8 +61,11 @@ public class PersistenceConfig {
     }
 
     @Bean(name = "entityManager")
-    public EntityManager entityManager(final EntityManagerFactory factory, final WebAppProperties props, final GSABox abox) throws IOException {
+    public EntityManager entityManager(final EntityManagerFactory factory, final WebAppProperties props,
+                                       final TBox tbox, final GSABox abox) {
+        OWLFBRuleReasonerFactoryWithTbox.setTBox(tbox);
         final EntityManager m=factory.createEntityManager();
+
         if (props.isLoadData()) {
             m.getTransaction().begin();
             m.unwrap(Dataset.class).getDefaultModel().add(abox.getModel());
