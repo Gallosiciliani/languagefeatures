@@ -10,9 +10,19 @@ import org.apache.jena.reasoner.rulesys.OWLFBRuleReasonerFactory;
 @Slf4j
 public class OWLFBRuleReasonerFactoryWithTbox implements ReasonerFactory {
     private final ReasonerFactory delegate = OWLFBRuleReasonerFactory.theInstance();
+    private static final OWLFBRuleReasonerFactoryWithTbox INSTANCE=new OWLFBRuleReasonerFactoryWithTbox();
     private static TBox tbox;
 
-    public static void setTBox(final TBox tbox){
+    /**
+     * This method is required for all {@link ReasonerFactory} implementations
+     *
+     * @return the singleton instances
+     */
+    public static OWLFBRuleReasonerFactoryWithTbox theInstance(){
+        return INSTANCE;
+    }
+
+    public void setTBox(final TBox tbox){
         OWLFBRuleReasonerFactoryWithTbox.tbox=tbox;
     }
 

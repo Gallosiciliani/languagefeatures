@@ -125,10 +125,6 @@ public class LexicaServiceTest {
         }
     }
 
-    @Test
-    void shouldReturnTheDerivation(){
-
-    }
 //    @Test
 //    void testSelectByPOSandFeature(){
 //        final GSKB gskb = new GSKB(webAppProperties);

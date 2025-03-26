@@ -63,7 +63,7 @@ public class PersistenceConfig {
     @Bean(name = "entityManager")
     public EntityManager entityManager(final EntityManagerFactory factory, final WebAppProperties props,
                                        final TBox tbox, final GSABox abox) {
-        OWLFBRuleReasonerFactoryWithTbox.setTBox(tbox);
+        OWLFBRuleReasonerFactoryWithTbox.theInstance().setTBox(tbox);
         final EntityManager m=factory.createEntityManager();
 
         if (props.isLoadData()) {

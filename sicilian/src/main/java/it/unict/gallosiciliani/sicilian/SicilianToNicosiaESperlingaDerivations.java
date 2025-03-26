@@ -17,6 +17,8 @@ import java.util.function.Consumer;
 public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> {
 
     private final List<? extends LinguisticPhenomenon> eligiblePhenomena;
+    private final TonicVowelAccentExplicitor accentExplicitor=new TonicVowelAccentExplicitor();
+
     private final BruteForceDerivationBuilder derivationBuilder;
     private int processedEntries=0;
     private long totalProcessingTime=0;
@@ -24,7 +26,9 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
     SicilianToNicosiaESperlingaDerivations() throws IOException {
         try (final GSFeatures gs = GSFeatures.loadLocal(); final NicosiaESperlinga nicosiaESperlinga=new NicosiaESperlinga()) {
             //derivations=nicosiaESperlinga.getAllForms().map((f)->new NearestShortestDerivation(f.getWrittenRep())).toList();
-            final List<String> lemmas=nicosiaESperlinga.getAllForms().map(Form::getWrittenRep).toList();
+            final List<String> lemmas=nicosiaESperlinga.getAllForms()
+                    .map(Form::getWrittenRep)
+                    .map(accentExplicitor::addGraveAccent).toList();
             eligiblePhenomena=gs.getRegexLinguisticPhenomena();
             derivationBuilder=new BruteForceDerivationBuilder(eligiblePhenomena, lemmas);
 //                    derivationBuilderFactory.build(gs.getRegexLinguisticPhenomena(), lemmas);
@@ -40,11 +44,12 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
         }
 
         final long startTime=System.currentTimeMillis();
-        derivationBuilder.apply(sicilianVocabularyEntry);
+        final String sicilianVocabularyEntryWithAccent= accentExplicitor.addGraveAccent(sicilianVocabularyEntry);
+        derivationBuilder.apply(sicilianVocabularyEntryWithAccent);
         final long endTime=System.currentTimeMillis();
         final long elapsedTime=endTime-startTime;
         totalProcessingTime+=elapsedTime;
-        System.out.println((processedEntries++)+" "+sicilianVocabularyEntry+": elapsed time "+elapsedTime+", total time "+totalProcessingTime+".");
+        System.out.println((processedEntries++)+" "+sicilianVocabularyEntry+"("+sicilianVocabularyEntryWithAccent+"): elapsed time "+elapsedTime+", total time "+totalProcessingTime+".");
     }
 
     /**
