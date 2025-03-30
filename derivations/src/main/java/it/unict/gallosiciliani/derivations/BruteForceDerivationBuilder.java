@@ -23,7 +23,7 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
     @Override
     public void apply(final String src){
         final DerivationPathNode currentDerivation=new DerivationPathNodeImpl(src);
-        System.out.println(apply(currentDerivation, 0)+" derivations for "+src);
+        apply(currentDerivation, 0);
     }
 
     /**

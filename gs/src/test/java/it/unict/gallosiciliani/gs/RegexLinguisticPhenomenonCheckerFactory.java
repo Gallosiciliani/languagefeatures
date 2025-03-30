@@ -25,7 +25,7 @@ public class RegexLinguisticPhenomenonCheckerFactory {
      * Test that the feature transformation does not change the src string
      *
      * @param src test string
-     * @return
+     * @return a checker
      */
     public RegexLinguisticPhenomenonCheckerFactory notApply(final String src) {
         build().notApply(src);
@@ -67,4 +67,5 @@ public class RegexLinguisticPhenomenonCheckerFactory {
         build(replacement).atTheBeginning(true, src);
         return this;
     }
+
 }

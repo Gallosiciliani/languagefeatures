@@ -96,6 +96,7 @@ public class GSFeaturesTest {
                 .betweenVowels(true, "c");
         for(final char v: RegexLinguisticPhenomenonChecker.VOWELS.toCharArray())
                 checker.derives("123"+v+"ch456", "123"+v+"gh456");
+        checker.notApply("accutiddari");
     }
 
     /**
@@ -718,34 +719,70 @@ public class GSFeaturesTest {
     // Dittongazione non metafonetica
 
     /**
-     * e / è  > ie / iè
+     * e- / è- > ie- / iè-
      */
     @Test
-    void testDitt1() throws IOException{
-        getChecker(NS+"ditt.1")
-                .replacing("e", "ie")
-                .replacing("è","iè");
+    void testDitt1a() throws IOException{
+        getChecker(NS+"ditt.1.a")
+                .atTheBeginning("e", "ie")
+                .atTheBeginning("è", "iè");
     }
 
     /**
-     * o / ò > uo / uò
+     * -e- / -è- > ie / iè
      */
     @Test
-    void testDitt2() throws IOException{
-        getChecker(NS+"ditt.2")
-                .replacing("o","uo")
-                .replacing("ò", "uò");
+    void testDitt1b() throws IOException{
+        final RegexLinguisticPhenomenonCheckerFactory c=getChecker(NS+"ditt.1.b")
+                .notApply("e456")
+                .notApply("ie456")
+                .notApply("123ie456")
+                .notApply("123ie")
+                .notApply("è456")
+                .notApply("iè456")
+                .notApply("123iè456")
+                .notApply("123iè");
+        c.build("ie").inside(false, "e").atTheEnd(false, "e");
+        c.build("iè").inside(false, "è").atTheEnd(false, "è");
+    }
+
+    /**
+     * o- / ò- > uo- / uò-
+     */
+    @Test
+    void testDitt2a() throws IOException{
+        getChecker(NS+"ditt.2.a")
+                .atTheBeginning("o", "uo")
+                .atTheBeginning("ò", "uò");
+    }
+
+    /**
+     * -o- / -ò- > uo / uò
+     */
+    @Test
+    void testDitt2b() throws IOException{
+        final RegexLinguisticPhenomenonCheckerFactory c=getChecker(NS+"ditt.2.b")
+                .notApply("o456")
+                .notApply("uo456")
+                .notApply("123uo456")
+                .notApply("123uo")
+                .notApply("ò456")
+                .notApply("uò456")
+                .notApply("123uò456")
+                .notApply("123uò");
+        c.build("uo").inside(false, "o").atTheEnd(false, "o");
+        c.build("uò").inside(false, "ò").atTheEnd(false, "ò");
     }
 
     // Mantenimento del sistema vocalico settentrionale
 
     /**
-     * i > ë
+     * -i > ë
      * @throws IOException on missing phenomenon
      */
     @Test
     void testVocal2a() throws IOException{
-        getChecker(NS+"vocal.2.a", "ë").replacing("i");
+        getChecker(NS+"vocal.2.a", "ë").atTheEnd(true, "i");
     }
 
     /**
@@ -764,15 +801,6 @@ public class GSFeaturesTest {
     @Test
     void testVocal2c() throws IOException{
         getChecker(NS+"vocal.2.c",  "ë̀").replacing("ì");
-    }
-
-    /**
-     * i / ì > i
-     */
-    @Test
-    void testVocal3() throws IOException{
-        getChecker(NS+"vocal.3","i")
-                .replacing("ì");
     }
 
     /**
@@ -803,41 +831,87 @@ public class GSFeaturesTest {
     }
 
     /**
-     * ù > u
+     * -i > e here - is a placeholder for any char.
      */
     @Test
-    void testVocal6() throws IOException{
-        getChecker(NS+"vocal.6","u")
-                .replacing("ù");
+    void testVocal7a() throws IOException {
+        getChecker(NS+"vocal.7.a").atTheEnd("i", "e");
     }
 
     /**
-     * i > e
+     * i- | -i- > e except where i is followed by a vowel. Here - stands for any char.
      */
     @Test
-    void testVocal7() throws IOException{
-        getChecker(NS+"vocal.7","e")
-                .replacing("i");
+    void testVocal7b() throws IOException{
+
+        final RegexLinguisticPhenomenonChecker checker=getChecker(NS+"vocal.7.b","e")
+                .atTheBeginning(false, "i").inside(false, "i");
+
+        for(final char vowel: RegexLinguisticPhenomenonChecker.VOWELS.toCharArray()){
+            if (vowel!='i')
+                checker.notApply("i"+vowel+"456").notApply("123i"+vowel+"456").notApply("123i"+vowel);
+        }
     }
 
+
     /**
-     * u > e
+     * u > e if u is not preceded by c or g
      */
     @Test
-    void testVocal8() throws IOException{
-        getChecker(NS+"vocal.8","e")
+    void testVocal8a() throws IOException{
+        getChecker(NS+"vocal.8.a","e")
+                .notApply("cu456")
+                .notApply("123cu456")
+                .notApply("123cu")
+                .notApply("gu456")
+                .notApply("123gu456")
+                .notApply("gu456")
                 .replacing("u");
     }
 
     /**
-     * -i > -ö
+     * cu > che
      */
     @Test
-    void testVocal9() throws IOException{
-        getChecker(NS+"vocal.9", "ö")
-                .atTheEnd(true, "i");
+    void testVocal8b() throws IOException{
+        getChecker(NS+"vocal.8.b","che")
+                .replacing("cu");
     }
 
+    /**
+     * gu > ghe
+     */
+    @Test
+    void testVocal8c() throws IOException{
+        getChecker(NS+"vocal.8.c","ghe")
+                .replacing("gu");
+    }
+
+    /**
+     * -eri > -erö
+     */
+    @Test
+    void testVocal9a() throws IOException{
+        getChecker(NS+"vocal.9.a").atTheEnd("eri", "erö");
+    }
+
+    /**
+     * ali > aö
+     * @throws IOException if vocal.9.b does not exist
+     */
+    @Test
+    void testVocal9b() throws IOException{
+        getChecker(NS+"vocal.9.b").atTheEnd("ali", "aö");
+    }
+
+    /**
+     * ì > è
+     * @throws IOException if vocal.10 does not exist
+     */
+    @Test
+    void testVocal10() throws IOException{
+        getChecker(NS+"vocal.10").replacing("ì", "é");
+    }
     // Aferesi di a-
 
     /**
@@ -906,11 +980,11 @@ public class GSFeaturesTest {
     }
 
     /**
-     * -iari > -è
+     * -ciari > -cè
      */
     @Test
     void testPalat7() throws IOException{
-        getChecker(NS+"palat.7", "è").atTheEnd(true, "iari");
+        getChecker(NS+"palat.7").atTheEnd("ciari", "cè");
     }
 
     /**
@@ -919,6 +993,14 @@ public class GSFeaturesTest {
     @Test
     void testPalat8() throws IOException{
         getChecker(NS+"palat.8", "essë").atTheEnd(true, "iàrisi");
+    }
+
+    /**
+     * -giari > -gè
+     */
+    @Test
+    void testPalat9() throws IOException{
+        getChecker(NS+"palat.9").atTheEnd("giari", "gè");
     }
 
     //  Eliminazione di varianti allofoniche siciliane in posizione debole

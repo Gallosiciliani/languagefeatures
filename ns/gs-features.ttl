@@ -28,11 +28,11 @@
 
 This work has been created in the scope of the project PRIN 2022 PNRR “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
                                                   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-                                                  dcterms:modified "2025-03-12" ;
+                                                  dcterms:modified "2025-03-30" ;
                                                   dcterms:title "Gallo-Sicilian features"@en ;
                                                   rdfs:comment "Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily." ;
                                                   rdfs:label "Gallo-Sicilian features" ;
-                                                  owl:versionInfo "0.9.1" .
+                                                  owl:versionInfo "0.10.2" .
 
 #################################################################
 #    Annotation properties
@@ -2070,9 +2070,23 @@ liph:replacement rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/gs-features#ditt.1
 :ditt.1 rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf :ditt ;
-        rdfs:label "e / è  > ie / iè" ;
-        liph:regex "([eè])" ;
-        liph:replacement "i$1" .
+        rdfs:label "e / è  > ie / iè" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#ditt.1.a
+:ditt.1.a rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :ditt.1 ;
+          rdfs:label "e- / è- > ie- / iè-" ;
+          liph:regex "^([eè])" ;
+          liph:replacement "i$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#ditt.1.b
+:ditt.1.b rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :ditt.1 ;
+          rdfs:label "-e- / -è- > ie / iè" ;
+          liph:regex "([^i])([eè])" ;
+          liph:replacement "$1i$2" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#ditt.2
@@ -2081,6 +2095,22 @@ liph:replacement rdf:type owl:AnnotationProperty .
         rdfs:label "o / ò > uo / uò" ;
         liph:regex "([oò])" ;
         liph:replacement "u$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#ditt.2.a
+:ditt.2.a rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :ditt.2 ;
+          rdfs:label "o- / ò- > uo- / uò-" ;
+          liph:regex "^([oò])" ;
+          liph:replacement "u$1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#ditt.2.b
+:ditt.2.b rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :ditt.2 ;
+          rdfs:label "-o- / -ò- > uo / uò if o/ò is not already preceded by u" ;
+          liph:regex "([^u])([oò])" ;
+          liph:replacement "$1u$2" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#elim
@@ -2441,9 +2471,9 @@ liph:replacement rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/gs-features#palat.7
 :palat.7 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :palat ;
-         rdfs:label "-iari > -è" ;
-         liph:regex "(.)iari$" ;
-         liph:replacement "$1è" .
+         rdfs:label "-ciari > -cè" ;
+         liph:regex "ciari$" ;
+         liph:replacement "cè" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#palat.8
@@ -2452,6 +2482,14 @@ liph:replacement rdf:type owl:AnnotationProperty .
          rdfs:label "-iàrisi > -essë" ;
          liph:regex "(.)iàrisi$" ;
          liph:replacement "$1essë" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.9
+:palat.9 rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :palat ;
+         rdfs:label "-giari > -gè" ;
+         liph:regex "giari$" ;
+         liph:replacement "gè" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#sanFratelloFeature
@@ -2481,17 +2519,25 @@ liph:replacement rdf:type owl:AnnotationProperty .
        rdfs:label "mantenimento del sistema vocalico settentrionale"@it .
 
 
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.10
+:vocal.10 rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :vocal ;
+          rdfs:label "ì > é" ;
+          liph:regex "ì" ;
+          liph:replacement "é" .
+
+
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2
 :vocal.2 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :vocal ;
-         rdfs:label "ì / i > ë / ë̀" .
+         rdfs:label "-ì / -i > ë / ë̀" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2.a
 :vocal.2.a rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf :vocal.2 ;
            rdfs:label "i > ë" ;
-           liph:regex "i" ;
+           liph:regex "i$" ;
            liph:replacement "ë" .
 
 
@@ -2509,14 +2555,6 @@ liph:replacement rdf:type owl:AnnotationProperty .
            rdfs:label "ì > ë̀" ;
            liph:regex "ì" ;
            liph:replacement "ë̀" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.3
-:vocal.3 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :vocal ;
-         rdfs:label "ì > i" ;
-         liph:regex "ì" ;
-         liph:replacement "i" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.5
@@ -2549,36 +2587,78 @@ liph:replacement rdf:type owl:AnnotationProperty .
            liph:replacement "ö̀" .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.6
-:vocal.6 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :vocal ;
-         rdfs:label "ù > u" ;
-         liph:regex "ù" ;
-         liph:replacement "u" .
-
-
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.7
 :vocal.7 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :vocal ;
-         rdfs:label "i > e" ;
-         liph:regex "i" ;
-         liph:replacement "e" .
+         rdfs:label "i > e if i is not followed by a vowel" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.7.a
+:vocal.7.a rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :vocal.7 ;
+           rdfs:label "-i > e" ;
+           liph:regex "i$" ;
+           liph:replacement "e" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.7.b
+:vocal.7.b rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :vocal.7 ;
+           rdfs:label "i- | -i- > e" ;
+           liph:regex "i([^aàáäeèéëë̀iìíïoòóöuùúüh])" ;
+           liph:replacement "e$1" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.8
 :vocal.8 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :vocal ;
-         rdfs:label "u > e" ;
-         liph:regex "u" ;
-         liph:replacement "e" .
+         rdfs:label "u > e" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.8.a
+:vocal.8.a rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :vocal.8 ;
+           rdfs:label "u > e if u is not preceded by c or g" ;
+           liph:regex "^u|([^cg])u" ;
+           liph:replacement "$1e" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.8.b
+:vocal.8.b rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :vocal.8 ;
+           rdfs:label "cu > che" ;
+           liph:regex "cu" ;
+           liph:replacement "che" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.8.c
+:vocal.8.c rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :vocal.8 ;
+           rdfs:label "gu > ghe" ;
+           liph:regex "gu" ;
+           liph:replacement "ghe" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.9
 :vocal.9 rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf :vocal ;
-         rdfs:label "-i > -ö" ;
-         liph:regex "i$" ;
-         liph:replacement "ö" .
+         rdfs:label "-i > -ö" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.9.a
+:vocal.9.a rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :vocal.9 ;
+           rdfs:label "-eri > -erö" ;
+           liph:regex "eri$" ;
+           liph:replacement "erö" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.9.b
+:vocal.9.b rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :vocal.9 ;
+           rdfs:label "-ali > aö" ;
+           liph:regex "(.+)ali$" ;
+           liph:replacement "$1aö" .
 
 
 ###  https://gallosiciliani.unict.it/ns/liph#linguisticPhenomenon

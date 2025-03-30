@@ -43,13 +43,14 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
             return;
         }
 
-        final long startTime=System.currentTimeMillis();
-        final String sicilianVocabularyEntryWithAccent= accentExplicitor.addGraveAccent(sicilianVocabularyEntry);
+        System.out.println((processedEntries)+" Processing "+sicilianVocabularyEntry);
+        final long startTime = System.currentTimeMillis();
+        final String sicilianVocabularyEntryWithAccent = accentExplicitor.addGraveAccent(sicilianVocabularyEntry);
         derivationBuilder.apply(sicilianVocabularyEntryWithAccent);
-        final long endTime=System.currentTimeMillis();
-        final long elapsedTime=endTime-startTime;
-        totalProcessingTime+=elapsedTime;
-        System.out.println((processedEntries++)+" "+sicilianVocabularyEntry+"("+sicilianVocabularyEntryWithAccent+"): elapsed time "+elapsedTime+", total time "+totalProcessingTime+".");
+        final long endTime = System.currentTimeMillis();
+        final long elapsedTime = endTime - startTime;
+        totalProcessingTime += elapsedTime;
+        System.out.println((processedEntries++) + " " + sicilianVocabularyEntry + "(" + sicilianVocabularyEntryWithAccent + "): elapsed time " + elapsedTime + ", total time " + totalProcessingTime + ".");
     }
 
     /**

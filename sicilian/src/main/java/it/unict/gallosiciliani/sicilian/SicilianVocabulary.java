@@ -18,6 +18,10 @@ import java.util.regex.Pattern;
 public class SicilianVocabulary implements Consumer<String>{
 
     private final Consumer<String> consumer;
+    private final Map<String,String> lemmaWithTypoErrors=Map.of("iaḍḍuzziéḍḍu", "iaḍḍuzzièḍḍu",
+            "praéttu", "praèttu",
+            "priiéra", "priièra",
+            "pulusiéḍḍu", "pulusièḍḍu");
     public static final Pattern toBeRemoved=Pattern.compile("[-!?\uF024§.]|\\(.*[)9]|[0-9]$");
 
     private String lastLemma=null;
@@ -53,7 +57,7 @@ public class SicilianVocabulary implements Consumer<String>{
     @Override
     public void accept(final String s) {
         for(final String part: s.split(",")) {
-            final String lemma = toBeRemoved.matcher(part).replaceAll("").trim().toLowerCase();
+            final String lemma = correctAccentTypoErrors(toBeRemoved.matcher(part).replaceAll("").trim().toLowerCase());
             if (lemma.isEmpty())
                 log.warn("Empty lemma recognized from string \"{}\"", s);
             else if (lastLemma == null || !lastLemma.equals(lemma)) {
@@ -61,5 +65,14 @@ public class SicilianVocabulary implements Consumer<String>{
                 lastLemma = lemma;
             }
         }
+    }
+
+    /**
+     * Make some corrections on terms where the acute accent has been
+     * reported in a wrong manner.
+     * @return the corrected lemma
+     */
+    private String correctAccentTypoErrors(final String lemma){
+        return lemmaWithTypoErrors.getOrDefault(lemma, lemma);
     }
 }

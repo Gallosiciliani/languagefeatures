@@ -154,7 +154,7 @@ public class RegexLinguisticPhenomenonChecker {
      * @return this checker
      */
     public RegexLinguisticPhenomenonChecker notApply(final String src){
-        assertTrue(phenomenon.apply(src).isEmpty(), "Expected empty but it was "+phenomenon.apply(src));
+        assertTrue(phenomenon.apply(src).isEmpty(), "Failed on "+src+": expected empty but it was "+phenomenon.apply(src));
         return this;
     }
 

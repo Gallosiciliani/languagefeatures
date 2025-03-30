@@ -159,4 +159,20 @@ public class SicilianVocabularyTest {
         verifyNoMoreInteractions(consumer);
     }
 
+    /**
+     * Acute accent in iaḍḍuzziéḍḍu, praéttu, priiéra and pulusiéḍḍu
+     * should be grave.
+     */
+    @Test
+    void shouldCorrectAccentTypoErrors(){
+        vocabulary.accept("iaḍḍuzziéḍḍu");
+        verify(consumer).accept("iaḍḍuzzièḍḍu");
+        vocabulary.accept("praéttu");
+        verify(consumer).accept("praèttu");
+        vocabulary.accept("priiéra");
+        verify(consumer).accept("priièra");
+        vocabulary.accept("pulusiéḍḍu");
+        verify(consumer).accept("pulusièḍḍu");
+    }
+
 }
