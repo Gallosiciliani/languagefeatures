@@ -1,7 +1,7 @@
 package it.unict.gallosiciliani.webapp.derivation;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
-import it.unict.gallosiciliani.derivations.DerivationPrinter;
+import it.unict.gallosiciliani.derivations.DerivationIOUtil;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +47,7 @@ public class DerivationHTMLController {
                     derivationService.derives(derivationForm.getEtymon(), derivationForm.getLemma()) :
                     derivationService.findSicilianEtymon(derivationForm.getLemma());
         final Collection<DerivationPathNode> derivations= result.getDerivation();
-        final DerivationPrinter printer=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
+        final DerivationIOUtil printer=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID);
         final List<String> derivationsAsStr=derivations.stream().map((n)->printer.print(n, locale)).toList();
         derivationForm.setDerivations(derivationsAsStr);
         return "derivation/derivationForm.html";

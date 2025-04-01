@@ -1,8 +1,8 @@
 package it.unict.gallosiciliani.webapp.derivation;
 
+import it.unict.gallosiciliani.derivations.DerivationIOUtil;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
-import it.unict.gallosiciliani.derivations.DerivationPrinter;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
@@ -98,7 +98,7 @@ public class DerivationHTMLControllerTest {
     }
 
     private void checkDerivations(final RequestBuilder request) throws Exception {
-        final DerivationPrinter printer=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
+        final DerivationIOUtil printer=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID);
         final String d0AsStr=printer.print(d0, locale);
         final String d1AsStr=printer.print(d1, locale);
 

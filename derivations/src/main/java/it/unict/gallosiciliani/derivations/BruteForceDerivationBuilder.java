@@ -61,7 +61,7 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
      * @throws IOException if unable to write to the output stream
      */
     public int write(final Appendable out, final LinguisticPhenomenonLabelProvider phenomenonLabelProvider, final Locale locale) throws IOException {
-        final DerivationPrinter derivationPrinter=new DerivationPrinter(phenomenonLabelProvider);
+        final DerivationIOUtil derivationIOUtil =new DerivationIOUtil(phenomenonLabelProvider);
         int n=0;
         try(final CSVPrinter printer=new CSVPrinter(out, CSVFormat.DEFAULT)) {
             for(final ShortestDerivation entry: targets.getDerivations()) {
@@ -71,7 +71,7 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
                 final String lemma=entry.getDerivation().iterator().next().get();
                 final String missedPhenomena=getMissedPhenomena(lemma, phenomenonLabelProvider, locale);
                 for (final DerivationPathNode d : entry.getDerivation())
-                    printer.printRecord(derivationPrinter.print(d, locale), missedPhenomena);
+                    printer.printRecord(derivationIOUtil.print(d, locale), missedPhenomena);
             }
         }
         return n;

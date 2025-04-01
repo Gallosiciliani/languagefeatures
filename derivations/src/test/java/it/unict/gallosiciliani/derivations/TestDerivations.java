@@ -2,7 +2,7 @@ package it.unict.gallosiciliani.derivations;
 
 import it.unict.gallosiciliani.derivations.strategy.DerivationStrategy;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
-import lombok.Getter;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
 import org.mockito.Mockito;
 
 import java.util.*;
@@ -13,26 +13,7 @@ import static org.mockito.Mockito.when;
 /**
  * Some derivations for test purposes
  */
-class TestDerivations {
-
-    static class FinalStrategy implements DerivationStrategy {
-        @Getter
-        private final DerivationPathNode derivation;
-        FinalStrategy(final DerivationPathNode derivation){
-            this.derivation=derivation;
-        }
-
-        public Collection<DerivationStrategy> branch(final Collection<DerivationPathNode> branches){
-            return Collections.emptyList();
-        }
-
-        /**
-         * Consume this derivation (or one of its ancestors) when the derivation stops
-         */
-        public void end(){
-
-        }
-    }
+class TestDerivations implements LinguisticPhenomenonLabelProvider {
 
     final LinguisticPhenomenon p= Mockito.mock(LinguisticPhenomenon.class);
     final LinguisticPhenomenon q=Mockito.mock(LinguisticPhenomenon.class);
@@ -62,13 +43,10 @@ class TestDerivations {
         return s;
     }
 
-    static DerivationStrategy getStrategy(final DerivationPathNode derivation){
-        final DerivationStrategy s= Mockito.mock(DerivationStrategy.class);
-        when(s.getDerivation()).thenReturn(derivation);
-        return s;
-    }
-
-    static DerivationStrategy getStrategy(final DerivationPathNode derivation, final Collection<DerivationPathNode> expectedDerivations, final Collection<DerivationStrategy> result){
-        return getStrategy(derivation, expectedDerivations, result, false);
+    @Override
+    public String getLabel(LinguisticPhenomenon linguisticPhenomenon, Locale locale) {
+        if (linguisticPhenomenon==p) return "p";
+        if (linguisticPhenomenon==q) return "q";
+        throw new IllegalArgumentException("Unexpected phenomenon "+linguisticPhenomenon);
     }
 }

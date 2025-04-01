@@ -1,7 +1,7 @@
 package it.unict.gallosiciliani.webapp.derivation;
 
+import it.unict.gallosiciliani.derivations.DerivationIOUtil;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
-import it.unict.gallosiciliani.derivations.DerivationPrinter;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ public class DerivationServiceTest {
 
     private void checkBocheDerivations(final NearestShortestDerivation actual){
         final Iterator<DerivationPathNode> actualIt=actual.getDerivation().iterator();
-        final DerivationPrinter printer=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
+        final DerivationIOUtil printer=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID);
         final DerivationPathNode actualDerivation=actualIt.next();
         System.out.println("Derivation 2: "+printer.print(actualDerivation, Locale.ENGLISH));
         printer.print(actualDerivation, Locale.ENGLISH);

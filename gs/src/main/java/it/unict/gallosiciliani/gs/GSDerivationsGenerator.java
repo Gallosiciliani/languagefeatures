@@ -27,7 +27,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
     private final CSVPrinter printer;
     private final List<? extends LinguisticPhenomenon> phenomena;
     private final TargetedDerivationStrategySelectorFactory selectorFactory;
-    private final DerivationPrinter derivationPrinter;
+    private final DerivationIOUtil derivationIOUtil;
     @Getter
     private int processed;
 
@@ -44,7 +44,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
         printer = new CSVPrinter(out, CSVFormat.DEFAULT);
         phenomena=RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
         this.selectorFactory=selectorFactory;
-        derivationPrinter=new DerivationPrinter(GSFeatures.LABEL_PROVIDER_ID);
+        derivationIOUtil =new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID);
     }
 
     public static void main(final String[] args) throws IOException {
@@ -108,7 +108,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
      * @return a string el <-- phenomenon -- el ... el <-- phenomenon -- el
      */
     private String toString(final DerivationPathNode n){
-        return derivationPrinter.print(n, Locale.ENGLISH);
+        return derivationIOUtil.print(n, Locale.ENGLISH);
     }
 
     @Override
