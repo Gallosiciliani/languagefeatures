@@ -1,9 +1,9 @@
-package it.unict.gallosiciliani.derivations;
+package it.unict.gallosiciliani.derivations.io;
 
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.derivations.DerivationPathNode;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenonByLabelRetriever;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
 
-import java.util.Collection;
 import java.util.Locale;
 
 /**
@@ -34,10 +34,10 @@ public class DerivationIOUtil {
 
     /**
      * Get a derivation parser which recognizes the specified phenomena
-     * @param availablePhenomena recognized phenomena
+     * @param retriever to retrieve phenomena by label
      * @return a derivation parser
      */
-    public DerivationParser getParser(final Collection<? extends LinguisticPhenomenon> availablePhenomena){
-        return new DerivationParser(PHENOMENON_START_MARKER, PHENOMENON_END_MARKER, labelProvider, availablePhenomena);
+    public DerivationParser getParser(final LinguisticPhenomenonByLabelRetriever retriever){
+        return new DerivationParser(PHENOMENON_START_MARKER, PHENOMENON_END_MARKER, retriever);
     }
 }

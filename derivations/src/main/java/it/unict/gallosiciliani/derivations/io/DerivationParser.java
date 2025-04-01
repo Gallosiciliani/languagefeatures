@@ -1,9 +1,10 @@
-package it.unict.gallosiciliani.derivations;
+package it.unict.gallosiciliani.derivations.io;
 
+import it.unict.gallosiciliani.derivations.DerivationPathNode;
+import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenonByLabelRetriever;
 
-import java.util.Collection;
 import java.util.Locale;
 
 /**
@@ -12,17 +13,14 @@ import java.util.Locale;
 public class DerivationParser {
     private final String phenomenonStartMarker;
     private final String phenomenonEndMarker;
-    private final LinguisticPhenomenonLabelProvider labelProvider;
-    private final Collection<? extends LinguisticPhenomenon> availablePhenomena;
+    private final LinguisticPhenomenonByLabelRetriever phenomenonRetriever;
 
     DerivationParser(final String phenomenonStartMarker,
         final String phenomenonEndMarker,
-        final LinguisticPhenomenonLabelProvider labelProvider,
-        final Collection<? extends LinguisticPhenomenon> availablePhenomena){
+        final LinguisticPhenomenonByLabelRetriever phenomenonRetriever){
         this.phenomenonStartMarker=phenomenonStartMarker;
         this.phenomenonEndMarker=phenomenonEndMarker;
-        this.labelProvider=labelProvider;
-        this.availablePhenomena=availablePhenomena;
+        this.phenomenonRetriever=phenomenonRetriever;
     }
 
     /**
@@ -45,21 +43,7 @@ public class DerivationParser {
         //else, we assume there are just two part pieces, the former is the lexical expression an
         //the latter is the phenomenon label
         final String lexicalExpression=partPieces[0];
-        final LinguisticPhenomenon phenomenon=getPhenomenonByLabel(partPieces[1], locale);
+        final LinguisticPhenomenon phenomenon=phenomenonRetriever.getByLabel(partPieces[1], locale);
         return new DerivationPathNodeImpl(lexicalExpression, parse(parts, i+1, locale), phenomenon);
-    }
-
-    /**
-     * Get the phenomenon with the specified label
-     * @param label phenomenon label
-     * @param locale label locale
-     * @return the phenomenon with the specified label
-     * @throws IllegalArgumentException if no phenomenon with the given label exists in availablePhenomena
-     */
-    private LinguisticPhenomenon getPhenomenonByLabel(final String label, final Locale locale) {
-        for(final LinguisticPhenomenon p: availablePhenomena)
-            if (labelProvider.getLabel(p, locale).equals(label))
-                return p;
-        throw new IllegalArgumentException("No phenomenon with label "+label);
     }
 }

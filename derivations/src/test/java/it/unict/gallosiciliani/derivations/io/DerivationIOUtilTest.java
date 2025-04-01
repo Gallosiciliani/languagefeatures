@@ -1,10 +1,9 @@
-package it.unict.gallosiciliani.derivations;
+package it.unict.gallosiciliani.derivations.io;
 
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.derivations.DerivationPathNode;
+import it.unict.gallosiciliani.derivations.TestDerivations;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,8 +23,7 @@ public class DerivationIOUtilTest {
 
     @Test
     void shouldParseDerivation(){
-        final Collection<LinguisticPhenomenon> availablePhenomena= List.of(testbed.p, testbed.q);
-        final DerivationPathNode actual=io.getParser(availablePhenomena).parse("u<-q--x<-p--s", Locale.ENGLISH);
+        final DerivationPathNode actual=io.getParser(testbed).parse("u<-q--x<-p--s", Locale.ENGLISH);
         assertEquals("u", actual.get());
         assertSame(testbed.q, actual.getLinguisticPhenomenon());
         final DerivationPathNode actualX=actual.prev();
