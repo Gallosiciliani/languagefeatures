@@ -1,7 +1,8 @@
 package it.unict.gallosiciliani.sicilian;
 
-import it.unict.gallosiciliani.derivations.DerivationIOUtil;
-import it.unict.gallosiciliani.derivations.DerivationParser;
+import it.unict.gallosiciliani.derivations.TonicVowelAccentExplicitor;
+import it.unict.gallosiciliani.derivations.io.DerivationIOUtil;
+import it.unict.gallosiciliani.derivations.io.DerivationParser;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import org.apache.commons.csv.CSVFormat;
@@ -20,6 +21,7 @@ public class DerivationLemmaExtractor {
     private final DerivationParser parser;
     private final Locale locale;
     private final Appendable out;
+    private final TonicVowelAccentExplicitor accentExplicitor=new TonicVowelAccentExplicitor();
     private String lastLemmaFound;
 
     DerivationLemmaExtractor(final DerivationParser parser, final Locale locale, final Appendable out){
@@ -32,7 +34,7 @@ public class DerivationLemmaExtractor {
         handle(parser.parse(derivationString,locale));
     }
     void handle(final DerivationPathNode n) throws IOException {
-        final String lemma=n.get();
+        final String lemma=accentExplicitor.addGraveAccent(n.get());
         if (lemma.equals(lastLemmaFound))
             return;
         lastLemmaFound=lemma;
@@ -41,9 +43,8 @@ public class DerivationLemmaExtractor {
 
     public static void main(final String[] args) throws IOException {
         try(final CSVParser sourceParser=CSVParser.parse(new File(args[0]), StandardCharsets.UTF_8, CSVFormat.DEFAULT);
-            final GSFeatures gs=GSFeatures.loadLocal();
             final FileWriter out=new FileWriter(args[1])){
-            final DerivationParser parser=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID).getParser(gs.getRegexLinguisticPhenomena());
+            final DerivationParser parser=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID).getParser((label, locale) -> null);
             final DerivationLemmaExtractor extractor=new DerivationLemmaExtractor(parser, Locale.ENGLISH, out);
             for (CSVRecord record : sourceParser) {
                 extractor.handle(record.get(0));
