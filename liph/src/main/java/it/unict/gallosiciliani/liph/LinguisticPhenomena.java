@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 /**
  * An ontology which allows to define linguistic phenomena
+ * @author Cristiano Longo
  */
 public class LinguisticPhenomena extends OntologyLoader {
     public static final String IRI = "https://gallosiciliani.unict.it/ns/liph";
@@ -19,12 +20,7 @@ public class LinguisticPhenomena extends OntologyLoader {
     public static final String ONTOLEX_NS = "http://www.w3.org/ns/lemon/ontolex#";
     public static final String ONTOLEX_WRITTEN_REP_DATA_PROPERTY = ONTOLEX_NS+"writtenRep";
 
-    public static final Comparator<LinguisticPhenomenon> COMPARATOR_BY_IRI=new Comparator<LinguisticPhenomenon>() {
-        @Override
-        public int compare(final LinguisticPhenomenon x, final LinguisticPhenomenon y) {
-            return x.getIRI().compareTo(y.getIRI());
-        }
-    };
+    public static final Comparator<LinguisticPhenomenon> COMPARATOR_BY_IRI= Comparator.comparing(LinguisticPhenomenon::getIRI);
 
     public LinguisticPhenomena() throws IOException {
         super("liph.ttl");

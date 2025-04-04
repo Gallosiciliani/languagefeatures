@@ -26,12 +26,6 @@
     <build>
         <resources>
             <resource>
-                <directory>../ns</directory>
-                <includes>
-                    <include>liph.ttl</include>
-                </includes>
-            </resource>
-            <resource>
                 <directory>../examples/nicosia</directory>
                 <includes>
                     <include>ex1.ttl</include>
