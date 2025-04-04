@@ -40,6 +40,7 @@ public class OntologyLoader implements AutoCloseable{
     /**
      * Create the ontology from an online resource
      * @param iri IRI of the ontology
+     * @deprecated
      */
     public OntologyLoader(final URI iri) throws IOException {
         ontologyAsStr = IOUtils.toString(iri, StandardCharsets.UTF_8);
