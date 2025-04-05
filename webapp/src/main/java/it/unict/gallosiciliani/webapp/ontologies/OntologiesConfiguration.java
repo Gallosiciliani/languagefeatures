@@ -15,7 +15,7 @@ import java.io.IOException;
 public class OntologiesConfiguration {
     @Bean
     GSFeatures gsFeatures() throws IOException {
-        return GSFeatures.loadLocal();
+        return new GSFeatures();
     }
 
     @Bean

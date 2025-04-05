@@ -41,7 +41,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
      * @throws IOException on I/O error
      */
     GSDerivationsGenerator(final Appendable out, final TargetedDerivationStrategySelectorFactory selectorFactory) throws IOException {
-        gs = GSFeatures.loadLocal();
+        gs = new GSFeatures();
         printer = new CSVPrinter(out, CSVFormat.DEFAULT);
         phenomena=RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
         this.selectorFactory=selectorFactory;

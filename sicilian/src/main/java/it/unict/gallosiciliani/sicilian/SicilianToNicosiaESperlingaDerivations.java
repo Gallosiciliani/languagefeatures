@@ -24,7 +24,7 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
     private long totalProcessingTime=0;
 
     SicilianToNicosiaESperlingaDerivations() throws IOException {
-        try (final GSFeatures gs = GSFeatures.loadLocal(); final NicosiaESperlinga nicosiaESperlinga=new NicosiaESperlinga()) {
+        try (final GSFeatures gs = new GSFeatures(); final NicosiaESperlinga nicosiaESperlinga=new NicosiaESperlinga()) {
             //derivations=nicosiaESperlinga.getAllForms().map((f)->new NearestShortestDerivation(f.getWrittenRep())).toList();
             final List<String> lemmas=nicosiaESperlinga.getAllForms()
                     .map(Form::getWrittenRep)

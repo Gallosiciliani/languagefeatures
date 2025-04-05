@@ -20,7 +20,7 @@ public class TBox {
 
     public TBox() throws IOException {
         linguisticPhenomena = new LinguisticPhenomena();
-        gsFeatures = GSFeatures.loadLocal();
+        gsFeatures = new GSFeatures();
         all=createMergeOntology(linguisticPhenomena.getModel(), gsFeatures.getModel());
     }
 

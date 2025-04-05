@@ -11,20 +11,6 @@
 
     <artifactId>gs</artifactId>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>../ns</directory>
-                <includes>
-                    <include>gs-features.ttl</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>

@@ -33,7 +33,7 @@ public class Main {
 
     Main(final String pdfFilePath, final int startPage, final int endPage) throws IOException {
         derivations=importWholeDictionary(pdfFilePath, startPage, endPage, "nicosiasperlinga-lemmas.txt");
-        try(final GSFeatures gs=GSFeatures.loadLocal()){
+        try(final GSFeatures gs=new GSFeatures()){
             final List<RegexLinguisticPhenomenon> phenomena= RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
             derivationBuilder=new DerivationBuilderWithStrategy(phenomena, new CompoundDerivationStrategyFactory(derivations, NearestStrategySelector.FACTORY));
         }
@@ -41,7 +41,7 @@ public class Main {
 
     Main(final String entriesFilePath) throws IOException {
         derivations=importDictionaryEntriesFromFile(entriesFilePath);
-        try(final GSFeatures gs=GSFeatures.loadLocal()){
+        try(final GSFeatures gs=new GSFeatures()){
             final List<RegexLinguisticPhenomenon> phenomena= RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
             derivationBuilder=new DerivationBuilderWithStrategy(phenomena, new CompoundDerivationStrategyFactory(derivations, NearestStrategySelector.FACTORY));
         }

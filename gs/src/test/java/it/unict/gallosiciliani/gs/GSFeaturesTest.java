@@ -25,7 +25,7 @@ public class GSFeaturesTest {
     @Test
     void shouldProvideLabelForPhenomena() throws IOException {
         final Locale locale = Locale.ENGLISH;
-        try(final GSFeatures gs = GSFeatures.loadLocal()) {
+        try(final GSFeatures gs = new GSFeatures()) {
             for(final LinguisticPhenomenon p : gs.getRegexLinguisticPhenomena())
                 assertNotNull(LABEL_PROVIDER_ID.getLabel(p, locale), "label for " + p + " not found");
         }
@@ -33,7 +33,7 @@ public class GSFeaturesTest {
 
     @Test
     void checkDuplicateRegex() throws IOException {
-        try(final GSFeatures gs = GSFeatures.loadLocal()) {
+        try(final GSFeatures gs = new GSFeatures()) {
             final RegexLinguisticPhenomenaReader reader = RegexLinguisticPhenomenaReader.read(gs.getModel());
             assertTrue(reader.getExceptions().isEmpty());
         }
@@ -42,7 +42,7 @@ public class GSFeaturesTest {
     @Test
     @Disabled
     void checkRegexConflicts() throws IOException {
-        try(final GSFeatures gs = GSFeatures.loadLocal()) {
+        try(final GSFeatures gs = new GSFeatures()) {
             final RegexLinguisticPhenomenaConflictsDetector d = new RegexLinguisticPhenomenaConflictsDetector();
             gs.getRegexLinguisticPhenomena().forEach(d);
             for(final Map.Entry<RegexLinguisticPhenomenon, Set<RegexLinguisticPhenomenon>> conflict: d.getConflicts().entrySet()){
@@ -74,7 +74,7 @@ public class GSFeaturesTest {
      * @throws IllegalArgumentException if no such phenomenon exists among GS features
      */
     private LinguisticPhenomenon getFeature(final String iri) throws IOException {
-        try(final GSFeatures ont = GSFeatures.loadLocal()) {
+        try(final GSFeatures ont = new GSFeatures()) {
             final RegexFeatureQuery q=new RegexFeatureQuery().ignoreDeprecated();
             final List<RegexLinguisticPhenomenon> allRegexFeatures = RegexLinguisticPhenomenaReader.read(ont.getModel(), q).getFeatures();
             assertFalse(allRegexFeatures.isEmpty());
