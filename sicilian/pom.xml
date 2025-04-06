@@ -12,20 +12,6 @@
     <artifactId>sicilian</artifactId>
     <build>
         <finalName>sicilianToNiSp</finalName>
-        <resources>
-            <resource>
-                <directory>../ns/lexica</directory>
-                <includes>
-                    <include>nicosiaesperlinga.ttl</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>VS.txt</include>
-                </includes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>cz.cvut.kbss.jopa</groupId>
+            <artifactId>jopa-impl</artifactId>
+            <version>${cz.cvut.kbss.jopa.version}</version>
+        </dependency>
+        <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
             <artifactId>util</artifactId>
             <version>1.12.0</version>

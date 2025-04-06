@@ -1,26 +1,20 @@
-package it.unict.gallosiciliani.webapp.persistence;
+package it.unict.gallosiciliani.webapp.ontologies;
 
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
-import java.io.IOException;
-
 /**
  * Provide both {@link LinguisticPhenomena} and {@link GSFeatures} ontologies in a single model
  * @author Cristiano Longo
  */
 public class TBox {
-    public final LinguisticPhenomena linguisticPhenomena;
-    public final GSFeatures gsFeatures;
 
     //where Language Features and GSKB Featrues ontologies are merged
     public final Model all;
 
-    public TBox() throws IOException {
-        linguisticPhenomena = new LinguisticPhenomena();
-        gsFeatures = new GSFeatures();
+    public TBox(final LinguisticPhenomena linguisticPhenomena, final GSFeatures gsFeatures) {
         all=createMergeOntology(linguisticPhenomena.getModel(), gsFeatures.getModel());
     }
 

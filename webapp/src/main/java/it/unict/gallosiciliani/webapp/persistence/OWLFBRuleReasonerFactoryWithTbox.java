@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.webapp.persistence;
 
+import it.unict.gallosiciliani.webapp.ontologies.TBox;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;

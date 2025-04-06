@@ -3,7 +3,6 @@ package it.unict.gallosiciliani.webapp.ontologies;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.util.OntologyLoader;
-import it.unict.gallosiciliani.webapp.persistence.GSABox;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -28,7 +27,7 @@ public class OntologiesRestControllerTest {
     GSFeatures gsFeatures;
 
     @MockBean
-    GSABox abox;
+    ABox abox;
 
     @Test
     void testAutowire(){

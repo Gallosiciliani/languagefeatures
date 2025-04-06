@@ -8,13 +8,12 @@ import cz.cvut.kbss.jopa.model.JOPAPersistenceProvider;
 import cz.cvut.kbss.ontodriver.jena.JenaDataSource;
 import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
+import it.unict.gallosiciliani.webapp.ontologies.TBox;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.jena.query.Dataset;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.github.ledsoft.jopa.loader.BootAwareClasspathScanner;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,31 +22,20 @@ import java.util.Map;
 public class PersistenceConfig {
 
     @Bean
-    GSABox abox() throws IOException {
-        return new GSABox();
-    }
-
-    @Bean
-    TBox tbox() throws IOException{
-        return new TBox();
-    }
-
-    @Bean
-    public EntityManagerFactory entityManagerFactory(){
+    EntityManagerFactory entityManagerFactory(final WebAppProperties appProps){
 
         final Map<String, String> props = new HashMap<>();
-        //props.put(JOPAPersistenceProperties.ONTOLOGY_URI_KEY, properties.getNs().toString());
+        props.put(JOPAPersistenceProperties.ONTOLOGY_URI_KEY, "https://gallosiciliani.unict.it/ns/");
         // Here we set up basic storage access properties - driver class, physical location of the storage
-        props.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, "notrelevant");
+        props.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, "nicosiaesperlinga.ttl");
         props.put(JOPAPersistenceProperties.DATA_SOURCE_CLASS, JenaDataSource.class.getName());
         // Let's use Jena TDB for storage
-        props.put(JenaOntoDriverProperties.JENA_STORAGE_TYPE, JenaOntoDriverProperties.IN_MEMORY);
-        props.put(JenaOntoDriverProperties.JENA_ISOLATION_STRATEGY, JenaOntoDriverProperties.READ_COMMITTED);
+        props.put(JenaOntoDriverProperties.JENA_STORAGE_TYPE, appProps.getJenaStorageType());
+//        props.put(JenaOntoDriverProperties.JENA_ISOLATION_STRATEGY, JenaOntoDriverProperties.SNAPSHOT);
         // Use Jena's rule-based RDFS reasoner
-        //props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, OWLFBRuleReasonerFactoryWithTbox.class.getName());
-        //props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, OWLFBRuleReasonerFactoryWithTbox.class.getName());
+//        props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, OWLFBRuleReasonerFactoryWithTbox.class.getName());
         // View transactional changes during transaction
-        //props.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
+//        props.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
         // Where to look for entities
         props.put(JOPAPersistenceProperties.SCAN_PACKAGE, "it.unict.gallosiciliani.model");
         // Ontology language
@@ -60,17 +48,9 @@ public class PersistenceConfig {
     }
 
     @Bean(name = "entityManager")
-    public EntityManager entityManager(final EntityManagerFactory factory, final WebAppProperties props,
-                                       final TBox tbox, final GSABox abox) {
+    public EntityManager entityManager(final EntityManagerFactory entityManagerFactory,
+                                       final TBox tbox) {
         OWLFBRuleReasonerFactoryWithTbox.theInstance().setTBox(tbox);
-        final EntityManager m=factory.createEntityManager();
-
-        if (props.isLoadData()) {
-            m.getTransaction().begin();
-            m.unwrap(Dataset.class).getDefaultModel().add(abox.getModel());
-            m.flush();
-            m.getTransaction().commit();
-        }
-        return m;
+        return entityManagerFactory.createEntityManager();
     }
 }

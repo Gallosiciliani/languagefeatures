@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
+import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
 import it.unict.gallosiciliani.webapp.TestUtil;
 import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
@@ -29,6 +30,10 @@ public class LexicaServiceTest {
 
     private final TestUtil util=new TestUtil();
 
+    @Test
+    void ensureUsingInMemoryStorage(){
+        assertEquals(JenaOntoDriverProperties.IN_MEMORY, props.getJenaStorageType());
+    }
     @Test
     void shouldGetLexicaAlphabeticallyOrdered(){
         final Lexicon a=new Lexicon();

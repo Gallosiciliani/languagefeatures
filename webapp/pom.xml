@@ -28,17 +28,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>../ns/lexica</directory>
-                <includes>
-                    <include>nicosiaesperlinga.ttl</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
     </build>
 
     <dependencies>

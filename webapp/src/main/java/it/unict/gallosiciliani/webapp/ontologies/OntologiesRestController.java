@@ -2,14 +2,11 @@ package it.unict.gallosiciliani.webapp.ontologies;
 
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
-import it.unict.gallosiciliani.webapp.persistence.GSABox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
-
-import java.io.IOException;
 
 /**
  * Provides the feature ontologies
@@ -25,7 +22,7 @@ public class OntologiesRestController {
     GSFeatures gsFeatures;
 
     @Autowired
-    GSABox abox;
+    ABox abox;
 
     /**
      * Provide the base ontology to define language features.

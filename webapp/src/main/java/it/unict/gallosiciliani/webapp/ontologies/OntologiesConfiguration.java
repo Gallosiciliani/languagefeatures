@@ -23,4 +23,13 @@ public class OntologiesConfiguration {
         return new LinguisticPhenomena();
     }
 
+    @Bean
+    TBox tBox(LinguisticPhenomena liph, GSFeatures gsFeatures){
+        return new TBox(liph, gsFeatures);
+    }
+
+    @Bean
+    ABox aBox() throws IOException {
+        return new ABox();
+    }
 }

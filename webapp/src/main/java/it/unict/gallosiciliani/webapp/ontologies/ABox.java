@@ -1,16 +1,16 @@
-package it.unict.gallosiciliani.webapp.persistence;
+package it.unict.gallosiciliani.webapp.ontologies;
 
 import it.unict.gallosiciliani.util.OntologyLoader;
 
 import java.io.IOException;
 
 /**
- * Load all data
+ * Load data in the abox file
  *
  * @author Cristiano Longo
  */
-public class GSABox extends OntologyLoader {
-    GSABox() throws IOException {
+public class ABox extends OntologyLoader {
+    ABox() throws IOException {
         super("nicosiaesperlinga.ttl");
     }
 
