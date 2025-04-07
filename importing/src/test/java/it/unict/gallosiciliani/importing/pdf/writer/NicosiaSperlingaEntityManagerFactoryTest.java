@@ -8,11 +8,11 @@ import cz.cvut.kbss.jopa.model.JOPAPersistenceProvider;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
 import cz.cvut.kbss.ontodriver.jena.JenaDataSource;
 import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
-import it.unict.gallosiciliani.model.persistence.FileEntityManagerFactoryHelper;
+import it.unict.gallosiciliani.liph.util.FileEntityManagerFactoryHelper;
 import it.unict.gallosiciliani.importing.pdf.writing.NicosiaSperlingaEntityManagerFactory;
-import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
-import it.unict.gallosiciliani.model.lemon.lime.Lime;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lime;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -56,7 +56,7 @@ public class NicosiaSperlingaEntityManagerFactoryTest {
     @Test
     void testMultipleCommits(){
         try(final EntityManagerFactory emf = Persistence.createEntityManagerFactory("test-pu", Map.of(
-                JOPAPersistenceProperties.SCAN_PACKAGE, "it.unict.gallosiciliani.model",
+                JOPAPersistenceProperties.SCAN_PACKAGE, "it.unict.gallosiciliani.liph.model",
                 JOPAPersistenceProperties.JPA_PERSISTENCE_PROVIDER, JOPAPersistenceProvider.class.getName(),
                 JOPAPersistenceProperties.DATA_SOURCE_CLASS, JenaDataSource.class.getName(),
                 JenaOntoDriverProperties.JENA_STORAGE_TYPE, JenaOntoDriverProperties.FILE,

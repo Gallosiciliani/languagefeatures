@@ -6,13 +6,13 @@ import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
 import it.unict.gallosiciliani.importing.iri.IRIProvider;
 import it.unict.gallosiciliani.importing.pdf.generator.LexicalEntriesGenerator;
 import it.unict.gallosiciliani.importing.pdf.parser.Parser;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 
 import java.io.IOException;
 import java.util.function.Consumer;
 
 /**
- * Create a converter that generates {@link it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry}
+ * Create a converter that generates {@link LexicalEntry}
  * from the source PDF vocabulary
  */
 public class PDFLexiconConverter implements LexiconConverter {

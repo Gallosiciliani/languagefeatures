@@ -1,10 +1,9 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
-import it.unict.gallosiciliani.model.lemonety.Etymology;
-import it.unict.gallosiciliani.model.lexinfo.LexInfo;
-import it.unict.gallosiciliani.webapp.WebAppProperties;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
+import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -25,7 +24,7 @@ import java.util.*;
 public class EntrySummarizer {
 
     @Autowired
-    private MessageSource messageSource;
+    MessageSource messageSource;
 
     private final Locale locale;
 
@@ -102,20 +101,6 @@ public class EntrySummarizer {
         return components;
     }
 
-    /**
-     * Get the language features associated to the given etymology
-     * @param etymology an etymology
-     * @param locale preferred locale for the feature labels
-     * @return labels for the language features associated to the etymology
-     */
-    private SortedSet<String> getFeatures(final Etymology etymology, final Locale locale){
-        return Collections.emptySortedSet();
-        //        final GSKB gskb = new GSKB(webAppProperties);
-//        final SortedSet<String> featureLabels = new TreeSet<>();
-//        final Consumer<GSLanguageFeatureCode> addToLabels = featureCode -> featureLabels.add(languageFeatureLabelProvider.getLabel(featureCode, locale));
-//        etymology.getTypes().forEach(iri -> gskb.getFeatureByHasFeatureClass(iri).ifPresent(addToLabels));
-//        return featureLabels;
-    }
     /**
      * Convert a list of {@link LexicalEntry} to the corresponding {@link EntrySummary} instances.
      *

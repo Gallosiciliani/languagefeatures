@@ -1,12 +1,12 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
-import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
-import it.unict.gallosiciliani.model.lemonety.EtyLink;
-import it.unict.gallosiciliani.model.lemonety.Etymology;
-import it.unict.gallosiciliani.model.lexinfo.LexInfo;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemonety.EtyLink;
+import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
+import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
 import org.springframework.test.web.servlet.ResultActions;
 

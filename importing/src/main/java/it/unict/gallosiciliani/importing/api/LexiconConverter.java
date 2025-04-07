@@ -1,10 +1,12 @@
 package it.unict.gallosiciliani.importing.api;
 
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+
 import java.io.IOException;
 
 /**
  * Basic interface for converters in for different source file formats.
- * Read lexicon entries from a file and generate the corresponding {@link it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry}
+ * Read lexicon entries from a file and generate the corresponding {@link LexicalEntry}
  * instances.
  *
  * @author Cristiano Longo

@@ -2,13 +2,13 @@ package it.unict.gallosiciliani.importing.api;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
-import it.unict.gallosiciliani.model.persistence.EntityManagerFactoryHelper;
-import it.unict.gallosiciliani.model.persistence.FileEntityManagerFactoryHelper;
-import it.unict.gallosiciliani.model.persistence.InMemoryEntityManagerFactoryHelper;
-import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
-import it.unict.gallosiciliani.model.lemon.lime.Lime;
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.util.EntityManagerFactoryHelper;
+import it.unict.gallosiciliani.liph.util.FileEntityManagerFactoryHelper;
+import it.unict.gallosiciliani.liph.util.InMemoryEntityManagerFactoryHelper;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lime;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

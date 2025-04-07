@@ -1,8 +1,8 @@
 package it.unict.gallosiciliani.webapp.sparql;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
-import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
-import it.unict.gallosiciliani.model.lemon.lime.Lime;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lime;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
 import org.apache.jena.vocabulary.DCTerms;
 import org.junit.jupiter.api.Test;

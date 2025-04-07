@@ -2,7 +2,7 @@ package it.unict.gallosiciliani.webapp.ontologies;
 
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
-import it.unict.gallosiciliani.util.OntologyLoader;
+import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -46,9 +46,18 @@ public class OntologiesRestControllerTest {
 
     @Test
     void shouldReturnAboxTTL() throws Exception {
-        shouldReturnOntologyInTTLFormat("/ns/lexica", abox);
-        shouldReturnOntologyInTTLFormat("/ns/lexica/", abox);
-        shouldReturnOntologyInTTLFormat("/ns/lexica/nicosiaesperlinga", abox);
+        shouldReturnAboxTTL("/ns/lexica");
+        shouldReturnAboxTTL("/ns/lexica/");
+        shouldReturnAboxTTL("/ns/lexica/nicosiaesperlinga");
+    }
+
+    private void shouldReturnAboxTTL(final String path) throws Exception {
+        final String expectedFile="test";
+        when(abox.getOntologyAsStr()).thenReturn(expectedFile);
+        mockMvc.perform(get(path)
+                        .accept("text/turtle")).andExpect(status().isOk())
+                .andExpect(content().contentType("text/turtle;charset=UTF-8"))
+                .andExpect(content().string(expectedFile));
     }
 
     @Test

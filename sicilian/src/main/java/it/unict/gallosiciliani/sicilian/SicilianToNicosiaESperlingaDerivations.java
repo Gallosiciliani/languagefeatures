@@ -3,7 +3,7 @@ package it.unict.gallosiciliani.sicilian;
 import it.unict.gallosiciliani.derivations.*;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 
 import java.io.FileWriter;
 import java.io.IOException;

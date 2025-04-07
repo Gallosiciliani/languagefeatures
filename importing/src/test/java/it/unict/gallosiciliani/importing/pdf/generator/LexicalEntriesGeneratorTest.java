@@ -3,7 +3,7 @@ import it.unict.gallosiciliani.importing.pdf.LexicalEntryConsumerTestUtils;
 import it.unict.gallosiciliani.importing.partofspeech.POSExamples;
 import it.unict.gallosiciliani.importing.partofspeech.POS;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

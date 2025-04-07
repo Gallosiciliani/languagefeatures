@@ -1,10 +1,10 @@
 package it.unict.gallosiciliani.webapp;
 
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
-import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
-import it.unict.gallosiciliani.model.liph.LexicalObject;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.LexicalObject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -45,7 +45,7 @@ public class TestUtil {
     }
 
     /**
-     * Create a {@link it.unict.gallosiciliani.model.liph.LexicalObject} instance for test purposes
+     * Create a {@link LexicalObject} instance for test purposes
      */
     public LexicalObject createLexicalObject(){
         final LexicalObject x=new LexicalObject();

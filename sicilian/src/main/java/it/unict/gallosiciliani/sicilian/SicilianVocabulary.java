@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.sicilian;
 
-import it.unict.gallosiciliani.util.OntologyLoader;
+import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;

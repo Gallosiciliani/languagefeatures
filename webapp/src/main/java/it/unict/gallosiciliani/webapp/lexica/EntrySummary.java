@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 
 import java.net.URI;
 import java.util.SortedSet;

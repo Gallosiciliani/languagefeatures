@@ -34,9 +34,7 @@ public class SPARQLResultToCSVConverter implements Consumer<Object> {
      * @throws IOException if some error occurs generating the CSV
      */
     public SPARQLResultToCSVConverter(final String[] headers) throws IOException {
-        final CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(headers);
-//                .setHeader(headers)
-//                .build();
+        final CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setHeader(headers).build();
         csv = new StringBuffer();
         final CSVPrinter printer = new CSVPrinter(csv, csvFormat);
         delegateRowProcessor = getRowProcessor(headers.length, printer);

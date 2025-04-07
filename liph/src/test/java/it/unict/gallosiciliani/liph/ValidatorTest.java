@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.liph;
 
-import it.unict.gallosiciliani.util.OntologyLoader;
+import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

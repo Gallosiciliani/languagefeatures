@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.importing.csv;
 
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 
 import java.util.stream.Stream;
 

@@ -2,12 +2,12 @@ package it.unict.gallosiciliani.importing.api;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
-import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
-import it.unict.gallosiciliani.model.lemon.lime.Lime;
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
-import it.unict.gallosiciliani.model.lemonety.Etymology;
-import it.unict.gallosiciliani.model.owl.Thing;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lime;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
+import it.unict.gallosiciliani.liph.model.owl.Thing;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

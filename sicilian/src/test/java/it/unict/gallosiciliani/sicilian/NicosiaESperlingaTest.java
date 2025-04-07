@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.sicilian;
 
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

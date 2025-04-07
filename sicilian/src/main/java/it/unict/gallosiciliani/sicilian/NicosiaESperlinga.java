@@ -2,12 +2,12 @@ package it.unict.gallosiciliani.sicilian;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
-import it.unict.gallosiciliani.model.lemon.lime.Lime;
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
-import it.unict.gallosiciliani.model.lemon.ontolex.Ontolex;
-import it.unict.gallosiciliani.model.persistence.EntityManagerFactoryHelper;
-import it.unict.gallosiciliani.model.persistence.InMemoryEntityManagerFactoryHelper;
-import it.unict.gallosiciliani.util.OntologyLoader;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lime;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Ontolex;
+import it.unict.gallosiciliani.liph.util.EntityManagerFactoryHelper;
+import it.unict.gallosiciliani.liph.util.InMemoryEntityManagerFactoryHelper;
+import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 

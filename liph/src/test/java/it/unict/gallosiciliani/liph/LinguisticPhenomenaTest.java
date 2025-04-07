@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.liph;
 
-import it.unict.gallosiciliani.util.OntologyCheckUtils;
+import it.unict.gallosiciliani.liph.util.OntologyCheckUtils;
 import org.apache.jena.rdf.model.Model;
 import org.junit.jupiter.api.Test;
 

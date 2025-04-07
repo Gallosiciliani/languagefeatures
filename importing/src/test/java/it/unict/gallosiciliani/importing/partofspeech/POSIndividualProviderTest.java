@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.importing.partofspeech;
 
-import it.unict.gallosiciliani.model.lexinfo.LexInfo;
+import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

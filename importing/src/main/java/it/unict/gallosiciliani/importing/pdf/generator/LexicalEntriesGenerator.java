@@ -6,7 +6,7 @@ import it.unict.gallosiciliani.importing.pdf.parser.ParsingDataConsumer;
 import it.unict.gallosiciliani.importing.partofspeech.POS;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
 import it.unict.gallosiciliani.importing.partofspeech.UnexpectedPOSStringException;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.function.Consumer;

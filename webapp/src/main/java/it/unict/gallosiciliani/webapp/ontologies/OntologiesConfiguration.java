@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Provide the beans corresponding to the OWL ontologies used in the project
@@ -29,7 +31,12 @@ public class OntologiesConfiguration {
     }
 
     @Bean
-    ABox aBox() throws IOException {
-        return new ABox();
+    ABox aBox(){
+        try {
+            final String str= Files.readString(Path.of("nicosiaesperlinga.ttl"));
+            return new ABox(str);
+        } catch (IOException e) {
+            return new ABox("ERROR: "+e.getMessage());
+        }
     }
 }

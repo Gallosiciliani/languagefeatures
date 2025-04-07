@@ -18,9 +18,22 @@
             <version>${cz.cvut.kbss.jopa.version}</version>
         </dependency>
         <dependency>
-            <groupId>it.unict.gallosiciliani</groupId>
-            <artifactId>util</artifactId>
-            <version>1.12.0</version>
+            <groupId>cz.cvut.kbss.jopa</groupId>
+            <artifactId>ontodriver-jena</artifactId>
+            <version>${cz.cvut.kbss.jopa.version}</version>
+            <!-- excluded because of a clash with webapp -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-slf4j2-impl</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- see https://github.com/kbss-cvut/jopa/wiki/Spring-and-Spring-Boot -->
+        <dependency>
+            <groupId>com.github.ledsoft</groupId>
+            <artifactId>jopa-spring-boot-loader</artifactId>
+            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>dk.brics.automaton</groupId>
@@ -29,17 +42,6 @@
         </dependency>
     </dependencies>
     <build>
-        <resources>
-            <resource>
-                <directory>../examples/nicosia</directory>
-                <includes>
-                    <include>ex1.ttl</include>
-                    <include>ex2.ttl</include>
-                    <include>ex3.ttl</include>
-                    <include>ex4.ttl</include>
-                </includes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

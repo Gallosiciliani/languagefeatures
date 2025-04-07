@@ -1,7 +1,10 @@
 package it.unict.gallosiciliani.importing.iri;
 
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemonety.EtyLink;
+
 /**
- * Provide IRIs for an etymology of a specified {@link it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry}
+ * Provide IRIs for an etymology of a specified {@link LexicalEntry}
  */
 public interface EtymologyIRIProvider {
     /**
@@ -12,7 +15,7 @@ public interface EtymologyIRIProvider {
     String getEtymolgyIRI();
 
     /**
-     * IRI of the first {@link it.unict.gallosiciliani.model.lemonety.EtyLink} of this
+     * IRI of the first {@link EtyLink} of this
      * etymology.
      *
      * @return IRI of first EtyLink

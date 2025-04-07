@@ -1,9 +1,8 @@
 package it.unict.gallosiciliani.importing.csv;
 
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.net.URI;
 
 import static org.junit.jupiter.api.Assertions.*;

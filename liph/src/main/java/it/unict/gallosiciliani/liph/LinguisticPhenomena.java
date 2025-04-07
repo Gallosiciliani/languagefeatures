@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.liph;
 
-import it.unict.gallosiciliani.util.OntologyLoader;
+import it.unict.gallosiciliani.liph.util.OntologyLoader;
 
 import java.io.IOException;
 import java.util.Comparator;

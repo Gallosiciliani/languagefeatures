@@ -4,7 +4,7 @@ import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
 import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
-import it.unict.gallosiciliani.util.OntologyLoader;
+import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

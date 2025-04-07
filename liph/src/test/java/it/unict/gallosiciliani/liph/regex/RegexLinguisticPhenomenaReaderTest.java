@@ -26,7 +26,7 @@ public class RegexLinguisticPhenomenaReaderTest {
                 getRegexFeatureTTL("http://test.org/f2", "b", "y") + ";\n" +
                 "\t<"+ LinguisticPhenomena.REPLACEMENT_ANN_PROPERTY+"> \"z\" .";
 
-        final Model m = RDFParser.fromString(ontologyTTL).lang(RDFLanguages.TTL).toModel();
+        final Model m = RDFParser.fromString(ontologyTTL, RDFLanguages.TTL).toModel();
         final RegexLinguisticPhenomenaReader reader = RegexLinguisticPhenomenaReader.read(m);
         assertTrue(reader.getExceptions().isEmpty());
 
@@ -42,7 +42,7 @@ public class RegexLinguisticPhenomenaReaderTest {
         final String ontologyTTL = "@prefix :<"+ LinguisticPhenomena.NS+"> .\n" +
                 getRegexFeatureTTL("http://test.org/f1", "a", "x") + ";\n" +
                 "\t<"+ LinguisticPhenomena.REGEX_ANN_PROPERTY+"> \"b\" .";
-        final Model m = RDFParser.fromString(ontologyTTL).lang(RDFLanguages.TTL).toModel();
+        final Model m = RDFParser.fromString(ontologyTTL, RDFLanguages.TTL).toModel();
         final RegexLinguisticPhenomenaReader actual = RegexLinguisticPhenomenaReader.read(m);
         assertEquals(1, actual.getExceptions().size());
     }

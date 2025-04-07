@@ -1,12 +1,12 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
 import it.unict.gallosiciliani.webapp.WebAppProperties;
-import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
-import it.unict.gallosiciliani.model.lemonety.EtyLink;
-import it.unict.gallosiciliani.model.lemonety.Etymology;
-import it.unict.gallosiciliani.model.lexinfo.LexInfo;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemonety.EtyLink;
+import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
+import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;

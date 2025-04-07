@@ -1,8 +1,8 @@
 package it.unict.gallosiciliani.importing.pdf.generator;
 
 import it.unict.gallosiciliani.importing.iri.LexicalEntryIRIProvider;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
-import it.unict.gallosiciliani.model.lexinfo.PartOfSpeech;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lexinfo.PartOfSpeech;
 
 import java.util.List;
 

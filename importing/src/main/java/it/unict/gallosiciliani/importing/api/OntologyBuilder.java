@@ -7,7 +7,7 @@ import it.unict.gallosiciliani.importing.iri.SequentialIRIProvider;
 import it.unict.gallosiciliani.importing.pdf.PDFLexiconConverter;
 import it.unict.gallosiciliani.importing.pdf.writing.NicosiaSperlingaEntityManagerFactory;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
-import it.unict.gallosiciliani.model.persistence.EntityManagerFactoryHelper;
+import it.unict.gallosiciliani.liph.util.EntityManagerFactoryHelper;
 import lombok.Getter;
 
 import java.io.IOException;

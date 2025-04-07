@@ -1,17 +1,17 @@
 package it.unict.gallosiciliani.webapp.ontologies;
 
-import it.unict.gallosiciliani.util.OntologyLoader;
-
-import java.io.IOException;
+import lombok.Getter;
 
 /**
  * Load data in the abox file
  *
  * @author Cristiano Longo
  */
-public class ABox extends OntologyLoader {
-    ABox() throws IOException {
-        super("nicosiaesperlinga.ttl");
-    }
+@Getter
+public class ABox{
+    private final String ontologyAsStr;
 
+    ABox(final String ontologyAsStr) {
+        this.ontologyAsStr=ontologyAsStr;
+    }
 }

@@ -4,7 +4,7 @@ import it.unict.gallosiciliani.importing.api.LexiconConverter;
 import it.unict.gallosiciliani.importing.api.LexiconConverterFactory;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
 import it.unict.gallosiciliani.importing.iri.IRIProvider;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;

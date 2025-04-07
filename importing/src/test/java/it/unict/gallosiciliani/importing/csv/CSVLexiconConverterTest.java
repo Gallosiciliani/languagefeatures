@@ -3,11 +3,11 @@ package it.unict.gallosiciliani.importing.csv;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
 import it.unict.gallosiciliani.importing.pdf.LexicalEntryConsumerTestUtils;
 import it.unict.gallosiciliani.importing.pdf.VocabTestParams;
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
-import it.unict.gallosiciliani.model.lemonety.EtyLink;
-import it.unict.gallosiciliani.model.lemonety.Etymology;
-import it.unict.gallosiciliani.model.lexinfo.LexInfo;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemonety.EtyLink;
+import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
+import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

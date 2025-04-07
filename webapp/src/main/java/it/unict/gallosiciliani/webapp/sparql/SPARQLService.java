@@ -17,7 +17,7 @@ import java.net.URI;
 @Slf4j
 public class SPARQLService {
     @Autowired
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
     /**
      * Perform a SPARQL query on the knowledge base. The resultset is returned in

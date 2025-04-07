@@ -2,7 +2,7 @@ package it.unict.gallosiciliani.importing.api;
 
 import it.unict.gallosiciliani.importing.iri.IRIProvider;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 
 import java.util.function.Consumer;
 

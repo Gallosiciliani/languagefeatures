@@ -4,9 +4,9 @@ import it.unict.gallosiciliani.importing.partofspeech.POS;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
 import it.unict.gallosiciliani.importing.iri.IRIProvider;
 import it.unict.gallosiciliani.importing.iri.SequentialIRIProvider;
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
-import it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry;
-import it.unict.gallosiciliani.model.lexinfo.LexInfo;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import lombok.Getter;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
 /**
- * Utility for tests involving a {@link it.unict.gallosiciliani.model.lemon.ontolex.LexicalEntry} consumer.
+ * Utility for tests involving a {@link LexicalEntry} consumer.
  *
  * @author Cristiano Longo
  */

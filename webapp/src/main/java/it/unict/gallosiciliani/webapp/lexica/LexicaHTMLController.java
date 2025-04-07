@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
-import it.unict.gallosiciliani.model.lemon.lime.Lexicon;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;

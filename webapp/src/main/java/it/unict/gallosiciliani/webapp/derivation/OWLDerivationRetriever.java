@@ -6,9 +6,9 @@ import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
-import it.unict.gallosiciliani.model.lemon.ontolex.Form;
-import it.unict.gallosiciliani.model.lemon.ontolex.Ontolex;
-import it.unict.gallosiciliani.model.liph.LexicalObject;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Ontolex;
+import it.unict.gallosiciliani.liph.model.LexicalObject;
 
 import cz.cvut.kbss.jopa.model.query.Query;
 import java.util.Collection;
