@@ -34,6 +34,24 @@ public class OntologiesRestController {
     }
 
     /**
+     * Provide the base ontology to define language features.
+     * @return the ontology in TTL format
+     */
+    @GetMapping(value = "liph/"+LinguisticPhenomena.VERSION, produces = "text/turtle")
+    public String getLanguageFeaturesOntologyWithVersion(){
+        return getLanguageFeaturesOntology();
+    }
+
+    /**
+     * Provide the previous version of the liph ontology.
+     * @return the ontology in TTL format
+     */
+    @GetMapping(value = "liph/1.2.0", produces = "text/turtle")
+    public RedirectView getLiph120(){
+        return new RedirectView("https://raw.githubusercontent.com/Gallosiciliani/languagefeatures/refs/heads/1.12.0/liph/src/main/resources/liph.ttl");
+    }
+
+    /**
      * Provide the ontology with features defined in the scope of the Galloitalici project
      * @return the ontology in TTL format
      */

@@ -19,7 +19,7 @@
 
     <groupId>it.unict.gallosiciliani</groupId>
     <artifactId>webapp</artifactId>
-    <version>1.12.0</version>
+    <version>1.13.0</version>
     <build>
         <finalName>webapp</finalName>
         <plugins>
@@ -33,28 +33,18 @@
     <dependencies>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
-            <artifactId>model</artifactId>
-            <version>1.12.0</version>
-        </dependency>
-        <dependency>
-            <groupId>it.unict.gallosiciliani</groupId>
-            <artifactId>util</artifactId>
-            <version>1.12.0</version>
-        </dependency>
-        <dependency>
-            <groupId>it.unict.gallosiciliani</groupId>
             <artifactId>gs</artifactId>
-            <version>1.12.0</version>
+            <version>1.13.0</version>
         </dependency>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
             <artifactId>derivations</artifactId>
-            <version>1.12.0</version>
+            <version>1.13.0</version>
         </dependency>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
             <artifactId>sicilian</artifactId>
-            <version>1.12.0</version>
+            <version>1.13.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

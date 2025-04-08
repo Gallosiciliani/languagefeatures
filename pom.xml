@@ -12,13 +12,12 @@
     </properties>
     <groupId>it.unict.gallosiciliani</groupId>
     <artifactId>liphtools</artifactId>
-    <version>1.12.0</version>
+    <version>1.13.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>liph</module>
         <module>derivations</module>
         <module>gs</module>
-        <module>model</module>
         <module>sicilian</module>
         <module>importing</module>
         <module>webapp</module>
