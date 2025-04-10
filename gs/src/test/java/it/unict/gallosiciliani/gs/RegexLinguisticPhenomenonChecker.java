@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.gs;
 
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 
 import java.util.*;
 

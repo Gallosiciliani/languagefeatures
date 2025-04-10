@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.derivations;
 
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonByLabelRetriever;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
 import org.mockito.Mockito;

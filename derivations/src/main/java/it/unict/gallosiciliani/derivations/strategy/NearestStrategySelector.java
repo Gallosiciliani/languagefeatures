@@ -1,15 +1,11 @@
 package it.unict.gallosiciliani.derivations.strategy;
 
-import it.unict.gallosiciliani.derivations.DerivationBuilder;
 import it.unict.gallosiciliani.derivations.DerivationBuilderFactory;
 import it.unict.gallosiciliani.derivations.DerivationBuilderWithStrategyFactory;
-import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
 import lombok.Getter;
 
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Select strategies the nearest to the target strategies
@@ -17,7 +13,6 @@ import java.util.List;
 public class NearestStrategySelector implements TargetedDerivationStrategySelector {
 
     public static TargetedDerivationStrategySelectorFactory FACTORY=NearestStrategySelector::new;
-    public static DerivationBuilderFactory DERIVATION_BUILDER_FACTORY=new DerivationBuilderWithStrategyFactory(FACTORY);
 
     @Getter
     private final Collection<DerivationStrategy> selectedStrategies;

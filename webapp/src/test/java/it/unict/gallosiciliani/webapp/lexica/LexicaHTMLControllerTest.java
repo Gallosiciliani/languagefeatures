@@ -187,7 +187,7 @@ public class LexicaHTMLControllerTest {
     public void shouldPrintNotAvailableForLemmaWithNoEtymon() throws Exception {
         final LexiconWithThreeEntries l3e = new LexiconWithThreeEntries();
         final Etymology etyA = l3e.entryA.getEtymology().iterator().next();
-        etyA.setName(null);
+        etyA.setLabel(null);
         final EtyLink linkA = etyA.getStartingLink();
         linkA.setEtySource(null);
         linkA.setEtySubTarget(null);
@@ -201,7 +201,7 @@ public class LexicaHTMLControllerTest {
     public void shouldShowSimpleNotLinkedLatinEtymonAsIs() throws Exception {
         final LexiconWithThreeEntries l3e = new LexiconWithThreeEntries();
         final Form etymonForm = setSimpleLatinEtymon(l3e.entryA);
-        final String expectedEtymon = etymonForm.getName();
+        final String expectedEtymon = etymonForm.getLabel();
         final String etymologyLabel = messageSource.getMessage("galloitalici.kb.lexica.etymology", new Object[0], locale);
         GETperformer.perform(l3e)
                 .andExpect(xpath("//tbody[1]/tr/th[text()='"+etymologyLabel+"']/following-sibling::td/ul/li[1]")
@@ -219,13 +219,13 @@ public class LexicaHTMLControllerTest {
         final String expectedEtymon = "expectedLatinEtymon";
         final String expectedEtymonNormalized = "expectedlatinetymon";
         final Etymology etyA = entry.getEtymology().iterator().next();
-        etyA.setName(expectedEtymon);
+        etyA.setLabel(expectedEtymon);
         final EtyLink linkA = etyA.getStartingLink();
         linkA.setEtySource(null);
         final Form etymonForm = new Form();
         linkA.getEtySubSource().add(etymonForm);
         etymonForm.setId("http://www.example.org/latinForm");
-        etymonForm.setName(expectedEtymon);
+        etymonForm.setLabel(expectedEtymon);
         etymonForm.setWrittenRep(expectedEtymonNormalized);
         return etymonForm;
     }
@@ -234,7 +234,7 @@ public class LexicaHTMLControllerTest {
     public void shouldProvideLinkForSimpleLinkedLatinEtymon() throws Exception {
         final LexiconWithThreeEntries l3e = new LexiconWithThreeEntries();
         final Form etymonForm = setSimpleLatinEtymon(l3e.entryA);
-        final String expectedEtymon = etymonForm.getName();
+        final String expectedEtymon = etymonForm.getLabel();
         final URI expectedEtymonURI = URI.create("http://anexternalresource.org");
         etymonForm.setSeeAlso(expectedEtymonURI);
         final String etymologyLabel = messageSource.getMessage("galloitalici.kb.lexica.etymology", new Object[0], locale);
@@ -280,7 +280,7 @@ public class LexicaHTMLControllerTest {
         if (expectedComponents.length==componentNum)
             return r;
         return checkExpectedEtymonSubcomponent(r.andExpect(xpath("//tbody["+entryNum+"]/tr/th[text()='"+etymologyLabel+"']/following-sibling::td/ul/li["+(componentNum+1)+"]")
-                .string(expectedComponents[componentNum].getName())), entryNum, componentNum+1, expectedComponents);
+                .string(expectedComponents[componentNum].getLabel())), entryNum, componentNum+1, expectedComponents);
     }
 
 //    @Test

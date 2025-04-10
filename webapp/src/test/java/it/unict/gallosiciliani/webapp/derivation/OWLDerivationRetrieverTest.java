@@ -2,7 +2,7 @@ package it.unict.gallosiciliani.webapp.derivation;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.LexicalObject;
 import it.unict.gallosiciliani.webapp.TestUtil;

@@ -1,5 +1,7 @@
 package it.unict.gallosiciliani.liph;
 
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+
 import java.util.Locale;
 
 /**

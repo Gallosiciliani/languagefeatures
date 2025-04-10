@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.liph;
 
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import lombok.Getter;
 import org.apache.jena.query.*;
@@ -7,7 +8,6 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.riot.RDFParser;
 
-import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -34,10 +34,12 @@ public class Validator implements Consumer<LinguisticPhenomenon> {
     @Override
     public void accept(final LinguisticPhenomenon phenomenon){
         final ParameterizedSparqlString queryStr = new ParameterizedSparqlString("SELECT ?src ?srcr ?target ?targetr WHERE{\n" +
-                "\t?src ?phenomenon ?target .\n" +
-                "\t?src <"+LinguisticPhenomena.ONTOLEX_WRITTEN_REP_DATA_PROPERTY+"> ?srcr .\n" +
-                "\t?target <"+LinguisticPhenomena.ONTOLEX_WRITTEN_REP_DATA_PROPERTY+"> ?targetr .\n}");
-        queryStr.setIri("phenomenon", phenomenon.getIRI());
+                "\t?occurrence <"+LinguisticPhenomena.OCCURRENCE_OF_OBJ_PROPERTY+"> ?phenomenon;\n"+
+                "\t\t<"+LinguisticPhenomena.SOURCE_OBJ_PROPERTY+"> ?src;\n"+
+                "\t\t<"+LinguisticPhenomena.TARGET_OBJ_PROPERTY+"> ?target .\n"+
+                "\t?src <"+ LinguisticPhenomena.WRITTEN_REP_DATA_PROPERTY+"> ?srcr .\n" +
+                "\t?target <"+LinguisticPhenomena.WRITTEN_REP_DATA_PROPERTY+"> ?targetr .\n}");
+        queryStr.setIri("phenomenon", phenomenon.getId());
         try (QueryExecution ex = QueryExecution.create(queryStr.asQuery(), model)) {
             final ResultSet rs = ex.execSelect();
             while(rs.hasNext()){
@@ -109,7 +111,7 @@ public class Validator implements Consumer<LinguisticPhenomenon> {
         System.out.println("Found "+illegalDerivations.size()+" illegal derivations");
         for(final LiphDerivation d : illegalDerivations){
             System.out.println("<"+d.getSourceIndividual()+"> writtenRep \""+d.getSourceWrittenRep()+"\";");
-            System.out.println("\t<"+d.getPhenomenon().getIRI()+">  <"+d.getTargetIndividual()+"> writtenRep \""+d.getTargetWrittenRep()+"\" .");
+            System.out.println("\t<"+d.getPhenomenon().getId()+">  <"+d.getTargetIndividual()+"> writtenRep \""+d.getTargetWrittenRep()+"\" .");
         }
     }
 }

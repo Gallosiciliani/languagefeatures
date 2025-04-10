@@ -170,7 +170,7 @@ public class LexiconWithThreeEntries {
     public Form[] setEtymonSubcomponents(final Entry e, final String fullEtymon, final String[] components, final String[] componentsNormalized){
         final LexicalEntry entry = getEntry(e);
         final Etymology etyA = entry.getEtymology().iterator().next();
-        etyA.setName(fullEtymon);
+        etyA.setLabel(fullEtymon);
         final EtyLink linkA = etyA.getStartingLink();
         linkA.setEtySource(null);
         int i =0 ;
@@ -178,7 +178,7 @@ public class LexiconWithThreeEntries {
         for(final String component : components){
             final Form etymonForm = new Form();
             etymonForm.setId("http://www.example.org/latinForm"+i);
-            etymonForm.setName(component);
+            etymonForm.setLabel(component);
             etymonForm.setWrittenRep(componentsNormalized[i]);
             linkA.getEtySubSource().add(etymonForm);
             res[i++]=etymonForm;

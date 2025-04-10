@@ -2,7 +2,7 @@ package it.unict.gallosiciliani.derivations;
 
 import it.unict.gallosiciliani.derivations.strategy.DerivationStrategy;
 import it.unict.gallosiciliani.derivations.strategy.DerivationStrategyFactory;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;

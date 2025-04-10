@@ -5,7 +5,7 @@ import cz.cvut.kbss.jopa.vocabulary.RDFS;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Ontolex;
 import it.unict.gallosiciliani.liph.model.LexicalObject;
@@ -28,7 +28,7 @@ public class OWLDerivationRetriever {
 
     public OWLDerivationRetriever(final Collection<LinguisticPhenomenon> recognizedPhenomena, final EntityManager entityManager){
         this.recognizedPhenomena=recognizedPhenomena;
-        recognizedPhenomena.forEach((p)->recognizedPhenomenaIRIs.add(p.getIRI()));
+        recognizedPhenomena.forEach((p)->recognizedPhenomenaIRIs.add(p.getId()));
         this.entityManager=entityManager;
 
     }
@@ -69,7 +69,7 @@ public class OWLDerivationRetriever {
             final String rValue=resultRow[1].toString();
             final String pValue=resultRow[2].toString();
             for(final LinguisticPhenomenon recognizedPhenomenon: recognizedPhenomena)
-                if (recognizedPhenomenon.getIRI().equals(pValue)){
+                if (recognizedPhenomenon.getId().equals(pValue)){
                     DerivationPathNode prev=retrieveDerivation(etymon, xValue);
                     return prev==null ? null : new DerivationPathNodeImpl(rValue, prev, recognizedPhenomenon);
                 }

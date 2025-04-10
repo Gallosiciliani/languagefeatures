@@ -1,5 +1,7 @@
 package it.unict.gallosiciliani.liph;
 
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+
 import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;

@@ -86,6 +86,7 @@ public class LexicaServiceTest {
     void shouldReturnEntriesInPagesAndSortedByLemma(){
         final LexiconWithThreeEntries lexiconWithThreeEntries = new LexiconWithThreeEntries();
         lexiconWithThreeEntries.persist(entityManager);
+
         try {
             final EntrySelector s=new EntrySelector();
             final Iterator<LexicalEntry> actualPageABIt = lexicaService.findEntries(lexiconWithThreeEntries.lexicon, s)

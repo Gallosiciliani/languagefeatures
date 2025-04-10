@@ -1,7 +1,6 @@
 
 package it.unict.gallosiciliani.liph.model.owl;
 
-import cz.cvut.kbss.jopa.model.MultilingualString;
 import cz.cvut.kbss.jopa.model.annotations.*;
 import cz.cvut.kbss.jopa.vocabulary.OWL;
 import cz.cvut.kbss.jopa.vocabulary.RDFS;
@@ -27,7 +26,7 @@ public class Thing
     @Id(generated = true)
     protected String id;
     @OWLAnnotationProperty(iri = RDFS.LABEL)
-    protected String name;
+    protected String label;
     @OWLAnnotationProperty(iri = cz.cvut.kbss.jopa.vocabulary.DC.Elements.DESCRIPTION)
     protected String description;
     @OWLAnnotationProperty(iri = RDFS.NAMESPACE+"seeAlso")
@@ -49,12 +48,12 @@ public class Thing
         return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 
     public void setDescription(String description) {
@@ -83,7 +82,7 @@ public class Thing
 
     @Override
     public String toString() {
-        return ((((("Thing {"+ name)+"<")+ id)+">")+"}");
+        return ((((("Thing {"+ label)+"<")+ id)+">")+"}");
     }
 
 }

@@ -79,7 +79,7 @@ public class EntrySummarizer {
             return Collections.emptySortedSet();
 
         final Etymology etymology=src.getEtymology().iterator().next();
-        if (etymology.getName()==null)
+        if (etymology.getLabel()==null)
             return Collections.emptySortedSet();
         /*
          * Here we assume that all the subcomponents of the etymon are reported in
@@ -87,8 +87,8 @@ public class EntrySummarizer {
          * the position of the subcomponent in etymology.getName
          */
         final Comparator<Form> subtermsComparator = (f1, f2) -> {
-            final int p1 = etymology.getName().indexOf(f1.getName());
-            final int p2 = etymology.getName().indexOf(f2.getName());
+            final int p1 = etymology.getLabel().indexOf(f1.getLabel());
+            final int p2 = etymology.getLabel().indexOf(f2.getLabel());
             return p1 - p2;
         };
         final SortedSet<Form> components = new TreeSet<>(subtermsComparator);
@@ -96,8 +96,8 @@ public class EntrySummarizer {
         components.addAll(etySubSource);
         final  StringBuffer componentStrings = new StringBuffer();
         for(final Form f : components)
-            componentStrings.append("(").append(f.getWrittenRep()).append(":").append(f.getName()).append(")");
-        log.info("Etymon {} - components {}", etymology.getName(), componentStrings);
+            componentStrings.append("(").append(f.getWrittenRep()).append(":").append(f.getLabel()).append(")");
+        log.info("Etymon {} - components {}", etymology.getLabel(), componentStrings);
         return components;
     }
 

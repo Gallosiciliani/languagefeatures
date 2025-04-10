@@ -3,9 +3,7 @@ package it.unict.gallosiciliani.gs;
 import it.unict.gallosiciliani.derivations.*;
 import it.unict.gallosiciliani.derivations.io.DerivationIOUtil;
 import it.unict.gallosiciliani.derivations.strategy.*;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
-import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
-import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import lombok.Getter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -43,7 +41,7 @@ public class GSDerivationsGenerator implements Consumer<CSVRecord>, AutoCloseabl
     GSDerivationsGenerator(final Appendable out, final TargetedDerivationStrategySelectorFactory selectorFactory) throws IOException {
         gs = new GSFeatures();
         printer = new CSVPrinter(out, CSVFormat.DEFAULT);
-        phenomena=RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
+        phenomena=gs.getRegexLinguisticPhenomena();
         this.selectorFactory=selectorFactory;
         derivationIOUtil =new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID);
     }

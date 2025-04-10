@@ -7,10 +7,8 @@ import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.importing.pdf.generator.LexicalEntriesGenerator;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
 import it.unict.gallosiciliani.importing.pdf.parser.Parser;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.sicilian.SicilianVocabulary;
-import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
-import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
-import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import org.apache.commons.csv.CSVFormat;
@@ -34,7 +32,7 @@ public class Main {
     Main(final String pdfFilePath, final int startPage, final int endPage) throws IOException {
         derivations=importWholeDictionary(pdfFilePath, startPage, endPage, "nicosiasperlinga-lemmas.txt");
         try(final GSFeatures gs=new GSFeatures()){
-            final List<RegexLinguisticPhenomenon> phenomena= RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
+            final List<LinguisticPhenomenon> phenomena=gs.getRegexLinguisticPhenomena();
             derivationBuilder=new DerivationBuilderWithStrategy(phenomena, new CompoundDerivationStrategyFactory(derivations, NearestStrategySelector.FACTORY));
         }
     }
@@ -42,7 +40,7 @@ public class Main {
     Main(final String entriesFilePath) throws IOException {
         derivations=importDictionaryEntriesFromFile(entriesFilePath);
         try(final GSFeatures gs=new GSFeatures()){
-            final List<RegexLinguisticPhenomenon> phenomena= RegexLinguisticPhenomenaReader.read(gs.getModel(), new RegexFeatureQuery().ignoreDeprecated()).getFeatures();
+            final List<LinguisticPhenomenon> phenomena=gs.getRegexLinguisticPhenomena();
             derivationBuilder=new DerivationBuilderWithStrategy(phenomena, new CompoundDerivationStrategyFactory(derivations, NearestStrategySelector.FACTORY));
         }
     }
@@ -126,7 +124,7 @@ public class Main {
         if (n.prev()==null)
             return n.get();
         //here we are assuming that the phenomenon is in GSFeatures
-        final String phenomenonLabel = n.getLinguisticPhenomenon().getIRI().substring(GSFeatures.NS.length());
+        final String phenomenonLabel = n.getLinguisticPhenomenon().getId().substring(GSFeatures.NS.length());
         return n.get()+"<-"+phenomenonLabel+"--"+toString(n.prev());
     }
 }

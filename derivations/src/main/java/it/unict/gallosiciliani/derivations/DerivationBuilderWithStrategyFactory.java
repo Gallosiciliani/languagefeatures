@@ -1,9 +1,8 @@
 package it.unict.gallosiciliani.derivations;
 
 import it.unict.gallosiciliani.derivations.strategy.CompoundDerivationStrategyFactory;
-import it.unict.gallosiciliani.derivations.strategy.DerivationStrategyFactory;
 import it.unict.gallosiciliani.derivations.strategy.TargetedDerivationStrategySelectorFactory;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 
 import java.util.List;
 

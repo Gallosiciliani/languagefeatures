@@ -1,5 +1,7 @@
 package it.unict.gallosiciliani.liph;
 
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+
 /**
  * A derivation step from a specific written representation
  * of a source Lexical Object to a specific written representation of

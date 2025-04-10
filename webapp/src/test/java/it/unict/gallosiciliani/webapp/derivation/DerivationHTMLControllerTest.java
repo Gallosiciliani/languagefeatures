@@ -5,7 +5,7 @@ import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.gs.GSFeatures;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -46,10 +46,10 @@ public class DerivationHTMLControllerTest {
 
     DerivationHTMLControllerTest(){
         final LinguisticPhenomenon p=mock(LinguisticPhenomenon.class);
-        when(p.getIRI()).thenReturn(GSFeatures.NS+"p");
+        when(p.getId()).thenReturn(GSFeatures.NS+"p");
 
         final LinguisticPhenomenon q=mock(LinguisticPhenomenon.class);
-        when(q.getIRI()).thenReturn(GSFeatures.NS+"q");
+        when(q.getId()).thenReturn(GSFeatures.NS+"q");
 
         d0=mock(DerivationPathNode.class);
         when(d0.get()).thenReturn(lemma);

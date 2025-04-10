@@ -1,10 +1,8 @@
 package it.unict.gallosiciliani.gs;
 
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
-import it.unict.gallosiciliani.liph.regex.RegexFeatureQuery;
-import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaConflictsDetector;
-import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
-import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.FiniteStateLinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.regex.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -32,23 +30,22 @@ public class GSFeaturesTest {
     }
 
     @Test
-    void checkDuplicateRegex() throws IOException {
-        try(final GSFeatures gs = new GSFeatures()) {
-            final RegexLinguisticPhenomenaReader reader = RegexLinguisticPhenomenaReader.read(gs.getModel());
-            assertTrue(reader.getExceptions().isEmpty());
-        }
-    }
-
-    @Test
     @Disabled
     void checkRegexConflicts() throws IOException {
         try(final GSFeatures gs = new GSFeatures()) {
             final RegexLinguisticPhenomenaConflictsDetector d = new RegexLinguisticPhenomenaConflictsDetector();
-            gs.getRegexLinguisticPhenomena().forEach(d);
-            for(final Map.Entry<RegexLinguisticPhenomenon, Set<RegexLinguisticPhenomenon>> conflict: d.getConflicts().entrySet()){
-                final RegexLinguisticPhenomenon p=conflict.getKey();
-                for(final RegexLinguisticPhenomenon q: conflict.getValue())
-                    System.out.println("Detected conflict "+p.getIRI()+" "+q.getIRI());
+            final List<RegexFeatureQuerySolution> regexPhenomena=new FiniteStatePhenomenaQuery().exec(gs.getModel());
+            regexPhenomena.addAll(new RegexLiph1FeatureQuery().ignoreDeprecated().exec(gs.getModel()));
+            regexPhenomena.forEach((s)->{
+                final FiniteStateLinguisticPhenomenon p=new FiniteStateLinguisticPhenomenon();
+                p.setId(s.getFeatureIRI());
+                p.setMatchingPattern(s.getRegex());
+                d.accept(p);
+            });
+            for(final Map.Entry<FiniteStateLinguisticPhenomenon, Set<FiniteStateLinguisticPhenomenon>> conflict: d.getConflicts().entrySet()){
+                final FiniteStateLinguisticPhenomenon p=conflict.getKey();
+                for(final FiniteStateLinguisticPhenomenon q: conflict.getValue())
+                    System.out.println("Detected conflict "+p.getId()+" "+q.getId());
             }
             assertTrue(d.getConflicts().isEmpty());
         }
@@ -75,11 +72,10 @@ public class GSFeaturesTest {
      */
     private LinguisticPhenomenon getFeature(final String iri) throws IOException {
         try(final GSFeatures ont = new GSFeatures()) {
-            final RegexFeatureQuery q=new RegexFeatureQuery().ignoreDeprecated();
-            final List<RegexLinguisticPhenomenon> allRegexFeatures = RegexLinguisticPhenomenaReader.read(ont.getModel(), q).getFeatures();
+            final List<LinguisticPhenomenon> allRegexFeatures = ont.getRegexLinguisticPhenomena();
             assertFalse(allRegexFeatures.isEmpty());
             for (final LinguisticPhenomenon f : allRegexFeatures)
-                if (iri.equals(f.getIRI()))
+                if (iri.equals(f.getId()))
                     return f;
             throw new IllegalArgumentException("Unable to get feature " + iri);
         }

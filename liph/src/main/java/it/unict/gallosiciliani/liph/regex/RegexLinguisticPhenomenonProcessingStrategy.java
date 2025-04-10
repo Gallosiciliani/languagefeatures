@@ -1,5 +1,7 @@
 package it.unict.gallosiciliani.liph.regex;
 
+import it.unict.gallosiciliani.liph.model.FiniteStateLinguisticPhenomenon;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -7,12 +9,12 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 
 /**
- * Strategy to apply a {@link RegexLinguisticPhenomenon} to a string.
+ * Strategy to apply a {@link FiniteStateLinguisticPhenomenon} to a string.
  * This strategy can deal with nested pattern occurrences.
  *
  * @author Cristiano Longo
  */
-class RegexLinguisticPhenomenonProcessingStrategy {
+public class RegexLinguisticPhenomenonProcessingStrategy {
 
     private final List<String> replacements;
     private final Matcher matcher;
@@ -23,8 +25,8 @@ class RegexLinguisticPhenomenonProcessingStrategy {
      *
      * @param phenomenon the phenomenon to apply
      */
-    RegexLinguisticPhenomenonProcessingStrategy(final RegexLinguisticPhenomenon phenomenon, final String src){
-        this.replacements=phenomenon.getReplacements();
+    public RegexLinguisticPhenomenonProcessingStrategy(final FiniteStateLinguisticPhenomenon phenomenon, final String src){
+        this.replacements=List.of(phenomenon.getReplaceWith());
         this.matcher=phenomenon.getRegex().matcher(src);
         this.src=src;
     }

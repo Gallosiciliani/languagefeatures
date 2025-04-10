@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.derivations.strategy;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 
 import java.util.Collection;
 
@@ -19,7 +20,7 @@ public interface DerivationStrategy {
     /**
      * Create strategies to handle the branching of a derivation due to the application of a linguistic phenomenon.
      *
-     * @param branches derivations obtained by applying a {@link it.unict.gallosiciliani.liph.LinguisticPhenomenon} to one
+     * @param branches derivations obtained by applying a {@link LinguisticPhenomenon} to one
      *                 characterizing this strategy.
      * @return strategies corresponding to these branches, notice that it may contain a strategy corresponding to the current derivation
      */

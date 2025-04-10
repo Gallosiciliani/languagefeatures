@@ -26,12 +26,13 @@ public class PersistenceConfig {
     EntityManagerFactory entityManagerFactory(final WebAppProperties appProps){
 
         final Map<String, String> props = new HashMap<>();
-        props.put(JOPAPersistenceProperties.ONTOLOGY_URI_KEY, "https://gallosiciliani.unict.it/ns/");
+        props.put(JOPAPersistenceProperties.ONTOLOGY_URI_KEY, "https://gallosiciliani.unict.it/ns/lexica");
         // Here we set up basic storage access properties - driver class, physical location of the storage
         props.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, "nicosiaesperlinga.ttl");
         props.put(JOPAPersistenceProperties.DATA_SOURCE_CLASS, JenaDataSource.class.getName());
         // Let's use Jena TDB for storage
         props.put(JenaOntoDriverProperties.JENA_STORAGE_TYPE, appProps.getJenaStorageType());
+
 //        props.put(JenaOntoDriverProperties.JENA_ISOLATION_STRATEGY, JenaOntoDriverProperties.SNAPSHOT);
         // Use Jena's rule-based RDFS reasoner
         props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, OWLFBRuleReasonerFactoryWithTbox.class.getName());

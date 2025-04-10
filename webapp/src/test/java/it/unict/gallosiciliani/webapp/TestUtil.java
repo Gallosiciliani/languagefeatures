@@ -1,6 +1,6 @@
 package it.unict.gallosiciliani.webapp;
 
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
@@ -61,7 +61,7 @@ public class TestUtil {
      */
     public LinguisticPhenomenon createPhenomenon(){
         final LinguisticPhenomenon p=mock(LinguisticPhenomenon.class);
-        when(p.getIRI()).thenReturn("http://test.org/phenomenon"+n);
+        when(p.getId()).thenReturn("http://test.org/phenomenon"+n);
         n++;
         return p;
     }

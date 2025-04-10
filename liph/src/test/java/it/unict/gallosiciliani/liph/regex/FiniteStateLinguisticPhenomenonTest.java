@@ -1,26 +1,39 @@
 package it.unict.gallosiciliani.liph.regex;
 
 import it.unict.gallosiciliani.liph.LanguageFeatureTestHelper;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.FiniteStateLinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Test cases for {@link RegexLinguisticPhenomenon}
+ * Test cases for {@link FiniteStateLinguisticPhenomenon}
  * @author Cristiano Longo
  */
-public class RegexLinguisticPhenomenonTest {
+public class FiniteStateLinguisticPhenomenonTest {
 
     private final String plainPattern = "abc";
     private final String replacement = "de";
 
-    private final RegexLinguisticPhenomenon t = new RegexLinguisticPhenomenon("http://test,org/f", plainPattern, replacement);
+    private final FiniteStateLinguisticPhenomenon t = createTestPhenomenon();
     private final LanguageFeatureTestHelper h = new LanguageFeatureTestHelper(t);
+
+    private FiniteStateLinguisticPhenomenon createTestPhenomenon(){
+        return createTestPhenomenon(plainPattern, replacement);
+    }
+
+    private FiniteStateLinguisticPhenomenon createTestPhenomenon(final String regex, final String replacement){
+        final FiniteStateLinguisticPhenomenon p=new FiniteStateLinguisticPhenomenon();
+        p.setId("http://test,org/f");
+        p.setMatchingPattern(regex);
+        p.setReplaceWith(replacement);
+        return p;
+    }
 
     @Test
     void shouldReturnFeatureIRI(){
-        assertEquals("http://test,org/f", t.getIRI());
+        assertEquals("http://test,org/f", t.getId());
     }
     @Test
     void testReplaceSingleOccurrence(){
@@ -58,54 +71,25 @@ public class RegexLinguisticPhenomenonTest {
 
     @Test
     void testUsingAGroupInReplacement(){
-        final LinguisticPhenomenon t = new RegexLinguisticPhenomenon("http://test,org/f", "a(.)c", "d$1");
+        final LinguisticPhenomenon t = createTestPhenomenon("a(.)c", "d$1");
         new LanguageFeatureTestHelper(t).derives("axc", "dx");
     }
 
     @Test
     void testUsingTwoGroupsInReplacement(){
-        final LinguisticPhenomenon t = new RegexLinguisticPhenomenon("http://test,org/f", "(\\S)x(\\S)", "$1b$2");
+        final LinguisticPhenomenon t = createTestPhenomenon("(\\S)x(\\S)", "$1b$2");
         new LanguageFeatureTestHelper(t).derives("axc", "abc");
     }
 
     @Test
-    void testMultipleReplacements(){
-        final LinguisticPhenomenon t = new RegexLinguisticPhenomenon("http://test,org/f", "a", "x", "y");
-        new LanguageFeatureTestHelper(t).derives("1a2a",
-                "1a2x",
-                "1a2y",
-                "1x2a",
-                "1x2x",
-                "1x2y",
-                "1y2a",
-                "1y2x",
-                "1y2y");
-    }
-
-    @Test
-    void testAddReplacement(){
-        final RegexLinguisticPhenomenon t = new RegexLinguisticPhenomenon("http://test,org/f", "a", "x");
-        t.addReplacement("y");
-        new LanguageFeatureTestHelper(t).derives("1a2a",
-                "1a2x",
-                "1a2y",
-                "1x2a",
-                "1x2x",
-                "1x2y",
-                "1y2a",
-                "1y2x",
-                "1y2y");
-    }
-
-    @Test
     void testOverlappingPatterns(){
-        final RegexLinguisticPhenomenon t = new RegexLinguisticPhenomenon("http://test,org/f", "aba", "x");
+        final LinguisticPhenomenon t = createTestPhenomenon("aba", "x");
         new LanguageFeatureTestHelper(t).derives("ababa", "xba", "abx");
     }
 
     @Test
     void testPatternBeginningOfStr(){
-        final RegexLinguisticPhenomenon t = new RegexLinguisticPhenomenon("http://test,org/f", "^ab", "x");
+        final LinguisticPhenomenon t = createTestPhenomenon("^ab", "x");
         new LanguageFeatureTestHelper(t).derives("abab", "xab");
     }
 

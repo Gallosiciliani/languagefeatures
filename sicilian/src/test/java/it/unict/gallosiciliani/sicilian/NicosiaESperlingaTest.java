@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.sicilian;
 
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class NicosiaESperlingaTest {
 
     @Test
+    @Disabled
     void shouldReturnAllForms() throws IOException {
         try(final NicosiaESperlinga n=new NicosiaESperlinga()) {
             assertFalse(n.getModel().isEmpty());

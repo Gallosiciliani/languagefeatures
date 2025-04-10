@@ -174,7 +174,7 @@ public class CSVLexiconConverterTest {
         final Set<Etymology> etimologies = actual.getEtymology();
         assertEquals(1, etimologies.size());
         final Etymology actualEtymology = etimologies.iterator().next();
-        assertEquals(expected.getEtymologyLabel(), actualEtymology.getName());
+        assertEquals(expected.getEtymologyLabel(), actualEtymology.getLabel());
 
         final EtyLink l = actualEtymology.getStartingLink();
         assertEquals(actual.getId(), l.getEtyTarget().getId());
@@ -195,7 +195,7 @@ public class CSVLexiconConverterTest {
         for(final ExpectedLatinEtym expectedEtym : expected){
             assertTrue(actualFormsIt.hasNext(), "Too less latin etyms. "+expectedEtym.getWrittenRep()+" not found.");
             final Form actualEtym = actualFormsIt.next();
-            assertEquals(expectedEtym.getLabel(), actualEtym.getName());
+            assertEquals(expectedEtym.getLabel(), actualEtym.getLabel());
             assertEquals(expectedEtym.getWrittenRep(), actualEtym.getWrittenRep());
             assertEquals(expectedEtym.getSeeAlso(), actualEtym.getSeeAlso());
         }

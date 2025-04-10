@@ -2,9 +2,7 @@ package it.unict.gallosiciliani.webapp.persistence;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.Query;
-import cz.cvut.kbss.jopa.vocabulary.RDFS;
-import it.unict.gallosiciliani.liph.LinguisticPhenomena;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
@@ -72,8 +70,8 @@ public class PersistenceTestUtils {
     }
 
     public PersistenceTestUtils persist(final LinguisticPhenomenon p){
-        return updateQuery("INSERT DATA {"+
-                "\t<"+p.getIRI()+"> <"+ RDFS.SUB_PROPERTY_OF +"> <"+ LinguisticPhenomena.LINGUISTIC_PHENOMENON_OBJ_PROPERTY +">}");
+        actions.add((final EntityManager entityManager) -> entityManager.persist(p));
+        return this;
     }
 
     /**
@@ -97,7 +95,7 @@ public class PersistenceTestUtils {
      * @return this object
      */
     public PersistenceTestUtils persist(final LexicalObject src, final LinguisticPhenomenon p, final LexicalObject dst){
-        return persist(src, p.getIRI(), dst);
+        return persist(src, p.getId(), dst);
     }
 
     public PersistenceTestUtils remove(final PartOfSpeech pos) {

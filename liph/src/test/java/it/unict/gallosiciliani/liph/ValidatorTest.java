@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.liph;
 
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,7 +53,7 @@ public class ValidatorTest {
 
     @BeforeEach
     void init(){
-        when(phenomenon.getIRI()).thenReturn(TEST_SINGLE_DERIVATION_NS +"phenomenon");
+        when(phenomenon.getId()).thenReturn(TEST_SINGLE_DERIVATION_NS +"phenomenon");
     }
     @Test
     void testValidDerivation() throws IOException {
@@ -84,7 +85,7 @@ public class ValidatorTest {
     private void checkEquals(final LiphDerivation expected, final LiphDerivation actual){
         assertEquals(expected.getSourceIndividual(), actual.getSourceIndividual());
         assertEquals(expected.getSourceWrittenRep(), actual.getSourceWrittenRep());
-        assertEquals(expected.getPhenomenon().getIRI(), actual.getPhenomenon().getIRI());
+        assertEquals(expected.getPhenomenon().getId(), actual.getPhenomenon().getId());
         assertEquals(expected.getTargetIndividual(), actual.getTargetIndividual());
         assertEquals(expected.getTargetWrittenRep(), actual.getTargetWrittenRep());
     }
@@ -108,7 +109,7 @@ public class ValidatorTest {
             final String defsNS = "https://gallosiciliani.unict.it/ns/test/defs#";
 
             final LinguisticPhenomenon atoc = Mockito.mock(LinguisticPhenomenon.class);
-            when(atoc.getIRI()).thenReturn(defsNS+"atoc");
+            when(atoc.getId()).thenReturn(defsNS+"atoc");
             checkEquals(new LiphDerivation() {
                 @Override
                 public String getSourceIndividual() {

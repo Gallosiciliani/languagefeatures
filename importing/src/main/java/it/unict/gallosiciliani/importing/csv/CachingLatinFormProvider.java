@@ -106,7 +106,7 @@ public class CachingLatinFormProvider implements LatinFormProvider {
         final Form f = new Form();
         f.setId(iri);
         f.setWrittenRep(writtenRep);
-        f.setName(label);
+        f.setLabel(label);
 
         final URI seeAlso = externalLinks.get(writtenRep);
         if (seeAlso!=null){

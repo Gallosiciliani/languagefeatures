@@ -13,7 +13,7 @@ class DerivationChecker {
 
     DerivationChecker inner(final String expectedString, final String expectedPhenomenon){
         assertEquals(expectedString, derivation.get());
-        assertEquals(expectedPhenomenon, derivation.getLinguisticPhenomenon().getIRI());
+        assertEquals(expectedPhenomenon, derivation.getLinguisticPhenomenon().getId());
         assertNotNull(derivation.prev());
         return new DerivationChecker(derivation.prev());
     }

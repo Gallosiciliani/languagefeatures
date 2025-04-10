@@ -15,12 +15,13 @@ import java.util.Map;
  */
 public class EntityManagerFactoryHelper implements AutoCloseable{
 
+    private static int nextPersistenceUnit;
     private final EntityManagerFactory factory;
 
     protected EntityManagerFactoryHelper(final Map<String,String> storageSpecificConfiguration){
         final Map<String, String> configuration=basicConfiguration();
         configuration.putAll(storageSpecificConfiguration);
-        factory=Persistence.createEntityManagerFactory("the-persistence-unit", configuration);
+        factory=Persistence.createEntityManagerFactory("persistence-unit"+(nextPersistenceUnit++), configuration);
 
     }
 
@@ -41,6 +42,7 @@ public class EntityManagerFactoryHelper implements AutoCloseable{
         final Map<String, String> props = new HashMap<>();
         props.put(JOPAPersistenceProperties.SCAN_PACKAGE, "it.unict.gallosiciliani.liph.model");
         props.put(JOPAPersistenceProperties.JPA_PERSISTENCE_PROVIDER, JOPAPersistenceProvider.class.getName());
+//        props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, OWLFBRuleReasonerFactory.class.getName());
         props.put(JOPAPersistenceProperties.DATA_SOURCE_CLASS, JenaDataSource.class.getName());
         return props;
     }

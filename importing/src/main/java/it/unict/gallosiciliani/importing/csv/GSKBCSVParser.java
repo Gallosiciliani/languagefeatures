@@ -148,11 +148,11 @@ class GSKBCSVParser implements Consumer<CSVRecord> {
             return etymology;
         }
         importedRowsWithLatinEtymon++;
-        etymology.setName(etymStr);
+        etymology.setLabel(etymStr);
         for(final String component : etymStr.split("\\+")){
             final Form latinForm = latinFormProvider.getLatinForm(component, etymologyIRIs.getEtySourceIRI());
-            if (!component.equals(latinForm.getName()))
-                log.error("Found latin form with two different representations: {} and {}", latinForm.getName(), component);
+            if (!component.equals(latinForm.getLabel()))
+                log.error("Found latin form with two different representations: {} and {}", latinForm.getLabel(), component);
             l.getEtySubSource().add(latinForm);
         }
         return etymology;

@@ -1,41 +1,29 @@
 package it.unict.gallosiciliani.liph.regex;
 
-import it.unict.gallosiciliani.liph.IllegalLinguisticPhenomenonDefinition;
+import it.unict.gallosiciliani.liph.model.FiniteStateLinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import lombok.Getter;
 import org.apache.jena.rdf.model.Model;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * Get regex features from SPARQL result set
  */
-public class RegexLinguisticPhenomenaReader implements Consumer<RegexFeatureQuerySolution> {
-    @Getter
-    private final List<RegexLinguisticPhenomenon> features = new ArrayList<>();
-    /**
-     * Exceptions occurred during the retrieving
-     */
-    @Getter
-    private final List<IllegalLinguisticPhenomenonDefinition> exceptions = new LinkedList<>();
-
-    private String currentFeatureIRI = null;
-    private String currentFeatureRegex = null;
-    private RegexLinguisticPhenomenon currentFeature;
+@Getter
+public class RegexLinguisticPhenomenaReader{
+    private final List<LinguisticPhenomenon> features = new ArrayList<>();
 
     /**
      * Factory method, read all regex features from a model
      * @param model the model
      * @param query a selection query for regex features
-     * @return a {@link RegexLinguisticPhenomenaReader} with all the recognizable and fully-specified
-     * features in the model
      */
-    public static RegexLinguisticPhenomenaReader read(final Model model, final RegexFeatureQuery query) {
-        final RegexLinguisticPhenomenaReader reader = new RegexLinguisticPhenomenaReader();
-        query.exec(model).forEach(reader);
-        return reader;
+    public void read(final Model model, final RegexFeatureQuery query) {
+        for (RegexFeatureQuerySolution s : query.exec(model))
+            accept(s);
+
     }
 
     /**
@@ -45,23 +33,17 @@ public class RegexLinguisticPhenomenaReader implements Consumer<RegexFeatureQuer
      * features in the model
      */
     public static RegexLinguisticPhenomenaReader read(final Model model) {
-        return read(model, new RegexFeatureQuery());
+        final RegexLinguisticPhenomenaReader reader=new RegexLinguisticPhenomenaReader();
+        reader.read(model, new RegexLiph1FeatureQuery().ignoreDeprecated());
+        reader.read(model, new FiniteStatePhenomenaQuery());
+        return reader;
     }
 
-    @Override
-    public void accept(final RegexFeatureQuerySolution solution) {
-        if (solution.getFeatureIRI().equals(currentFeatureIRI)) {
-            if (solution.getRegex().equals(currentFeatureRegex))
-                currentFeature.addReplacement(solution.getReplacement());
-            else exceptions.add(new IllegalLinguisticPhenomenonDefinition("Multiple regex for "+currentFeatureIRI+": "
-                    +currentFeatureRegex+" and "+solution.getRegex()));
-        }
-        else { // this is also the case when currentFeatureIRI == null
-            currentFeatureIRI = solution.getFeatureIRI();
-            currentFeatureRegex = solution.getRegex();
-            currentFeature = new RegexLinguisticPhenomenon(solution.getFeatureIRI(), solution.getRegex(),
-                    solution.getReplacement());
-            features.add(currentFeature);
-        }
+    private void accept(final RegexFeatureQuerySolution solution) {
+        final FiniteStateLinguisticPhenomenon p=new FiniteStateLinguisticPhenomenon();
+        p.setId(solution.getFeatureIRI());
+        p.setMatchingPattern(solution.getRegex());
+        p.setReplaceWith(solution.getReplacement());
+        features.add(p);
     }
 }

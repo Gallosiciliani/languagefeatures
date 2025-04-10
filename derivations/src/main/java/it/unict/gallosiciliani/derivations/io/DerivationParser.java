@@ -2,7 +2,7 @@ package it.unict.gallosiciliani.derivations.io;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
-import it.unict.gallosiciliani.liph.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonByLabelRetriever;
 
 import java.util.Locale;
