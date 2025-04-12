@@ -27,7 +27,7 @@ public class DerivationServiceTest {
 
     @Test
     void shouldReturnNearestShortestDerivations(){
-        checkBocheDerivations(derivationService.derives("abbuccari", "böchè"));
+        checkBocheDerivations(derivationService.derives("abbuccàri", "böchè"));
     }
 
     private void checkBocheDerivations(final NearestShortestDerivation actual){
@@ -38,10 +38,11 @@ public class DerivationServiceTest {
         printer.print(actualDerivation, Locale.ENGLISH);
         new DerivationChecker(actualDerivation)
                 .inner("böchè", GSFeatures.NS+"vocal.5.a")
-                .inner("buchè", GSFeatures.NS+"elim.2")
-                .inner("bbuchè", GSFeatures.NS+"degem.8")
-                .inner("bbuccari", GSFeatures.NS+"afer.1")
-                .last("abbuccari");
+                .inner("buchè", GSFeatures.NS+"palat.1")
+                .inner("bucàri", GSFeatures.NS+"elim.2")
+                .inner("bbucàri", GSFeatures.NS+"degem.7")
+                .inner("bbuccàri", GSFeatures.NS+"afer.1")
+                .last("abbuccàri");
 
         assertFalse(actualIt.hasNext());
     }

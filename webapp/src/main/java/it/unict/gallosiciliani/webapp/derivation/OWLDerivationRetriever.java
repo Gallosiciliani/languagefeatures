@@ -57,9 +57,9 @@ public class OWLDerivationRetriever {
             return new DerivationPathNodeImpl(etymon.getWrittenRep());
         // etymon --...-> x -- p -> derivedForm --...-> lemma
         final Query q=entityManager.createNativeQuery("SELECT ?x ?r ?p WHERE {\n"+
-                "\t<"+etymon.getId()+"> <"+ LinguisticPhenomena.LINGUISTIC_PHENOMENON_OBJ_PROPERTY+"> ?x .\n"+
+                "\t<"+etymon.getId()+"> <"+ LinguisticPhenomena.DERIVES_OBJ_PROPERTY+"> ?x .\n"+
                 "\t?x ?p <"+ destinationIRI +"> . \n"+
-                "\t?p <"+ RDFS.SUB_PROPERTY_OF+"> <"+LinguisticPhenomena.LINGUISTIC_PHENOMENON_OBJ_PROPERTY+"> .\n"+
+                "\t?p <"+ RDFS.SUB_PROPERTY_OF+"> <"+LinguisticPhenomena.DERIVES_OBJ_PROPERTY+"> .\n"+
                 "\t?x <"+ Ontolex.WRITTEN_REP_DATA_PROPERTY+"> ?r \n"+
                 "}");
         final List<Object> results=q.getResultList();

@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.derivations;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -76,5 +77,28 @@ public class TonicVowelAccentExplicitorTest {
         assertEquals("xyë̀zïhka", e.addGraveAccent("xyëzïhka"));
         assertEquals("xyö̀zïhka", e.addGraveAccent("xyözïhka"));
         assertEquals("xyǜzïhka", e.addGraveAccent("xyüzïhka"));
+    }
+
+    @Test
+    @Disabled
+    void shouldAddGraveAccentToTheLastVowelOnWordsEndingVowelAndN(){
+        assertEquals("xàn", e.addGraveAccent("xan"));
+        assertEquals("xèn", e.addGraveAccent("xen"));
+        assertEquals("xìn", e.addGraveAccent("xin"));
+        assertEquals("xòn", e.addGraveAccent("xon"));
+        assertEquals("xùn", e.addGraveAccent("xun"));
+        assertEquals("xä̀n", e.addGraveAccent("xän"));
+        assertEquals("xë̀n", e.addGraveAccent("xën"));
+        assertEquals("xö̀n", e.addGraveAccent("xön"));
+        assertEquals("xǜn", e.addGraveAccent("xün"));
+        assertEquals("xaxàn", e.addGraveAccent("xaxan"));
+        assertEquals("xaxèn", e.addGraveAccent("xaxen"));
+        assertEquals("xaxìn", e.addGraveAccent("xaxin"));
+        assertEquals("xaxòn", e.addGraveAccent("xaxon"));
+        assertEquals("xaxùn", e.addGraveAccent("xaxun"));
+        assertEquals("xaxä̀n", e.addGraveAccent("xaxän"));
+        assertEquals("xaxë̀n", e.addGraveAccent("xaxën"));
+        assertEquals("xaxö̀n", e.addGraveAccent("xaxön"));
+        assertEquals("xaxǜn", e.addGraveAccent("xaxün"));
     }
 }

@@ -61,6 +61,15 @@ public class OntologiesRestController {
     }
 
     /**
+     * Provide the ontology with features defined in the scope of the Galloitalici project
+     * @return the ontology in TTL format
+     */
+    @GetMapping(value = "gs-features/"+GSFeatures.VERSION, produces = "text/turtle")
+    public String getGSFeaturesOntologyWithVersion(){
+        return getGSFeaturesOntology();
+    }
+
+    /**
      * Provide a ttl version of the data stored in the ABox
      * @return ABox in TTL format
      */

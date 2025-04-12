@@ -3,6 +3,7 @@ package it.unict.gallosiciliani.liph.regex;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDFS;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class RegexLiph1FeatureQuery implements RegexFeatureQuery {
     private static final String FEATURE_IRI_VAR = "feature";
+    private static final String LABEL_VAR = "label";
     private static final String REGEX_VAR = "regex";
     private static final String REPLACEMENT_VAR = "replacement";
 
@@ -34,7 +36,8 @@ public class RegexLiph1FeatureQuery implements RegexFeatureQuery {
                 }
 
                 @Override
-                public String getFeatureLabel(){ return null;}
+                public String getFeatureLabel(){ final Literal labelLiteral=querySolution.getLiteral(LABEL_VAR);
+                    return labelLiteral==null ? null : labelLiteral.toString();}
 
                 @Override
                 public String getRegex() {
@@ -70,9 +73,10 @@ public class RegexLiph1FeatureQuery implements RegexFeatureQuery {
      * @return the query string
      */
     private String buildQueryString(){
-        return "SELECT ?"+ FEATURE_IRI_VAR+" ?"+ RegexLiph1FeatureQuery.REGEX_VAR+" ?"+ REPLACEMENT_VAR+" WHERE{"+
+        return "SELECT ?"+ FEATURE_IRI_VAR+" ?"+ RegexLiph1FeatureQuery.REGEX_VAR+" ?"+ REPLACEMENT_VAR+" ?"+LABEL_VAR+" WHERE{"+
                 "?"+ FEATURE_IRI_VAR+" <"+ LinguisticPhenomena.REGEX_ANN_PROPERTY+"> ?"+ RegexLiph1FeatureQuery.REGEX_VAR+" ."+
-                "?"+ FEATURE_IRI_VAR+" <"+ LinguisticPhenomena.REPLACEMENT_ANN_PROPERTY+"> ?"+ RegexLiph1FeatureQuery.REPLACEMENT_VAR+
+                "?"+ FEATURE_IRI_VAR+" <"+ LinguisticPhenomena.REPLACEMENT_ANN_PROPERTY+"> ?"+ RegexLiph1FeatureQuery.REPLACEMENT_VAR+" ."+
+                "OPTIONAL {?"+FEATURE_IRI_VAR+" <"+RDFS.label.getURI()+"> ?"+LABEL_VAR+"} "+
                 (parentPropertyIRI==null ? "" : " . ?"+FEATURE_IRI_VAR+" <"+ RDFS.subPropertyOf.getURI()+"> <"+parentPropertyIRI+">")+
                 (ignoreDeprecated ? " . FILTER NOT EXISTS { ?"+FEATURE_IRI_VAR+" <"+ OWL.deprecated.getURI()+"> true }":"")+
                 "} ORDER BY ?"+ FEATURE_IRI_VAR;

@@ -18,9 +18,9 @@ public class LinguisticPhenomenaTest {
         try(final LinguisticPhenomena liph = new LinguisticPhenomena()) {
             final Model m = liph.getModel();
             final OntologyCheckUtils utils = new OntologyCheckUtils(m)
-                    .objectPropertyExists(LinguisticPhenomena.LINGUISTIC_PHENOMENON_OBJ_PROPERTY)
-                    .annotationPropertyExists(LinguisticPhenomena.REGEX_ANN_PROPERTY)
-                    .annotationPropertyExists(LinguisticPhenomena.REPLACEMENT_ANN_PROPERTY);
+                    .objectPropertyExists(LinguisticPhenomena.DERIVES_OBJ_PROPERTY)
+                    .objectPropertyExists(LinguisticPhenomena.OCCURRENCE_OF_OBJ_PROPERTY);
+            //TODO data properties
             assertTrue(utils.check(), utils.getFailureMessage());
         }
     }

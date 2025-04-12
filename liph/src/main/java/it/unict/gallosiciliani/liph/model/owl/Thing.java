@@ -27,6 +27,10 @@ public class Thing
     protected String id;
     @OWLAnnotationProperty(iri = RDFS.LABEL)
     protected String label;
+    @OWLAnnotationProperty(iri = RDFS.COMMENT)
+    @Getter
+    @Setter
+    protected String comment;
     @OWLAnnotationProperty(iri = cz.cvut.kbss.jopa.vocabulary.DC.Elements.DESCRIPTION)
     protected String description;
     @OWLAnnotationProperty(iri = RDFS.NAMESPACE+"seeAlso")

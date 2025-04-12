@@ -72,7 +72,10 @@ public class GSFeaturesTest {
      */
     private LinguisticPhenomenon getFeature(final String iri) throws IOException {
         try(final GSFeatures ont = new GSFeatures()) {
-            final List<LinguisticPhenomenon> allRegexFeatures = ont.getRegexLinguisticPhenomena();
+            RegexLinguisticPhenomenaReader r=new RegexLinguisticPhenomenaReader();
+            r.read(ont.getModel(), new FiniteStatePhenomenaQuery());
+            final List<LinguisticPhenomenon> allRegexFeatures=r.getFeatures();
+//            final List<LinguisticPhenomenon> allRegexFeatures = ont.getRegexLinguisticPhenomena();
             assertFalse(allRegexFeatures.isEmpty());
             for (final LinguisticPhenomenon f : allRegexFeatures)
                 if (iri.equals(f.getId()))
@@ -129,35 +132,35 @@ public class GSFeaturesTest {
     }
 
     /**
-     * -itu > -ì
+     * -ìtu > -ì
      */
     @Test
     void testLeniz6() throws IOException{
-        getChecker(NS+"leniz.6","ì").atTheEnd(true, "itu");
+        getChecker(NS+"leniz.6","ì").atTheEnd(true, "ìtu");
     }
 
     /**
-     * -atu > -à
+     * -àtu > -à
      */
     @Test
     void testLeniz7() throws IOException{
-        getChecker(NS+"leniz.7","à").atTheEnd(true, "atu");
+        getChecker(NS+"leniz.7","à").atTheEnd(true, "àtu");
     }
 
     /**
-     * -utu > -ù
+     * -ùtu > -ù
      */
     @Test
     void testLeniz8() throws IOException{
-        getChecker(NS+"leniz.8","ù").atTheEnd(true, "utu");
+        getChecker(NS+"leniz.8","ù").atTheEnd(true, "ùtu");
     }
 
     /**
-     * -iti > - ë̀
+     * -ìti > -ë̀
      */
     @Test
     void testLeniz9() throws IOException{
-        getChecker(NS+"leniz.9","ë̀").atTheEnd(true, "iti");
+        getChecker(NS+"leniz.9","ë̀").atTheEnd(true, "ìti");
     }
 
     /**
@@ -185,43 +188,35 @@ public class GSFeaturesTest {
     }
 
     /**
-     * -ani > -an
+     * -àni > -àn
      */
     @Test
     void testLeniz13() throws IOException{
-        getChecker(NS+"leniz.13","an").atTheEnd(true, "ani");
+        getChecker(NS+"leniz.13","àn").atTheEnd(true, "àni");
     }
 
     /**
-     * -uni > -ön
+     * -ùni > -ö̀n
      */
     @Test
     void testLeniz14() throws IOException{
-        getChecker(NS+"leniz.14","ön").atTheEnd(true, "uni");
+        getChecker(NS+"leniz.14","ö̀n").atTheEnd(true, "ùni");
     }
 
     /**
-     * -eni > -en
-     */
-    @Test
-    void testLeniz15() throws IOException{
-        getChecker(NS+"leniz.15","en").atTheEnd(true, "eni");
-    }
-
-    /**
-     * -inu > -in
+     * -ìnu > -ìn
      */
     @Test
     void testLeniz16() throws IOException{
-        getChecker(NS+"leniz.16","in").atTheEnd(true, "inu");
+        getChecker(NS+"leniz.16","ìn").atTheEnd(true, "ìnu");
     }
 
     /**
-     * -unu > -un
+     * -ùnu > -ùn
      */
     @Test
     void testLeniz17() throws IOException{
-        getChecker(NS+"leniz.17","un").atTheEnd(true, "unu");
+        getChecker(NS+"leniz.17","ùn").atTheEnd(true, "ùnu");
     }
 
     /*
@@ -372,11 +367,11 @@ public class GSFeaturesTest {
     }
 
     /**
-     * -ccari > -chè
+     * -ccàri > -chè
      */
     @Test
     void testDegem8() throws IOException {
-        getChecker(NS+"degem.8", "chè").atTheEnd(true, "ccari");
+        getChecker(NS+"degem.8").atTheEnd("ccàri","chè");
     }
 
     /**
@@ -390,11 +385,11 @@ public class GSFeaturesTest {
     }
 
     /**
-     * -ggari > -ghè
+     *  -ggàri > -ghè
      */
     @Test
     void testDegem10() throws IOException {
-        getChecker(NS+"degem.10","ghè").atTheEnd(true, "ggari");
+        getChecker(NS+"degem.10").atTheEnd("ggàri", "ghè");
     }
 
 
@@ -578,8 +573,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib6b() throws IOException{
-        getChecker(NS+"assib.6.b","sgë")
-                .replacing("ci");
+        getChecker(NS+"assib.6.b","sgë").atTheEnd(true,"ci");
     }
 
     /**
@@ -692,6 +686,30 @@ public class GSFeaturesTest {
                 .notApply("sa");
     }
 
+    /**
+     * -ii- > ẕẕ
+     */
+    @Test
+    void testAssib15() throws IOException{
+        getChecker(NS+"assib.15").inside("ii","ẕẕ");
+    }
+
+    /**
+     * -ìiri> ẕẕö
+     */
+    @Test
+    void testAssib16() throws IOException{
+        getChecker(NS+"assib.16").atTheEnd("ìiri","ẕẕö");
+    }
+
+    /**
+     * ggi > i
+     */
+    @Test
+    void testAssib17() throws IOException{
+        getChecker(NS+"assib.17").replacing("ggi", "i");
+    }
+
     // Dissimilazione dei nessi MB e ND
 
     /**
@@ -708,65 +726,52 @@ public class GSFeaturesTest {
      */
     @Test
     void testDissim2() throws IOException{
-        getChecker(NS+"dissim.2","nd")
-                .replacing("nn");
+        getChecker(NS+"dissim.2").replacing("nn", "nd");
     }
 
     // Dittongazione non metafonetica
 
     /**
-     * e- / è- > ie- / iè-
+     * è- > iè-
      */
     @Test
     void testDitt1a() throws IOException{
         getChecker(NS+"ditt.1.a")
-                .atTheBeginning("e", "ie")
                 .atTheBeginning("è", "iè");
     }
 
     /**
-     * -e- / -è- > ie / iè
+     * -è- > iè
      */
     @Test
     void testDitt1b() throws IOException{
         final RegexLinguisticPhenomenonCheckerFactory c=getChecker(NS+"ditt.1.b")
-                .notApply("e456")
-                .notApply("ie456")
-                .notApply("123ie456")
-                .notApply("123ie")
                 .notApply("è456")
                 .notApply("iè456")
                 .notApply("123iè456")
                 .notApply("123iè");
-        c.build("ie").inside(false, "e").atTheEnd(false, "e");
         c.build("iè").inside(false, "è").atTheEnd(false, "è");
     }
 
     /**
-     * o- / ò- > uo- / uò-
+     * ò- > uò-
      */
     @Test
     void testDitt2a() throws IOException{
         getChecker(NS+"ditt.2.a")
-                .atTheBeginning("o", "uo")
                 .atTheBeginning("ò", "uò");
     }
 
     /**
-     * -o- / -ò- > uo / uò
+     * -ò- > uò
      */
     @Test
     void testDitt2b() throws IOException{
         final RegexLinguisticPhenomenonCheckerFactory c=getChecker(NS+"ditt.2.b")
-                .notApply("o456")
-                .notApply("uo456")
-                .notApply("123uo456")
-                .notApply("123uo")
                 .notApply("ò456")
                 .notApply("uò456")
                 .notApply("123uò456")
                 .notApply("123uò");
-        c.build("uo").inside(false, "o").atTheEnd(false, "o");
         c.build("uò").inside(false, "ò").atTheEnd(false, "ò");
     }
 
@@ -779,15 +784,6 @@ public class GSFeaturesTest {
     @Test
     void testVocal2a() throws IOException{
         getChecker(NS+"vocal.2.a", "ë").atTheEnd(true, "i");
-    }
-
-    /**
-     * ì > ë
-     * @throws IOException on missing phenomenon
-     */
-    @Test
-    void testVocal2b() throws IOException{
-        getChecker(NS+"vocal.2.b", "ë").replacing("ì");
     }
 
     /**
@@ -806,15 +802,6 @@ public class GSFeaturesTest {
     @Test
     void testVocal5a() throws IOException{
         getChecker(NS+"vocal.5.a", "ö").replacing("u");
-    }
-
-    /**
-     * ù > ö
-     * @throws IOException on missing phenomenon
-     */
-    @Test
-    void testVocal5b() throws IOException{
-        getChecker(NS+"vocal.5.b", "ö").replacing("ù");
     }
 
     /**
@@ -884,29 +871,29 @@ public class GSFeaturesTest {
     }
 
     /**
-     * -eri > -erö
+     * -èri > -èrö
      */
     @Test
     void testVocal9a() throws IOException{
-        getChecker(NS+"vocal.9.a").atTheEnd("eri", "erö");
+        getChecker(NS+"vocal.9.a").atTheEnd("èri", "èrö");
     }
 
     /**
-     * ali > aö
+     * àli > àö
      * @throws IOException if vocal.9.b does not exist
      */
     @Test
     void testVocal9b() throws IOException{
-        getChecker(NS+"vocal.9.b").atTheEnd("ali", "aö");
+        getChecker(NS+"vocal.9.b").atTheEnd("àli", "àö");
     }
 
     /**
-     * ì > è
+     * ì > ë̀
      * @throws IOException if vocal.10 does not exist
      */
     @Test
     void testVocal10() throws IOException{
-        getChecker(NS+"vocal.10").replacing("ì", "é");
+        getChecker(NS+"vocal.10").replacing("ì", "ë̀");
     }
     // Aferesi di a-
 
@@ -921,82 +908,114 @@ public class GSFeaturesTest {
 
     // Palatalizzazione di /a/
     /**
-     * -cari > -chè
+     * -càri > chè
      */
     @Test
     void testPalat1() throws IOException{
-        getChecker(NS+"palat.1", "chè").atTheEnd(true, "cari");
+        getChecker(NS+"palat.1").atTheEnd("càri", "chè");
     }
 
     /**
-     * -càrisi > -chessë
+     * -càrisi > chèssë
      */
     @Test
     void testPalat2() throws IOException{
-        getChecker(NS+"palat.2", "chessë").atTheEnd(true, "càrisi");
+        getChecker(NS+"palat.2").atTheEnd("càrisi",  "chèssë");
     }
 
     /**
-     * -gari > -ghè
+     * -gàri > ghè
      */
     @Test
     void testPalat3() throws IOException{
-        getChecker(NS+"palat.3", "ghè").atTheEnd(true, "gari");
+        getChecker(NS+"palat.3").atTheEnd("gàri", "ghè");
     }
 
     /**
-     * -gàrisi > -ghessë
+     * -gàrisi > ghèssë
      */
     @Test
     void testPalat4() throws IOException{
-        getChecker(NS+"palat.4", "ghessë").atTheEnd(true, "gàrisi");
+        getChecker(NS+"palat.4").atTheEnd("gàrisi", "ghèssë");
     }
 
     /**
-     * -ari > -è if not preceded by c, g, i
+     * -àri > è if not preceded by c, g, i
      */
     @Test
     void testPalat5() throws IOException{
-        getChecker(NS+"palat.5", "è").atTheEnd(true, "ari")
+        getChecker(NS+"palat.5").atTheEnd("àri", "è")
                 .notApply("123cari")
                 .notApply("123gari")
                 .notApply("123iari");
     }
 
     /**
-     * -àrisi > -essë if not preceded by c, g, i
+     * -àrisi > èssë if not preceded by c, g, i
      */
     @Test
     void testPalat6() throws IOException{
-        getChecker(NS+"palat.6", "essë")
-                .atTheEnd(true, "àrisi")
+        getChecker(NS+"palat.6")
+                .atTheEnd("àrisi", "èssë")
                 .notApply("123càrisi")
                 .notApply("123gàrisi")
                 .notApply("123iàrisi");
     }
 
     /**
-     * -ciari > -cè
+     * -ciàri > cè
      */
     @Test
     void testPalat7() throws IOException{
-        getChecker(NS+"palat.7").atTheEnd("ciari", "cè");
+        getChecker(NS+"palat.7").atTheEnd("ciàri", "cè");
     }
 
     /**
-     * -iàrisi > -essë
+     * -iàrisi > èssë
      */
     @Test
     void testPalat8() throws IOException{
-        getChecker(NS+"palat.8", "essë").atTheEnd(true, "iàrisi");
+        getChecker(NS+"palat.8").atTheEnd("iàrisi", "èssë");
     }
 
     /**
-     * -giari > -gè
+     * -giàri > gè
      */
     @Test
     void testPalat9() throws IOException{
-        getChecker(NS+"palat.9").atTheEnd("giari", "gè");
+        getChecker(NS+"palat.9").atTheEnd("giàri", "gè");
+    }
+
+    /**
+     *  -ïàri > ïè
+     */
+    @Test
+    void testPalat10() throws IOException{
+        getChecker(NS+"palat.10").atTheEnd( "ïàri", "ïè");
+    }
+
+    /**
+     * -ïàrisi > ïèssë
+     */
+    @Test
+    void testPalat11() throws IOException{
+        getChecker(NS+"palat.11").atTheEnd("ïàrisi","ïèssë");
+    }
+
+    /**
+     * -àrini > ènë
+     */
+    @Test
+    void testPalat12() throws IOException{
+        getChecker(NS+"palat.12").atTheEnd("àrini","ènë");
+    }
+
+    /**
+     * -arisìnni > èssenë
+     */
+    @Test
+    void testPalat13() throws IOException{
+        getChecker(NS+"palat.13").atTheEnd("arisìnni","èssenë");
     }
 
     //  Eliminazione di varianti allofoniche siciliane in posizione debole
@@ -1092,5 +1111,122 @@ public class GSFeaturesTest {
     @Test
     void testDeretr3() throws IOException{
         getChecker(NS+"deretr.3", "str").replacing("ṣṭṛ");
+    }
+
+    // Desinenze infiniti (=INF)
+    /**
+     * -ìri > -ë̀
+     */
+    @Test
+    void testInf1() throws IOException{
+        getChecker(NS+"inf.1").atTheEnd("ìri", "ë̀");
+    }
+
+    /**
+     * -ìri > ì
+     */
+    @Test
+    void testInf2() throws IOException{
+        getChecker(NS+"inf.2").atTheEnd("ìri","ì");
+    }
+
+    /**
+     * -iri > ö only if iri is not preceeded by one of the followings: c,g,j,h
+     */
+    @Test
+    void testInf3a() throws IOException{
+        getChecker(NS+"inf.3.a").atTheEnd("iri","ö")
+                .notApply("123ciri")
+                .notApply("123giri")
+                .notApply("123jiri")
+                .notApply("123hiri");
+    }
+
+    /**
+     *  -ciri > ciö
+     */
+    @Test
+    void testInf3b1() throws IOException{
+        getChecker(NS+"inf.3.b.1")
+                .atTheEnd("ciri", "ciö");
+    }
+
+    /**
+     *  -giri > giö
+     */
+    @Test
+    void testInf3b2() throws IOException{
+        getChecker(NS+"inf.3.b.2")
+                .atTheEnd("giri","giö");
+    }
+
+    /**
+     *  -chjiri > chjiö
+     */
+    @Test
+    void testInf3b3() throws IOException{
+        getChecker(NS+"inf.3.b.3")
+                .atTheEnd("chjiri", "chjiö");
+    }
+
+    /**
+     *  -ghjiri > ghjiö
+     */
+    @Test
+    void testInf3b4() throws IOException{
+        getChecker(NS+"inf.3.b.4")
+                .atTheEnd("ghjiri", "ghjiö");
+    }
+
+    /**
+     * -jiri > jö
+     */
+    @Test
+    void testInf3c() throws IOException{
+        getChecker(NS+"inf.3.c")
+                .atTheEnd("jiri","jö");
+    }
+
+    /**
+     * -hiri > hjö
+     */
+    @Test
+    void testInf3d() throws IOException{
+        getChecker(NS+"inf.3.d")
+                .atTheEnd("hiri","hjö");
+    }
+
+    /**
+     * -ìri > ìsciö
+     */
+    @Test
+    void testInf4() throws IOException{
+        getChecker(NS+"inf.4").atTheEnd("ìri","ìsciö");
+    }
+
+    /**
+     * -ìrisi > -essë provided that ìrisi is not preceded by SC
+     */
+    @Test
+    void testInf5() throws IOException{
+        getChecker(NS+"inf.5")
+                .atTheEnd("ìrisi", "essë")
+                .notApply("123scìrisi");
+    }
+
+    /**
+     * -scìrisi > essë
+     */
+    @Test
+    void testInf6() throws IOException{
+        getChecker(NS+"inf.6").atTheEnd("scìrisi","essë");
+    }
+
+    /**
+     * -ìricci > ë̀ghjë
+     */
+    @Test
+    void testInf7() throws IOException{
+        getChecker(NS+"inf.7").atTheEnd("ìricci","ë̀ghjë");
     }
 }

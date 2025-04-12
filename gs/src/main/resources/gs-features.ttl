@@ -11,7 +11,8 @@
 @base <https://gallosiciliani.unict.it/ns/gs-features#> .
 
 <https://gallosiciliani.unict.it/ns/gs-features> rdf:type owl:Ontology ;
-                                                  owl:imports <https://gallosiciliani.unict.it/ns/liph> ;
+                                                  owl:versionIRI <https://gallosiciliani.unict.it/ns/gs-features/2.0.0> ;
+                                                  owl:imports <https://gallosiciliani.unict.it/ns/liph/2.0.0> ;
                                                   dcterms:contributor "Alessandro De Angelis" ,
                                                                       "Angela Castiglione" ,
                                                                       "Daniele Francesco Santamaria" ,
@@ -28,22 +29,18 @@
 
 This work has been created in the scope of the project PRIN 2022 PNRR “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
                                                   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-                                                  dcterms:modified "2025-03-30" ;
+                                                  dcterms:modified "2025-04-12" ;
                                                   dcterms:title "Gallo-Sicilian features"@en ;
                                                   rdfs:comment "Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily." ;
                                                   rdfs:label "Gallo-Sicilian features" ;
-                                                  owl:versionInfo "0.10.2" .
+                                                  owl:versionInfo "2.0.0" .
 
 #################################################################
-#    Annotation properties
+#    Datatypes
 #################################################################
 
-###  https://gallosiciliani.unict.it/ns/liph#regex
-liph:regex rdf:type owl:AnnotationProperty .
-
-
-###  https://gallosiciliani.unict.it/ns/liph#replacement
-liph:replacement rdf:type owl:AnnotationProperty .
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
 
 
 #################################################################
@@ -1659,837 +1656,16 @@ liph:replacement rdf:type owl:AnnotationProperty .
      liph:replacement "nd" .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#afer
-:afer rdf:type owl:ObjectProperty ;
-      rdfs:subPropertyOf liph:linguisticPhenomenon ;
-      rdfs:label "aferesi di a-" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#afer.1
-:afer.1 rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :afer ;
-        rdfs:label "a- > -" ;
-        liph:regex "^a(.)" ;
-        liph:replacement "$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib
-:assib rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf liph:linguisticPhenomenon ;
-       rdfs:label "assibilazione" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.1
-:assib.1 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :assib ;
-         rdfs:label "si >  sge | sgë | sgi" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.1.a
-:assib.1.a rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :assib.1 ;
-           rdfs:label "si > sge" ;
-           liph:regex "si" ;
-           liph:replacement "sge" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.1.b
-:assib.1.b rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :assib.1 ;
-           rdfs:label "si > sgë" ;
-           liph:regex "si" ;
-           liph:replacement "sgë" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.1.c
-:assib.1.c rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :assib.1 ;
-           rdfs:label "si > sgi" ;
-           liph:regex "si" ;
-           liph:replacement "sgi" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.10
-:assib.10 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :assib ;
-          rdfs:label "nge / ngè / ngi / ngì / ngï >  nẕe / nẕè / nẕi / nẕì / nẕï" ;
-          liph:regex "ng([eèiìï])" ;
-          liph:replacement "nẕ$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.11
-:assib.11 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :assib ;
-          rdfs:label "-rce- / -rcè / -rci-/ -rcì- / -rcï- > -rze- / -rzè- / -rzi- / -rzì- / -rzï-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])rc([eiìï].+|è$)" ;
-          liph:replacement "$1rz$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.12
-:assib.12 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :assib ;
-          rdfs:label "ce- / cè- / ci- / cì- / cï- > zze- / zzè- /zzi- / zzì- / zzï-" ;
-          liph:regex "^c([eèiìï].)" ;
-          liph:replacement "zz$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.13
-:assib.13 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :assib ;
-          rdfs:label "ge- / gè- / gi- / gì- / gï- > zze- / zze- / ẕẕi- / ẕẕì- / zzï-" ;
-          liph:regex "^g([eèiìï].)" ;
-          liph:replacement "ẕẕ$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.14
-:assib.14 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :assib ;
-          rdfs:label "se- / sè- / si- / sì- > zze- /zzè- / zzi- / zzì-" ;
-          liph:regex "^s([eèiì].)" ;
-          liph:replacement "zz$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.2
-:assib.2 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :assib ;
-         rdfs:label "sì > sgì" ;
-         liph:regex "sì" ;
-         liph:replacement "sgì" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.3
-:assib.3 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :assib ;
-         rdfs:label "sï > sgï" ;
-         liph:regex "sï" ;
-         liph:replacement "sgï" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.4
-:assib.4 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :assib ;
-         rdfs:label "ce > sge" ;
-         liph:regex "ce" ;
-         liph:replacement "sge" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.5
-:assib.5 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :assib ;
-         rdfs:label "cè > sgè" ;
-         liph:regex "cè" ;
-         liph:replacement "sgè" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.6
-:assib.6 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :assib ;
-         rdfs:label "ci > sge | sgë | sgi" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.6.a
-:assib.6.a rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :assib.6 ;
-           rdfs:label "ci > sge" ;
-           liph:regex "ci" ;
-           liph:replacement "sge" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.6.b
-:assib.6.b rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :assib.6 ;
-           rdfs:label "ci > sgë" ;
-           liph:regex "ci" ;
-           liph:replacement "sgë" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.6.c
-:assib.6.c rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :assib.6 ;
-           rdfs:label "ci > sgi" ;
-           liph:regex "ci" ;
-           liph:replacement "sgi" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.7
-:assib.7 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :assib ;
-         rdfs:label "cì > sgì" ;
-         liph:regex "cì" ;
-         liph:replacement "sgì" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.8
-:assib.8 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :assib ;
-         rdfs:label "cï > sgï" ;
-         liph:regex "cï" ;
-         liph:replacement "sgï" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#assib.9
-:assib.9 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :assib ;
-         rdfs:label "nce / ncè / nci / ncì / ncï > nze / nzè / nzi / nzì / nzï" ;
-         liph:regex "nc([eèiìï])" ;
-         liph:replacement "nz$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem
-:degem rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf liph:linguisticPhenomenon ;
-       rdfs:label "degeminazione"@it .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.1
-:degem.1 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :degem ;
-         rdfs:label "-tt- > -it-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])tt([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1it$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.10
-:degem.10 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "-ggari > -ghè" ;
-          liph:regex "ggari$" ;
-          liph:replacement "ghè" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.11
-:degem.11 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "ff > f" ;
-          liph:regex "ff" ;
-          liph:replacement "f" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.12
-:degem.12 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "vv > v" ;
-          liph:regex "vv" ;
-          liph:replacement "v" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.13
-:degem.13 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "ss- > s-" ;
-          liph:regex "^ss" ;
-          liph:replacement "s" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.15
-:degem.15 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "żż > ẕẕ" ;
-          liph:regex "żż" ;
-          liph:replacement "ẕẕ" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.16
-:degem.16 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "mm > m" ;
-          liph:regex "mm" ;
-          liph:replacement "m" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.17
-:degem.17 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "nn > n" ;
-          liph:regex "nn" ;
-          liph:replacement "n" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.18
-:degem.18 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "l- > dd-" ;
-          liph:regex "^l" ;
-          liph:replacement "dd" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.19
-:degem.19 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "-ll- > -" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ll([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.2
-:degem.2 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :degem ;
-         rdfs:label "tt > t" ;
-         liph:regex "tt" ;
-         liph:replacement "t" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.20
-:degem.20 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "-ḍḍ- > -" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ḍḍ([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.22
-:degem.22 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "ḍḍr > dr" ;
-          liph:regex "ḍḍr" ;
-          liph:replacement "dr" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.23
-:degem.23 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :degem ;
-          rdfs:label "ṭṭṛ > tr" ;
-          liph:regex "ṭṭṛ" ;
-          liph:replacement "tr" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.3
-:degem.3 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :degem ;
-         rdfs:label "dd > d" ;
-         liph:regex "dd" ;
-         liph:replacement "d" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.4
-:degem.4 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :degem ;
-         rdfs:label "ḍḍ > dd" ;
-         liph:regex "ḍḍ" ;
-         liph:replacement "dd" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.5
-:degem.5 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :degem ;
-         rdfs:label "pp > p" ;
-         liph:regex "pp" ;
-         liph:replacement "p" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.6
-:degem.6 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :degem ;
-         rdfs:label "bb > b" ;
-         liph:regex "(.)bb" ;
-         liph:replacement "$1b" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.7
-:degem.7 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :degem ;
-         rdfs:label "cc > c" ;
-         liph:regex "cc([^a]|a[^r]|ar[^i]|ari.+)" ;
-         liph:replacement "c$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.8
-:degem.8 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :degem ;
-         rdfs:label "-ccari > -chè" ;
-         liph:regex "ccari$" ;
-         liph:replacement "chè" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#degem.9
-:degem.9 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :degem ;
-         rdfs:label "gg > g but not in -ggari" ;
-         liph:regex "gg([^a]|a[^r]|ar[^i]|ari.+)" ;
-         liph:replacement "g$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#deretr
-:deretr rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf liph:linguisticPhenomenon ;
-        rdfs:label "deretroflessione"@it .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#deretr.1
-:deretr.1 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :deretr ;
-          rdfs:label "ṭṛ > tr" ;
-          liph:regex "ṭṛ" ;
-          liph:replacement "tr" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#deretr.2
-:deretr.2 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :deretr ;
-          rdfs:label "ṭṭṛ > ttr" ;
-          liph:regex "ṭṭṛ" ;
-          liph:replacement "ttr" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#deretr.3
-:deretr.3 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :deretr ;
-          rdfs:label "ṣṭṛ > str" ;
-          liph:regex "ṣṭṛ" ;
-          liph:replacement "str" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#dissim
-:dissim rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf liph:linguisticPhenomenon ;
-        rdfs:label "dissimilazione dei nessi MB e ND" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#dissim.1
-:dissim.1 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :dissim ;
-          rdfs:label "mm > mb" ;
-          liph:regex "mm" ;
-          liph:replacement "mb" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#dissim.2
-:dissim.2 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :dissim ;
-          rdfs:label "nn > nd" ;
-          liph:regex "nn" ;
-          liph:replacement "nd" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#ditt
-:ditt rdf:type owl:ObjectProperty ;
-      rdfs:subPropertyOf liph:linguisticPhenomenon ;
-      rdfs:label "dittongazione non metafonetica"@it .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#ditt.1
-:ditt.1 rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :ditt ;
-        rdfs:label "e / è  > ie / iè" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#ditt.1.a
-:ditt.1.a rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :ditt.1 ;
-          rdfs:label "e- / è- > ie- / iè-" ;
-          liph:regex "^([eè])" ;
-          liph:replacement "i$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#ditt.1.b
-:ditt.1.b rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :ditt.1 ;
-          rdfs:label "-e- / -è- > ie / iè" ;
-          liph:regex "([^i])([eè])" ;
-          liph:replacement "$1i$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#ditt.2
-:ditt.2 rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :ditt ;
-        rdfs:label "o / ò > uo / uò" ;
-        liph:regex "([oò])" ;
-        liph:replacement "u$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#ditt.2.a
-:ditt.2.a rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :ditt.2 ;
-          rdfs:label "o- / ò- > uo- / uò-" ;
-          liph:regex "^([oò])" ;
-          liph:replacement "u$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#ditt.2.b
-:ditt.2.b rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :ditt.2 ;
-          rdfs:label "-o- / -ò- > uo / uò if o/ò is not already preceded by u" ;
-          liph:regex "([^u])([oò])" ;
-          liph:replacement "$1u$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#elim
-:elim rdf:type owl:ObjectProperty ;
-      rdfs:subPropertyOf liph:linguisticPhenomenon ;
-      rdfs:label "eliminazione di varianti allofoniche siciliane in posizione debole" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#elim.1
-:elim.1 rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :elim ;
-        rdfs:label "v- > b-" ;
-        liph:regex "^v(.)" ;
-        liph:replacement "b$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#elim.2
-:elim.2 rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :elim ;
-        rdfs:label "bb- > b-" ;
-        liph:regex "^bb(.)" ;
-        liph:replacement "b$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#elim.3
-:elim.3 rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :elim ;
-        rdfs:label "r- > br-" ;
-        liph:regex "^r(.)" ;
-        liph:replacement "br$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#elim.4
-:elim.4 rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :elim ;
-        rdfs:label "i- > g- | gi-" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#elim.4.a
-:elim.4.a rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :elim.4 ;
-          rdfs:label "i- > g-" ;
-          liph:regex "^i(.)" ;
-          liph:replacement "g$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#elim.4.b
-:elim.4.b rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :elim.4 ;
-          rdfs:label "i- > gi-" ;
-          liph:regex "^i(.)" ;
-          liph:replacement "gi$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#elim.5
-:elim.5 rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :elim ;
-        rdfs:label "r- > gr-" ;
-        liph:regex "^r(.)" ;
-        liph:replacement "gr$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz
-:leniz rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf liph:linguisticPhenomenon ;
-       rdfs:label "lenizione"@it .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.1
-:leniz.1 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :leniz ;
-         rdfs:label "-c-  > -g-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])c([aàáäeèéëë̀iìíïoòóöö̀uùúüh])" ;
-         liph:replacement "$1g$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.10
-:leniz.10 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :leniz ;
-          rdfs:label "-ṭṛ- > -ir-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ṭṛ([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1ir$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.11
-:leniz.11 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :leniz ;
-          rdfs:label "-dr- > -ir-" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])dr([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1ir$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.12
-:leniz.12 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :leniz ;
-          rdfs:label "-l- > --" ;
-          liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])l([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-          liph:replacement "$1$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.13
-:leniz.13 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :leniz ;
-          rdfs:label "-ani > -an" ;
-          liph:regex "(.)ani$" ;
-          liph:replacement "$1an" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.14
-:leniz.14 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :leniz ;
-          rdfs:label "-uni > -ön" ;
-          liph:regex "(.)uni$" ;
-          liph:replacement "$1ön" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.15
-:leniz.15 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :leniz ;
-          rdfs:label "-eni > -en" ;
-          liph:regex "(.)eni$" ;
-          liph:replacement "$1en" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.16
-:leniz.16 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :leniz ;
-          rdfs:label "-inu > -in" ;
-          liph:regex "(.)inu$" ;
-          liph:replacement "$1in" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.17
-:leniz.17 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :leniz ;
-          rdfs:label "-unu > -un" ;
-          liph:regex "(.)unu$" ;
-          liph:replacement "$1un" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19
-:leniz.19 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :leniz ;
-          rdfs:label "-chi- | -chì- | -chj- | -chï- > -ghj- | -ghï-" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.a
-:leniz.19.a rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :leniz.19 ;
-            rdfs:label "-chi- > -ghj-" ;
-            liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chi([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-            liph:replacement "$1ghj$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.b
-:leniz.19.b rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :leniz.19 ;
-            rdfs:label "-chi- > -ghï-" ;
-            liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chi([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-            liph:replacement "$1ghï$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.c
-:leniz.19.c rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :leniz.19 ;
-            rdfs:label "-chì- > -ghj-" ;
-            liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chì([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-            liph:replacement "$1ghj$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.d
-:leniz.19.d rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :leniz.19 ;
-            rdfs:label "-chì- > -ghï-" ;
-            liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chì([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-            liph:replacement "$1ghï$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.e
-:leniz.19.e rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :leniz.19 ;
-            rdfs:label "-chj- > -ghj-" ;
-            liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chj([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-            liph:replacement "$1ghj$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.f
-:leniz.19.f rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :leniz.19 ;
-            rdfs:label "-chj- > -ghï-" ;
-            liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chj([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-            liph:replacement "$1ghï$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.g
-:leniz.19.g rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :leniz.19 ;
-            rdfs:label "-chï- > -ghj-" ;
-            liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chï([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-            liph:replacement "$1ghj$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.h
-:leniz.19.h rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :leniz.19 ;
-            rdfs:label "-chï- > -ghï-" ;
-            liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chï([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-            liph:replacement "$1ghï$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.2
-:leniz.2 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :leniz ;
-         rdfs:label "-cr- > -gr-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])cr([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1gr$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.20
-:leniz.20 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :leniz ;
-          rdfs:label "spr / sbr > sbr" ;
-          liph:regex "spr" ;
-          liph:replacement "sbr" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.3
-:leniz.3 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :leniz ;
-         rdfs:label "-p-  > -v-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])p([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1v$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.4
-:leniz.4 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :leniz ;
-         rdfs:label "-pr- > -vr-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])pr([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1vr$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.5
-:leniz.5 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :leniz ;
-         rdfs:label "-t- > -d-" ;
-         liph:regex "([aàáäeèéëë̀iìíïoòóöö̀uùúü])t([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
-         liph:replacement "$1d$2" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.6
-:leniz.6 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :leniz ;
-         rdfs:label "-itu > -ì" ;
-         liph:regex "(.)itu$" ;
-         liph:replacement "$1ì" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.7
-:leniz.7 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :leniz ;
-         rdfs:label "-atu > -à" ;
-         liph:regex "(.)atu$" ;
-         liph:replacement "$1à" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.8
-:leniz.8 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :leniz ;
-         rdfs:label "-utu > -ù" ;
-         liph:regex "(.)utu$" ;
-         liph:replacement "$1ù" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#leniz.9
-:leniz.9 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :leniz ;
-         rdfs:label "-iti > - ë̀" ;
-         liph:regex "(.)iti$" ;
-         liph:replacement "$1ë̀" .
-
-
 ###  https://gallosiciliani.unict.it/ns/gs-features#nicosiaFeature
-:nicosiaFeature rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf liph:linguisticPhenomenon ;
-                rdfs:comment "A linguistic phenomena recurring in the language spoken in Novara di Sicilia." ;
-                owl:deprecated "true"^^xsd:boolean .
+:nicosiaFeature rdf:type owl:ObjectProperty .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#northernItalyFeature
-:northernItalyFeature rdf:type owl:ObjectProperty ;
-                      rdfs:subPropertyOf liph:linguisticPhenomenon ;
-                      rdfs:comment "A linguistic phenomenon typical of languages of northern Italy." ;
-                      owl:deprecated "true"^^xsd:boolean .
+:northernItalyFeature rdf:type owl:ObjectProperty .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#novaraDiSiciliaFeature
-:novaraDiSiciliaFeature rdf:type owl:ObjectProperty ;
-                        rdfs:subPropertyOf liph:linguisticPhenomenon ;
-                        rdfs:comment "A linguistic phenomena recurring in the language spoken in Novara di Sicilia." ;
-                        owl:deprecated "true"^^xsd:boolean .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#palat
-:palat rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf liph:linguisticPhenomenon ;
-       rdfs:label "palatalizzazione di /a/"@it .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#palat.1
-:palat.1 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :palat ;
-         rdfs:label "-cari > -chè" ;
-         liph:regex "(.)cari$" ;
-         liph:replacement "$1chè" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#palat.2
-:palat.2 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :palat ;
-         rdfs:label "-càrisi > -chessë" ;
-         liph:regex "(.)càrisi$" ;
-         liph:replacement "$1chessë" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#palat.3
-:palat.3 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :palat ;
-         rdfs:label "-gari > -ghè" ;
-         liph:regex "(.)gari$" ;
-         liph:replacement "$1ghè" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#palat.4
-:palat.4 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :palat ;
-         rdfs:label "-gàrisi > -ghessë" ;
-         liph:regex "(.)gàrisi$" ;
-         liph:replacement "$1ghessë" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#palat.5
-:palat.5 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :palat ;
-         rdfs:label "-ari > -è (if not preceded by c, g, i)" ;
-         liph:regex "([^cgi])ari$" ;
-         liph:replacement "$1è" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#palat.6
-:palat.6 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :palat ;
-         rdfs:label "-àrisi > -essë (if not preceded by c, g, i)" ;
-         liph:regex "([^cgi])àrisi$" ;
-         liph:replacement "$1essë" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#palat.7
-:palat.7 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :palat ;
-         rdfs:label "-ciari > -cè" ;
-         liph:regex "ciari$" ;
-         liph:replacement "cè" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#palat.8
-:palat.8 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :palat ;
-         rdfs:label "-iàrisi > -essë" ;
-         liph:regex "(.)iàrisi$" ;
-         liph:replacement "$1essë" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#palat.9
-:palat.9 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :palat ;
-         rdfs:label "-giari > -gè" ;
-         liph:regex "giari$" ;
-         liph:replacement "gè" .
+:novaraDiSiciliaFeature rdf:type owl:ObjectProperty .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#sanFratelloFeature
@@ -2513,156 +1689,132 @@ liph:replacement rdf:type owl:AnnotationProperty .
                   owl:deprecated "true"^^xsd:boolean .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal
-:vocal rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf liph:linguisticPhenomenon ;
-       rdfs:label "mantenimento del sistema vocalico settentrionale"@it .
+#################################################################
+#    Classes
+#################################################################
+
+###  https://gallosiciliani.unict.it/ns/gs-features#Afer
+:Afer rdf:type owl:Class ;
+      rdfs:subClassOf liph:LinguisticPhenomenon ;
+      owl:disjointWith :Assib ,
+                       :Degem ,
+                       :Deretr ,
+                       :Dissim ,
+                       :Ditt ,
+                       :Elim ,
+                       :Leniz ,
+                       :Palat ,
+                       :Vocal ;
+      rdfs:label "Aferesi"@it ,
+                 "Apheresis"@en .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.10
-:vocal.10 rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :vocal ;
-          rdfs:label "ì > é" ;
-          liph:regex "ì" ;
-          liph:replacement "é" .
+###  https://gallosiciliani.unict.it/ns/gs-features#Assib
+:Assib rdf:type owl:Class ;
+       rdfs:subClassOf liph:LinguisticPhenomenon ;
+       owl:disjointWith :Degem ,
+                        :Deretr ,
+                        :Dissim ,
+                        :Ditt ,
+                        :Elim ,
+                        :Leniz ,
+                        :Palat ,
+                        :Vocal ;
+       rdfs:label "Assibilation"@en ,
+                  "Assibilazione"@it .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2
-:vocal.2 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :vocal ;
-         rdfs:label "-ì / -i > ë / ë̀" .
+###  https://gallosiciliani.unict.it/ns/gs-features#Degem
+:Degem rdf:type owl:Class ;
+       rdfs:subClassOf liph:LinguisticPhenomenon ;
+       owl:disjointWith :Deretr ,
+                        :Dissim ,
+                        :Ditt ,
+                        :Elim ,
+                        :Leniz ,
+                        :Palat ,
+                        :Vocal ;
+       rdfs:label "Degemination"@en ,
+                  "Degeminazione"@it .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2.a
-:vocal.2.a rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.2 ;
-           rdfs:label "i > ë" ;
-           liph:regex "i$" ;
-           liph:replacement "ë" .
+###  https://gallosiciliani.unict.it/ns/gs-features#Deretr
+:Deretr rdf:type owl:Class ;
+        rdfs:subClassOf liph:LinguisticPhenomenon ;
+        owl:disjointWith :Dissim ,
+                         :Ditt ,
+                         :Elim ,
+                         :Leniz ,
+                         :Palat ,
+                         :Vocal ;
+        rdfs:label "Deretroflessione"@it ,
+                   "Deretroflexion"@en .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2.b
-:vocal.2.b rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.2 ;
-           rdfs:label "ì > ë" ;
-           liph:regex "ì" ;
-           liph:replacement "ë" .
+###  https://gallosiciliani.unict.it/ns/gs-features#Dissim
+:Dissim rdf:type owl:Class ;
+        rdfs:subClassOf liph:LinguisticPhenomenon ;
+        owl:disjointWith :Ditt ,
+                         :Elim ,
+                         :Leniz ,
+                         :Palat ,
+                         :Vocal ;
+        rdfs:label "Dissimilation"@en ,
+                   "Dissimilazione"@it .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2.c
-:vocal.2.c rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.2 ;
-           rdfs:label "ì > ë̀" ;
-           liph:regex "ì" ;
-           liph:replacement "ë̀" .
+###  https://gallosiciliani.unict.it/ns/gs-features#Ditt
+:Ditt rdf:type owl:Class ;
+      rdfs:subClassOf liph:LinguisticPhenomenon ;
+      owl:disjointWith :Elim ,
+                       :Leniz ,
+                       :Palat ,
+                       :Vocal ;
+      rdfs:label "Diphthongization"@en ,
+                 "Dittongazione"@it .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.5
-:vocal.5 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :vocal ;
-         rdfs:label "u / ù > ö / ó | ö̀" .
+###  https://gallosiciliani.unict.it/ns/gs-features#Elim
+:Elim rdf:type owl:Class ;
+      rdfs:subClassOf liph:LinguisticPhenomenon ;
+      owl:disjointWith :Leniz ,
+                       :Palat ,
+                       :Vocal .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.5.a
-:vocal.5.a rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.5 ;
-           rdfs:label "u > ö" ;
-           liph:regex "u" ;
-           liph:replacement "ö" .
+###  https://gallosiciliani.unict.it/ns/gs-features#GalloSicilianFeature
+:GalloSicilianFeature rdf:type owl:Class ;
+                      rdfs:subClassOf liph:LinguisticPhenomenon ;
+                      rdfs:comment "This class represents linguistic phenomena occurred in borrowing of Sicilian expression in Gallo-Sicilian varieties." ;
+                      rdfs:label "Gallo-Sicilian feature" .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.5.b
-:vocal.5.b rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.5 ;
-           rdfs:label "ù > ö" ;
-           liph:regex "ù" ;
-           liph:replacement "ö" .
+###  https://gallosiciliani.unict.it/ns/gs-features#Inf
+:Inf rdf:type owl:Class ;
+     rdfs:subClassOf liph:LinguisticPhenomenon .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.5.c
-:vocal.5.c rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.5 ;
-           rdfs:label "ù > ö̀" ;
-           liph:regex "ù" ;
-           liph:replacement "ö̀" .
+###  https://gallosiciliani.unict.it/ns/gs-features#Leniz
+:Leniz rdf:type owl:Class ;
+       rdfs:subClassOf liph:LinguisticPhenomenon ;
+       owl:disjointWith :Palat ,
+                        :Vocal ;
+       rdfs:label "Lenition"@en ,
+                  "Lenizione"@it .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.7
-:vocal.7 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :vocal ;
-         rdfs:label "i > e if i is not followed by a vowel" .
+###  https://gallosiciliani.unict.it/ns/gs-features#Palat
+:Palat rdf:type owl:Class ;
+       rdfs:subClassOf liph:LinguisticPhenomenon ;
+       owl:disjointWith :Vocal ;
+       rdfs:label "Palatalization"@en ,
+                  "Palatalizzazione"@it .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.7.a
-:vocal.7.a rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.7 ;
-           rdfs:label "-i > e" ;
-           liph:regex "i$" ;
-           liph:replacement "e" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.7.b
-:vocal.7.b rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.7 ;
-           rdfs:label "i- | -i- > e" ;
-           liph:regex "i([^aàáäeèéëë̀iìíïoòóöuùúüh])" ;
-           liph:replacement "e$1" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.8
-:vocal.8 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :vocal ;
-         rdfs:label "u > e" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.8.a
-:vocal.8.a rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.8 ;
-           rdfs:label "u > e if u is not preceded by c or g" ;
-           liph:regex "^u|([^cg])u" ;
-           liph:replacement "$1e" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.8.b
-:vocal.8.b rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.8 ;
-           rdfs:label "cu > che" ;
-           liph:regex "cu" ;
-           liph:replacement "che" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.8.c
-:vocal.8.c rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.8 ;
-           rdfs:label "gu > ghe" ;
-           liph:regex "gu" ;
-           liph:replacement "ghe" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.9
-:vocal.9 rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :vocal ;
-         rdfs:label "-i > -ö" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.9.a
-:vocal.9.a rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.9 ;
-           rdfs:label "-eri > -erö" ;
-           liph:regex "eri$" ;
-           liph:replacement "erö" .
-
-
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.9.b
-:vocal.9.b rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :vocal.9 ;
-           rdfs:label "-ali > aö" ;
-           liph:regex "(.+)ali$" ;
-           liph:replacement "$1aö" .
-
-
-###  https://gallosiciliani.unict.it/ns/liph#linguisticPhenomenon
-liph:linguisticPhenomenon rdf:type owl:ObjectProperty .
+###  https://gallosiciliani.unict.it/ns/gs-features#Vocal
+:Vocal rdf:type owl:Class ;
+       rdfs:subClassOf liph:LinguisticPhenomenon ;
+       rdfs:label "Vocal" .
 
 
 #################################################################
@@ -2672,6 +1824,1316 @@ liph:linguisticPhenomenon rdf:type owl:ObjectProperty .
 ###  https://gallosiciliani.unict.it/ns/gs-features
 <https://gallosiciliani.unict.it/ns/gs-features> rdf:type owl:NamedIndividual ;
                                                  eurio:isResultOf liph:gallosiciliani2023Project .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#afer.1
+:afer.1 rdf:type owl:NamedIndividual ,
+                 :GalloSicilianFeature ,
+                 liph:FiniteStateLinguisticPhenomenon ;
+        liph:matchingPattern "^a(.)" ;
+        liph:replaceWith "$1" ;
+        rdfs:comment "a- > -" ;
+        rdfs:label "afer.1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.1.a
+:assib.1.a rdf:type owl:NamedIndividual ,
+                    :Assib ,
+                    :GalloSicilianFeature ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "si" ;
+           liph:replaceWith "sge" ;
+           rdfs:comment "si > sge" ;
+           rdfs:label "assib.1.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.1.b
+:assib.1.b rdf:type owl:NamedIndividual ,
+                    :Assib ,
+                    :GalloSicilianFeature ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "si" ;
+           liph:replaceWith "sgë" ;
+           rdfs:comment "si > sgë" ;
+           rdfs:label "assib.1.b" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.1.c
+:assib.1.c rdf:type owl:NamedIndividual ,
+                    :Assib ,
+                    :GalloSicilianFeature ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "si" ;
+           liph:replaceWith "sgi" ;
+           rdfs:comment "si > sgi" ;
+           rdfs:label "assib.1.c" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.10
+:assib.10 rdf:type owl:NamedIndividual ,
+                   :Assib ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ng([eèiìï])" ;
+          liph:replaceWith "nẕ$1" ;
+          rdfs:comment "nge / ngè / ngi / ngì / ngï >  nẕe / nẕè / nẕi / nẕì / nẕï" ;
+          rdfs:label "assib.10" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.11
+:assib.11 rdf:type owl:NamedIndividual ,
+                   :Assib ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])rc([eiìï].+|è$)" ;
+          liph:replaceWith "$1rz$2" ;
+          rdfs:comment "-rce- / -rcè / -rci-/ -rcì- / -rcï- > -rze- / -rzè- / -rzi- / -rzì- / -rzï-" ;
+          rdfs:label "assib.11" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.12
+:assib.12 rdf:type owl:NamedIndividual ,
+                   :Assib ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "^c([eèiìï].)" ;
+          liph:replaceWith "zz$1" ;
+          rdfs:comment "ce- / cè- / ci- / cì- / cï- > zze- / zzè- /zzi- / zzì- / zzï-" ;
+          rdfs:label "assib.12" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.13
+:assib.13 rdf:type owl:NamedIndividual ,
+                   :Assib ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "^g([eèiìï].)" ;
+          liph:replaceWith "ẕẕ$1" ;
+          rdfs:comment "ge- / gè- / gi- / gì- / gï- > zze- / zze- / ẕẕi- / ẕẕì- / zzï-" ;
+          rdfs:label "assib.13" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.14
+:assib.14 rdf:type owl:NamedIndividual ,
+                   :Assib ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "^s([eèiì].)" ;
+          liph:replaceWith "zz$1" ;
+          rdfs:comment "se- / sè- / si- / sì- > zze- /zzè- / zzi- / zzì-" ;
+          rdfs:label "assib.14" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.15
+:assib.15 rdf:type owl:NamedIndividual ,
+                   :Assib ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "(.)ii(.)" ;
+          liph:replaceWith "$1ẕẕ$2" ;
+          rdfs:comment "-ii- > ẕẕ" ;
+          rdfs:label "assib.15" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.16
+:assib.16 rdf:type owl:NamedIndividual ,
+                   :Assib ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "(.)ìiri$" ;
+          liph:replaceWith "$1ẕẕö" ;
+          rdfs:comment "-ìiri> ẕẕö" ;
+          rdfs:label "assib.16" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.17
+:assib.17 rdf:type owl:NamedIndividual ,
+                   :Assib ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ggi" ;
+          liph:replaceWith "i" ;
+          rdfs:comment "ggi > i" ;
+          rdfs:label "assib.17" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.2
+:assib.2 rdf:type owl:NamedIndividual ,
+                  :Assib ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "sì" ;
+         liph:replaceWith "sgì" ;
+         rdfs:comment "sì > sgì" ;
+         rdfs:label "assib.2" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.3
+:assib.3 rdf:type owl:NamedIndividual ,
+                  :Assib ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "sï" ;
+         liph:replaceWith "sgï" ;
+         rdfs:comment "sï > sgï" ;
+         rdfs:label "assib.3" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.4
+:assib.4 rdf:type owl:NamedIndividual ,
+                  :Assib ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "ce" ;
+         liph:replaceWith "sge" ;
+         rdfs:comment "ce > sge" ;
+         rdfs:label "assib.4" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.5
+:assib.5 rdf:type owl:NamedIndividual ,
+                  :Assib ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "cè" ;
+         liph:replaceWith "sgè" ;
+         rdfs:comment "cè > sgè" ;
+         rdfs:label "assib.5" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.6.a
+:assib.6.a rdf:type owl:NamedIndividual ,
+                    :Assib ,
+                    :GalloSicilianFeature ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "ci" ;
+           liph:replaceWith "sge" ;
+           rdfs:comment "ci > sge" ;
+           rdfs:label "assib.6.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.6.b
+:assib.6.b rdf:type owl:NamedIndividual ,
+                    :Assib ,
+                    :GalloSicilianFeature ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "(.)ci$" ;
+           liph:replaceWith "$1sgë" ;
+           rdfs:comment "-ci > sgë" ;
+           rdfs:label "assib.6.b" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.6.c
+:assib.6.c rdf:type owl:NamedIndividual ,
+                    :Assib ,
+                    :GalloSicilianFeature ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "ci" ;
+           liph:replaceWith "sgi" ;
+           rdfs:comment "ci > sgi" ;
+           rdfs:label "assib.6.c" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.7
+:assib.7 rdf:type owl:NamedIndividual ,
+                  :Assib ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "cì" ;
+         liph:replaceWith "sgì" ;
+         rdfs:comment "cì > sgì" ;
+         rdfs:label "assib.7" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.8
+:assib.8 rdf:type owl:NamedIndividual ,
+                  :Assib ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "cï" ;
+         liph:replaceWith "sgï" ;
+         rdfs:comment "cï > sgï" ;
+         rdfs:label "assib.8" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#assib.9
+:assib.9 rdf:type owl:NamedIndividual ,
+                  :Assib ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "nc([eèiìï])" ;
+         liph:replaceWith "nz$1" ;
+         rdfs:comment "nce / ncè / nci / ncì / ncï > nze / nzè / nzi / nzì / nzï" ;
+         rdfs:label "assib.9" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.1
+:degem.1 rdf:type owl:NamedIndividual ,
+                  :Degem ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])tt([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+         liph:replaceWith "$1it$2" ;
+         rdfs:comment "-tt- > -it-" ;
+         rdfs:label "degem.1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.10
+:degem.10 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ggàri$" ;
+          liph:replaceWith "ghè" ;
+          rdfs:comment "-ggàri > ghè" ;
+          rdfs:label "degem.10" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.11
+:degem.11 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ff" ;
+          liph:replaceWith "f" ;
+          rdfs:comment "ff > f" ;
+          rdfs:label "degem.11" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.12
+:degem.12 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "vv" ;
+          liph:replaceWith "v" ;
+          rdfs:comment "vv > v" ;
+          rdfs:label "degem.12" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.13
+:degem.13 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "^ss" ;
+          liph:replaceWith "s" ;
+          rdfs:comment "ss- > s-" ;
+          rdfs:label "degem.13" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.15
+:degem.15 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "żż" ;
+          liph:replaceWith "ẕẕ" ;
+          rdfs:comment "żż > ẕẕ" ;
+          rdfs:label "degem.15" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.16
+:degem.16 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "mm" ;
+          liph:replaceWith "m" ;
+          rdfs:comment "mm > m" ;
+          rdfs:label "degem.16" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.17
+:degem.17 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "nn" ;
+          liph:replaceWith "n" ;
+          rdfs:comment "nn > n" ;
+          rdfs:label "degem.17" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.18
+:degem.18 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "^l" ;
+          liph:replaceWith "dd" ;
+          rdfs:comment "l- > dd-" ;
+          rdfs:label "degem.18" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.19
+:degem.19 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ll([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+          liph:replaceWith "$1$2" ;
+          rdfs:comment "-ll- > -" ;
+          rdfs:label "degem.19" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.2
+:degem.2 rdf:type owl:NamedIndividual ,
+                  :Degem ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "tt" ;
+         liph:replaceWith "t" ;
+         rdfs:comment "tt > t" ;
+         rdfs:label "degem.2" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.20
+:degem.20 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ḍḍ([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+          liph:replaceWith "$1$2" ;
+          rdfs:comment "-ḍḍ- > -" ;
+          rdfs:label "degem.20" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.22
+:degem.22 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ḍḍr" ;
+          liph:replaceWith "dr" ;
+          rdfs:comment "ḍḍr > dr" ;
+          rdfs:label "degem.22" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.23
+:degem.23 rdf:type owl:NamedIndividual ,
+                   :Degem ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ṭṭṛ" ;
+          liph:replaceWith "tr" ;
+          rdfs:comment "ṭṭṛ > tr" ;
+          rdfs:label "degem.23" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.3
+:degem.3 rdf:type owl:NamedIndividual ,
+                  :Degem ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "dd" ;
+         liph:replaceWith "d" ;
+         rdfs:comment "dd > d" ;
+         rdfs:label "degem.3" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.4
+:degem.4 rdf:type owl:NamedIndividual ,
+                  :Degem ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "ḍḍ" ;
+         liph:replaceWith "dd" ;
+         rdfs:comment "ḍḍ > dd" ;
+         rdfs:label "degem.4" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.5
+:degem.5 rdf:type owl:NamedIndividual ,
+                  :Degem ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "pp" ;
+         liph:replaceWith "p" ;
+         rdfs:comment "pp > p" ;
+         rdfs:label "degem.5" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.6
+:degem.6 rdf:type owl:NamedIndividual ,
+                  :Degem ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)bb" ;
+         liph:replaceWith "$1b" ;
+         rdfs:comment "bb > b" ;
+         rdfs:label "degem.6" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.7
+:degem.7 rdf:type owl:NamedIndividual ,
+                  :Degem ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "cc([^a]|a[^r]|ar[^i]|ari.+)" ;
+         liph:replaceWith "c$1" ;
+         rdfs:comment "cc > c" ;
+         rdfs:label "degem.7" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.8
+:degem.8 rdf:type owl:NamedIndividual ,
+                  :Degem ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "ccàri$" ;
+         liph:replaceWith "chè" ;
+         rdfs:comment "-ccàri > -chè" ;
+         rdfs:label "degem.8" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.9
+:degem.9 rdf:type owl:NamedIndividual ,
+                  :Degem ,
+                  :GalloSicilianFeature ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "gg([^a]|a[^r]|ar[^i]|ari.+)" ;
+         liph:replaceWith "g$1" ;
+         rdfs:comment "gg > g but not in -ggari" ;
+         rdfs:label "degem.9" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#deretr.1
+:deretr.1 rdf:type owl:NamedIndividual ,
+                   :Deretr ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ṭṛ" ;
+          liph:replaceWith "tr" ;
+          rdfs:comment "ṭṛ > tr" ;
+          rdfs:label "deretr.1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#deretr.2
+:deretr.2 rdf:type owl:NamedIndividual ,
+                   :Deretr ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ṭṭṛ" ;
+          liph:replaceWith "ttr" ;
+          rdfs:comment "ṭṭṛ > ttr" ;
+          rdfs:label "deretr.2" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#deretr.3
+:deretr.3 rdf:type owl:NamedIndividual ,
+                   :Deretr ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ṣṭṛ" ;
+          liph:replaceWith "str" ;
+          rdfs:comment "ṣṭṛ > str" ;
+          rdfs:label "deretr.3" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#dissim.1
+:dissim.1 rdf:type owl:NamedIndividual ,
+                   :Dissim ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "mm" ;
+          liph:replaceWith "mb" ;
+          rdfs:comment "mm > mb" ;
+          rdfs:label "dissim.1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#dissim.2
+:dissim.2 rdf:type owl:NamedIndividual ,
+                   :Dissim ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "nn" ;
+          liph:replaceWith "nd" ;
+          rdfs:comment "nn > nd" ;
+          rdfs:label "dissim.2" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#ditt.1.a
+:ditt.1.a rdf:type owl:NamedIndividual ,
+                   :Ditt ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "^è" ;
+          liph:replaceWith "iè" ;
+          rdfs:comment "è- > iè-" ;
+          rdfs:label "ditt.1.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#ditt.1.b
+:ditt.1.b rdf:type owl:NamedIndividual ,
+                   :Ditt ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "([^i])è" ;
+          liph:replaceWith "$1iè" ;
+          rdfs:comment "-è- > iè" ;
+          rdfs:label "ditt.1.b" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#ditt.2.a
+:ditt.2.a rdf:type owl:NamedIndividual ,
+                   :Ditt ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "^ò" ;
+          liph:replaceWith "uò" ;
+          rdfs:comment "ò- > uò-" ;
+          rdfs:label "ditt.2.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#ditt.2.b
+:ditt.2.b rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "([^u])ò" ;
+          liph:replaceWith "$1uò" ;
+          rdfs:comment "-ò- > uò if ò is not already preceded by u" ;
+          rdfs:label "ditt.2.b" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#elim.1
+:elim.1 rdf:type owl:NamedIndividual ,
+                 :Elim ,
+                 :GalloSicilianFeature ,
+                 liph:FiniteStateLinguisticPhenomenon ;
+        liph:matchingPattern "^v(.)" ;
+        liph:replaceWith "b$1" ;
+        rdfs:comment "v- > b-" ;
+        rdfs:label "elim.1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#elim.2
+:elim.2 rdf:type owl:NamedIndividual ,
+                 :Elim ,
+                 :GalloSicilianFeature ,
+                 liph:FiniteStateLinguisticPhenomenon ;
+        liph:matchingPattern "^bb(.)" ;
+        liph:replaceWith "b$1" ;
+        rdfs:comment "bb- > b-" ;
+        rdfs:label "elim.2" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#elim.3
+:elim.3 rdf:type owl:NamedIndividual ,
+                 :Elim ,
+                 :GalloSicilianFeature ,
+                 liph:FiniteStateLinguisticPhenomenon ;
+        liph:matchingPattern "^r(.)" ;
+        liph:replaceWith "br$1" ;
+        rdfs:comment "r- > br-" ;
+        rdfs:label "elim.3" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#elim.4.a
+:elim.4.a rdf:type owl:NamedIndividual ,
+                   :Elim ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "^i(.)" ;
+          liph:replaceWith "g$1" ;
+          rdfs:comment "i- > g-" ;
+          rdfs:label "elim.4.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#elim.4.b
+:elim.4.b rdf:type owl:NamedIndividual ,
+                   :Elim ,
+                   :GalloSicilianFeature ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "^i(.)" ;
+          liph:replaceWith "gi$1" ;
+          rdfs:comment "i- > gi-" ;
+          rdfs:label "elim.4.b" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#elim.5
+:elim.5 rdf:type owl:NamedIndividual ,
+                 :Elim ,
+                 :GalloSicilianFeature ,
+                 liph:FiniteStateLinguisticPhenomenon ;
+        liph:matchingPattern "^r(.)" ;
+        liph:replaceWith "gr$1" ;
+        rdfs:comment "r- > gr-" ;
+        rdfs:label "elim.5" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.1
+:inf.1 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)ìri$" ;
+       liph:replaceWith "$1ë̀" ;
+       rdfs:comment "-ìri > -ë̀" ;
+       rdfs:label "inf.1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.1
+:leniz.1 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Leniz ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])c([aàáäeèéëë̀iìíïoòóöö̀uùúüh])" ;
+         liph:replaceWith "$1g$2" ;
+         rdfs:comment "-c-  > -g-" ;
+         rdfs:label "leniz.1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.10
+:leniz.10 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Leniz ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ṭṛ([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+          liph:replaceWith "$1ir$2" ;
+          rdfs:comment "-ṭṛ- > -ir-" ;
+          rdfs:label "leniz.10" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.11
+:leniz.11 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Leniz ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])dr([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+          liph:replaceWith "$1ir$2" ;
+          rdfs:comment "-dr- > -ir-" ;
+          rdfs:label "leniz.11" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.12
+:leniz.12 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Leniz ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])l([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+          liph:replaceWith "$1$2" ;
+          rdfs:comment "-l- > --" ;
+          rdfs:label "leniz.12" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.13
+:leniz.13 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Leniz ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "(.)àni$" ;
+          liph:replaceWith "$1àn" ;
+          rdfs:comment "-àni > -àn" ;
+          rdfs:label "leniz.13" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.14
+:leniz.14 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Leniz ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "(.)ùni$" ;
+          liph:replaceWith "$1ö̀n" ;
+          rdfs:comment "-ùni > -ö̀n" ;
+          rdfs:label "leniz.14" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.16
+:leniz.16 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Leniz ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "(.)ìnu$" ;
+          liph:replaceWith "$1ìn" ;
+          rdfs:comment "-ìnu > -ìn" ;
+          rdfs:label "leniz.16" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.17
+:leniz.17 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Leniz ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "(.)ùnu$" ;
+          liph:replaceWith "$1ùn" ;
+          rdfs:comment "-ùnu > -ùn" ;
+          rdfs:label "leniz.17" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.a
+:leniz.19.a rdf:type owl:NamedIndividual ,
+                     :GalloSicilianFeature ,
+                     :Leniz ,
+                     liph:FiniteStateLinguisticPhenomenon ;
+            liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chi([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+            liph:replaceWith "$1ghj$2" ;
+            rdfs:comment "-chi- > -ghj-" ;
+            rdfs:label "leniz.19.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.b
+:leniz.19.b rdf:type owl:NamedIndividual ,
+                     :GalloSicilianFeature ,
+                     :Leniz ,
+                     liph:FiniteStateLinguisticPhenomenon ;
+            liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chi([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+            liph:replaceWith "$1ghï$2" ;
+            rdfs:comment "-chi- > -ghï-" ;
+            rdfs:label "leniz.19.b" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.c
+:leniz.19.c rdf:type owl:NamedIndividual ,
+                     :GalloSicilianFeature ,
+                     :Leniz ,
+                     liph:FiniteStateLinguisticPhenomenon ;
+            liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chì([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+            liph:replaceWith "$1ghj$2" ;
+            rdfs:comment "-chì- > -ghj-" ;
+            rdfs:label "leniz.19.c" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.d
+:leniz.19.d rdf:type owl:NamedIndividual ,
+                     :GalloSicilianFeature ,
+                     :Leniz ,
+                     liph:FiniteStateLinguisticPhenomenon ;
+            liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chì([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+            liph:replaceWith "$1ghï$2" ;
+            rdfs:comment "-chì- > -ghï-" ;
+            rdfs:label "leniz.19.d" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.e
+:leniz.19.e rdf:type owl:NamedIndividual ,
+                     :GalloSicilianFeature ,
+                     :Leniz ,
+                     liph:FiniteStateLinguisticPhenomenon ;
+            liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chj([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+            liph:replaceWith "$1ghj$2" ;
+            rdfs:comment "-chj- > -ghj-" ;
+            rdfs:label "leniz.19.e" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.f
+:leniz.19.f rdf:type owl:NamedIndividual ,
+                     :GalloSicilianFeature ,
+                     :Leniz ,
+                     liph:FiniteStateLinguisticPhenomenon ;
+            liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chj([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+            liph:replaceWith "$1ghï$2" ;
+            rdfs:comment "-chj- > -ghï-" ;
+            rdfs:label "leniz.19.f" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.g
+:leniz.19.g rdf:type owl:NamedIndividual ,
+                     :GalloSicilianFeature ,
+                     :Leniz ,
+                     liph:FiniteStateLinguisticPhenomenon ;
+            liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chï([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+            liph:replaceWith "$1ghj$2" ;
+            rdfs:comment "-chï- > -ghj-" ;
+            rdfs:label "leniz.19.g" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.19.h
+:leniz.19.h rdf:type owl:NamedIndividual ,
+                     :GalloSicilianFeature ,
+                     :Leniz ,
+                     liph:FiniteStateLinguisticPhenomenon ;
+            liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])chï([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+            liph:replaceWith "$1ghï$2" ;
+            rdfs:comment "-chï- > -ghï-" ;
+            rdfs:label "leniz.19.h" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.2
+:leniz.2 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Leniz ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])cr([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+         liph:replaceWith "$1gr$2" ;
+         rdfs:comment "-cr- > -gr-" ;
+         rdfs:label "leniz.2" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.20
+:leniz.20 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Leniz ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "spr" ;
+          liph:replaceWith "sbr" ;
+          rdfs:comment "spr / sbr > sbr" ;
+          rdfs:label "leniz.20" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.3
+:leniz.3 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Leniz ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])p([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+         liph:replaceWith "$1v$2" ;
+         rdfs:comment "-p-  > -v-" ;
+         rdfs:label "leniz.3" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.4
+:leniz.4 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Leniz ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])pr([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+         liph:replaceWith "$1vr$2" ;
+         rdfs:comment "-pr- > -vr-" ;
+         rdfs:label "leniz.4" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.5
+:leniz.5 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Leniz ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])t([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+         liph:replaceWith "$1d$2" ;
+         rdfs:comment "-t- > -d-" ;
+         rdfs:label "leniz.5" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.6
+:leniz.6 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Leniz ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)ìtu$" ;
+         liph:replaceWith "$1ì" ;
+         rdfs:comment "-ìtu > -ì" ;
+         rdfs:label "leniz.6" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.7
+:leniz.7 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Leniz ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)àtu$" ;
+         liph:replaceWith "$1à" ;
+         rdfs:comment "-àtu > -à" ;
+         rdfs:label "leniz.7" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.8
+:leniz.8 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Leniz ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)ùtu$" ;
+         liph:replaceWith "$1ù" ;
+         rdfs:comment "-ùtu > -ù" ;
+         rdfs:label "leniz.8" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.9
+:leniz.9 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Leniz ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)ìti$" ;
+         liph:replaceWith "$1ë̀" ;
+         rdfs:comment "-ìti > -ë̀" ;
+         rdfs:label "leniz.9" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.1
+:palat.1 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Palat ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)càri$" ;
+         liph:replaceWith "$1chè" ;
+         rdfs:comment "-càri > chè" ;
+         rdfs:label "palat.1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.10
+:palat.10 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Palat ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ïàri$" ;
+          liph:replaceWith "ïè" ;
+          rdfs:comment "-ïàri > ïè" ;
+          rdfs:label "palat.10" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.11
+:palat.11 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Palat ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ïàrisi$" ;
+          liph:replaceWith "ïèssë" ;
+          rdfs:comment "-ïàrisi > ïèssë" ;
+          rdfs:label "palat.11" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.12
+:palat.12 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Palat ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "àrini$" ;
+          liph:replaceWith "ènë" ;
+          rdfs:comment "-àrini > -ènë" ;
+          rdfs:label "palat.12" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.13
+:palat.13 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Palat ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "arisìnni$" ;
+          liph:replaceWith "èssenë" ;
+          rdfs:comment "-arisìnni > -èssenë" ;
+          rdfs:label "palat.13" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.2
+:palat.2 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Palat ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)càrisi$" ;
+         liph:replaceWith "$1chèssë" ;
+         rdfs:comment "-càrisi > chèssë" ;
+         rdfs:label "palat.2" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.3
+:palat.3 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Palat ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)gàri$" ;
+         liph:replaceWith "$1ghè" ;
+         rdfs:comment "-gàri > ghè" ;
+         rdfs:label "palat.3" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.4
+:palat.4 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Palat ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)gàrisi$" ;
+         liph:replaceWith "$1ghèssë" ;
+         rdfs:comment "-gàrisi > ghèssë" ;
+         rdfs:label "palat.4" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.5
+:palat.5 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Palat ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "([^cgi])àri$" ;
+         liph:replaceWith "$1è" ;
+         rdfs:comment "-àri > è (if not preceded by c, g, i)" ;
+         rdfs:label "palat.5" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.6
+:palat.6 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Palat ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "([^cgi])àrisi$" ;
+         liph:replaceWith "$1èssë" ;
+         rdfs:comment "-àrisi > èssë (if not preceded by c, g, i)" ;
+         rdfs:label "palat.6" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.7
+:palat.7 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Palat ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "ciàri$" ;
+         liph:replaceWith "cè" ;
+         rdfs:comment "-ciàri > cè" ;
+         rdfs:label "palat.7" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.8
+:palat.8 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Palat ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)iàrisi$" ;
+         liph:replaceWith "$1èssë" ;
+         rdfs:comment "-iàrisi > èssë" ;
+         rdfs:label "palat.8" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#palat.9
+:palat.9 rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Palat ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "giàri$" ;
+         liph:replaceWith "gè" ;
+         rdfs:comment "-giàri > gè" ;
+         rdfs:label "palat.9" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.10
+:vocal.10 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Vocal ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "ì" ;
+          liph:replaceWith "ë̀" ;
+          rdfs:comment "ì > ë̀" ;
+          rdfs:label "vocal.10" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2.a
+:vocal.2.a rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Vocal ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "i$" ;
+           liph:replaceWith "ë" ;
+           rdfs:comment "i > ë" ;
+           rdfs:label "vocal.2.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2.c
+:vocal.2.c rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Vocal ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "ì" ;
+           liph:replaceWith "ë̀" ;
+           rdfs:comment "ì > ë̀" ;
+           rdfs:label "vocal.2.c" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.5.a
+:vocal.5.a rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Vocal ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "u" ;
+           liph:replaceWith "ö" ;
+           rdfs:comment "u > ö" ;
+           rdfs:label "vocal.5.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.5.c
+:vocal.5.c rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "ù" ;
+           liph:replaceWith "ö̀" ;
+           rdfs:comment "ù > ö̀" ;
+           rdfs:label "vocal.5.c" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.7.a
+:vocal.7.a rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Vocal ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "i$" ;
+           liph:replaceWith "e" ;
+           rdfs:comment "-i > e" ;
+           rdfs:label "vocal.7.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.7.b
+:vocal.7.b rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Vocal ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "i([^aàáäeèéëë̀iìíïoòóöuùúüh])" ;
+           liph:replaceWith "e$1" ;
+           rdfs:comment "i- | -i- > e" ;
+           rdfs:label "vocal.7.b" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.8.a
+:vocal.8.a rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Vocal ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "^u|([^cg])u" ;
+           liph:replaceWith "$1e" ;
+           rdfs:comment "u > e if u is not preceded by c or g" ;
+           rdfs:label "vocal.8.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.8.b
+:vocal.8.b rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Vocal ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "cu" ;
+           liph:replaceWith "che" ;
+           rdfs:comment "cu > che" ;
+           rdfs:label "vocal.8.b" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.8.c
+:vocal.8.c rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Vocal ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "gu" ;
+           liph:replaceWith "ghe" ;
+           rdfs:comment "gu > ghe" ;
+           rdfs:label "vocal.8.c" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.9.a
+:vocal.9.a rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Vocal ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "èri$" ;
+           liph:replaceWith "èrö" ;
+           rdfs:comment "-èri > -èrö" ;
+           rdfs:label "vocal.9.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.9.b
+:vocal.9.b rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Vocal ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "(.+)àli$" ;
+           liph:replaceWith "$1àö" ;
+           rdfs:comment "-àli > àö" ;
+           rdfs:label "vocal.9.b" .
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.2
+:inf.2 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)ìri$" ;
+       liph:replaceWith "$1ì" ;
+       rdfs:comment "-ìri > ì" ;
+       rdfs:label "inf.2" .
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.3.a
+:inf.3.a rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "([^cgjh])iri$" ;
+       liph:replaceWith "$1ö" ;
+       rdfs:comment "-iri > ö only if iri is not preceeded by one of the followings: c,g,j,h" ;
+       rdfs:label "inf.3.a" .
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.3.a
+:inf.3.b.1 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)ciri$" ;
+       liph:replaceWith "$1ciö" ;
+       rdfs:comment "-ciri > ciö" ;
+       rdfs:label "inf.3.b.1" .
+
+:inf.3.b.2 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)giri$" ;
+       liph:replaceWith "$1giö" ;
+       rdfs:comment "-giri > giö" ;
+       rdfs:label "inf.3.b.2" .
+
+:inf.3.b.3 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)chjiri$" ;
+       liph:replaceWith "$1chjiö" ;
+       rdfs:comment "-chjiri > chjiö" ;
+       rdfs:label "inf.3.b.3" .
+
+:inf.3.b.4 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)ghjiri$" ;
+       liph:replaceWith "$1ghjiö" ;
+       rdfs:comment "-ghjiri > ghjiö" ;
+       rdfs:label "inf.3.b.4" .
+
+:inf.3.c rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)jiri$" ;
+       liph:replaceWith "$1jö" ;
+       rdfs:comment "-jiri > jö" ;
+       rdfs:label "inf.3.c" .
+
+:inf.3.d rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)hiri$" ;
+       liph:replaceWith "$1hjö" ;
+       rdfs:comment "-hiri > hjö" ;
+       rdfs:label "inf.3.d" .
+
+:inf.4 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)ìri$" ;
+       liph:replaceWith "$1ìsciö" ;
+       rdfs:comment "-ìri > ìsciö" ;
+       rdfs:label "inf.4" .
+
+:inf.5 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "([^c]|[^s]c)ìrisi$" ;
+       liph:replaceWith "$1essë" ;
+       rdfs:comment "-ìrisi > -essë provided that ìrisi is not preceded by SC" ;
+       rdfs:label "inf.5" .
+
+:inf.6 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)scìrisi$" ;
+       liph:replaceWith "$1essë" ;
+       rdfs:comment "-scìrisi > essë" ;
+       rdfs:label "inf.6" .
+
+:inf.7 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)ìricci$" ;
+       liph:replaceWith "$1ë̀ghjë" ;
+       rdfs:comment "-ìricci > ë̀ghjë" ;
+       rdfs:label "inf.7" .
+
+###  https://gallosiciliani.unict.it/ns/liph#gallosiciliani2023Project
+liph:gallosiciliani2023Project rdf:type owl:NamedIndividual .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

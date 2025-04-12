@@ -20,8 +20,23 @@ import java.util.List;
 @Getter
 @Slf4j
 public class GSFeatures extends OntologyLoader{
-    public static String IRI = "https://gallosiciliani.unict.it/ns/gs-features";
-    public static String NS = IRI+"#";
+    public static final String IRI = "https://gallosiciliani.unict.it/ns/gs-features";
+    public static final String NS = IRI+"#";
+    public static final String VERSION = "2.0.0";
+
+    public static final String GALLOSICILIAN_FEATURE_CLASS=NS+"GalloSicilianFeature";
+    public static final String LENIZ_CLASS=NS+"Leniz";
+    public static final String DEGEM_CLASS=NS+"Degem";
+    public static final String ASSIB_CLASS=NS+"Assib";
+    public static final String DISSIM_CLASS=NS+"Dissim";
+    public static final String DITT_CLASS=NS+"Ditt";
+    public static final String VOCAL_CLASS=NS+"Vocal";
+    public static final String AFER_CLASS=NS+"Afer";
+    public static final String ELIM_CLASS =NS+"Elim";
+    public static final String INF_CLASS =NS+"Inf";
+
+    public static final String[] CATEGORY_CLASSES={LENIZ_CLASS, DEGEM_CLASS, ASSIB_CLASS, DISSIM_CLASS, DITT_CLASS,
+            VOCAL_CLASS, AFER_CLASS, ELIM_CLASS, INF_CLASS};
 
     private final List<LinguisticPhenomenon> regexLinguisticPhenomena;
 

@@ -149,7 +149,7 @@ vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/liph#matchingPattern
 :matchingPattern rdf:type owl:DatatypeProperty ,
                           owl:FunctionalProperty ;
-                 rdfs:domain :FiniteStateLinguisicPhenomenon ;
+                 rdfs:domain :FiniteStateLinguisticPhenomenon ;
                  rdfs:range xsd:string ;
                  rdfs:comment "A regular expression indicating the parts of a lexical expression which are subject to be replaced" ;
                  rdfs:label "matching pattern" .
@@ -158,7 +158,7 @@ vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/liph#replaceWith
 :replaceWith rdf:type owl:DatatypeProperty ,
                       owl:FunctionalProperty ;
-             rdfs:domain :FiniteStateLinguisicPhenomenon ;
+             rdfs:domain :FiniteStateLinguisticPhenomenon ;
              rdfs:range xsd:string ;
              rdfs:comment "How the matched parts of a lexical expression have to be replaced" .
 
@@ -176,19 +176,19 @@ vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
 <http://www.w3.org/ns/lemon/ontolex#Form> rdfs:subClassOf :LexicalObject .
 
 
-###  https://gallosiciliani.unict.it/ns/liph#FiniteStateLinguisicPhenomenon
-:FiniteStateLinguisicPhenomenon rdf:type owl:Class ;
-                                rdfs:subClassOf :LinguisticPhenomenon ,
-                                                [ rdf:type owl:Restriction ;
-                                                  owl:onProperty :matchingPattern ;
-                                                  owl:someValuesFrom xsd:string
-                                                ] ,
-                                                [ rdf:type owl:Restriction ;
-                                                  owl:onProperty :replaceWith ;
-                                                  owl:someValuesFrom xsd:string
-                                                ] ;
-                                rdfs:comment "An executable phenomenon described in terms of regular relations." ;
-                                rdfs:label "Finite-State Linguistic Phenomenon" .
+###  https://gallosiciliani.unict.it/ns/liph#FiniteStateLinguisticPhenomenon
+:FiniteStateLinguisticPhenomenon rdf:type owl:Class ;
+                                 rdfs:subClassOf :LinguisticPhenomenon ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty :matchingPattern ;
+                                                   owl:someValuesFrom xsd:string
+                                                 ] ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty :replaceWith ;
+                                                   owl:someValuesFrom xsd:string
+                                                 ] ;
+                                 rdfs:comment "An executable phenomenon described in terms of regular relations." ;
+                                 rdfs:label "Finite-State Linguistic Phenomenon" .
 
 
 ###  https://gallosiciliani.unict.it/ns/liph#LexicalObject

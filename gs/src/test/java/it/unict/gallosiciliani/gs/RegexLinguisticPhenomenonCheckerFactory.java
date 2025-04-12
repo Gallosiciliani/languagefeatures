@@ -68,4 +68,9 @@ public class RegexLinguisticPhenomenonCheckerFactory {
         return this;
     }
 
+    public RegexLinguisticPhenomenonCheckerFactory inside(final String src, final String replacement) {
+        build(replacement).inside(true, src);
+        return this;
+    }
+
 }
