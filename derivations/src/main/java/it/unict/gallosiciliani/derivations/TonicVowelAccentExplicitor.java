@@ -30,14 +30,16 @@ public class TonicVowelAccentExplicitor {
     }
 
     private final Predicate<String> hasAccentedVowel;
+    private final Pattern endingWithVowelAndNPattern;
     private final Pattern secondToLastVowelPattern;
     private final Pattern thirdToLastVowelPattern;
 
     public TonicVowelAccentExplicitor(){
         hasAccentedVowel=Pattern.compile("[àèìòù]|ä̀|ë̀|ï̀|ö̀|ǜ").asPredicate();
         final String atonicVowels="aeiouáéíóúäëïöü";
-        secondToLastVowelPattern =Pattern.compile("["+atonicVowels+"][^"+atonicVowels+"]*["+atonicVowels+"][^"+atonicVowels+"]*$");
-        thirdToLastVowelPattern =Pattern.compile("["+atonicVowels+"][^"+atonicVowels+"]*"+ secondToLastVowelPattern.pattern());
+        endingWithVowelAndNPattern=Pattern.compile("["+atonicVowels+"]n$");
+        secondToLastVowelPattern=Pattern.compile("["+atonicVowels+"][^"+atonicVowels+"]*["+atonicVowels+"][^"+atonicVowels+"]*$");
+        thirdToLastVowelPattern=Pattern.compile("["+atonicVowels+"][^"+atonicVowels+"]*"+ secondToLastVowelPattern.pattern());
     }
 
     public String addGraveAccent(final String word){
@@ -53,6 +55,9 @@ public class TonicVowelAccentExplicitor {
     }
 
     private Optional<TonicVowel> findTonicVowel(final String word){
+        final Optional<TonicVowel> endingWithVowelAndN=findVowel(endingWithVowelAndNPattern, word);
+        if (endingWithVowelAndN.isPresent())
+            return endingWithVowelAndN;
         final Optional<TonicVowel> secondToLastVowel=findVowel(secondToLastVowelPattern ,word);
         if (secondToLastVowel.isEmpty() || 'ï'!=secondToLastVowel.get().vowel)
             return secondToLastVowel;

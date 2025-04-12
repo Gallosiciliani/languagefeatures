@@ -3,7 +3,6 @@ package it.unict.gallosiciliani.gs;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.FiniteStatePhenomenaQuery;
-import it.unict.gallosiciliani.liph.regex.RegexLiph1FeatureQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
 import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import lombok.Getter;
@@ -51,7 +50,6 @@ public class GSFeatures extends OntologyLoader{
     public GSFeatures() throws IOException {
         super("gs-features.ttl");
         final RegexLinguisticPhenomenaReader reader=new RegexLinguisticPhenomenaReader();
-        reader.read(getModel(), new RegexLiph1FeatureQuery().ignoreDeprecated());
         reader.read(getModel(), new FiniteStatePhenomenaQuery());
         regexLinguisticPhenomena = reader.getFeatures();
     }
