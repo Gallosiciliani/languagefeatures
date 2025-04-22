@@ -17,12 +17,12 @@ public class TestDerivations implements LinguisticPhenomenonLabelProvider, Lingu
     public final LinguisticPhenomenon p= Mockito.mock(LinguisticPhenomenon.class);
     public final LinguisticPhenomenon q=Mockito.mock(LinguisticPhenomenon.class);
     public final DerivationPathNode s=new DerivationPathNodeImpl("s");
-    public final DerivationPathNode spx=new DerivationPathNodeImpl("x", s, p);
-    public final DerivationPathNode spy=new DerivationPathNodeImpl("y", s, p);
+    public final DerivationPathNode spx=new DerivationPathNodeImpl("x", p, s);
+    public final DerivationPathNode spy=new DerivationPathNodeImpl("y", p, s);
     public final Collection<DerivationPathNode> sSubsequentsThroughP= List.of(spx, spy);
-    public final DerivationPathNode sqz=new DerivationPathNodeImpl("z", s, q);
+    public final DerivationPathNode sqz=new DerivationPathNodeImpl("z", q, s);
     public final Collection<DerivationPathNode> sSubsequentsThroughQ= List.of(sqz);
-    public final DerivationPathNode spxqu=new DerivationPathNodeImpl("u", spx, q);
+    public final DerivationPathNode spxqu=new DerivationPathNodeImpl("u", q, spx);
     public final Collection<DerivationPathNode> sPxSubsequentsThroughQ= List.of(spxqu);
 
     public TestDerivations(){

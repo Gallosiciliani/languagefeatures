@@ -45,7 +45,7 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
         //current phenomenon applied
         final LinguisticPhenomenon currentPhenomenon= phenomena.get(currentPhenomenaIndex);
         for(final String derivedString : currentPhenomenon.apply(currentDerivation.get())){
-            final DerivationPathNode newDerivation=new DerivationPathNodeImpl(derivedString, currentDerivation, currentPhenomenon);
+            final DerivationPathNode newDerivation=new DerivationPathNodeImpl(derivedString, currentPhenomenon, currentDerivation);
             leafs+=apply(newDerivation, currentPhenomenaIndex+1);
         }
         return leafs;

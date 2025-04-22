@@ -71,7 +71,7 @@ public class OWLDerivationRetriever {
             for(final LinguisticPhenomenon recognizedPhenomenon: recognizedPhenomena)
                 if (recognizedPhenomenon.getId().equals(pValue)){
                     DerivationPathNode prev=retrieveDerivation(etymon, xValue);
-                    return prev==null ? null : new DerivationPathNodeImpl(rValue, prev, recognizedPhenomenon);
+                    return prev==null ? null : new DerivationPathNodeImpl(rValue, recognizedPhenomenon, prev);
                 }
         }
         return null;

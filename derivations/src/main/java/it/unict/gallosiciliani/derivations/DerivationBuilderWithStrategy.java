@@ -43,7 +43,7 @@ public class DerivationBuilderWithStrategy implements  DerivationBuilder{
                 phenomena.subList(1, phenomena.size()) : Collections.emptyList();
         final DerivationPathNode currentNode=strategy.getDerivation();
 
-        final List<DerivationPathNode> branches=currentPhenomenon.apply(currentNode.get()).stream().<DerivationPathNode>map((f)->new DerivationPathNodeImpl(f, currentNode, currentPhenomenon)).toList();
+        final List<DerivationPathNode> branches=currentPhenomenon.apply(currentNode.get()).stream().<DerivationPathNode>map((f)->new DerivationPathNodeImpl(f, currentPhenomenon, currentNode)).toList();
         final Collection<DerivationStrategy> strategies=strategy.branch(branches);
 
 //        System.out.println(print(strategy, currentPhenomenon, this.phenomena.size()-phenomena.size())+" BEGIN");

@@ -23,11 +23,11 @@ public class DerivationPathNodeImpl implements DerivationPathNode{
     /**
      * Private constructor, use the public one to create a root node, or the apply method to build complex paths.
      *
-     * @param s the characterizing string of this node
-     * @param prev previous part of the path
+     * @param s              the characterizing string of this node
      * @param transformation transformation which produced the string
+     * @param prev           previous part of the path
      */
-    public DerivationPathNodeImpl(final String s, final DerivationPathNode prev, final LinguisticPhenomenon transformation){
+    public DerivationPathNodeImpl(final String s, final LinguisticPhenomenon transformation, final DerivationPathNode prev){
         this.s=s;
         this.prev=prev;
         this.transformation=transformation;

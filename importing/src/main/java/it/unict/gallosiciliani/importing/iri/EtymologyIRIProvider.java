@@ -25,6 +25,15 @@ public interface EtymologyIRIProvider {
     /**
      * Create an IRI for a novel etySource for the first link of the etymology
      * @return IRI for a novel etySource
+     * TODO consider to remove, the etymon should be already placed in the knowledge base
      */
     String getEtySourceIRI();
+
+    /**
+     * IRIs for {@link it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence} individuals
+     * involved in this etymology
+     * @return IRI for a novel {@link it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence}
+     */
+    PhenomenonOccurrenceIRIProvider getLinguisticPhenomenaOccurrencesIRIs();
+
 }

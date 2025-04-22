@@ -30,7 +30,7 @@ public class MissedPhenomenaFinderTest {
         final MissedPhenomenaFinder finder=new MissedPhenomenaFinder(List.of(p,q));
 
         final DerivationPathNode x=new DerivationPathNodeImpl("x");
-        final DerivationPathNode y=new DerivationPathNodeImpl("y",x,p);
+        final DerivationPathNode y=new DerivationPathNodeImpl("y", p, x);
 
         final Iterator<LinguisticPhenomenon> actualIt=finder.getMissedPhenomena(y).iterator();
         assertSame(q,actualIt.next());

@@ -84,7 +84,7 @@ public class TonicVowelAccentExplicitor {
             case 'u' -> "ù";
             case 'ä' -> "ä̀";
             case 'ë' -> "ë̀";
-            case 'ï' -> throw new IllegalArgumentException("Grave accent not expected on ï");
+            case 'ï' -> "ï̀";
             case 'ö' -> "ö̀";
             case 'ü' -> "ǜ";
             default -> throw new IllegalArgumentException("Not a plain vowel " + plainVowel);

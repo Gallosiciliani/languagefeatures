@@ -96,6 +96,7 @@ public class TonicVowelAccentExplicitorTest {
         assertEquals("xaxùn", e.addGraveAccent("xaxun"));
         assertEquals("xaxä̀n", e.addGraveAccent("xaxän"));
         assertEquals("xaxë̀n", e.addGraveAccent("xaxën"));
+        assertEquals("xaxï̀n", e.addGraveAccent("xaxïn"));
         assertEquals("xaxö̀n", e.addGraveAccent("xaxön"));
         assertEquals("xaxǜn", e.addGraveAccent("xaxün"));
     }

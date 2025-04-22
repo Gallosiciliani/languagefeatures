@@ -2,7 +2,6 @@ package it.unict.gallosiciliani.sicilian;
 
 import it.unict.gallosiciliani.derivations.*;
 import it.unict.gallosiciliani.gs.GSFeatures;
-import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 
 import java.io.FileWriter;
@@ -16,7 +15,6 @@ import java.util.function.Consumer;
  */
 public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> {
 
-    private final List<? extends LinguisticPhenomenon> eligiblePhenomena;
     private final TonicVowelAccentExplicitor accentExplicitor=new TonicVowelAccentExplicitor();
 
     private final BruteForceDerivationBuilder derivationBuilder;
@@ -29,8 +27,7 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
             final List<String> lemmas=nicosiaESperlinga.getAllForms()
                     .map(Form::getWrittenRep)
                     .map(accentExplicitor::addGraveAccent).toList();
-            eligiblePhenomena=gs.getRegexLinguisticPhenomena();
-            derivationBuilder=new BruteForceDerivationBuilder(eligiblePhenomena, lemmas);
+            derivationBuilder=new BruteForceDerivationBuilder(gs.getRegexLinguisticPhenomena(), lemmas);
 //                    derivationBuilderFactory.build(gs.getRegexLinguisticPhenomena(), lemmas);
         }
     }

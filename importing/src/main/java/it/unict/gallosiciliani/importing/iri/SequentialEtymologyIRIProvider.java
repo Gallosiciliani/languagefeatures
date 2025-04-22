@@ -7,7 +7,7 @@ class SequentialEtymologyIRIProvider implements EtymologyIRIProvider {
 
     private final String iri;
     private int n;
-
+    private int occurrencesNum;
 
     /**
      *
@@ -30,5 +30,10 @@ class SequentialEtymologyIRIProvider implements EtymologyIRIProvider {
     @Override
     public String getEtySourceIRI() {
         return iri+"-source"+(n++);
+    }
+
+    @Override
+    public PhenomenonOccurrenceIRIProvider getLinguisticPhenomenaOccurrencesIRIs() {
+        return new SequentialPhenomenonOccurrenceIRIProvider(iri+"-occurrence"+(occurrencesNum++));
     }
 }

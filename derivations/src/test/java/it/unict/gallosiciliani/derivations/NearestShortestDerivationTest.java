@@ -111,6 +111,6 @@ public class NearestShortestDerivationTest {
 
     private DerivationPathNode createDerivation(final int length){
         return length==1 ? new DerivationPathNodeImpl("x0") : //node string is not relevant
-            new DerivationPathNodeImpl("x"+(length-1), createDerivation(length-1), null); //also the phenomenon is not relevant
+            new DerivationPathNodeImpl("x"+(length-1), null, createDerivation(length-1)); //also the phenomenon is not relevant
     }
 }
