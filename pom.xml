@@ -8,7 +8,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <cz.cvut.kbss.jopa.version>2.2.0</cz.cvut.kbss.jopa.version>
+        <cz.cvut.kbss.jopa.version>2.3.1</cz.cvut.kbss.jopa.version>
     </properties>
     <groupId>it.unict.gallosiciliani</groupId>
     <artifactId>liphtools</artifactId>

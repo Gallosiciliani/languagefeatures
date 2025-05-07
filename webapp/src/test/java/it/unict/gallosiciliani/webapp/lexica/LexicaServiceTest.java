@@ -1,18 +1,33 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
+import cz.cvut.kbss.jopa.model.query.Query;
+import cz.cvut.kbss.jopa.model.query.TypedQuery;
+import cz.cvut.kbss.jopa.vocabulary.OWL;
+import cz.cvut.kbss.jopa.vocabulary.RDF;
 import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
+import it.unict.gallosiciliani.liph.LinguisticPhenomena;
+import it.unict.gallosiciliani.liph.model.LexicalObject;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import it.unict.gallosiciliani.webapp.TestUtil;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
+import it.unict.gallosiciliani.webapp.ontologies.TBox;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.jena.query.Dataset;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +42,8 @@ public class LexicaServiceTest {
     LexicaService lexicaService;
     @Autowired
     WebAppProperties props;
+    @Autowired
+    TBox tbox;
 
     private final TestUtil util=new TestUtil();
 
@@ -129,6 +146,80 @@ public class LexicaServiceTest {
         } finally {
             lexiconWithThreeEntries.cleanup(entityManager);
         }
+    }
+
+    @Test
+    @Disabled
+    void shouldImportLiPh() throws IOException {
+//        final OntologyLoader base=new OntologyLoader("nicosiaesperlinga.ttl");
+        final Query q=entityManager.createNativeQuery("SELECT ?x WHERE {?x <"+ RDF.TYPE+"> <"+ OWL.CLASS+">}");
+        assertFalse(q.getResultList().isEmpty());
+        for(final Object c: q.getResultList())
+            System.out.println("Class "+c);
+        final Query q1=entityManager.createNativeQuery("SELECT ?x WHERE {<"+LinguisticPhenomena.FINITE_STATE_LINGUISTIC_PHENOMENON_CLASS+"> ?p ?x}");
+        assertFalse(q1.getResultList().isEmpty());
+
+
+        final Form x=util.createForm();
+        final LinguisticPhenomenon p=util.createPhenomenon();
+        final LexicalObject y=util.createLexicalObject();
+        final LinguisticPhenomenonOccurrence op=util.createPhenomenonOccurrence(p, x, y);
+
+        final PersistenceTestUtils persistence= PersistenceTestUtils.build().
+                persist(x).
+                persist(p).
+                persist(y).
+                persist(op);
+        persistence.execute(entityManager);
+
+        final TypedQuery<LexicalObject> queryInferredInv=entityManager.createNativeQuery("SELECT ?x WHERE {\n"+
+                "\t?x <"+LinguisticPhenomena.NS+"isSourceOf> ?y\n"+
+                "}", LexicalObject.class);
+        assertEquals(1, queryInferredInv.getResultList().size());
+
+        final TypedQuery<LexicalObject> queryInferred1=entityManager.createNativeQuery("SELECT ?x WHERE {\n"+
+                "\t?y <"+LinguisticPhenomena.DERIVES_OBJ_PROPERTY+"> ?x\n"+
+                "}", LexicalObject.class);
+        assertEquals(1, queryInferred1.getResultList().size());
+
+    }
+    @Test
+    @Disabled
+    void shouldRetrieveTheDerivation(){
+        // derivation x<-p-y<-q-z
+        final Form x=util.createForm();
+        final LinguisticPhenomenon p=util.createPhenomenon();
+        final LexicalObject y=util.createLexicalObject();
+        final LinguisticPhenomenonOccurrence op=util.createPhenomenonOccurrence(p, x, y);
+        final LinguisticPhenomenon q=util.createPhenomenon();
+        final Form z=util.createForm();
+        final LinguisticPhenomenonOccurrence oq=util.createPhenomenonOccurrence(q, y, z);
+
+        final PersistenceTestUtils persistence= PersistenceTestUtils.build().
+                persist(x).
+                persist(p).
+                persist(y).
+                persist(op).
+                persist(q).
+                persist(z).
+                persist(oq);
+        persistence.execute(entityManager);
+
+        final TypedQuery<LinguisticPhenomenonOccurrence> queryExplicit=entityManager.createNativeQuery("SELECT ?o WHERE {\n"+
+                "\t?o <"+ LinguisticPhenomena.SOURCE_OBJ_PROPERTY+"> <"+x.getId()+"> ;\n"+
+                "\t\t <"+ LinguisticPhenomena.TARGET_OBJ_PROPERTY+"> ?y .\n"+
+                "}", LinguisticPhenomenonOccurrence.class);
+
+        final TypedQuery<LinguisticPhenomenonOccurrence> queryInferred1=entityManager.createNativeQuery("SELECT ?o WHERE {\n"+
+                "\t?y <"+LinguisticPhenomena.DERIVES_OBJ_PROPERTY+"> ?x\n"+
+                "}", LinguisticPhenomenonOccurrence.class);
+
+        assertEquals(1, queryExplicit.getResultList().size());
+        assertEquals(1, queryInferred1.getResultList().size());
+        final Iterator<LinguisticPhenomenonOccurrence> actualDerivationIt=lexicaService.getDerivationChain(x,z).iterator();
+        util.checkEquals(op, actualDerivationIt.next());
+        util.checkEquals(oq, actualDerivationIt.next());
+        assertFalse(actualDerivationIt.hasNext());
     }
 
 //    @Test

@@ -11,6 +11,7 @@ import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
 import it.unict.gallosiciliani.webapp.ontologies.TBox;
 import lombok.extern.slf4j.Slf4j;
+import openllet.jena.PelletReasonerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.github.ledsoft.jopa.loader.BootAwareClasspathScanner;
@@ -33,11 +34,11 @@ public class PersistenceConfig {
         // Let's use Jena TDB for storage
         props.put(JenaOntoDriverProperties.JENA_STORAGE_TYPE, appProps.getJenaStorageType());
 
-//        props.put(JenaOntoDriverProperties.JENA_ISOLATION_STRATEGY, JenaOntoDriverProperties.SNAPSHOT);
+        //props.put(JenaOntoDriverProperties.JENA_ISOLATION_STRATEGY, JenaOntoDriverProperties.READ_COMMITTED);
         // Use Jena's rule-based RDFS reasoner
-        props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, OWLFBRuleReasonerFactoryWithTbox.class.getName());
+        props.put(OntoDriverProperties.REASONER_FACTORY_CLASS, ReasonerFactoryWithTbox.class.getName());
         // View transactional changes during transaction
-//        props.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
+        //props.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
         // Where to look for entities
         props.put(JOPAPersistenceProperties.SCAN_PACKAGE, "it.unict.gallosiciliani.liph.model");
         // Ontology language
@@ -52,7 +53,12 @@ public class PersistenceConfig {
     @Bean(name = "entityManager")
     public EntityManager entityManager(final EntityManagerFactory entityManagerFactory,
                                        final TBox tbox) {
-        OWLFBRuleReasonerFactoryWithTbox.theInstance().setTBox(tbox);
-        return entityManagerFactory.createEntityManager();
+        ReasonerFactoryWithTbox.theInstance().setTBox(tbox);
+        final EntityManager entityManager=entityManagerFactory.createEntityManager();
+//        entityManager.getTransaction().begin();
+//        entityManager.unwrap(Dataset.class).getDefaultModel().add(tbox.all);
+//        entityManager.flush();
+//        entityManager.getTransaction().commit();
+        return entityManager;
     }
 }

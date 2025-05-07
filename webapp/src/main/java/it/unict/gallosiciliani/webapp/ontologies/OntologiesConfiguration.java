@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.webapp.ontologies;
 
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
+import org.apache.jena.ontology.OntDocumentManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,7 +17,8 @@ import java.nio.file.Path;
 @Configuration
 public class OntologiesConfiguration {
     @Bean
-    GSFeatures gsFeatures() throws IOException {
+    GSFeatures gsFeatures(final LinguisticPhenomena liph) throws IOException {
+        OntDocumentManager.getInstance().addModel(LinguisticPhenomena.IRI, liph.getModel());
         return new GSFeatures();
     }
 

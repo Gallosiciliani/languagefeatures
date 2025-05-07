@@ -3,6 +3,7 @@ package it.unict.gallosiciliani.webapp.persistence;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.Query;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
@@ -71,6 +72,11 @@ public class PersistenceTestUtils {
 
     public PersistenceTestUtils persist(final LinguisticPhenomenon p){
         actions.add((final EntityManager entityManager) -> entityManager.persist(p));
+        return this;
+    }
+
+    public PersistenceTestUtils persist(final LinguisticPhenomenonOccurrence o){
+        actions.add((final EntityManager entityManager) -> entityManager.persist(o));
         return this;
     }
 

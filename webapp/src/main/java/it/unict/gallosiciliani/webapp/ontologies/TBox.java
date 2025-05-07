@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.webapp.ontologies;
 
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
+import org.apache.jena.ontology.OntDocumentManager;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
@@ -15,6 +16,7 @@ public class TBox {
     public final Model all;
 
     public TBox(final LinguisticPhenomena linguisticPhenomena, final GSFeatures gsFeatures) {
+        OntDocumentManager.getInstance().addModel(GSFeatures.IRI, gsFeatures.getModel());
         all=createMergeOntology(linguisticPhenomena.getModel(), gsFeatures.getModel());
     }
 

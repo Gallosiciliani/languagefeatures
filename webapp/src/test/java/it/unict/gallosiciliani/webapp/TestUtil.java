@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.webapp;
 
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
@@ -33,6 +34,12 @@ public class TestUtil {
         assertEquals(expected.getWrittenRep(), actual.getWrittenRep());
     }
 
+    public void checkEquals(final LinguisticPhenomenonOccurrence expected, final LinguisticPhenomenonOccurrence actual){
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getOccurrenceOf().getId(), actual.getOccurrenceOf().getId());
+        assertEquals(expected.getSource().getId(), actual.getSource().getId());
+    }
+
     /**
      * Create a {@link Form} object for test purposes
      */
@@ -60,9 +67,19 @@ public class TestUtil {
      * @return a novel linguistic phenomenon
      */
     public LinguisticPhenomenon createPhenomenon(){
-        final LinguisticPhenomenon p=mock(LinguisticPhenomenon.class);
-        when(p.getId()).thenReturn("http://test.org/phenomenon"+n);
+        final LinguisticPhenomenon p=new LinguisticPhenomenon();
+        p.setId("http://test.org/phenomenon"+n);
         n++;
         return p;
+    }
+
+    public LinguisticPhenomenonOccurrence createPhenomenonOccurrence(final LinguisticPhenomenon p, final LexicalObject source,
+                                                                     final LexicalObject target){
+        final LinguisticPhenomenonOccurrence o=new LinguisticPhenomenonOccurrence();
+        o.setId("http://test.org/occurrence"+(n++));
+        o.setOccurrenceOf(p);
+        o.setSource(source);
+        o.setTarget(target);
+        return o;
     }
 }

@@ -4,6 +4,7 @@ import it.unict.gallosiciliani.derivations.io.DerivationIOUtil;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.gs.GSFeatures;
+import it.unict.gallosiciliani.webapp.TestUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +25,8 @@ public class DerivationServiceTest {
 
     @Autowired
     DerivationService derivationService;
+
+    private final TestUtil util=new TestUtil();
 
     @Test
     void shouldReturnNearestShortestDerivations(){
@@ -56,5 +59,4 @@ public class DerivationServiceTest {
                 .inner("abentu", GSFeatures.NS+"degem.6")
                 .last("abbentu");
     }
-
 }

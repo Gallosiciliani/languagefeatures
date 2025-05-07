@@ -7,11 +7,15 @@ import it.unict.gallosiciliani.derivations.strategy.NearestStrategySelector;
 import it.unict.gallosiciliani.derivations.strategy.TargetedDerivationStrategyFactory;
 import it.unict.gallosiciliani.derivations.strategy.TargetedDerivationStrategySelectorFactory;
 import it.unict.gallosiciliani.gs.GSFeatures;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.sicilian.SicilianVocabulary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Provide derivations using Gallo-Sicilian features
