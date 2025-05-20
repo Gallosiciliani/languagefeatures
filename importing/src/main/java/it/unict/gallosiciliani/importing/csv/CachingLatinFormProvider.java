@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.importing.csv;
 
+import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import lombok.Getter;
 import org.apache.commons.csv.CSVFormat;
@@ -105,7 +106,7 @@ public class CachingLatinFormProvider implements LatinFormProvider {
     private Form getNovelForm(final String writtenRep, final String label, final String iri){
         final Form f = new Form();
         f.setId(iri);
-        f.setWrittenRep(writtenRep);
+        f.setWrittenRep(new MultilingualString().set(writtenRep));
         f.setLabel(label);
 
         final URI seeAlso = externalLinks.get(writtenRep);

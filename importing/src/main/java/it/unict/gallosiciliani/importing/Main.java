@@ -62,12 +62,12 @@ public class Main {
         try(final PrintStream out=new PrintStream(outFilePath)) {
             final Consumer<LexicalEntry> consumer = lexicalEntry -> {
                 final Form form = lexicalEntry.getCanonicalForm();
-                if (writtenRep.add(form.getWrittenRep()) != formsIri.add(form.getId())) {
-                    duplicates.add(form.getWrittenRep());
+                if (writtenRep.add(form.getWrittenRep().get()) != formsIri.add(form.getId())) {
+                    duplicates.add(form.getWrittenRep().get());
                     System.err.println("Found duplicate for "+form.getWrittenRep());
                     //throw new IllegalArgumentException("Found duplicate form for "+form.getWrittenRep());
                 }
-                else emptyDerivations.add(new NearestShortestDerivation(form.getWrittenRep()));
+                else emptyDerivations.add(new NearestShortestDerivation(form.getWrittenRep().get()));
                 out.println(form.getWrittenRep());
             };
             final LexicalEntriesGenerator generator = new LexicalEntriesGenerator(consumer, "http://localhost/nicosiasperlinga#", new POSIndividualProvider());

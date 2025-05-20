@@ -1,8 +1,7 @@
 package it.unict.gallosiciliani.liph.model;
 
-import cz.cvut.kbss.jopa.model.annotations.OWLClass;
-import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
-import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
+import cz.cvut.kbss.jopa.model.MultilingualString;
+import cz.cvut.kbss.jopa.model.annotations.*;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.model.owl.Thing;
 import lombok.Data;
@@ -19,9 +18,20 @@ import java.util.Set;
 @Data
 public class LexicalObject extends Thing {
 
+    public static final String UNDETERMINED_LANGUAGE_TAG="und";
+
     @OWLDataProperty(iri=LinguisticPhenomena.WRITTEN_REP_DATA_PROPERTY)
-    String writtenRep;
+    MultilingualString writtenRep;
 
     @OWLObjectProperty(iri=LinguisticPhenomena.DERIVES_OBJ_PROPERTY)
     Set<LexicalObject> derives;
+
+    /**
+     * Set the written representation as a value with language tag corresponding to undetermined
+     * @param s written representation
+     */
+    public void setWrittenRepUndLang(final String s){
+        setWrittenRep(new MultilingualString().set(UNDETERMINED_LANGUAGE_TAG,s));
+    }
+
 }

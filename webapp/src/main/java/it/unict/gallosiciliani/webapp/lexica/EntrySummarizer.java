@@ -40,7 +40,7 @@ public class EntrySummarizer {
     }
 
     public EntrySummary summarize(final LexicalEntry src){
-        final String writtenRep = src.getCanonicalForm().getWrittenRep();
+        final String writtenRep = src.getCanonicalForm().getWrittenRep().get();
         final String partOfSpeechMessageId = LexInfo.getMessageId(src.getPartOfSpeech());
         final String partOfSpeech = messageSource.getMessage(partOfSpeechMessageId, new Object[0], locale);
         final SortedSet<Form> etyComponents = getEtymonComponents(src);

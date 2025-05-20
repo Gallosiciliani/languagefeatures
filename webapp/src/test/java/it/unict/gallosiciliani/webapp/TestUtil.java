@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.webapp;
 
+import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
@@ -46,7 +47,7 @@ public class TestUtil {
     public Form createForm(){
         final Form x=new Form();
         x.setId("http://test.org/form"+n);
-        x.setWrittenRep("writtenRep"+n);
+        x.setWrittenRep(new MultilingualString().set(LexicalObject.UNDETERMINED_LANGUAGE_TAG, "writtenRep"+n));
         n++;
         return x;
     }
@@ -57,7 +58,7 @@ public class TestUtil {
     public LexicalObject createLexicalObject(){
         final LexicalObject x=new LexicalObject();
         x.setId("http://test.org/lexicalobject"+n);
-        x.setWrittenRep("writtenRep"+n);
+        x.setWrittenRep(new MultilingualString().set(LexicalObject.UNDETERMINED_LANGUAGE_TAG, "writtenRep"+n));
         n++;
         return x;
     }

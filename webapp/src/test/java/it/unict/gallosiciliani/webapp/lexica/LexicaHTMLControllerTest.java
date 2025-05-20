@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
+import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
@@ -178,9 +179,9 @@ public class LexicaHTMLControllerTest {
                 .andExpect(xpath("//form/following-sibling::p")
                         .string(messageSource.getMessage("galloitalici.kb.lexica.selection.numentries", new Object[]{2}, locale)))
                 .andExpect(xpath("//tbody[1]/tr[1]/th")
-                        .string(l3e.entryA.getCanonicalForm().getWrittenRep()+" ("+nounLabel+")"))
+                        .string(l3e.entryA.getCanonicalForm().getWrittenRep().get()+" ("+nounLabel+")"))
                 .andExpect(xpath("//tbody[2]/tr[1]/th")
-                        .string(l3e.entryB.getCanonicalForm().getWrittenRep()+" ("+verbLabel+")"));
+                        .string(l3e.entryB.getCanonicalForm().getWrittenRep().get()+" ("+verbLabel+")"));
     }
 
     @Test
@@ -226,7 +227,7 @@ public class LexicaHTMLControllerTest {
         linkA.getEtySubSource().add(etymonForm);
         etymonForm.setId("http://www.example.org/latinForm");
         etymonForm.setLabel(expectedEtymon);
-        etymonForm.setWrittenRep(expectedEtymonNormalized);
+        etymonForm.setWrittenRep(new MultilingualString().set(expectedEtymonNormalized));
         return etymonForm;
     }
 

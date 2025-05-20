@@ -25,7 +25,7 @@ public class SicilianToNicosiaESperlingaDerivations implements Consumer<String> 
         try (final GSFeatures gs = new GSFeatures(); final NicosiaESperlinga nicosiaESperlinga=new NicosiaESperlinga()) {
             //derivations=nicosiaESperlinga.getAllForms().map((f)->new NearestShortestDerivation(f.getWrittenRep())).toList();
             final List<String> lemmas=nicosiaESperlinga.getAllForms()
-                    .map(Form::getWrittenRep)
+                    .map((f)->{return f.getWrittenRep().get();})
                     .map(accentExplicitor::addGraveAccent).toList();
             derivationBuilder=new BruteForceDerivationBuilder(gs.getRegexLinguisticPhenomena(), lemmas);
 //                    derivationBuilderFactory.build(gs.getRegexLinguisticPhenomena(), lemmas);

@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
+import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
@@ -108,7 +109,7 @@ public class LexiconWithThreeEntries {
         final Form form = new Form();
         form.setId(iri+"-form");
         entry.setCanonicalForm(form);
-        form.setWrittenRep(lemma);
+        form.setWrittenRepUndLang(lemma);
         final Etymology etymology = new Etymology();
         etymology.setId(iri+"-etymology");
         entry.getEtymology().add(etymology);
@@ -133,7 +134,8 @@ public class LexiconWithThreeEntries {
                         .add(persist(entryC))
                                 .add(persist(entryA))
                                         .add(persist(entryB))
-                                                .persist(lexicon).execute(entityManager);
+                                                .persist(lexicon)
+                                                    .execute(entityManager);
     }
 
     private PersistenceTestUtils persist(final LexicalEntry e){
@@ -179,7 +181,7 @@ public class LexiconWithThreeEntries {
             final Form etymonForm = new Form();
             etymonForm.setId("http://www.example.org/latinForm"+i);
             etymonForm.setLabel(component);
-            etymonForm.setWrittenRep(componentsNormalized[i]);
+            etymonForm.setWrittenRep(new MultilingualString().set(componentsNormalized[i]));
             linkA.getEtySubSource().add(etymonForm);
             res[i++]=etymonForm;
         }

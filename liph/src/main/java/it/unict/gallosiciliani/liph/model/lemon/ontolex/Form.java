@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.liph.model.lemon.ontolex;
 
+import cz.cvut.kbss.jopa.model.MultilingualString;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLDataProperty;
 import it.unict.gallosiciliani.liph.model.LexicalObject;
@@ -16,5 +17,5 @@ import lombok.EqualsAndHashCode;
 public class Form extends LexicalObject {
 
     @OWLDataProperty(iri=Ontolex.WRITTEN_REP_DATA_PROPERTY)
-    String writtenRep;
+    MultilingualString writtenRep;
 }

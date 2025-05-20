@@ -170,6 +170,7 @@ public class PersistenceTestUtils {
         entityManager.getTransaction().begin();
         for(final Action action : actions)
             action.execute(entityManager);
+        entityManager.flush();
         entityManager.getTransaction().commit();
     }
 }

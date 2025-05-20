@@ -168,7 +168,7 @@ public class CSVLexiconConverterTest {
     }
 
     private void checkImportedEntry(final ExpectedEntry expected, final LexicalEntry actual){
-        assertEquals(expected.getLemma(), actual.getCanonicalForm().getWrittenRep());
+        assertEquals(expected.getLemma(), actual.getCanonicalForm().getWrittenRep().get());
         assertEquals(expected.getPartOfSpeech() , actual.getPartOfSpeech().getId());
 
         final Set<Etymology> etimologies = actual.getEtymology();
@@ -189,14 +189,14 @@ public class CSVLexiconConverterTest {
      * @param actualEtyLink the link in the etymology to be checked
      */
     private void checkLatinEtyms(final ExpectedLatinEtym[] expected, final EtyLink actualEtyLink){
-        final TreeSet<Form> actualFormsSorted = new TreeSet<>(Comparator.comparing(Form::getWrittenRep));
+        final TreeSet<Form> actualFormsSorted = new TreeSet<>(Comparator.comparing((f)-> f.getWrittenRep().get()));
         actualFormsSorted.addAll(actualEtyLink.getEtySubSource());
         final Iterator<Form> actualFormsIt = actualFormsSorted.iterator();
         for(final ExpectedLatinEtym expectedEtym : expected){
             assertTrue(actualFormsIt.hasNext(), "Too less latin etyms. "+expectedEtym.getWrittenRep()+" not found.");
             final Form actualEtym = actualFormsIt.next();
             assertEquals(expectedEtym.getLabel(), actualEtym.getLabel());
-            assertEquals(expectedEtym.getWrittenRep(), actualEtym.getWrittenRep());
+            assertEquals(expectedEtym.getWrittenRep(), actualEtym.getWrittenRep().get());
             assertEquals(expectedEtym.getSeeAlso(), actualEtym.getSeeAlso());
         }
         assertFalse(actualFormsIt.hasNext());

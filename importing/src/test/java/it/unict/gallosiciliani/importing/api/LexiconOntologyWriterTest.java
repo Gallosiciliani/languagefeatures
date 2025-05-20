@@ -101,7 +101,7 @@ public class LexiconOntologyWriterTest {
     void shouldStoreEntryCanonicalForm(){
         final Form f=new Form();
         f.setId("http://test.org/form");
-        f.setWrittenRep("written rep");
+        f.setWrittenRepUndLang("written rep");
         entry.setCanonicalForm(f);
         write(entry, inMemoryEntityManagerFactory);
 

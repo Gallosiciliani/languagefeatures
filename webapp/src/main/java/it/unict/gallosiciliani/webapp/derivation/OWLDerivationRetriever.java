@@ -54,7 +54,7 @@ public class OWLDerivationRetriever {
      */
     private DerivationPathNode retrieveDerivation(final Form etymon, final String destinationIRI){
         if (destinationIRI.equals(etymon.getId()))
-            return new DerivationPathNodeImpl(etymon.getWrittenRep());
+            return new DerivationPathNodeImpl(etymon.getWrittenRep().get());
         // etymon --...-> x -- p -> derivedForm --...-> lemma
         final Query q=entityManager.createNativeQuery("SELECT ?x ?r ?p WHERE {\n"+
                 "\t<"+etymon.getId()+"> <"+ LinguisticPhenomena.DERIVES_OBJ_PROPERTY+"> ?x .\n"+

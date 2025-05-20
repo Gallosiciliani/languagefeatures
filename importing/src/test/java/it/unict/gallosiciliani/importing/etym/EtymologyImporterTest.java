@@ -53,7 +53,7 @@ public class EtymologyImporterTest {
     EtymologyImporterTest(){
         lemmaEntry.setId("http://test.org/lemmaEntry");
         lemmaEntry.setCanonicalForm(lemmaForm);
-        when(etymonProvider.apply(etymonForm.getWrittenRep())).thenReturn(etymonForm);
+        when(etymonProvider.apply(etymonForm.getWrittenRep().get())).thenReturn(etymonForm);
         final EtymologyIRIProvider etymIriProvider=mock(EtymologyIRIProvider.class);
         final LexicalEntryIRIProvider entryIRIProvider=mock(LexicalEntryIRIProvider.class);
         when(etymIriProvider.getEtymolgyIRI()).thenReturn(NS+"etymology");
@@ -70,7 +70,7 @@ public class EtymologyImporterTest {
     private Form createForm(final String id){
         final Form f=new Form();
         f.setId(NS+id);
-        f.setWrittenRep("written rep for "+id);
+        f.setWrittenRepUndLang("written rep for "+id);
         return f;
 
     }
@@ -85,9 +85,9 @@ public class EtymologyImporterTest {
     @Test
     void shouldImportDerivationAsEtymology(){
         final String intermediateFormWrittenRep = "written rep for intermediate form";
-        final DerivationPathNode derivation=new DerivationPathNodeImpl(lemmaForm.getWrittenRep(), p,
+        final DerivationPathNode derivation=new DerivationPathNodeImpl(lemmaForm.getWrittenRep().get(), p,
                 new DerivationPathNodeImpl(intermediateFormWrittenRep, q ,
-                        new DerivationPathNodeImpl(etymonForm.getWrittenRep())));
+                        new DerivationPathNodeImpl(etymonForm.getWrittenRep().get())));
         try(final EntityManagerFactoryHelper emf=new InMemoryEntityManagerFactoryHelper();
             final EntityManager em=emf.createEntityManager()){
             em.getTransaction().begin();
@@ -140,8 +140,8 @@ public class EtymologyImporterTest {
 
     @Test
     void shouldImportEmptyDerivation(){
-        final DerivationPathNode emptyDerivation=new DerivationPathNodeImpl(lemmaForm.getWrittenRep());
-        when(etymonProvider.apply(lemmaForm.getWrittenRep())).thenReturn(etymonForm);
+        final DerivationPathNode emptyDerivation=new DerivationPathNodeImpl(lemmaForm.getWrittenRep().get());
+        when(etymonProvider.apply(lemmaForm.getWrittenRep().get())).thenReturn(etymonForm);
 
         try(final EntityManagerFactoryHelper emf=new InMemoryEntityManagerFactoryHelper();
             final EntityManager em=emf.createEntityManager()){

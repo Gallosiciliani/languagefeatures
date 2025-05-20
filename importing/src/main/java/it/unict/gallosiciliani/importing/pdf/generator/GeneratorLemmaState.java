@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.importing.pdf.generator;
 
+import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.importing.iri.LexicalEntryIRIProvider;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
@@ -46,7 +47,7 @@ class GeneratorLemmaState extends GeneratorState{
                 e.setPartOfSpeech(partOfSpeechIndividual);
                 e.setCanonicalForm(new Form());
                 e.getCanonicalForm().setId(iris.getCanonicalFormIRI());
-                e.getCanonicalForm().setWrittenRep(lemma);
+                e.getCanonicalForm().setWrittenRep(new MultilingualString().set(lemma));
                 createdEntries.add(e);
                 params.getConsumer().accept(e);
             }

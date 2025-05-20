@@ -87,7 +87,7 @@ public class LexicaService {
                         selectByPOSPattern + selectByFeatureTypePattern +
                         "?x <"+ Ontolex.CANONICAL_FORM_OBJ_PROPERTY+"> ?f ."+
                         "?f <"+Ontolex.WRITTEN_REP_DATA_PROPERTY+"> ?r . "+
-                        "FILTER regex(?r, \""+getRegexLemmaFilter(selector.getPage())+"\", \"i\") }"+
+                        "FILTER regex(str(?r), \""+getRegexLemmaFilter(selector.getPage())+"\", \"i\") }"+
                         "ORDER BY ?r",
                 LexicalEntry.class);
         query.setParameter("lexicon", persistedLexicon);

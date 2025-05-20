@@ -1,6 +1,5 @@
 package it.unict.gallosiciliani.liph;
 
-import openllet.jena.PelletReasoner;
 import openllet.jena.PelletReasonerFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
@@ -15,6 +14,8 @@ import java.io.IOException;
 public class TestReasonerFactory implements ReasonerFactory {
 
     public static final TestReasonerFactory INSTANCE=new TestReasonerFactory();
+    //private static ReasonerFactory delegate=OWLFBRuleReasonerFactory.theInstance();
+    private static PelletReasonerFactory delegate=PelletReasonerFactory.theInstance();
     private final Model liphModel;
 
     TestReasonerFactory(){
@@ -35,13 +36,12 @@ public class TestReasonerFactory implements ReasonerFactory {
 
     @Override
     public Reasoner create(Resource resource) {
-        final PelletReasoner r=PelletReasonerFactory.theInstance().create(resource);
-        return r.bindFixedSchema(liphModel);
+        return delegate.create(resource).bindFixedSchema(liphModel);
     }
 
     @Override
     public Model getCapabilities() {
-        return PelletReasonerFactory.theInstance().getCapabilities();
+        return delegate.getCapabilities();
     }
 
     @Override

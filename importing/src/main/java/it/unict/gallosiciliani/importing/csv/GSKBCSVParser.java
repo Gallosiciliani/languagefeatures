@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.importing.csv;
 
+import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.importing.iri.EtymologyIRIProvider;
 import it.unict.gallosiciliani.importing.iri.IRIProvider;
 import it.unict.gallosiciliani.importing.iri.LexicalEntryIRIProvider;
@@ -98,7 +99,7 @@ class GSKBCSVParser implements Consumer<CSVRecord> {
             log.error("Empty lemma found at line {}", totalRows);
             return;
         }
-        novelEntry.getCanonicalForm().setWrittenRep(lemma);
+        novelEntry.getCanonicalForm().setWrittenRep(new MultilingualString().set(lemma));
         novelEntry.getCanonicalForm().setId(entryIRIs.getCanonicalFormIRI());
         novelEntry.setPartOfSpeech(getPartOfSpeech(row.get(headers.getPartOfSpeechCol())));
         final Etymology etymology = parseLatinEtymology(row, novelEntry, entryIRIs.getEtymologyIRIs());

@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.importing.etym;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
+import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.importing.iri.EtymologyIRIProvider;
 import it.unict.gallosiciliani.importing.iri.IRIProvider;
@@ -57,7 +58,7 @@ class EtymologyDerivationImporter {
         o.setSource(importDerivation(n.prev(), (sourceWrittenRep)->{
             final LexicalObject intermediateForm=new LexicalObject();
             intermediateForm.setId(iris.getIntermediateFormIRI());
-            intermediateForm.setWrittenRep(sourceWrittenRep);
+            intermediateForm.setWrittenRep(new MultilingualString().set(sourceWrittenRep));
             entityManager.persist(intermediateForm);
             return intermediateForm;
         }));
@@ -100,7 +101,7 @@ class EtymologyDerivationImporter {
         }
         final LexicalObject intermediateForm=new LexicalObject();
         intermediateForm.setId(iris.getIntermediateFormIRI());
-        intermediateForm.setWrittenRep(n.get());
+        intermediateForm.setWrittenRep(new MultilingualString().set(n.get()));
         entityManager.persist(intermediateForm);
         importDerivation(intermediateForm, n.prev());
         return intermediateForm;
