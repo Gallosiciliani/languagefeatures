@@ -17,7 +17,7 @@ public class CachingLatinFormProviderTest {
         final URI expectedSeeAlso = URI.create("http://test.org/lemmas/habitu");
         final Form actual = latinFormProvider.getLatinForm(latinLemma, expectedIRI);
         assertEquals(expectedIRI, actual.getId());
-        assertEquals(latinLemma, actual.getWrittenRep());
+        assertEquals(latinLemma, actual.getWrittenRep().get());
         assertEquals(expectedSeeAlso, actual.getSeeAlso());
     }
 

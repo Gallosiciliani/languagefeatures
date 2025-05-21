@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.importing.etym;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.MultilingualString;
+import cz.cvut.kbss.jopa.model.query.TypedQuery;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.importing.iri.EtymologyIRIProvider;
 import it.unict.gallosiciliani.importing.iri.IRIProvider;
@@ -38,8 +39,9 @@ class EtymologyDerivationImporter {
     }
 
     void importDerivation(final DerivationPathNode n){
-        lemmaEntry=entityManager.createNativeQuery("SELECT ?x WHERE {?x <"+ Ontolex.CANONICAL_FORM_OBJ_PROPERTY+"> ?f . "+
-                "?f <"+Ontolex.WRITTEN_REP_DATA_PROPERTY+"> \""+n.get()+"\"}", LexicalEntry.class).getSingleResult();
+        final TypedQuery<LexicalEntry> query=entityManager.createNativeQuery("SELECT ?x WHERE {?x <"+ Ontolex.CANONICAL_FORM_OBJ_PROPERTY+"> ?f . "+
+                "?f <"+Ontolex.WRITTEN_REP_DATA_PROPERTY+"> ?w . FILTER (STR(?w)=\""+n.get()+"\") }", LexicalEntry.class);
+        lemmaEntry=query.getSingleResult();
         etymologyIRIProvider=iriProvider.getLexicalEntryIRIs(lemmaEntry).getEtymologyIRIs();
         importDerivation(n, (writtenRep)-> lemmaEntry.getCanonicalForm());
     }
@@ -58,7 +60,7 @@ class EtymologyDerivationImporter {
         o.setSource(importDerivation(n.prev(), (sourceWrittenRep)->{
             final LexicalObject intermediateForm=new LexicalObject();
             intermediateForm.setId(iris.getIntermediateFormIRI());
-            intermediateForm.setWrittenRep(new MultilingualString().set(sourceWrittenRep));
+            intermediateForm.setWrittenRepUndLang(sourceWrittenRep);
             entityManager.persist(intermediateForm);
             return intermediateForm;
         }));

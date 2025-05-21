@@ -106,7 +106,7 @@ public class LexicalEntryConsumerTestUtils {
         final String expectedIri=ns+"entry"+(generatedEntries++);
         assertEquals(expectedIri, actual.getId());
         assertEquals(expectedIri + "-canonicalForm", actual.getCanonicalForm().getId());
-        assertEquals(expectedLemma, actual.getCanonicalForm().getWrittenRep());
+        assertEquals(expectedLemma, actual.getCanonicalForm().getWrittenRep().get());
     }
 
     /**

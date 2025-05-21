@@ -123,7 +123,7 @@ public class EtymologyImporterTest {
             assertEquals(lemmaForm.getId(), actualOP.getTarget().getId());
             assertEquals(p.getId(), actualOP.getOccurrenceOf().getId());
             assertEquals(occurrenceIRIProviderP.getIntermediateFormIRI(), actualOP.getSource().getId());
-            assertEquals(intermediateFormWrittenRep, actualOP.getSource().getWrittenRep());
+            assertEquals(intermediateFormWrittenRep, actualOP.getSource().getWrittenRep().get());
 
             final LinguisticPhenomenonOccurrence actualOQ=actualOccurrencesIt.next();
             assertEquals(occurrenceIRIProviderQ.getOccurrenceIRI(), actualOQ.getId());

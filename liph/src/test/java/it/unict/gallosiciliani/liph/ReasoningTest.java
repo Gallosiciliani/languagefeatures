@@ -13,6 +13,7 @@ import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
 import it.unict.gallosiciliani.liph.model.LexicalObject;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
@@ -100,14 +101,16 @@ public class ReasoningTest{
 
         assertDerives(x,y);
     }
+
+    @Disabled // see github.com/Gallosiciliani/openllet-jena5/issues/2
     @Test
     void testPhenomenonOccurrenceRoleChainAndTransitivity(){
-        x.setDerives(Set.of(y));
+//        x.setDerives(Set.of(y));
         entityManager.getTransaction().begin();
         entityManager.persist(z);
         entityManager.persist(y);
         entityManager.persist(x);
-//        entityManager.persist(x2y);
+        entityManager.persist(x2y);
         entityManager.persist(y2z);
         entityManager.getTransaction().commit();
 
@@ -115,5 +118,4 @@ public class ReasoningTest{
         assertDerives(y,z);
         assertDerives(x,z);
     }
-
 }
