@@ -19,6 +19,7 @@ import java.util.Set;
 public class LexicalObject extends Thing {
 
     public static final String UNDETERMINED_LANGUAGE_TAG="und";
+    public static final String UNCODED_LANGUAGE_TAG="mis";
 
     @OWLDataProperty(iri=LinguisticPhenomena.WRITTEN_REP_DATA_PROPERTY)
     MultilingualString writtenRep;

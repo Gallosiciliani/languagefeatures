@@ -8,9 +8,9 @@ import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.LexicalObject;
 
+import java.util.HashSet;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Entities for test purposes
@@ -74,13 +74,26 @@ public class TestUtil {
         return p;
     }
 
+    /**
+     * Create a Linguistic Phenomenon occurrence in OWL
+     * @param p the linguistic phenomenon
+     * @param source the occurrence source
+     * @param target the occurrence target
+     * @param addDerivesExplicitiy if true, the derives edge between source and target is added explicitly (it should be inferred)
+     * @return the occurrence
+     */
     public LinguisticPhenomenonOccurrence createPhenomenonOccurrence(final LinguisticPhenomenon p, final LexicalObject source,
-                                                                     final LexicalObject target){
+                                                                     final LexicalObject target, boolean addDerivesExplicitiy){
         final LinguisticPhenomenonOccurrence o=new LinguisticPhenomenonOccurrence();
         o.setId("http://test.org/occurrence"+(n++));
         o.setOccurrenceOf(p);
         o.setSource(source);
         o.setTarget(target);
+        if (addDerivesExplicitiy){
+            if (source.getDerives()==null)
+                source.setDerives(new HashSet<>());
+            source.getDerives().add(target);
+        }
         return o;
     }
 }

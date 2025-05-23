@@ -19,19 +19,15 @@ import static org.mockito.Mockito.*;
 public class LexicalEntriesGeneratorTest {
     private static final String NS = "http://gallosiciliani.unict.it/test#";
 
-    //private final Consumer<LexicalEntry> lec;
     private final LexicalEntryConsumerTestUtils utils;
     private final LexicalEntriesGenerator pdc;
-    //private final InOrder o;
     private final Runnable sendNounWithIgnored;
     private final Runnable sendVerbWithIgnored;
 
 
     LexicalEntriesGeneratorTest(){
-        //lec=Mockito.mock(LexicalEntryConsumer.class);
         final POSIndividualProvider p = new POSIndividualProvider();
         utils=new LexicalEntryConsumerTestUtils(NS,p);
-        //o=inOrder(lec);
         pdc=new LexicalEntriesGenerator(utils.getLec(), NS, p);
         sendNounWithIgnored=sendWithIgnored(pdc, POS.NOUN);
         sendVerbWithIgnored=sendWithIgnored(pdc, POS.VERB);

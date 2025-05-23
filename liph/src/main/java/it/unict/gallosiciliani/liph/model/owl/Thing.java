@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -22,6 +23,8 @@ import java.util.TreeSet;
 public class Thing
     implements Serializable
 {
+
+    public static final Comparator<Thing> COMPARATOR_BY_IRI=(o, t)->{return o.id.compareTo(t.id);};
 
     @Id(generated = true)
     protected String id;

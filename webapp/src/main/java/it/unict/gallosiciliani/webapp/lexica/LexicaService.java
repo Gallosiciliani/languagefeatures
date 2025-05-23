@@ -4,7 +4,6 @@ import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
 import cz.cvut.kbss.jopa.vocabulary.RDF;
 import cz.cvut.kbss.jopa.vocabulary.RDFS;
-import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lime;
@@ -14,13 +13,13 @@ import it.unict.gallosiciliani.liph.model.lemon.ontolex.Ontolex;
 import it.unict.gallosiciliani.liph.model.lemonety.LemonEty;
 import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
+import it.unict.gallosiciliani.webapp.derivation.DerivationChainRetriever;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Provide access to the lexica in the knowledge base
@@ -120,19 +119,7 @@ public class LexicaService {
      * @return a list of {@link LinguisticPhenomenonOccurrence} such that the source of each item is the target of the preceding one.
      */
     public List<LinguisticPhenomenonOccurrence> getDerivationChain(final Form lemma, final Form etymon){
-        final TypedQuery<LinguisticPhenomenonOccurrence> query=entityManager.createNativeQuery("SELECT ?o WHERE {\n"+
-                "\t?o <"+ LinguisticPhenomena.SOURCE_OBJ_PROPERTY+"> ?etymon ;\n"+
-                "\t\t <"+ LinguisticPhenomena.TARGET_OBJ_PROPERTY+"> ?y .\n"+
-                "}", LinguisticPhenomenonOccurrence.class);
-//            final TypedQuery<LinguisticPhenomenonOccurrence> query=entityManager.createNativeQuery("SELECT ?o WHERE {\n"+
-//                    "\t?etymon <"+ LinguisticPhenomena.DERIVES_OBJ_PROPERTY+"> ?x .\n"+
-//                    "\t?o <"+ LinguisticPhenomena.SOURCE_OBJ_PROPERTY+"> ?x ;\n"+
-//                    "\t\t <"+ LinguisticPhenomena.TARGET_OBJ_PROPERTY+"> ?y .\n"+
-//                    "\t?y <"+ LinguisticPhenomena.DERIVES_OBJ_PROPERTY+"> ?lemma "
-//                    +"}", LinguisticPhenomenonOccurrence.class);
-        query.setParameter("etymon", etymon);
-        //query.setParameter("lemma", lemma);
-        return query.getResultList();
+        final DerivationChainRetriever r=new DerivationChainRetriever(lemma, etymon, entityManager);
+        return r.getOccurrencesSorted();
     }
-
 }
