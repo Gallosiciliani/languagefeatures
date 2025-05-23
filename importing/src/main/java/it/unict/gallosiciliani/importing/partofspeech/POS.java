@@ -14,7 +14,7 @@ public enum POS {
 
 
     /**
-     * Create a POS from a POS string (see {@link it.unict.gallosiciliani.importing.pdf.parser.ParsingDataConsumer})
+     * Create a POS from a POS string (see {@link it.unict.gallosiciliani.pdfimporter.parser.ParsingDataConsumer})
      * @param posString a POS string
      * @return the corresponding POS
      */

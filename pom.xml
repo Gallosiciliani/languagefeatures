@@ -21,6 +21,8 @@
         <module>sicilian</module>
         <module>importing</module>
         <module>webapp</module>
+        <module>pdfimporter</module>
+        <module>csvimporter</module>
     </modules>
 
     <dependencyManagement>
