@@ -27,4 +27,7 @@ public class Lexicon extends Thing implements Serializable {
 
     @OWLObjectProperty(iri=Lime.LINGUISTIC_CATALOG_OBJ_PROPERTY)
     private String linguisticCatalog;
+
+    @OWLDataProperty(iri=Lime.LANGUAGE_DATA_PROPERTY)
+    private String language;
 }

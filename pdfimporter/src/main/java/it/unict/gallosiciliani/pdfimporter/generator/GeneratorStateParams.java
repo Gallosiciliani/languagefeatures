@@ -32,4 +32,10 @@ interface GeneratorStateParams{
      * @return a duplicates handler
      */
     WellKnownDuplicatesHandler getDuplicatesHandler();
+
+    /**
+     * Language tag for written representation
+     * @return language tag
+     */
+    String getLang();
 }

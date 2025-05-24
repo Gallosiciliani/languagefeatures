@@ -25,7 +25,7 @@ public class OntologyBuilder implements LexiconConverter, AutoCloseable {
         final POSIndividualProvider posProvider = new POSIndividualProvider();
         final IRIProvider iris=new SequentialIRIProvider(namespace);
         writer = new LexiconOntologyWriter(em, posProvider);
-        delegate=lexiconConverterFactory.build(writer, iris, posProvider);
+        delegate=lexiconConverterFactory.build(writer, iris, posProvider, writer.getLexiconLanguage());
     }
 
 

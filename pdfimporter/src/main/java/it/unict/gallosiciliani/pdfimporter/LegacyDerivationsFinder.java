@@ -71,7 +71,7 @@ public class LegacyDerivationsFinder {
                 else emptyDerivations.add(new NearestShortestDerivation(form.getWrittenRep().get()));
                 out.println(form.getWrittenRep());
             };
-            final LexicalEntriesGenerator generator = new LexicalEntriesGenerator(consumer, "http://localhost/nicosiasperlinga#", new POSIndividualProvider());
+            final LexicalEntriesGenerator generator = new LexicalEntriesGenerator(consumer, "http://localhost/nicosiasperlinga#", new POSIndividualProvider(), "mis");
             try(final Parser parser = new Parser(generator, pdfFilePath)) {
                 for(int i=startPage; i<=endPage; i++)
                     parser.parsePage(i);

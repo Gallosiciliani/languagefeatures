@@ -22,7 +22,7 @@ import java.util.function.Consumer;
  */
 public class CSVLexiconConverter implements LexiconConverter {
 
-    public static final LexiconConverterFactory FACTORY= CSVLexiconConverter::new;
+    public static final LexiconConverterFactory FACTORY= (consumer1, iris1, posProvider1, lemmaLang) -> new CSVLexiconConverter(consumer1, iris1, posProvider1);
 
     private final Consumer<LexicalEntry> consumer;
     private final LatinFormProvider latinFormProvider;

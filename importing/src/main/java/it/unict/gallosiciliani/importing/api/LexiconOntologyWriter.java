@@ -47,6 +47,9 @@ public class LexiconOntologyWriter implements Consumer<LexicalEntry> {
         entityManager.getTransaction().commit();
     }
 
+    public String getLexiconLanguage(){
+        return lexicon.getLanguage();
+    }
     @Override
     public void accept(final LexicalEntry lexicalEntry) {
         for(final Form f: getAllForms(lexicalEntry))

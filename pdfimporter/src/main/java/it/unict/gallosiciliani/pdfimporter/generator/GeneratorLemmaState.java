@@ -47,7 +47,7 @@ class GeneratorLemmaState extends GeneratorState{
                 e.setPartOfSpeech(partOfSpeechIndividual);
                 e.setCanonicalForm(new Form());
                 e.getCanonicalForm().setId(iris.getCanonicalFormIRI());
-                e.getCanonicalForm().setWrittenRep(new MultilingualString().set(lemma));
+                e.getCanonicalForm().setWrittenRep(new MultilingualString().set(params.getLang(), lemma));
                 createdEntries.add(e);
                 params.getConsumer().accept(e);
             }

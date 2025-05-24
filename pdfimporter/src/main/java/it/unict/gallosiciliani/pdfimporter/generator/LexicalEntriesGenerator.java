@@ -22,7 +22,7 @@ public class LexicalEntriesGenerator implements ParsingDataConsumer{
     private GeneratorState currentState;
 
     public LexicalEntriesGenerator(final Consumer<LexicalEntry> consumer, final IRIProvider iris,
-                                   final POSIndividualProvider posIndividualProvider){
+                                   final POSIndividualProvider posIndividualProvider, final String lemmaLang){
         final WellKnownDuplicatesHandler duplicatesHandler=new WellKnownDuplicatesHandler();
         currentState=new GeneratorInitialState(new GeneratorStateParams() {
             @Override
@@ -44,12 +44,17 @@ public class LexicalEntriesGenerator implements ParsingDataConsumer{
             public WellKnownDuplicatesHandler getDuplicatesHandler() {
                 return duplicatesHandler;
             }
+
+            @Override
+            public String getLang() {
+                return lemmaLang;
+            }
         });
     }
 
     public LexicalEntriesGenerator(final Consumer<LexicalEntry> consumer, final String namespace,
-                                   final POSIndividualProvider posIndividualProvider){
-        this(consumer, new SequentialIRIProvider(namespace), posIndividualProvider);
+                                   final POSIndividualProvider posIndividualProvider, String lemmaLang){
+        this(consumer, new SequentialIRIProvider(namespace), posIndividualProvider, lemmaLang);
     }
 
     @Override

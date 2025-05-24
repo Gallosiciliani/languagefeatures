@@ -27,8 +27,8 @@ public class LexicalEntriesGeneratorTest {
 
     LexicalEntriesGeneratorTest(){
         final POSIndividualProvider p = new POSIndividualProvider();
-        utils=new LexicalEntryConsumerTestUtils(NS,p);
-        pdc=new LexicalEntriesGenerator(utils.getLec(), NS, p);
+        utils=new LexicalEntryConsumerTestUtils(NS,p, "expectedlang");
+        pdc=new LexicalEntriesGenerator(utils.getLec(), NS, p, "expectedlang");
         sendNounWithIgnored=sendWithIgnored(pdc, POS.NOUN);
         sendVerbWithIgnored=sendWithIgnored(pdc, POS.VERB);
     }

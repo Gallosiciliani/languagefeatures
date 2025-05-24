@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.pdfimporter;
 
+import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.importing.iri.IRIProvider;
 import it.unict.gallosiciliani.importing.iri.SequentialIRIProvider;
 import it.unict.gallosiciliani.importing.partofspeech.POS;
@@ -13,6 +14,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -58,21 +60,25 @@ public class LexicalEntryConsumerTestUtils {
     @Getter
     private final Consumer<LexicalEntry> lec;
     private final InOrder o;
+    @Getter
+    private final String expectedLemmaLang;
     //number of received entries
     private int generatedEntries=0;
 
 
     /**
-     *
-     * @param ns expected namespace for accepted entries
-     * @param posProvider expected Part of Speech individuals
+     * @param ns                expected namespace for accepted entries
+     * @param posProvider       expected Part of Speech individuals
+     * @param expectedLemmaLang expected value for the language tag of written representations
      */
-    public LexicalEntryConsumerTestUtils(final String ns, final POSIndividualProvider posProvider){
+    public LexicalEntryConsumerTestUtils(final String ns, final POSIndividualProvider posProvider,
+                                         final String expectedLemmaLang){
         lec= Mockito.mock(LexicalEntryConsumer.class);
         o= Mockito.inOrder(lec);
         this.ns=ns;
         this.posProvider=posProvider;
         this.expectedIRIProvider=new SequentialIRIProvider(ns);
+        this.expectedLemmaLang=expectedLemmaLang;
     }
 
     public void assertAcceptedEntries(final Expected...expected){
@@ -106,7 +112,10 @@ public class LexicalEntryConsumerTestUtils {
         final String expectedIri=ns+"entry"+(generatedEntries++);
         Assertions.assertEquals(expectedIri, actual.getId());
         Assertions.assertEquals(expectedIri + "-canonicalForm", actual.getCanonicalForm().getId());
-        Assertions.assertEquals(expectedLemma, actual.getCanonicalForm().getWrittenRep().get());
+        final MultilingualString writtenRep=actual.getCanonicalForm().getWrittenRep();
+        Assertions.assertEquals(Collections.singleton(expectedLemmaLang), writtenRep.getLanguages());
+        Assertions.assertEquals(expectedLemma, writtenRep.get());
+        Assertions.assertEquals(expectedLemma, writtenRep.get(expectedLemmaLang));
     }
 
     /**
