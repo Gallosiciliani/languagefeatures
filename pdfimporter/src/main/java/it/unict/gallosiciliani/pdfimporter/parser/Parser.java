@@ -42,7 +42,7 @@ public class Parser implements AutoCloseable{
      * @throws IOException if an error occurs reading the document
      */
     public void parsePage(final int pageNum) throws IOException {
-        log.info("Parsing page {} of {}", pageNum, pdf.getDocumentInformation().getTitle());
+        log.info("Parsing page {}", pageNum);
         final UnderlinedZDetector underlines=new UnderlinedZDetector((pdf.getPage(pageNum-1)));
         underlines.processPage();
         tokenizer.setUnderlines(underlines);

@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.derivations;
 
+import it.unict.gallosiciliani.derivations.strategy.DerivationBuilderWithStrategy;
 import it.unict.gallosiciliani.derivations.strategy.DerivationStrategy;
 import it.unict.gallosiciliani.derivations.strategy.DerivationStrategyFactory;
 import org.junit.jupiter.api.Test;

@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.pdfimporter;
 
 import it.unict.gallosiciliani.derivations.*;
 import it.unict.gallosiciliani.derivations.strategy.CompoundDerivationStrategyFactory;
+import it.unict.gallosiciliani.derivations.strategy.DerivationBuilderWithStrategy;
 import it.unict.gallosiciliani.derivations.strategy.NearestStrategySelector;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.pdfimporter.generator.LexicalEntriesGenerator;

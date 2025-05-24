@@ -1,7 +1,8 @@
-package it.unict.gallosiciliani.derivations;
+package it.unict.gallosiciliani.derivations.strategy;
 
-import it.unict.gallosiciliani.derivations.strategy.DerivationStrategy;
-import it.unict.gallosiciliani.derivations.strategy.DerivationStrategyFactory;
+import it.unict.gallosiciliani.derivations.DerivationBuilder;
+import it.unict.gallosiciliani.derivations.DerivationPathNode;
+import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * by applying a set of {@link it.unict.gallosiciliani.liph.LinguisticPhenomena}
  */
 @Slf4j
-public class DerivationBuilderWithStrategy implements  DerivationBuilder{
+public class DerivationBuilderWithStrategy implements DerivationBuilder {
     private final List<? extends LinguisticPhenomenon> phenomena;
     private final DerivationStrategyFactory strategyFactory;
 

@@ -9,13 +9,30 @@
         <version>2.1.0</version>
     </parent>
 
-    <artifactId>csvimporter</artifactId>
-    <name>CSVImporter</name>
+    <artifactId>sicilian-derivationbuilder</artifactId>
+    <name>DerivationBuilder Sicilian</name>
+    <description>Generate derivations from Sicilian etymons.</description>
+
     <dependencies>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
-            <artifactId>importing</artifactId>
+            <artifactId>sicilian</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>it.unict.gallosiciliani</groupId>
+            <artifactId>gs</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>it.unict.gallosiciliani</groupId>
+            <artifactId>derivations</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.17</version>
         </dependency>
     </dependencies>
     <build>
@@ -33,7 +50,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        it.unict.gallosiciliani.csvimporter.it.unict.gallosiciliani.sicilian.derivationbuilder.Main
+                                        it.unict.gallosiciliani.sicilian.derivationbuilder.Main
                                     </mainClass>
                                 </manifest>
                             </archive>

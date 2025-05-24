@@ -1,7 +1,6 @@
 package it.unict.gallosiciliani.derivations.strategy;
 
 import it.unict.gallosiciliani.derivations.DerivationBuilderFactory;
-import it.unict.gallosiciliani.derivations.DerivationBuilderWithStrategyFactory;
 import lombok.Getter;
 
 import java.util.Collection;

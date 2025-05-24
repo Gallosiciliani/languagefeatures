@@ -23,6 +23,7 @@
         <module>webapp</module>
         <module>pdfimporter</module>
         <module>csvimporter</module>
+        <module>sicilian-derivationbuilder</module>
     </modules>
 
     <dependencyManagement>

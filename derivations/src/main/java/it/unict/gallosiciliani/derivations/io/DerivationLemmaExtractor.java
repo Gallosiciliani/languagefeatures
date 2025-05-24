@@ -1,10 +1,7 @@
-package it.unict.gallosiciliani.sicilian;
+package it.unict.gallosiciliani.derivations.io;
 
-import it.unict.gallosiciliani.derivations.TonicVowelAccentExplicitor;
-import it.unict.gallosiciliani.derivations.io.DerivationIOUtil;
-import it.unict.gallosiciliani.derivations.io.DerivationParser;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
-import it.unict.gallosiciliani.gs.GSFeatures;
+import it.unict.gallosiciliani.derivations.TonicVowelAccentExplicitor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -14,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 /**
- * Extract lemmas from derivations produced by {@link SicilianToNicosiaESperlingaDerivations}
+ * Extract lemmas from derivations
  */
 public class DerivationLemmaExtractor {
 
@@ -44,7 +41,7 @@ public class DerivationLemmaExtractor {
     public static void main(final String[] args) throws IOException {
         try(final CSVParser sourceParser=CSVParser.parse(new File(args[0]), StandardCharsets.UTF_8, CSVFormat.DEFAULT);
             final FileWriter out=new FileWriter(args[1])){
-            final DerivationParser parser=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID).getParser((label, locale) -> null);
+            final DerivationParser parser=new DerivationIOUtil((f, l)->f.getLabel()).getParser((label, locale) -> null);
             final DerivationLemmaExtractor extractor=new DerivationLemmaExtractor(parser, Locale.ENGLISH, out);
             for (CSVRecord record : sourceParser) {
                 extractor.handle(record.get(0));

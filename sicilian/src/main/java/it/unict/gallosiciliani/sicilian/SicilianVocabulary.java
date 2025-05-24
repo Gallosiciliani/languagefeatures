@@ -1,6 +1,5 @@
 package it.unict.gallosiciliani.sicilian;
 
-import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
@@ -39,7 +38,7 @@ public class SicilianVocabulary implements Consumer<String>{
      * @param consumer consumer that will receive entries
      */
     public static void visit(final Consumer<String> consumer) throws IOException {
-        final ClassLoader classloader=OntologyLoader.class.getClassLoader();
+        final ClassLoader classloader=SicilianVocabulary.class.getClassLoader();
         try(final InputStream s= Objects.requireNonNull(classloader.getResourceAsStream("VS.txt"));
             final Scanner entriesScanner=new Scanner(s, StandardCharsets.UTF_8)){
             final SicilianVocabulary v=new SicilianVocabulary(consumer);

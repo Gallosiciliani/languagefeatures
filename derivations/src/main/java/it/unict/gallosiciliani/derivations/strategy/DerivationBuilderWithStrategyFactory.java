@@ -1,12 +1,13 @@
-package it.unict.gallosiciliani.derivations;
+package it.unict.gallosiciliani.derivations.strategy;
 
-import it.unict.gallosiciliani.derivations.strategy.CompoundDerivationStrategyFactory;
-import it.unict.gallosiciliani.derivations.strategy.TargetedDerivationStrategySelectorFactory;
+import it.unict.gallosiciliani.derivations.DerivationBuilder;
+import it.unict.gallosiciliani.derivations.DerivationBuilderFactory;
+import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 
 import java.util.List;
 
-public class DerivationBuilderWithStrategyFactory implements DerivationBuilderFactory{
+public class DerivationBuilderWithStrategyFactory implements DerivationBuilderFactory {
     private final TargetedDerivationStrategySelectorFactory selectorFactory;
 
     public DerivationBuilderWithStrategyFactory(final TargetedDerivationStrategySelectorFactory selectorFactory){
