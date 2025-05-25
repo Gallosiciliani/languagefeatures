@@ -4,7 +4,8 @@ import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
 import cz.cvut.kbss.ontodriver.model.LangString;
 import it.unict.gallosiciliani.derivations.BruteForceDerivationBuilder;
-import it.unict.gallosiciliani.derivations.TonicVowelAccentExplicitor;
+import it.unict.gallosiciliani.liph.LinguisticPhenomena;
+import it.unict.gallosiciliani.liph.util.TonicVowelAccentExplicitor;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Ontolex;
 import it.unict.gallosiciliani.liph.util.EntityManagerFactoryHelper;
@@ -79,7 +80,7 @@ public class Main implements Consumer<String> {
      * @throws IOException if unable to write to the output stream
      */
     public int writeNearestShortestDerivations(final Appendable out) throws IOException {
-        return derivationBuilder.write(out, GSFeatures.LABEL_PROVIDER_ID, Locale.ENGLISH);
+        return derivationBuilder.write(out, LinguisticPhenomena.DEFAULT_LABEL_PROVIDER, Locale.ENGLISH);
     }
 
 

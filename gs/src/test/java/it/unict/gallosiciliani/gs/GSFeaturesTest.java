@@ -21,15 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GSFeaturesTest {
 
     @Test
-    void shouldProvideLabelForPhenomena() throws IOException {
-        final Locale locale = Locale.ENGLISH;
-        try(final GSFeatures gs = new GSFeatures()) {
-            for(final LinguisticPhenomenon p : gs.getRegexLinguisticPhenomena())
-                assertNotNull(LABEL_PROVIDER_ID.getLabel(p, locale), "label for " + p + " not found");
-        }
-    }
-
-    @Test
     @Disabled
     void checkRegexConflicts() throws IOException {
         try(final GSFeatures gs = new GSFeatures()) {

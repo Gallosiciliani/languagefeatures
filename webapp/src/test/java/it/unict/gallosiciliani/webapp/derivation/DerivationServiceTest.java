@@ -4,7 +4,6 @@ import it.unict.gallosiciliani.derivations.io.DerivationIOUtil;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
 import it.unict.gallosiciliani.gs.GSFeatures;
-import it.unict.gallosiciliani.webapp.TestUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,8 +25,6 @@ public class DerivationServiceTest {
     @Autowired
     DerivationService derivationService;
 
-    private final TestUtil util=new TestUtil();
-
     @Test
     void shouldReturnNearestShortestDerivations(){
         checkBocheDerivations(derivationService.derives("abbuccàri", "böchè"));
@@ -35,7 +32,7 @@ public class DerivationServiceTest {
 
     private void checkBocheDerivations(final NearestShortestDerivation actual){
         final Iterator<DerivationPathNode> actualIt=actual.getDerivation().iterator();
-        final DerivationIOUtil printer=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID);
+        final DerivationIOUtil printer=new DerivationIOUtil();
         final DerivationPathNode actualDerivation=actualIt.next();
         System.out.println("Derivation 2: "+printer.print(actualDerivation, Locale.ENGLISH));
         printer.print(actualDerivation, Locale.ENGLISH);

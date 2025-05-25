@@ -62,7 +62,7 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
      * @throws IOException if unable to write to the output stream
      */
     public int write(final Appendable out, final LinguisticPhenomenonLabelProvider phenomenonLabelProvider, final Locale locale) throws IOException {
-        final DerivationIOUtil derivationIOUtil =new DerivationIOUtil(phenomenonLabelProvider);
+        final DerivationIOUtil derivationIOUtil=new DerivationIOUtil(phenomenonLabelProvider);
         int n=0;
         try(final CSVPrinter printer=new CSVPrinter(out, CSVFormat.DEFAULT)) {
             for(final ShortestDerivation entry: targets.getDerivations()) {

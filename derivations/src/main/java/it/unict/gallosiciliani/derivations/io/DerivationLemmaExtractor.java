@@ -1,7 +1,7 @@
 package it.unict.gallosiciliani.derivations.io;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
-import it.unict.gallosiciliani.derivations.TonicVowelAccentExplicitor;
+import it.unict.gallosiciliani.liph.util.TonicVowelAccentExplicitor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;

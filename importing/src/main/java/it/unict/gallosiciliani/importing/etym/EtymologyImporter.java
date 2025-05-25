@@ -4,13 +4,12 @@ import cz.cvut.kbss.jopa.model.EntityManager;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.importing.iri.EtymologyIRIProvider;
 import it.unict.gallosiciliani.importing.iri.IRIProvider;
-import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lemonety.EtyLink;
 import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
 
+import java.util.Set;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * Import etymologies for {@link it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry} already in the knowledge
@@ -21,9 +20,11 @@ public class EtymologyImporter implements Consumer<DerivationPathNode> {
     private final EtymologyDerivationImporter derivationImporter;
 
 
-    EtymologyImporter(final EntityManager entityManager, final Function<String,Form> etymonProvider, final IRIProvider iriProvider){
+    EtymologyImporter(final EntityManager entityManager,
+                      final IRIProvider iriProvider,
+                      final String etymonLanguageTag){
         this.entityManager=entityManager;
-        derivationImporter=new EtymologyDerivationImporter(entityManager, iriProvider, etymonProvider);
+        derivationImporter=new EtymologyDerivationImporter(entityManager, iriProvider, etymonLanguageTag);
     }
 
 
@@ -38,9 +39,9 @@ public class EtymologyImporter implements Consumer<DerivationPathNode> {
 
         etymology.setStartingLink(new EtyLink());
         etymology.getStartingLink().setId(etymologyIRIProvider.getEtyLinkIRI());
-        etymology.getStartingLink().setEtySource(entry);
-        etymology.getStartingLink().getEtySubSource().add(entry.getCanonicalForm());
-        etymology.getStartingLink().setEtySubTarget(derivationImporter.getEtymon());
+        etymology.getStartingLink().setEtyTarget(entry);
+        etymology.getStartingLink().setEtySubTarget(entry.getCanonicalForm());
+        etymology.getStartingLink().setEtySubSource(Set.of(derivationImporter.getEtymon()));
 
         entityManager.persist(etymology.getStartingLink());
         entityManager.persist(etymology);

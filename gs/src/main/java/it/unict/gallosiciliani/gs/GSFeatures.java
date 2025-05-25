@@ -1,6 +1,5 @@
 package it.unict.gallosiciliani.gs;
 
-import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.FiniteStatePhenomenaQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
@@ -38,11 +37,6 @@ public class GSFeatures extends OntologyLoader{
             VOCAL_CLASS, AFER_CLASS, ELIM_CLASS, INF_CLASS};
 
     private final List<LinguisticPhenomenon> regexLinguisticPhenomena;
-
-    /**
-     * Provide local identifiers as linguistic phenomena labels
-     */
-    public static final LinguisticPhenomenonLabelProvider LABEL_PROVIDER_ID= (linguisticPhenomenon, locale) -> linguisticPhenomenon.getId().substring(NS.length());
 
     /**
      * Private constructor, use factory methods.

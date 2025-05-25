@@ -23,11 +23,11 @@ public interface EtymologyIRIProvider {
     String getEtyLinkIRI();
 
     /**
-     * Create an IRI for a novel etySource for the first link of the etymology
-     * @return IRI for a novel etySource
+     * Create an IRI for a novel etySubSource for the first link of the etymology
+     * @return IRI for a novel etySubSource
      * TODO consider to remove, the etymon should be already placed in the knowledge base
      */
-    String getEtySourceIRI();
+    String getEtySubSourceIRI();
 
     /**
      * IRIs for {@link it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence} individuals

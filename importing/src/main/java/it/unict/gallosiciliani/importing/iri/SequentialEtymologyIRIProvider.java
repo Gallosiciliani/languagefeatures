@@ -28,8 +28,8 @@ class SequentialEtymologyIRIProvider implements EtymologyIRIProvider {
     }
 
     @Override
-    public String getEtySourceIRI() {
-        return iri+"-source"+(n++);
+    public String getEtySubSourceIRI() {
+        return iri+"-subsource"+(n++);
     }
 
     @Override

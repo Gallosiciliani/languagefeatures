@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.derivations.io;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
+import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonByLabelRetriever;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonLabelProvider;
 
@@ -16,8 +17,19 @@ public class DerivationIOUtil {
     public static final String PHENOMENON_END_MARKER="--";
     private final LinguisticPhenomenonLabelProvider labelProvider;
 
+    /**
+     * Create utilities for derivations using the specified label provider
+     * @param labelProvider provide labels for phenomena
+     */
     public DerivationIOUtil(final LinguisticPhenomenonLabelProvider labelProvider){
         this.labelProvider=labelProvider;
+    }
+
+    /**
+     * Create utilities for derivations using the default label provider
+     */
+    public DerivationIOUtil(){
+        this(LinguisticPhenomena.DEFAULT_LABEL_PROVIDER);
     }
 
     /**

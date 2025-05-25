@@ -21,8 +21,8 @@ import java.util.function.Function;
  */
 class EtymologyDerivationImporter {
     private final EntityManager entityManager;
-    private final Function<String, Form> etymonFormProvider;
     private final IRIProvider iriProvider;
+    private final String etymonLanguageTag;
 
     @Getter
     private LexicalEntry lemmaEntry;
@@ -32,10 +32,23 @@ class EtymologyDerivationImporter {
     private Form etymon;
 
     EtymologyDerivationImporter(final EntityManager entityManager, final IRIProvider iriProvider,
-                                final Function<String, Form> etymonFormProvider){
+                                final String etymonLanguageTag){
         this.entityManager=entityManager;
         this.iriProvider=iriProvider;
-        this.etymonFormProvider=etymonFormProvider;
+        this.etymonLanguageTag=etymonLanguageTag;
+    }
+
+    /**
+     * Create and store the etymon individual
+     * @param writtenRep etymon written representation
+     * @return a {@link Form} individual
+     */
+    private Form createEtymon(final String writtenRep){
+        final Form etymon=new Form();
+        etymon.setId(etymologyIRIProvider.getEtySubSourceIRI());
+        etymon.setWrittenRep(new MultilingualString().set(etymonLanguageTag, writtenRep));
+        entityManager.persist(etymon);
+        return etymon;
     }
 
     void importDerivation(final DerivationPathNode n){
@@ -48,7 +61,7 @@ class EtymologyDerivationImporter {
 
     private LexicalObject importDerivation(final DerivationPathNode n, final Function<String, LexicalObject> targetProvider) {
         if (n.prev()==null){
-            etymon=etymonFormProvider.apply(n.get());
+            etymon=createEtymon(n.get());
             return etymon;
         }
         final PhenomenonOccurrenceIRIProvider iris=etymologyIRIProvider.getLinguisticPhenomenaOccurrencesIRIs();
@@ -75,7 +88,7 @@ class EtymologyDerivationImporter {
      */
     private void importDerivation(final LexicalObject target, final DerivationPathNode n) {
         if (n.prev()==null){
-            etymon=etymonFormProvider.apply(n.get());
+            etymon=createEtymon(n.get());
             return;
         }
         final PhenomenonOccurrenceIRIProvider iris=etymologyIRIProvider.getLinguisticPhenomenaOccurrencesIRIs();
@@ -98,7 +111,7 @@ class EtymologyDerivationImporter {
      */
     private LexicalObject importDerivation(final DerivationPathNode n, final PhenomenonOccurrenceIRIProvider iris) {
         if (n.prev()==null){
-            etymon=etymonFormProvider.apply(n.get());
+            etymon=createEtymon(n.get());
             return etymon;
         }
         final LexicalObject intermediateForm=new LexicalObject();

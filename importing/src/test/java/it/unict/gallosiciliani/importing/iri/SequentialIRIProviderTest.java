@@ -38,8 +38,8 @@ public class SequentialIRIProviderTest {
         final EtymologyIRIProvider e1ety1=entryIRIProvider.getEtymologyIRIs();
         checkProduced(e1ety1.getEtymolgyIRI());
         checkProduced(e1ety1.getEtyLinkIRI());
-        checkProduced(e1ety1.getEtySourceIRI());
-        checkProduced(e1ety1.getEtySourceIRI());
+        checkProduced(e1ety1.getEtySubSourceIRI());
+        checkProduced(e1ety1.getEtySubSourceIRI());
 
         final PhenomenonOccurrenceIRIProvider e1ety1o1=e1ety1.getLinguisticPhenomenaOccurrencesIRIs();
         checkProduced(e1ety1o1.getOccurrenceIRI());
@@ -52,7 +52,7 @@ public class SequentialIRIProviderTest {
         final EtymologyIRIProvider e1ety2=entryIRIProvider.getEtymologyIRIs();
         checkProduced(e1ety2.getEtymolgyIRI());
         checkProduced(e1ety2.getEtyLinkIRI());
-        checkProduced(e1ety2.getEtySourceIRI());
+        checkProduced(e1ety2.getEtySubSourceIRI());
 
         final PhenomenonOccurrenceIRIProvider e1ety2o1=e1ety2.getLinguisticPhenomenaOccurrencesIRIs();
         checkProduced(e1ety2o1.getOccurrenceIRI());

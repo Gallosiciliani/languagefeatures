@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
-            <artifactId>derivations</artifactId>
+            <artifactId>liph</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

@@ -1,4 +1,4 @@
-package it.unict.gallosiciliani.derivations;
+package it.unict.gallosiciliani.liph.util;
 
 import org.junit.jupiter.api.Test;
 

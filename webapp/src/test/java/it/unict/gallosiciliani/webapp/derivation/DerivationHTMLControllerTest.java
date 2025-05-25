@@ -98,7 +98,7 @@ public class DerivationHTMLControllerTest {
     }
 
     private void checkDerivations(final RequestBuilder request) throws Exception {
-        final DerivationIOUtil printer=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID);
+        final DerivationIOUtil printer=new DerivationIOUtil();
         final String d0AsStr=printer.print(d0, locale);
         final String d1AsStr=printer.print(d1, locale);
 
