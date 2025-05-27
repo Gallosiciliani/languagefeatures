@@ -69,8 +69,11 @@ public class GSFeaturesTest {
 //            final List<LinguisticPhenomenon> allRegexFeatures = ont.getRegexLinguisticPhenomena();
             assertFalse(allRegexFeatures.isEmpty());
             for (final LinguisticPhenomenon f : allRegexFeatures)
-                if (iri.equals(f.getId()))
+                if (iri.equals(f.getId())){
+                    final String expectedLabel=f.getId().substring(NS.length());
+                    assertEquals(f.getId(), ont.getByLabel(expectedLabel, null).getId());
                     return f;
+                }
             throw new IllegalArgumentException("Unable to get feature " + iri);
         }
 

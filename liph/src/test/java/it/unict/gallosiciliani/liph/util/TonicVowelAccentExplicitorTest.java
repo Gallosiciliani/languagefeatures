@@ -100,4 +100,9 @@ public class TonicVowelAccentExplicitorTest {
         assertEquals("xaxö̀n", e.addGraveAccent("xaxön"));
         assertEquals("xaxǜn", e.addGraveAccent("xaxün"));
     }
+
+    @Test
+    void shouldNotApplyToPolyrematicExpressions(){
+        assertEquals("polirematic expression", e.addGraveAccent("polirematic expression"));
+    }
 }

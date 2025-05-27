@@ -67,7 +67,7 @@ public class EtymologyImporterTest {
     private Form createLemmaForm(){
         final Form f=new Form();
         f.setId(NS+"lemmaForm");
-        f.setWrittenRepUndLang("written rep for lemma");
+        f.setWrittenRepUndLang("writtenrèp");
         return f;
 
     }
@@ -79,6 +79,16 @@ public class EtymologyImporterTest {
         return p;
     }
 
+    @Test
+    void testLemmaForm(){
+        try(final EntityManagerFactoryHelper emf=new InMemoryEntityManagerFactoryHelper();
+            final EntityManager em=emf.createEntityManager()) {
+            em.getTransaction().begin();
+            em.persist(createLemmaForm());
+            em.getTransaction().commit();
+        }
+
+    }
     @Test
     void shouldImportDerivationAsEtymology(){
         final String etymonWrittenRep="etymon";

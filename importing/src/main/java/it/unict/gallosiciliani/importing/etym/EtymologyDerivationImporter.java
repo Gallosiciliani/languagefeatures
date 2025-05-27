@@ -14,6 +14,8 @@ import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Ontolex;
 import lombok.Getter;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -77,6 +79,12 @@ class EtymologyDerivationImporter {
             entityManager.persist(intermediateForm);
             return intermediateForm;
         }));
+
+        //due to an openellet error, it is necessary to explicitly put this assertion
+        final Set<LexicalObject> derives=new HashSet<>();
+        derives.add(o.getTarget());
+        o.getSource().setDerives(derives);
+
         entityManager.persist(o);
         return o.getTarget();
     }

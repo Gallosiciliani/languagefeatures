@@ -30,12 +30,14 @@ public class TonicVowelAccentExplicitor {
     }
 
     private final Predicate<String> hasAccentedVowel;
+    private final Predicate<String> isPolyrematic;
     private final Pattern endingWithVowelAndNPattern;
     private final Pattern secondToLastVowelPattern;
     private final Pattern thirdToLastVowelPattern;
 
     public TonicVowelAccentExplicitor(){
         hasAccentedVowel=Pattern.compile("[àèìòù]|ä̀|ë̀|ï̀|ö̀|ǜ").asPredicate();
+        isPolyrematic=(s)->s.contains(" ");
         final String atonicVowels="aeiouáéíóúäëïöü";
         endingWithVowelAndNPattern=Pattern.compile("["+atonicVowels+"]n$");
         secondToLastVowelPattern=Pattern.compile("["+atonicVowels+"][^"+atonicVowels+"]*["+atonicVowels+"][^"+atonicVowels+"]*$");
@@ -43,7 +45,7 @@ public class TonicVowelAccentExplicitor {
     }
 
     public String addGraveAccent(final String word){
-        if (hasAccentedVowel.test(word)) return word;
+        if (hasAccentedVowel.test(word) || isPolyrematic.test(word)) return word;
         final Optional<TonicVowel> tonicVowel=findTonicVowel(word);
         if (tonicVowel.isEmpty())
             return word;

@@ -20,7 +20,7 @@ public class EtymologyImporter implements Consumer<DerivationPathNode> {
     private final EtymologyDerivationImporter derivationImporter;
 
 
-    EtymologyImporter(final EntityManager entityManager,
+    public EtymologyImporter(final EntityManager entityManager,
                       final IRIProvider iriProvider,
                       final String etymonLanguageTag){
         this.entityManager=entityManager;

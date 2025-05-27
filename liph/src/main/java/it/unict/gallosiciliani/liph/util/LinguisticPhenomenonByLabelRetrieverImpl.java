@@ -31,6 +31,8 @@ public class LinguisticPhenomenonByLabelRetrieverImpl implements LinguisticPheno
 
     @Override
     public void accept(LinguisticPhenomenon linguisticPhenomenon) {
+        if (linguisticPhenomenon.getLabel()==null)
+            throw new IllegalArgumentException("Linguistic Phenomenon with no label "+linguisticPhenomenon.getId());
         if (lpByLabel.put(linguisticPhenomenon.getLabel(), linguisticPhenomenon)!=null)
             throw new IllegalArgumentException("Duplicate phenomenon with label "+linguisticPhenomenon.getLabel());
     }

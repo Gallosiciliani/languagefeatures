@@ -1,14 +1,17 @@
 package it.unict.gallosiciliani.gs;
 
+import it.unict.gallosiciliani.liph.LinguisticPhenomenonByLabelRetriever;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.FiniteStatePhenomenaQuery;
 import it.unict.gallosiciliani.liph.regex.RegexLinguisticPhenomenaReader;
+import it.unict.gallosiciliani.liph.util.LinguisticPhenomenonByLabelRetrieverImpl;
 import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * An ontology for all the language features defined in the
@@ -17,7 +20,7 @@ import java.util.List;
 
 @Getter
 @Slf4j
-public class GSFeatures extends OntologyLoader{
+public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonByLabelRetriever {
     public static final String IRI = "https://gallosiciliani.unict.it/ns/gs-features";
     public static final String NS = IRI+"#";
     public static final String VERSION = "2.0.0";
@@ -37,6 +40,7 @@ public class GSFeatures extends OntologyLoader{
             VOCAL_CLASS, AFER_CLASS, ELIM_CLASS, INF_CLASS};
 
     private final List<LinguisticPhenomenon> regexLinguisticPhenomena;
+    private final LinguisticPhenomenonByLabelRetriever phenomenonByLabelRetriever;
 
     /**
      * Private constructor, use factory methods.
@@ -45,6 +49,12 @@ public class GSFeatures extends OntologyLoader{
         super("gs-features.ttl");
         final RegexLinguisticPhenomenaReader reader=new RegexLinguisticPhenomenaReader();
         reader.read(getModel(), new FiniteStatePhenomenaQuery());
-        regexLinguisticPhenomena = reader.getFeatures();
+        regexLinguisticPhenomena=reader.getFeatures();
+        phenomenonByLabelRetriever=LinguisticPhenomenonByLabelRetrieverImpl.build(regexLinguisticPhenomena);
+    }
+
+    @Override
+    public LinguisticPhenomenon getByLabel(final String label, final Locale locale) {
+        return phenomenonByLabelRetriever.getByLabel(label, locale);
     }
 }

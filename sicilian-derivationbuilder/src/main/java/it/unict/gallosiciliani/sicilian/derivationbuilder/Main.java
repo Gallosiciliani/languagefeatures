@@ -52,7 +52,7 @@ public class Main implements Consumer<String> {
                     "\t?e <"+ Ontolex.CANONICAL_FORM_OBJ_PROPERTY+"> ?f.\n"+
                     "\t?f <"+Ontolex.WRITTEN_REP_DATA_PROPERTY+"> ?w\n"+
                     "}", LangString.class);
-            return allEntriesQuery.getResultStream().map((s)-> accentExplicitor.addGraveAccent(s.getValue())).toList();
+            return allEntriesQuery.getResultStream().map(LangString::getValue).toList();
         }
     }
 
