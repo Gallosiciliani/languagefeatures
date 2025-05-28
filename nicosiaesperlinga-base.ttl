@@ -6,6 +6,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix liph: <https://gallosiciliani.unict.it/ns/liph#> .
+@prefix gs: <https://gallosiciliani.unict.it/ns/gs-features#> .
 @prefix eurio: <http://data.europa.eu/s66#> .
 @prefix lime: <http://www.w3.org/ns/lemon/lime#> .
 @base <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#> .
@@ -14,7 +15,8 @@
                                                                owl:imports <http://purl.org/ontology/bibo/> ,
                                                                            <http://www.geonames.org/ontology> ,
                                                                            <http://www.w3.org/ns/lemon/lime> ,
-                                                                           <https://gallosiciliani.unict.it/ns/liph>;
+                                                                           <https://gallosiciliani.unict.it/ns/liph>,
+                                                                           <https://gallosiciliani.unict.it/ns/gs-features>;
                                                                <http://purl.org/dc/terms/source> :trovatoMenza2020 ;
                                                                rdfs:label "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
                                                                owl:versionInfo "0.5.0" ;

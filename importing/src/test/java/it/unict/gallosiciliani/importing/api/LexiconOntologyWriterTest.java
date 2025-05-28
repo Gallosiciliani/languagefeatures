@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.importing.api;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
+import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.importing.partofspeech.POSIndividualProvider;
 import it.unict.gallosiciliani.liph.util.EntityManagerFactoryHelper;
 import it.unict.gallosiciliani.liph.util.FileEntityManagerFactoryHelper;
@@ -101,7 +102,8 @@ public class LexiconOntologyWriterTest {
     void shouldStoreEntryCanonicalForm(){
         final Form f=new Form();
         f.setId("http://test.org/form");
-        f.setWrittenRepUndLang("written rep");
+        //f.setWrittenRepUndLang("written rep");
+        f.setWrittenRep(new MultilingualString().set("lang", "written rep"));
         entry.setCanonicalForm(f);
         write(entry, inMemoryEntityManagerFactory);
 

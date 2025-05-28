@@ -11,7 +11,6 @@ import it.unict.gallosiciliani.liph.LinguisticPhenomenonByLabelRetriever;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.util.EntityManagerFactoryHelper;
 import it.unict.gallosiciliani.liph.util.FileEntityManagerFactoryHelper;
-import it.unict.gallosiciliani.liph.util.LinguisticPhenomenonByLabelRetrieverImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -20,8 +19,9 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Parse a derivation file and add the derivations listed in it to an OWL ontology containing the
@@ -42,17 +42,18 @@ public class Main {
         int n=0;
 
         final DerivationIOUtil derivationIO=new DerivationIOUtil();
-        final DerivationParser parser=derivationIO.getParser(getGSPhenomenaRetriever());
         log.info("Importing derivations from {} to {}",derivationFile,ontologyFile);
         try(final CSVParser sourceParser=CSVParser.parse(new File(derivationFile), StandardCharsets.UTF_8, CSVFormat.DEFAULT);
             final EntityManagerFactoryHelper emf=new FileEntityManagerFactoryHelper(ontologyFile)){
             final EntityManager em=emf.createEntityManager();
+            final LinguisticPhenomenonByLabelRetriever phenomenonByLabelRetriever=getGSPhenomenaRetriever(em);
+            final DerivationParser parser=derivationIO.getParser(phenomenonByLabelRetriever);
             final EtymologyImporter importer=new EtymologyImporter(em,
                     new SequentialIRIProvider(NS), sourceLanguageTag);
             em.getTransaction().begin();
             for (CSVRecord record : sourceParser) {
                 final DerivationPathNode d=parser.parse(record.get(0), Locale.getDefault());
-                log.debug("Importing {}", derivationIO.print(d, Locale.getDefault()));
+//                log.debug("Importing {}", derivationIO.print(d, Locale.getDefault()));
                 importer.accept(d);
                 n++;
             }
@@ -61,10 +62,20 @@ public class Main {
         log.info("Imported {} derivations",n);
     }
 
-    private static LinguisticPhenomenonByLabelRetriever getGSPhenomenaRetriever() throws IOException {
+    private static LinguisticPhenomenonByLabelRetriever getGSPhenomenaRetriever(final EntityManager em) throws IOException {
+        final Map<String, LinguisticPhenomenon> label2Lp=new TreeMap<>();
         try(final GSFeatures gs=new GSFeatures()){
-            final List<LinguisticPhenomenon> gsPhenomena=gs.getRegexLinguisticPhenomena();
-            return LinguisticPhenomenonByLabelRetrieverImpl.build(gsPhenomena);
+            em.getTransaction().begin();
+            //TODO JOPA does not perform import closure
+            gs.getRegexLinguisticPhenomena().forEach((p)->{
+                final LinguisticPhenomenon p0=new LinguisticPhenomenon();
+                p0.setId(p.getId());
+                em.persist(p0);
+                label2Lp.put(p.getLabel(), p0);
+            });
+            em.getTransaction().commit();
+            return (label, locale) -> label2Lp.get(label);
         }
     }
+
 }

@@ -10,7 +10,8 @@ import java.util.regex.Pattern;
  * the tonic vowel, if it is not.
  * @author Cristiano Longo
  */
-public class TonicVowelAccentExplicitor {
+public class TonicVowelAccentExplicitor{
+
     /**
      * The plain tonic vowel found inside a word
      */

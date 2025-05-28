@@ -1,108 +1,16 @@
 package it.unict.gallosiciliani.liph.util;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test for {@link TonicVowelAccentExplicitor}
  *
  * @author Cristiano Longo
  */
-public class TonicVowelAccentExplicitorTest {
+public class TonicVowelAccentExplicitorTest extends AbstractAccentExplicitorTest{
     private final TonicVowelAccentExplicitor e=new TonicVowelAccentExplicitor();
 
-    @Test
-    void shouldNotAlterWordsWithAGraveAccent(){
-        assertEquals("àbetö", e.addGraveAccent("àbetö")); //galloitalic
-        assertEquals("nserraghjè", e.addGraveAccent("nserraghjè"));
-        assertEquals("mìserö", e.addGraveAccent("mìserö"));
-        assertEquals("cuòsgiö", e.addGraveAccent("cuòsgiö"));
-        assertEquals("servetù", e.addGraveAccent("servetù"));
-
-        //invented
-        assertEquals("123ä̀456", e.addGraveAccent("123ä̀456"));
-        assertEquals("123ë̀456", e.addGraveAccent("123ë̀456"));
-        assertEquals("123ï̀456", e.addGraveAccent("123ï̀456"));
-        assertEquals("123ö̀456", e.addGraveAccent("123ö̀456"));
-        assertEquals("123ǜ456", e.addGraveAccent("123ǜ456"));
-    }
-
-    @Test
-    void shouldNotAlterWordsWithASingleVowel(){
-        assertEquals("abs", e.addGraveAccent("abs"));
-    }
-
-    @Test
-    void shouldAddGraveAccentToTheSecondToLastVowel(){
-        // on Gallo-Italian terms
-        assertEquals("àla", e.addGraveAccent("ala"));
-        assertEquals("afànö", e.addGraveAccent("afanö"));
-        assertEquals("aciprètë", e.addGraveAccent("acipretë"));
-        assertEquals("alegrìa", e.addGraveAccent("alegria"));
-        assertEquals("abòrtö", e.addGraveAccent("abortö")); //galloitalic
-        assertEquals("abùsö", e.addGraveAccent("abusö")); //galloitalic
-        assertEquals("acidë̀ntë", e.addGraveAccent("acidëntë")); //galloitalic
-        assertEquals("agö̀stö", e.addGraveAccent("agöstö"));
-
-        // da chiedere aghjö agrefuoghjö
-
-        //on Sicilian terms
-        // a
-        assertEquals("àba", e.addGraveAccent("aba"));
-        assertEquals("abbaccarunàtu", e.addGraveAccent("abbaccarunatu"));
-        //e
-        assertEquals("abballèttu", e.addGraveAccent("abballettu"));
-        //i
-        assertEquals("abbabbalìri", e.addGraveAccent("abbabbaliri"));
-        // o
-        assertEquals("abbaruòzzu", e.addGraveAccent("abbaruozzu"));
-        //u
-        assertEquals("abbabbanùtu", e.addGraveAccent("abbabbanutu"));
-        // yöëïüj
-        // ü
-        assertEquals("rraǜsu", e.addGraveAccent("rraüsu"));
-    }
-
-    @Test
-    void shouldAddGraveAccentToThirdToLastIfSecondToLastIsIWithDieresis(){
-        assertEquals("zïhka", e.addGraveAccent("zïhka"));
-        assertEquals("xyàzïhka", e.addGraveAccent("xyazïhka"));
-        assertEquals("xyèzïhka", e.addGraveAccent("xyezïhka"));
-        assertEquals("xyìzïhka", e.addGraveAccent("xyizïhka"));
-        assertEquals("xyòzïhka", e.addGraveAccent("xyozïhka"));
-        assertEquals("xyùzïhka", e.addGraveAccent("xyuzïhka"));
-        assertEquals("xyä̀zïhka", e.addGraveAccent("xyäzïhka"));
-        assertEquals("xyë̀zïhka", e.addGraveAccent("xyëzïhka"));
-        assertEquals("xyö̀zïhka", e.addGraveAccent("xyözïhka"));
-        assertEquals("xyǜzïhka", e.addGraveAccent("xyüzïhka"));
-    }
-
-    @Test
-    void shouldAddGraveAccentToTheLastVowelOnWordsEndingVowelAndN(){
-        assertEquals("xàn", e.addGraveAccent("xan"));
-        assertEquals("xèn", e.addGraveAccent("xen"));
-        assertEquals("xìn", e.addGraveAccent("xin"));
-        assertEquals("xòn", e.addGraveAccent("xon"));
-        assertEquals("xùn", e.addGraveAccent("xun"));
-        assertEquals("xä̀n", e.addGraveAccent("xän"));
-        assertEquals("xë̀n", e.addGraveAccent("xën"));
-        assertEquals("xö̀n", e.addGraveAccent("xön"));
-        assertEquals("xǜn", e.addGraveAccent("xün"));
-        assertEquals("xaxàn", e.addGraveAccent("xaxan"));
-        assertEquals("xaxèn", e.addGraveAccent("xaxen"));
-        assertEquals("xaxìn", e.addGraveAccent("xaxin"));
-        assertEquals("xaxòn", e.addGraveAccent("xaxon"));
-        assertEquals("xaxùn", e.addGraveAccent("xaxun"));
-        assertEquals("xaxä̀n", e.addGraveAccent("xaxän"));
-        assertEquals("xaxë̀n", e.addGraveAccent("xaxën"));
-        assertEquals("xaxï̀n", e.addGraveAccent("xaxïn"));
-        assertEquals("xaxö̀n", e.addGraveAccent("xaxön"));
-        assertEquals("xaxǜn", e.addGraveAccent("xaxün"));
-    }
-
-    @Test
-    void shouldNotApplyToPolyrematicExpressions(){
-        assertEquals("polirematic expression", e.addGraveAccent("polirematic expression"));
+    @Override
+    protected String getAccented(final String expr){
+        return e.addGraveAccent(expr);
     }
 }
