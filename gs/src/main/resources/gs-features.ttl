@@ -3045,17 +3045,6 @@ xsd:date rdf:type rdfs:Datatype .
            rdfs:label "vocal.2.a" .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2.c
-:vocal.2.c rdf:type owl:NamedIndividual ,
-                    :GalloSicilianFeature ,
-                    :Vocal ,
-                    liph:FiniteStateLinguisticPhenomenon ;
-           liph:matchingPattern "ì" ;
-           liph:replaceWith "ë̀" ;
-           rdfs:comment "ì > ë̀" ;
-           rdfs:label "vocal.2.c" .
-
-
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.5.a
 :vocal.5.a rdf:type owl:NamedIndividual ,
                     :GalloSicilianFeature ,

@@ -793,15 +793,6 @@ public class GSFeaturesTest {
     }
 
     /**
-     * ì > ë̀
-     * @throws IOException on missing phenomenon
-     */
-    @Test
-    void testVocal2c() throws IOException{
-        getChecker(NS+"vocal.2.c",  "ë̀").replacing("ì");
-    }
-
-    /**
      * u > ö
      * @throws IOException on missing phenomenon
      */
