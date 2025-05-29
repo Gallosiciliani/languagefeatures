@@ -169,11 +169,14 @@ public class RegexLinguisticPhenomenonChecker {
 
     /**
      * Test that the transformation of the source string produce the specified derived strings, may be among others
-     * @param src source string
+     *
+     * @param src      source string
      * @param expected expected derived string
+     * @return this checker
      */
-    public void derives(final String src, final String expected){
+    public RegexLinguisticPhenomenonChecker derives(final String src, final String expected){
         assertTrue(phenomenon.apply(src).contains(expected));
+        return this;
     }
 
     /**

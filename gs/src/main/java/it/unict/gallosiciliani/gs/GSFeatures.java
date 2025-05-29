@@ -21,7 +21,7 @@ import java.util.List;
 public class GSFeatures extends OntologyLoader{
     public static final String IRI = "https://gallosiciliani.unict.it/ns/gs-features";
     public static final String NS = IRI+"#";
-    public static final String VERSION = "2.0.0";
+    public static final String VERSION = "2.0.1";
 
     public static final String GALLOSICILIAN_FEATURE_CLASS=NS+"GalloSicilianFeature";
     public static final String LENIZ_CLASS=NS+"Leniz";

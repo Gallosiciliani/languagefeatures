@@ -363,7 +363,10 @@ public class GSFeaturesTest {
     @Test
     void testDegem7() throws IOException{
         getChecker(NS+"degem.7","c").atTheBeginning(false, "cc")
-                .inside(false, "cc").notApply("123ccari");
+                .inside(false, "cc").notApply("123ccari")
+                .derives("zzìcca", "zzìca")
+                .derives("123ccar", "123car")
+                .derives("123ccarx", "123carx");
     }
 
     /**
@@ -381,7 +384,10 @@ public class GSFeaturesTest {
     @Test
     void testDegem9() throws IOException{
         getChecker(NS+"degem.9","g").atTheBeginning(false, "gg").inside(false, "gg")
-                .notApply("123ggari");
+                .notApply("123ggari")
+                .derives("123gga", "123ga")
+                .derives("123ggar", "123gar")
+                .derives("123ggarx", "123garx");
     }
 
     /**
@@ -945,9 +951,13 @@ public class GSFeaturesTest {
     @Test
     void testPalat5() throws IOException{
         getChecker(NS+"palat.5").atTheEnd("àri", "è")
+                .notApply("123càri")
                 .notApply("123cari")
+                .notApply("123gàri")
                 .notApply("123gari")
-                .notApply("123iari");
+                .notApply("123iari")
+                .notApply("123iàri");
+
     }
 
     /**
