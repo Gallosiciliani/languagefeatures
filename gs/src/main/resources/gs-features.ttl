@@ -11,7 +11,7 @@
 @base <https://gallosiciliani.unict.it/ns/gs-features#> .
 
 <https://gallosiciliani.unict.it/ns/gs-features> rdf:type owl:Ontology ;
-                                                  owl:versionIRI <https://gallosiciliani.unict.it/ns/gs-features/2.0.0> ;
+                                                  owl:versionIRI <https://gallosiciliani.unict.it/ns/gs-features/2.0.1> ;
                                                   owl:imports <https://gallosiciliani.unict.it/ns/liph/2.0.0> ;
                                                   dcterms:contributor "Alessandro De Angelis" ,
                                                                       "Angela Castiglione" ,
@@ -29,11 +29,11 @@
 
 This work has been created in the scope of the project PRIN 2022 PNRR “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
                                                   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-                                                  dcterms:modified "2025-04-12" ;
+                                                  dcterms:modified "2025-05-29" ;
                                                   dcterms:title "Gallo-Sicilian features"@en ;
                                                   rdfs:comment "Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily." ;
                                                   rdfs:label "Gallo-Sicilian features" ;
-                                                  owl:versionInfo "2.0.0" .
+                                                  owl:versionInfo "2.0.1" .
 
 #################################################################
 #    Datatypes
@@ -2270,7 +2270,7 @@ xsd:date rdf:type rdfs:Datatype .
                   :Degem ,
                   :GalloSicilianFeature ,
                   liph:FiniteStateLinguisticPhenomenon ;
-         liph:matchingPattern "cc([^a]|a[^r]|ar[^i]|ari.+)" ;
+         liph:matchingPattern "cc([^a]|a$|a[^r]|ar$|ar[^i]|ari.+)" ;
          liph:replaceWith "c$1" ;
          rdfs:comment "cc > c" ;
          rdfs:label "degem.7" .
@@ -2292,7 +2292,7 @@ xsd:date rdf:type rdfs:Datatype .
                   :Degem ,
                   :GalloSicilianFeature ,
                   liph:FiniteStateLinguisticPhenomenon ;
-         liph:matchingPattern "gg([^a]|a[^r]|ar[^i]|ari.+)" ;
+         liph:matchingPattern "gg([^a]|a$|a[^r]|ar$|ar[^i]|ari.+)" ;
          liph:replaceWith "g$1" ;
          rdfs:comment "gg > g but not in -ggari" ;
          rdfs:label "degem.9" .
@@ -2471,6 +2471,138 @@ xsd:date rdf:type rdfs:Datatype .
        liph:replaceWith "$1ë̀" ;
        rdfs:comment "-ìri > -ë̀" ;
        rdfs:label "inf.1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.2
+:inf.2 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)ìri$" ;
+       liph:replaceWith "$1ì" ;
+       rdfs:comment "-ìri > ì" ;
+       rdfs:label "inf.2" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.3.a
+:inf.3.a rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Inf ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "([^cgjh])iri$" ;
+         liph:replaceWith "$1ö" ;
+         rdfs:comment "-iri > ö only if iri is not preceeded by one of the followings: c,g,j,h" ;
+         rdfs:label "inf.3.a" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.3.b.1
+:inf.3.b.1 rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Inf ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "(.)ciri$" ;
+           liph:replaceWith "$1ciö" ;
+           rdfs:comment "-ciri > ciö" ;
+           rdfs:label "inf.3.b.1" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.3.b.2
+:inf.3.b.2 rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Inf ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "(.)giri$" ;
+           liph:replaceWith "$1giö" ;
+           rdfs:comment "-giri > giö" ;
+           rdfs:label "inf.3.b.2" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.3.b.3
+:inf.3.b.3 rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Inf ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "(.)chjiri$" ;
+           liph:replaceWith "$1chjiö" ;
+           rdfs:comment "-chjiri > chjiö" ;
+           rdfs:label "inf.3.b.3" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.3.b.4
+:inf.3.b.4 rdf:type owl:NamedIndividual ,
+                    :GalloSicilianFeature ,
+                    :Inf ,
+                    liph:FiniteStateLinguisticPhenomenon ;
+           liph:matchingPattern "(.)ghjiri$" ;
+           liph:replaceWith "$1ghjiö" ;
+           rdfs:comment "-ghjiri > ghjiö" ;
+           rdfs:label "inf.3.b.4" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.3.c
+:inf.3.c rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Inf ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)jiri$" ;
+         liph:replaceWith "$1jö" ;
+         rdfs:comment "-jiri > jö" ;
+         rdfs:label "inf.3.c" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.3.d
+:inf.3.d rdf:type owl:NamedIndividual ,
+                  :GalloSicilianFeature ,
+                  :Inf ,
+                  liph:FiniteStateLinguisticPhenomenon ;
+         liph:matchingPattern "(.)hiri$" ;
+         liph:replaceWith "$1hjö" ;
+         rdfs:comment "-hiri > hjö" ;
+         rdfs:label "inf.3.d" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.4
+:inf.4 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)ìri$" ;
+       liph:replaceWith "$1ìsciö" ;
+       rdfs:comment "-ìri > ìsciö" ;
+       rdfs:label "inf.4" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.5
+:inf.5 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "([^c]|[^s]c)ìrisi$" ;
+       liph:replaceWith "$1essë" ;
+       rdfs:comment "-ìrisi > -essë provided that ìrisi is not preceded by SC" ;
+       rdfs:label "inf.5" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.6
+:inf.6 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)scìrisi$" ;
+       liph:replaceWith "$1essë" ;
+       rdfs:comment "-scìrisi > essë" ;
+       rdfs:label "inf.6" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#inf.7
+:inf.7 rdf:type owl:NamedIndividual ,
+                :GalloSicilianFeature ,
+                :Inf ,
+                liph:FiniteStateLinguisticPhenomenon ;
+       liph:matchingPattern "(.)ìricci$" ;
+       liph:replaceWith "$1ë̀ghjë" ;
+       rdfs:comment "-ìricci > ë̀ghjë" ;
+       rdfs:label "inf.7" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#leniz.1
@@ -2913,17 +3045,6 @@ xsd:date rdf:type rdfs:Datatype .
            rdfs:label "vocal.2.a" .
 
 
-###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2.c
-:vocal.2.c rdf:type owl:NamedIndividual ,
-                    :GalloSicilianFeature ,
-                    :Vocal ,
-                    liph:FiniteStateLinguisticPhenomenon ;
-           liph:matchingPattern "ì" ;
-           liph:replaceWith "ë̀" ;
-           rdfs:comment "ì > ë̀" ;
-           rdfs:label "vocal.2.c" .
-
-
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.5.a
 :vocal.5.a rdf:type owl:NamedIndividual ,
                     :GalloSicilianFeature ,
@@ -3021,116 +3142,6 @@ xsd:date rdf:type rdfs:Datatype .
            rdfs:comment "-àli > àö" ;
            rdfs:label "vocal.9.b" .
 
-###  https://gallosiciliani.unict.it/ns/gs-features#inf.2
-:inf.2 rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "(.)ìri$" ;
-       liph:replaceWith "$1ì" ;
-       rdfs:comment "-ìri > ì" ;
-       rdfs:label "inf.2" .
-
-###  https://gallosiciliani.unict.it/ns/gs-features#inf.3.a
-:inf.3.a rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "([^cgjh])iri$" ;
-       liph:replaceWith "$1ö" ;
-       rdfs:comment "-iri > ö only if iri is not preceeded by one of the followings: c,g,j,h" ;
-       rdfs:label "inf.3.a" .
-
-###  https://gallosiciliani.unict.it/ns/gs-features#inf.3.a
-:inf.3.b.1 rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "(.)ciri$" ;
-       liph:replaceWith "$1ciö" ;
-       rdfs:comment "-ciri > ciö" ;
-       rdfs:label "inf.3.b.1" .
-
-:inf.3.b.2 rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "(.)giri$" ;
-       liph:replaceWith "$1giö" ;
-       rdfs:comment "-giri > giö" ;
-       rdfs:label "inf.3.b.2" .
-
-:inf.3.b.3 rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "(.)chjiri$" ;
-       liph:replaceWith "$1chjiö" ;
-       rdfs:comment "-chjiri > chjiö" ;
-       rdfs:label "inf.3.b.3" .
-
-:inf.3.b.4 rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "(.)ghjiri$" ;
-       liph:replaceWith "$1ghjiö" ;
-       rdfs:comment "-ghjiri > ghjiö" ;
-       rdfs:label "inf.3.b.4" .
-
-:inf.3.c rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "(.)jiri$" ;
-       liph:replaceWith "$1jö" ;
-       rdfs:comment "-jiri > jö" ;
-       rdfs:label "inf.3.c" .
-
-:inf.3.d rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "(.)hiri$" ;
-       liph:replaceWith "$1hjö" ;
-       rdfs:comment "-hiri > hjö" ;
-       rdfs:label "inf.3.d" .
-
-:inf.4 rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "(.)ìri$" ;
-       liph:replaceWith "$1ìsciö" ;
-       rdfs:comment "-ìri > ìsciö" ;
-       rdfs:label "inf.4" .
-
-:inf.5 rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "([^c]|[^s]c)ìrisi$" ;
-       liph:replaceWith "$1essë" ;
-       rdfs:comment "-ìrisi > -essë provided that ìrisi is not preceded by SC" ;
-       rdfs:label "inf.5" .
-
-:inf.6 rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "(.)scìrisi$" ;
-       liph:replaceWith "$1essë" ;
-       rdfs:comment "-scìrisi > essë" ;
-       rdfs:label "inf.6" .
-
-:inf.7 rdf:type owl:NamedIndividual ,
-                :GalloSicilianFeature ,
-                :Inf ,
-                liph:FiniteStateLinguisticPhenomenon ;
-       liph:matchingPattern "(.)ìricci$" ;
-       liph:replaceWith "$1ë̀ghjë" ;
-       rdfs:comment "-ìricci > ë̀ghjë" ;
-       rdfs:label "inf.7" .
 
 ###  https://gallosiciliani.unict.it/ns/liph#gallosiciliani2023Project
 liph:gallosiciliani2023Project rdf:type owl:NamedIndividual .
