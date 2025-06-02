@@ -1,6 +1,5 @@
 package it.unict.gallosiciliani.webapp.sparql;
 
-import cz.cvut.kbss.jopa.exceptions.OWLPersistenceException;
 import lombok.Getter;
 
 /**
@@ -10,7 +9,7 @@ import lombok.Getter;
 public class SPARQLQueryException extends Throwable {
     private final String query;
 
-    public SPARQLQueryException(final String query, final OWLPersistenceException cause){
+    public SPARQLQueryException(final String query, final Exception cause){
         super("Error performing sparql query "+query, cause);
         this.query=query;
     }
