@@ -1,13 +1,12 @@
 package it.unict.gallosiciliani.webapp.sparql;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/sparql")
@@ -18,9 +17,9 @@ public class SPARQLRestController {
     SPARQLService sparqlService;
 
     @PostMapping(value={"","/"}, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = "text/csv")
-    public String executeQuery(final SPARQLQueryForm form) throws IOException, SPARQLQueryException {
+    public String executeQuery(final SPARQLQueryForm form) throws SPARQLQueryException {
         log.info("Performing SPARQL query {}", form.getQuery());
-        return sparqlService.performSelectQuery(form.getQuery());
+        return sparqlService.performSelectQueryJena(form.getQuery(), ResultsFormat.FMT_RS_CSV);
     }
 
     @ExceptionHandler(value=SPARQLQueryException.class)

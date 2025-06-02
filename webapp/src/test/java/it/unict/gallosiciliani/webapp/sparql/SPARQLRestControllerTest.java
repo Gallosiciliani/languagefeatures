@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.webapp.sparql;
 
 import cz.cvut.kbss.jopa.exceptions.OWLPersistenceException;
+import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -37,7 +38,7 @@ public class SPARQLRestControllerTest {
     void shouldReturnResultsAsCSV() throws Exception, SPARQLQueryException {
         final String query = "SELECT ?x ?y ?x WHERE {?x ?y ?z}";
         final String expected = "?x,?y,?z\n\r" + "x,y,z\n\r";
-        when(sparqlService.performSelectQuery(query)).thenReturn(expected);
+        when(sparqlService.performSelectQueryJena(query, ResultsFormat.FMT_RS_CSV)).thenReturn(expected);
 
         mockMvc.perform(post("/sparql").param("query", query).contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
@@ -50,7 +51,7 @@ public class SPARQLRestControllerTest {
         final String query = "wrongquery";
         final OWLPersistenceException cause = new OWLPersistenceException("error cause");
 
-        when(sparqlService.performSelectQuery(query)).thenThrow(new SPARQLQueryException(query, cause));
+        when(sparqlService.performSelectQueryJena(query, ResultsFormat.FMT_RS_CSV)).thenThrow(new SPARQLQueryException(query, cause));
         final Locale locale = Locale.ENGLISH;
 
         final String[] errorMessageParameters = {cause.getMessage()};

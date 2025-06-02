@@ -4,11 +4,14 @@ import cz.cvut.kbss.jopa.exceptions.OWLPersistenceException;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.Query;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.jena.query.*;
+import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Cristiano Longo
@@ -26,9 +29,8 @@ public class SPARQLService {
      * @param query the SPARQL query
      * @return the query result in CSV format
      */
+    @Deprecated
     public String performSelectQuery(final String query) throws IOException, SPARQLQueryException {
-        for(final URI context : entityManager.getContexts())
-            log.info("Context {} ", context);
         final Query q = entityManager.createNativeQuery(query);
         try {
             return SPARQLResultToCSVConverter.getResultAsCSV(q);
@@ -36,4 +38,20 @@ public class SPARQLService {
             throw new SPARQLQueryException(query,e);
         }
     }
+
+    public String performSelectQueryJena(final String query, final ResultsFormat format) throws SPARQLQueryException {
+        final Dataset dataset=entityManager.unwrap(Dataset.class);
+        try {
+            final QueryExecutionDatasetBuilder builder = QueryExecutionDatasetBuilder.create().query(query).dataset(dataset);
+            final ByteArrayOutputStream out = new ByteArrayOutputStream();
+            try (final QueryExecution e = builder.build()) {
+                final ResultSet rs = e.execSelect();
+                ResultSetFormatter.output(out, rs, format);
+                return out.toString(StandardCharsets.UTF_8);
+            }
+        } catch (final QueryParseException e) {
+            throw new SPARQLQueryException(query, e);
+        }
+    }
+
 }

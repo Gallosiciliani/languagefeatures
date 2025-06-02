@@ -4,12 +4,11 @@ import cz.cvut.kbss.jopa.model.EntityManager;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lime;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
+import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.apache.jena.vocabulary.DCTerms;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +28,7 @@ public class SPARQLServiceTest {
      * Assuming that in the knowledge base there are the three default lexica.
      */
     @Test
-    void shouldConvertResultSetWithSingleVariableToCSV() throws IOException, SPARQLQueryException {
+    void shouldConvertResultSetWithSingleVariableToCSV() throws SPARQLQueryException {
         final Lexicon l1=new Lexicon();
         l1.setId("http://test.org/lexicon1");
         final Lexicon l2=new Lexicon();
@@ -45,9 +44,9 @@ public class SPARQLServiceTest {
         PersistenceTestUtils.build().persist(l1).persist(l2).persist(l3).execute(entityManager);
 
         try {
-            final String actual = sparqlService.performSelectQuery("SELECT ?x where {" +
+            final String actual = sparqlService.performSelectQueryJena("SELECT ?x where {" +
                     "?x a <" + Lime.LEXICON_CLASS + "> ." +
-                    "} ORDER BY ?x");
+                    "} ORDER BY ?x", ResultsFormat.FMT_RS_CSV);
             assertEquals(expected, actual);
         }finally {
             PersistenceTestUtils.build().remove(l3).remove(l2).remove(l1).execute(entityManager);
@@ -58,7 +57,7 @@ public class SPARQLServiceTest {
      * Assuming that in the knowledge base there are the three default lexica.
      */
     @Test
-    void shouldConvertResultSetWithMultipleVariablesToCSV() throws IOException, SPARQLQueryException {
+    void shouldConvertResultSetWithMultipleVariablesToCSV() throws SPARQLQueryException {
         final Lexicon l1=new Lexicon();
         l1.setId("http://test.org/lexicon1");
         l1.setTitle("Lexicon 1");
@@ -76,10 +75,10 @@ public class SPARQLServiceTest {
 
         PersistenceTestUtils.build().persist(l1).persist(l2).persist(l3).execute(entityManager);
         try {
-            final String actual = sparqlService.performSelectQuery("SELECT ?x ?title where {" +
+            final String actual = sparqlService.performSelectQueryJena("SELECT ?x ?title where {" +
                     "?x a <" + Lime.LEXICON_CLASS + "> ." +
                     "?x <" + DCTerms.NS + "title> ?title " +
-                    "} ORDER BY ?x");
+                    "} ORDER BY ?x", ResultsFormat.FMT_RS_CSV);
             assertEquals(expected, actual);
         } finally {
             PersistenceTestUtils.build().remove(l3).remove(l2).remove(l1).execute(entityManager);
@@ -89,7 +88,7 @@ public class SPARQLServiceTest {
     @Test
     public void shouldThrowExceptionOnWrongQuery() {
         final String query = "Not a sparql query";
-        final SPARQLQueryException e = assertThrows(SPARQLQueryException.class, ()->sparqlService.performSelectQuery(query));
+        final SPARQLQueryException e = assertThrows(SPARQLQueryException.class, ()->sparqlService.performSelectQueryJena(query, ResultsFormat.FMT_RS_CSV));
         assertEquals(query, e.getQuery());
         assertNotNull(e.getCause());
     }
