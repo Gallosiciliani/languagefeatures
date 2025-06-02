@@ -43,7 +43,6 @@ public class SPARQLService {
         final Dataset dataset=entityManager.unwrap(Dataset.class);
         try {
             final QueryExecutionDatasetBuilder builder = QueryExecutionDatasetBuilder.create().query(query).dataset(dataset);
-
             final ByteArrayOutputStream out = new ByteArrayOutputStream();
             try (final QueryExecution e = builder.build()) {
                 final ResultSet rs = e.execSelect();

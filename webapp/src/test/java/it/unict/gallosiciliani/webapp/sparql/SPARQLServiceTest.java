@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -30,7 +28,7 @@ public class SPARQLServiceTest {
      * Assuming that in the knowledge base there are the three default lexica.
      */
     @Test
-    void shouldConvertResultSetWithSingleVariableToCSV() throws IOException, SPARQLQueryException {
+    void shouldConvertResultSetWithSingleVariableToCSV() throws SPARQLQueryException {
         final Lexicon l1=new Lexicon();
         l1.setId("http://test.org/lexicon1");
         final Lexicon l2=new Lexicon();
@@ -59,7 +57,7 @@ public class SPARQLServiceTest {
      * Assuming that in the knowledge base there are the three default lexica.
      */
     @Test
-    void shouldConvertResultSetWithMultipleVariablesToCSV() throws IOException, SPARQLQueryException {
+    void shouldConvertResultSetWithMultipleVariablesToCSV() throws SPARQLQueryException {
         final Lexicon l1=new Lexicon();
         l1.setId("http://test.org/lexicon1");
         l1.setTitle("Lexicon 1");
