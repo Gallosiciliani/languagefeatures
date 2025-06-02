@@ -45,6 +45,15 @@ public class LexicaHTMLController {
         return viewLexiconInternal(id.toString(), EntrySelector.ALL, model, locale);
     }
 
+    /**
+     * Assuming that the specified lexicon is in the knowledge base
+     */
+    @GetMapping(value={"/nicosiaesperlinga"})
+    String viewNicosiaESperlinga(final Model model,
+                       final Locale locale){
+        return viewLexiconInternal("https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#lexicon", EntrySelector.ALL, model, locale);
+    }
+
     private String viewLexiconInternal(final String lexicon,
                               final @ModelAttribute EntrySelector selector,
                                       final Model model,
