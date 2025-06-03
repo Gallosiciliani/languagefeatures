@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,6 +44,7 @@ public class DerivationHTMLControllerTest {
     private final DerivationPathNode d0;
     private final DerivationPathNode d1;
     private final NearestShortestDerivation expectedDerivations;
+    private final Collection<DerivationPathNode> expectedDerivationsCollection;
 
     DerivationHTMLControllerTest(){
         final LinguisticPhenomenon p=mock(LinguisticPhenomenon.class);
@@ -63,8 +65,8 @@ public class DerivationHTMLControllerTest {
 
 
         expectedDerivations=mock(NearestShortestDerivation.class);
-        when(expectedDerivations.getDerivation()).thenReturn(List.of(d0, d1));
-
+        expectedDerivationsCollection=List.of(d0, d1);
+        when(expectedDerivations.getDerivation()).thenReturn(expectedDerivationsCollection);
     }
 
     @Test
@@ -78,7 +80,7 @@ public class DerivationHTMLControllerTest {
 
     @Test
     void shouldReportSubmittedLemmaAndEtymon() throws Exception {
-        when(derivationService.derives(etymon, lemma)).thenReturn(expectedDerivations);
+        when(derivationService.derives(etymon, lemma)).thenReturn(expectedDerivationsCollection);
         mockMvc.perform(post("/derivation/").param("lemma", lemma).param("etymon", etymon))
                 .andExpect(status().isOk())
                 .andExpect(xpath("//input[@name='lemma']/@value").string(lemma))
@@ -87,7 +89,7 @@ public class DerivationHTMLControllerTest {
 
     @Test
     void shouldReportDerivationsFromEtymonToLemma() throws Exception {
-        when(derivationService.derives(etymon, lemma)).thenReturn(expectedDerivations);
+        when(derivationService.derives(etymon, lemma)).thenReturn(expectedDerivationsCollection);
         checkDerivations(post("/derivation/").param("lemma", lemma).param("etymon", etymon));
     }
 

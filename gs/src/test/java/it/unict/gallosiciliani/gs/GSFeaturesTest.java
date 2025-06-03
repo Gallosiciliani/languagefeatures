@@ -733,6 +733,7 @@ public class GSFeaturesTest {
     @Test
     void testDissim2() throws IOException{
         getChecker(NS+"dissim.2").replacing("nn", "nd");
+        getChecker(NS+"dissim.2").derives("munnàri", "mundàri");
     }
 
     // Dittongazione non metafonetica
