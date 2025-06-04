@@ -39,7 +39,7 @@ public class DerivationServiceTest {
     }
 
     private void testDeriveExact(final String etymon, final String lemma){
-        final DerivationIOUtil printer=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID);
+        final DerivationIOUtil printer=new DerivationIOUtil();
         final Collection<DerivationPathNode> d=derivationService.derives(etymon, lemma);
         assertFalse(d.isEmpty());
         System.out.println(printer.print(d.iterator().next(), Locale.getDefault()));
@@ -49,7 +49,7 @@ public class DerivationServiceTest {
 
     private void checkBocheDerivations(final Collection<DerivationPathNode> actual){
         final Iterator<DerivationPathNode> actualIt=actual.iterator();
-        final DerivationIOUtil printer=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID);
+        final DerivationIOUtil printer=new DerivationIOUtil();
         final DerivationPathNode actualDerivation=actualIt.next();
         System.out.println("Derivation 2: "+printer.print(actualDerivation, Locale.ENGLISH));
         printer.print(actualDerivation, Locale.ENGLISH);

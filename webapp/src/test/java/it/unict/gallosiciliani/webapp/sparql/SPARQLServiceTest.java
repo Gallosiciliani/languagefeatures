@@ -44,7 +44,7 @@ public class SPARQLServiceTest {
         PersistenceTestUtils.build().persist(l1).persist(l2).persist(l3).execute(entityManager);
 
         try {
-            final String actual = sparqlService.performSelectQueryJena("SELECT ?x where {" +
+            final String actual = sparqlService.performSelectQuery("SELECT ?x where {" +
                     "?x a <" + Lime.LEXICON_CLASS + "> ." +
                     "} ORDER BY ?x", ResultsFormat.FMT_RS_CSV);
             assertEquals(expected, actual);
@@ -75,7 +75,7 @@ public class SPARQLServiceTest {
 
         PersistenceTestUtils.build().persist(l1).persist(l2).persist(l3).execute(entityManager);
         try {
-            final String actual = sparqlService.performSelectQueryJena("SELECT ?x ?title where {" +
+            final String actual = sparqlService.performSelectQuery("SELECT ?x ?title where {" +
                     "?x a <" + Lime.LEXICON_CLASS + "> ." +
                     "?x <" + DCTerms.NS + "title> ?title " +
                     "} ORDER BY ?x", ResultsFormat.FMT_RS_CSV);
@@ -88,7 +88,7 @@ public class SPARQLServiceTest {
     @Test
     public void shouldThrowExceptionOnWrongQuery() {
         final String query = "Not a sparql query";
-        final SPARQLQueryException e = assertThrows(SPARQLQueryException.class, ()->sparqlService.performSelectQueryJena(query, ResultsFormat.FMT_RS_CSV));
+        final SPARQLQueryException e = assertThrows(SPARQLQueryException.class, ()->sparqlService.performSelectQuery(query, ResultsFormat.FMT_RS_CSV));
         assertEquals(query, e.getQuery());
         assertNotNull(e.getCause());
     }

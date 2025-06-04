@@ -19,7 +19,7 @@ public class SPARQLRestController {
     @PostMapping(value={"","/"}, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = "text/csv")
     public String executeQuery(final SPARQLQueryForm form) throws SPARQLQueryException {
         log.info("Performing SPARQL query {}", form.getQuery());
-        return sparqlService.performSelectQueryJena(form.getQuery(), ResultsFormat.FMT_RS_CSV);
+        return sparqlService.performSelectQuery(form.getQuery(), ResultsFormat.FMT_RS_CSV);
     }
 
     @ExceptionHandler(value=SPARQLQueryException.class)
