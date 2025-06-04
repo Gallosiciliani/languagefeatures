@@ -73,4 +73,9 @@ public class RegexLinguisticPhenomenonCheckerFactory {
         return this;
     }
 
+    public RegexLinguisticPhenomenonCheckerFactory derives(final String src, final String target) {
+        build().derives(src, target);
+        return this;
+    }
+
 }

@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
@@ -30,17 +32,31 @@ public class DerivationServiceTest {
         checkBocheDerivations(derivationService.derives("abbuccàri", "böchè"));
     }
 
-    private void checkBocheDerivations(final NearestShortestDerivation actual){
-        final Iterator<DerivationPathNode> actualIt=actual.getDerivation().iterator();
-        final DerivationIOUtil printer=new DerivationIOUtil();
+    @Test
+    void shouldDeriveExactlyMondeFromMunnari(){
+        testDeriveExact("munnàri", "möndè");
+//        testDeriveExact("mircèri", "merzièrö");
+    }
+
+    private void testDeriveExact(final String etymon, final String lemma){
+        final DerivationIOUtil printer=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID);
+        final Collection<DerivationPathNode> d=derivationService.derives(etymon, lemma);
+        assertFalse(d.isEmpty());
+        System.out.println(printer.print(d.iterator().next(), Locale.getDefault()));
+        assertEquals(lemma, d.iterator().next().get());
+
+    }
+
+    private void checkBocheDerivations(final Collection<DerivationPathNode> actual){
+        final Iterator<DerivationPathNode> actualIt=actual.iterator();
+        final DerivationIOUtil printer=new DerivationIOUtil(GSFeatures.LABEL_PROVIDER_ID);
         final DerivationPathNode actualDerivation=actualIt.next();
         System.out.println("Derivation 2: "+printer.print(actualDerivation, Locale.ENGLISH));
         printer.print(actualDerivation, Locale.ENGLISH);
         new DerivationChecker(actualDerivation)
                 .inner("böchè", GSFeatures.NS+"vocal.5.a")
-                .inner("buchè", GSFeatures.NS+"palat.1")
-                .inner("bucàri", GSFeatures.NS+"elim.2")
-                .inner("bbucàri", GSFeatures.NS+"degem.7")
+                .inner("buchè", GSFeatures.NS+"elim.2")
+                .inner("bbuchè", GSFeatures.NS+"degem.8")
                 .inner("bbuccàri", GSFeatures.NS+"afer.1")
                 .last("abbuccàri");
 
@@ -56,4 +72,5 @@ public class DerivationServiceTest {
                 .inner("abentu", GSFeatures.NS+"degem.6")
                 .last("abbentu");
     }
+
 }

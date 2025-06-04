@@ -7,6 +7,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -84,4 +86,10 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
                 .collect(Collectors.joining(" "));
     }
 
+    public Collection<DerivationPathNode> getDerivations(){
+        final Collection<DerivationPathNode> res=new LinkedList<>();
+        for(final ShortestDerivation sd: targets.getDerivations())
+            res.addAll(sd.getDerivation());
+        return res;
+    }
 }
