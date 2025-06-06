@@ -32,7 +32,7 @@ public class DerivationChainRetriever {
         query.setParameter("etymon", etymon);
         query.setParameter("lemma", lemma);
 
-        query.getResultList().forEach((o)->{
+        query.getResultStream().forEach((o)->{
             if (targetToOccurrence.put(o.getTarget(), o)!=null)
                 throw new UnsupportedOperationException("Multiple linguistic phenomena occurrences with the same target in the derivation from "+etymon+" to "+lemma);
         });

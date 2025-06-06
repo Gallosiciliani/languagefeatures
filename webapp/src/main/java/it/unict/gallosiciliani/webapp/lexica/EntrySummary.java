@@ -1,8 +1,10 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 
 import java.net.URI;
+import java.util.List;
 import java.util.SortedSet;
 
 /**
@@ -16,8 +18,8 @@ public interface EntrySummary {
     interface EtymonComponent{
 
         /**
-         * The string representing the component (may be with '-' to indicate that it is a prefix or a suffix)
-         * @return human readable representation of the component
+         * The string representing the etymon component (may be with '-' to indicate that it is a prefix or a suffix)
+         * @return human-readable representation of the component
          */
         String getName();
 
@@ -43,7 +45,7 @@ public interface EntrySummary {
 
     /**
      * Components of the latin etymon. May be there is just one component, if the etymon is simple.
-     * May be there are no components at all in the case the etymon is not available.
+     * Maybe there are no components at all in the case the etymon is not available.
      *
      * @return SortedSet of {@link Form}
      */
@@ -55,4 +57,10 @@ public interface EntrySummary {
      * @return labels of phonetic features
      */
     SortedSet<String> getPhoneticFeatureLabels();
+
+    /**
+     *
+     * @return the derivation from lemma to etymon, may be empty
+     */
+    List<LinguisticPhenomenonOccurrence> getDerivation();
 }

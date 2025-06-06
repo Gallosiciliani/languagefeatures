@@ -1,9 +1,11 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
 import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
+import it.unict.gallosiciliani.webapp.derivation.DerivationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -26,6 +28,9 @@ public class EntrySummarizer {
     @Autowired
     MessageSource messageSource;
 
+    @Autowired
+    DerivationService derivationService;
+
     private final Locale locale;
 
     /**
@@ -45,6 +50,7 @@ public class EntrySummarizer {
         final String partOfSpeech = messageSource.getMessage(partOfSpeechMessageId, new Object[0], locale);
         final SortedSet<Form> etyComponents = getEtymonComponents(src);
         final SortedSet<String> featureLabels = new TreeSet<>();
+        final List<LinguisticPhenomenonOccurrence> derivation=getDerivation(src);
         return new EntrySummary() {
 
             @Override
@@ -66,7 +72,28 @@ public class EntrySummarizer {
             public SortedSet<String> getPhoneticFeatureLabels() {
                 return featureLabels;
             }
+
+            @Override
+            public List<LinguisticPhenomenonOccurrence> getDerivation() {
+                return derivation;
+            }
         };
+    }
+
+    private Etymology getEtymology(final LexicalEntry src){
+        if (src.getEtymology()==null || src.getEtymology().isEmpty())
+            return null;
+        return src.getEtymology().iterator().next();
+    }
+
+    private List<LinguisticPhenomenonOccurrence> getDerivation(final LexicalEntry src) {
+        final Etymology etymology=getEtymology(src);
+        if (etymology==null) return Collections.emptyList();
+        final Set<Form> etySubSource = etymology.getStartingLink().getEtySubSource();
+        if (etySubSource==null || etySubSource.isEmpty()) return Collections.emptyList();
+        final Form lemma=src.getCanonicalForm();
+        final Form etymon=etySubSource.iterator().next();
+        return derivationService.getDerivationChain(lemma, etymon);
     }
 
     /**
@@ -75,11 +102,8 @@ public class EntrySummarizer {
      * @return a string
      */
     private SortedSet<Form> getEtymonComponents(final LexicalEntry src){
-        if (src.getEtymology()==null || src.getEtymology().isEmpty())
-            return Collections.emptySortedSet();
-
-        final Etymology etymology=src.getEtymology().iterator().next();
-        if (etymology.getLabel()==null)
+        final Etymology etymology=getEtymology(src);
+        if (etymology==null || etymology.getLabel()==null)
             return Collections.emptySortedSet();
         /*
          * Here we assume that all the subcomponents of the etymon are reported in
@@ -93,7 +117,11 @@ public class EntrySummarizer {
         };
         final SortedSet<Form> components = new TreeSet<>(subtermsComparator);
         final Set<Form> etySubSource = etymology.getStartingLink().getEtySubSource();
-        components.addAll(etySubSource);
+        for (Form form : etySubSource) {
+            if (form.getLabel() != null) {
+                components.add(form);
+            }
+        }
         final  StringBuffer componentStrings = new StringBuffer();
         for(final Form f : components)
             componentStrings.append("(").append(f.getWrittenRep()).append(":").append(f.getLabel()).append(")");

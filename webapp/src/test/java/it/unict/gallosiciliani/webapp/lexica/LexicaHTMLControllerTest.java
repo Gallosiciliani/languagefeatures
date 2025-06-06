@@ -1,6 +1,10 @@
 package it.unict.gallosiciliani.webapp.lexica;
 
 import cz.cvut.kbss.jopa.model.MultilingualString;
+import it.unict.gallosiciliani.liph.model.LexicalObject;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
+import it.unict.gallosiciliani.webapp.TestUtil;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
@@ -8,6 +12,7 @@ import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lemonety.EtyLink;
 import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
 import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
+import it.unict.gallosiciliani.webapp.derivation.DerivationService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -52,6 +57,9 @@ public class LexicaHTMLControllerTest {
 
     @MockBean
     LexicaService lexicaService;
+
+    @MockBean
+    DerivationService derivationService;
 
     @MockBean
     WebAppProperties props;
@@ -209,6 +217,19 @@ public class LexicaHTMLControllerTest {
                         .string(expectedEtymon));
     }
 
+    /**
+     * Add to the specific entry an etymon consisting of a single word
+     *
+     * @param entry where set the etymon
+     * @param etymonForm the form of the etymon
+     */
+    private void setEtymon(final LexicalEntry entry, final Form etymonForm){
+        final Etymology etyA = entry.getEtymology().iterator().next();
+        etyA.setLabel(etymonForm.getWrittenRep().get());
+        final EtyLink linkA = etyA.getStartingLink();
+        linkA.setEtySource(null);
+        linkA.getEtySubSource().add(etymonForm);
+    }
 
     /**
      * Add to the specific entry a latin etymology consisting of a single word
@@ -219,15 +240,11 @@ public class LexicaHTMLControllerTest {
     private Form setSimpleLatinEtymon(final LexicalEntry entry){
         final String expectedEtymon = "expectedLatinEtymon";
         final String expectedEtymonNormalized = "expectedlatinetymon";
-        final Etymology etyA = entry.getEtymology().iterator().next();
-        etyA.setLabel(expectedEtymon);
-        final EtyLink linkA = etyA.getStartingLink();
-        linkA.setEtySource(null);
         final Form etymonForm = new Form();
-        linkA.getEtySubSource().add(etymonForm);
         etymonForm.setId("http://www.example.org/latinForm");
         etymonForm.setLabel(expectedEtymon);
         etymonForm.setWrittenRep(new MultilingualString().set(expectedEtymonNormalized));
+        setEtymon(entry, etymonForm);
         return etymonForm;
     }
 
@@ -282,6 +299,40 @@ public class LexicaHTMLControllerTest {
             return r;
         return checkExpectedEtymonSubcomponent(r.andExpect(xpath("//tbody["+entryNum+"]/tr/th[text()='"+etymologyLabel+"']/following-sibling::td/ul/li["+(componentNum+1)+"]")
                 .string(expectedComponents[componentNum].getLabel())), entryNum, componentNum+1, expectedComponents);
+    }
+
+    @Test
+    void shouldShowDerivationFromEtymon() throws Exception {
+        final TestUtil util=new TestUtil();
+        final LexiconWithThreeEntries l3e = new LexiconWithThreeEntries();
+        final LexicalEntry entry=l3e.entryA;
+        final Form lemma=entry.getCanonicalForm();
+
+        //      o1                     o2
+        //lemma <-p-- intermediateForm <-q-- etymon
+        final Form etymonForm=util.createForm();
+        setEtymon(entry, etymonForm);
+        final LinguisticPhenomenon p=util.createPhenomenon();
+        final LinguisticPhenomenon q=util.createPhenomenon();
+        final LexicalObject intermediateForm=util.createForm();
+        final LinguisticPhenomenonOccurrence o1=util.createPhenomenonOccurrence(p, intermediateForm, lemma, true);
+        final LinguisticPhenomenonOccurrence o2=util.createPhenomenonOccurrence(q,etymonForm, intermediateForm, true);
+        when(derivationService.getDerivationChain(lemma, etymonForm)).thenReturn(List.of(o1, o2));
+        final String etymologyLabel = messageSource.getMessage("galloitalici.kb.lexica.etymology", new Object[0], locale);
+
+        GETperformer.perform(l3e)
+                .andExpect(xpath("//tbody[1]/tr/"+
+                        "th[text()='"+etymologyLabel+"']/following-sibling::td/ol/li[1]/a[@href='"+p.getId()+"']")
+                        .string(p.getLabel()))
+                .andExpect(xpath("//tbody[1]/tr/"+
+                    "th[text()='"+etymologyLabel+"']/following-sibling::td/ol/li[1]/span")
+                    .string(intermediateForm.getWrittenRep().get()))
+                .andExpect(xpath("//tbody[1]/tr/"+
+                        "th[text()='"+etymologyLabel+"']/following-sibling::td/ol/li[2]/a[@href='"+q.getId()+"']")
+                        .string(q.getLabel()))
+                .andExpect(xpath("//tbody[1]/tr/"+
+                        "th[text()='"+etymologyLabel+"']/following-sibling::td/ol/li[2]/span")
+                        .string(etymonForm.getWrittenRep().get()));
     }
 
 //    @Test

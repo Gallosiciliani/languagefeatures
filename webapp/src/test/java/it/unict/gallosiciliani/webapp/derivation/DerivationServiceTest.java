@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.webapp.derivation;
 
+import cz.cvut.kbss.jopa.model.EntityManager;
 import it.unict.gallosiciliani.derivations.io.DerivationIOUtil;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.NearestShortestDerivation;
@@ -28,7 +29,7 @@ public class DerivationServiceTest {
     DerivationService derivationService;
 
     @Test
-    void shouldReturnNearestShortestDerivations(){
+    void shouldReturnNearestShortestDerivations() throws IOException {
         checkBocheDerivations(derivationService.derives("abbuccàri", "böchè"));
     }
 
@@ -72,5 +73,4 @@ public class DerivationServiceTest {
                 .inner("abentu", GSFeatures.NS+"degem.6")
                 .last("abbentu");
     }
-
 }

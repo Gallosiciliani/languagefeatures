@@ -2,19 +2,13 @@ package it.unict.gallosiciliani.webapp.lexica;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.Query;
-import cz.cvut.kbss.jopa.model.query.TypedQuery;
 import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
-import it.unict.gallosiciliani.liph.model.LexicalObject;
-import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
-import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
-import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.webapp.TestUtil;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
-import it.unict.gallosiciliani.webapp.ontologies.TBox;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -143,51 +137,6 @@ public class LexicaServiceTest {
     void shouldImportLiPh(){
         final Query q1=entityManager.createNativeQuery("SELECT ?x WHERE {<"+LinguisticPhenomena.FINITE_STATE_LINGUISTIC_PHENOMENON_CLASS+"> ?p ?x}");
         assertFalse(q1.getResultList().isEmpty());
-    }
-
-    @Test
-    void shouldRetrieveTheDerivation(){
-        final Form x=util.createForm();
-        final LinguisticPhenomenon p=util.createPhenomenon();
-        final LexicalObject y=util.createLexicalObject();
-        final LinguisticPhenomenonOccurrence op=util.createPhenomenonOccurrence(p, x, y, true);
-        final LinguisticPhenomenon q=util.createPhenomenon();
-        final Form z=util.createForm();
-        final LinguisticPhenomenonOccurrence oq=util.createPhenomenonOccurrence(q, y, z, true);
-
-        final PersistenceTestUtils persistence= PersistenceTestUtils.build().
-                persist(x).
-                persist(p).
-                persist(y).
-                persist(op).
-                persist(q).
-                persist(z).
-                persist(oq);
-        persistence.execute(entityManager);
-
-        assertDerives(x,x);
-        assertDerives(x,y);
-        assertDerives(y,z);
-        assertDerives(z,z);
-
-        final Iterator<LinguisticPhenomenonOccurrence> actualIt=lexicaService.getDerivationChain(z, x).iterator();
-        util.checkEquals(oq, actualIt.next());
-        util.checkEquals(op, actualIt.next());
-    }
-
-    /**
-     * Check whether the source is bound to the target through the derives property
-     * @param source derives subject
-     * @param target derives object
-     */
-    private void assertDerives(final LexicalObject source, final LexicalObject target){
-        final TypedQuery<Boolean> askDerivesQuery=entityManager.createNativeQuery("ASK { ?source <"+LinguisticPhenomena.DERIVES_OBJ_PROPERTY+"> ?target}",
-                Boolean.class);
-        askDerivesQuery.setParameter("source", source);
-        askDerivesQuery.setParameter("target", target);
-        final Iterator<Boolean> askResultIt=askDerivesQuery.getResultList().iterator();
-        assertEquals(Boolean.TRUE, askResultIt.next());
-        assertFalse(askResultIt.hasNext());
     }
 
 //    @Test

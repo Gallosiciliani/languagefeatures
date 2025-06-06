@@ -44,12 +44,20 @@
                 <tr>
                     <th th:text="#{galloitalici.kb.lexica.etymology}" scope="row">Etymology</th>
                     <td th:text="#{galloitalici.kb.lexica.etymology.na}"
-                       th:if="${#sets.isEmpty(entry.latinEtymon)}">
+                       th:if="${#sets.isEmpty(entry.latinEtymon) and #lists.isEmpty(entry.derivation)}">
                     </td>
-                    <td th:unless="${#sets.isEmpty(entry.latinEtymon)}">
+                    <td th:if="${(not #sets.isEmpty(entry.latinEtymon)) and #lists.isEmpty(entry.derivation)}">
                         <ul>
                             <li class="btn btn-outline-primary" th:each="c : ${entry.latinEtymon}"><span th:if="${c.seeAlso == null}" th:remove="tag" th:text="${c.label}">etymon</span><a th:unless="${c.seeAlso == null}" th:href="${c.seeAlso}" th:text="${c.label}">etymon</a></li>
                         </ul>
+                    </td>
+                    <td th:unless="${#lists.isEmpty(entry.derivation)}">
+                        <ol class="list-inline">
+                            <li class="list-inline-item" th:each="o : ${entry.derivation}" >
+                                <a class="btn btn-outline-primary" th:href="${o.occurrenceOf.id}" th:text="${o.occurrenceOf.label}">missing phenomena</a>
+                                <span th:text="${o.source.writtenRep.get}">missing written rep</span>
+                            </li>
+                        </ol>
                     </td>
                 </tr>
                 <!--tr>

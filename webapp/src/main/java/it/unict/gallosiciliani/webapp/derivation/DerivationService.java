@@ -1,12 +1,16 @@
 package it.unict.gallosiciliani.webapp.derivation;
 
+import cz.cvut.kbss.jopa.model.EntityManager;
 import it.unict.gallosiciliani.derivations.*;
 import it.unict.gallosiciliani.derivations.strategy.DerivationBuilderWithStrategy;
 import it.unict.gallosiciliani.derivations.strategy.NearestStrategySelector;
 import it.unict.gallosiciliani.derivations.strategy.TargetedDerivationStrategyFactory;
 import it.unict.gallosiciliani.derivations.strategy.TargetedDerivationStrategySelectorFactory;
-import it.unict.gallosiciliani.gs.GSFeatures;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.sicilian.SicilianVocabulary;
+import it.unict.gallosiciliani.webapp.ontologies.LinguisticPhenomenaProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +29,10 @@ public class DerivationService {
     private final TargetedDerivationStrategySelectorFactory selectorFactory= NearestStrategySelector.FACTORY;
 
     @Autowired
-    GSFeatures gsFeatures;
+    LinguisticPhenomenaProvider lpProvider;
+
+    @Autowired
+    EntityManager entityManager;
 
     /**
      * Provide the derivations from etymon to target through Gallo-Sicilian features
@@ -58,7 +65,7 @@ public class DerivationService {
      * @return shortest derivations from the etymon to the target
      */
     public Collection<DerivationPathNode> derivesExact(final String etymon, final String lemma){
-        final BruteForceDerivationBuilder derivationBuilder=new BruteForceDerivationBuilder(gsFeatures.getRegexLinguisticPhenomena(), List.of(lemma));
+        final BruteForceDerivationBuilder derivationBuilder=new BruteForceDerivationBuilder(lpProvider.getAll(), List.of(lemma));
         derivationBuilder.apply(etymon);
         return derivationBuilder.getDerivations();
     }
@@ -73,7 +80,35 @@ public class DerivationService {
 
     private DerivationBuilder getNearestDerivationBuilder(final NearestShortestDerivation consumer){
         final TargetedDerivationStrategyFactory strategyFactory = new TargetedDerivationStrategyFactory(consumer, selectorFactory);
-        return new DerivationBuilderWithStrategy(gsFeatures.getRegexLinguisticPhenomena(), strategyFactory);
+        return new DerivationBuilderWithStrategy(lpProvider.getAll(), strategyFactory);
 //        return new BruteForceDerivationBuilder(gsFeatures.getRegexLinguisticPhenomena(), List.of(consumer.getTarget()));
     }
+
+    /**
+     * Retrieve from the knowledge base a list of {@link LinguisticPhenomenonOccurrence}
+     * representing a chain of occurrences such that the first occurrence has the lemma as target and the last occurrence
+     * has the etymon as source.
+     *
+     * @param lemma the lemma form
+     * @param etymon the etymon form
+     * @return a list of {@link LinguisticPhenomenonOccurrence} such that the source of each item is the target of the preceding one.
+     */
+    public List<LinguisticPhenomenonOccurrence> getDerivationChain(final Form lemma, final Form etymon){
+        final DerivationChainRetriever r=new DerivationChainRetriever(lemma, etymon, entityManager);
+        final List<LinguisticPhenomenonOccurrence> derivation=r.getOccurrencesSorted();
+        setPhenomenaLabel(derivation);
+        return derivation;
+    }
+
+    /**
+     * This is a workaround due to the fact that JOPA is unable to retrieve individuals in imported ontologies
+     * @param phenomena the penomena
+     */
+    private void setPhenomenaLabel(List<LinguisticPhenomenonOccurrence> phenomena) {
+        for(final LinguisticPhenomenonOccurrence o: phenomena){
+            final LinguisticPhenomenon p=o.getOccurrenceOf();
+            p.setLabel(lpProvider.getById(p.getId()).getLabel());
+        }
+    }
+
 }

@@ -41,4 +41,9 @@ public class OntologiesConfiguration {
             return new ABox("ERROR: "+e.getMessage());
         }
     }
+
+    @Bean
+    LinguisticPhenomenaProvider linguisticPhenomenaProvider(final GSFeatures gsFeatures){
+        return new LinguisticPhenomenaProvider(gsFeatures.getRegexLinguisticPhenomena());
+    }
 }

@@ -4,16 +4,13 @@ import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
 import cz.cvut.kbss.jopa.vocabulary.RDF;
 import cz.cvut.kbss.jopa.vocabulary.RDFS;
-import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lime;
-import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Ontolex;
 import it.unict.gallosiciliani.liph.model.lemonety.LemonEty;
 import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
-import it.unict.gallosiciliani.webapp.derivation.DerivationChainRetriever;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -107,19 +104,5 @@ public class LexicaService {
             return webAppProperties.getPaging().getPages()[page].getSelector();
         log.error("Invalid page requested {}", page);
         return webAppProperties.getPaging().getPages()[0].getSelector();
-    }
-
-    /**
-     * Retrieve from the knowledge base a list of {@link LinguisticPhenomenonOccurrence}
-     * representing a chain of occurrences such that the first occurrence has the lemma as target and the last occurrence
-     * has the etymon as source.
-     *
-     * @param lemma the lemma form
-     * @param etymon the etymon form
-     * @return a list of {@link LinguisticPhenomenonOccurrence} such that the source of each item is the target of the preceding one.
-     */
-    public List<LinguisticPhenomenonOccurrence> getDerivationChain(final Form lemma, final Form etymon){
-        final DerivationChainRetriever r=new DerivationChainRetriever(lemma, etymon, entityManager);
-        return r.getOccurrencesSorted();
     }
 }

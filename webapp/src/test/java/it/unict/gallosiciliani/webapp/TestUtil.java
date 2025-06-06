@@ -38,6 +38,7 @@ public class TestUtil {
     public void checkEquals(final LinguisticPhenomenonOccurrence expected, final LinguisticPhenomenonOccurrence actual){
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getOccurrenceOf().getId(), actual.getOccurrenceOf().getId());
+        assertEquals(expected.getOccurrenceOf().getLabel(), actual.getOccurrenceOf().getLabel());
         assertEquals(expected.getSource().getId(), actual.getSource().getId());
     }
 
@@ -70,6 +71,7 @@ public class TestUtil {
     public LinguisticPhenomenon createPhenomenon(){
         final LinguisticPhenomenon p=new LinguisticPhenomenon();
         p.setId("http://test.org/phenomenon"+n);
+        p.setLabel("phenomenon"+n);
         n++;
         return p;
     }
