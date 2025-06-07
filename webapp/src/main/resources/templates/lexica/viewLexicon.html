@@ -54,20 +54,12 @@
                     <td th:unless="${#lists.isEmpty(entry.derivation)}">
                         <ol class="list-inline">
                             <li class="list-inline-item" th:each="o : ${entry.derivation}" >
-                                <a class="btn btn-outline-primary" th:href="${o.occurrenceOf.id}" th:text="${o.occurrenceOf.label}">missing phenomena</a>
+                                <a class="btn btn-outline-primary" th:href="${o.occurrenceOf.id}" th:text="${o.occurrenceOf.label}" th:title="${o.occurrenceOf.comment}" target="gs-features">missing phenomena</a>
                                 <span th:text="${o.source.writtenRep.get}">missing written rep</span>
                             </li>
                         </ol>
                     </td>
                 </tr>
-                <!--tr>
-                    <th scope="row" th:text="#{galloitalici.kb.lexica.features}">Features</th>
-                    <td>
-                        <ul>
-                            <li th:each="label : ${entry.phoneticFeatureLabels}" class="btn btn-outline-primary" th:text="${label}">Missing phonetic feature label</li>
-                        </ul>
-                    </td>
-                </tr-->
             </tbody>
         </table>
     </div>

@@ -43,6 +43,7 @@ public class RegexLinguisticPhenomenaReader{
         final FiniteStateLinguisticPhenomenon p=new FiniteStateLinguisticPhenomenon();
         p.setId(solution.getFeatureIRI());
         p.setLabel(solution.getFeatureLabel());
+        p.setComment(solution.getFeatureComment());
         p.setMatchingPattern(solution.getRegex());
         p.setReplaceWith(solution.getReplacement());
         features.add(p);

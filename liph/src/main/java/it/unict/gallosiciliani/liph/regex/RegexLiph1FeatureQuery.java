@@ -40,6 +40,11 @@ public class RegexLiph1FeatureQuery implements RegexFeatureQuery {
                     return labelLiteral==null ? null : labelLiteral.toString();}
 
                 @Override
+                public String getFeatureComment() {
+                    return null;
+                }
+
+                @Override
                 public String getRegex() {
                     return querySolution.getLiteral(REGEX_VAR).getString();
                 }

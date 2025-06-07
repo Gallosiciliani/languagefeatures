@@ -7,6 +7,7 @@ package it.unict.gallosiciliani.liph.regex;
 public interface RegexFeatureQuerySolution {
     String getFeatureIRI();
     String getFeatureLabel();
+    String getFeatureComment();
     String getRegex();
     String getReplacement();
 }

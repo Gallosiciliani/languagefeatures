@@ -1225,4 +1225,11 @@ public class GSFeaturesTest {
     void testInf7() throws IOException{
         getChecker(NS+"inf.7").atTheEnd("ìricci","ë̀ghjë");
     }
+
+    @Test
+    void shouldGetTheOntologyName() throws IOException {
+        try(final GSFeatures gs = new GSFeatures()) {
+            assertNotNull(gs.getName());
+        }
+    }
 }

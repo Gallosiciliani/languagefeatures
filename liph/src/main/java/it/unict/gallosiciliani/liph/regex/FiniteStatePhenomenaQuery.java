@@ -3,6 +3,7 @@ package it.unict.gallosiciliani.liph.regex;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.vocabulary.RDFS;
 
@@ -18,6 +19,7 @@ public class FiniteStatePhenomenaQuery implements RegexFeatureQuery{
     private static final String LABEL_VAR = "label";
     private static final String REGEX_VAR = "regex";
     private static final String REPLACEMENT_VAR = "replacement";
+    private static final String COMMENT_VAR = "comment";
 
 
     @Override
@@ -33,6 +35,12 @@ public class FiniteStatePhenomenaQuery implements RegexFeatureQuery{
 
                 @Override
                 public String getFeatureLabel(){ return querySolution.getLiteral(LABEL_VAR).getString();}
+
+                @Override
+                public String getFeatureComment() {
+                    final Literal commentLiteral=querySolution.getLiteral(COMMENT_VAR);
+                    return commentLiteral==null ? null : commentLiteral.getString();
+                }
 
                 @Override
                 public String getRegex() {
@@ -53,10 +61,11 @@ public class FiniteStatePhenomenaQuery implements RegexFeatureQuery{
      * @return the query string
      */
     private String buildQueryString(){
-        return "SELECT ?"+ FEATURE_IRI_VAR+" ?"+ FiniteStatePhenomenaQuery.LABEL_VAR+" ?"+ FiniteStatePhenomenaQuery.REGEX_VAR+" ?"+ REPLACEMENT_VAR+" WHERE{"+
+        return "SELECT ?"+ FEATURE_IRI_VAR+" ?"+ FiniteStatePhenomenaQuery.LABEL_VAR+" ?"+ FiniteStatePhenomenaQuery.REGEX_VAR+" ?"+ REPLACEMENT_VAR+" ?"+COMMENT_VAR+" WHERE{"+
                 "?"+ FEATURE_IRI_VAR+" <"+ RDFS.label.getURI()+"> ?"+ FiniteStatePhenomenaQuery.LABEL_VAR+" ;"+
                 " <"+ LinguisticPhenomena.MATCHING_PATTERN_DATA_PROPERTY+"> ?"+ FiniteStatePhenomenaQuery.REGEX_VAR+" ;"+
-                " <"+ LinguisticPhenomena.REPLACE_WITH_DATA_PROPERTY+"> ?"+ FiniteStatePhenomenaQuery.REPLACEMENT_VAR+
+                " <"+ LinguisticPhenomena.REPLACE_WITH_DATA_PROPERTY+"> ?"+ FiniteStatePhenomenaQuery.REPLACEMENT_VAR+" ."+
+                " OPTIONAL {?"+ FEATURE_IRI_VAR+" <"+ RDFS.comment.getURI()+"> ?"+ FiniteStatePhenomenaQuery.COMMENT_VAR+" }"+
                 "} ORDER BY ?"+ FEATURE_IRI_VAR;
     }
 }

@@ -10,7 +10,7 @@ import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.sicilian.SicilianVocabulary;
-import it.unict.gallosiciliani.webapp.ontologies.LinguisticPhenomenaProvider;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenaProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +96,7 @@ public class DerivationService {
     public List<LinguisticPhenomenonOccurrence> getDerivationChain(final Form lemma, final Form etymon){
         final DerivationChainRetriever r=new DerivationChainRetriever(lemma, etymon, entityManager);
         final List<LinguisticPhenomenonOccurrence> derivation=r.getOccurrencesSorted();
-        setPhenomenaLabel(derivation);
+        fillPhenomenaFields(derivation);
         return derivation;
     }
 
@@ -104,10 +104,12 @@ public class DerivationService {
      * This is a workaround due to the fact that JOPA is unable to retrieve individuals in imported ontologies
      * @param phenomena the penomena
      */
-    private void setPhenomenaLabel(List<LinguisticPhenomenonOccurrence> phenomena) {
+    private void fillPhenomenaFields(List<LinguisticPhenomenonOccurrence> phenomena) {
         for(final LinguisticPhenomenonOccurrence o: phenomena){
             final LinguisticPhenomenon p=o.getOccurrenceOf();
-            p.setLabel(lpProvider.getById(p.getId()).getLabel());
+            final LinguisticPhenomenon pWithData=lpProvider.getById(p.getId());
+            p.setLabel(pWithData.getLabel());
+            p.setComment(pWithData.getComment());
         }
     }
 

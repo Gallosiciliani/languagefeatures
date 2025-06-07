@@ -8,7 +8,7 @@ import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.webapp.TestUtil;
-import it.unict.gallosiciliani.webapp.ontologies.LinguisticPhenomenaProvider;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenaProvider;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

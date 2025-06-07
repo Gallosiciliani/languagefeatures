@@ -71,6 +71,7 @@ public class RegexLinguisticPhenomenaReaderTest {
      */
     private String getLiph2RegexFeatureTTL(final String featureIRI, final String label, final String regex, final String replacement){
         return "\t<"+featureIRI+"> <"+ RDFS.label.getURI() +"> \""+label+"\" ;\n" +
+                "\t\t<"+ RDFS.comment.getURI()+"> \""+label+" comment\" ;\n" +
                 "\t\t<"+ LinguisticPhenomena.MATCHING_PATTERN_DATA_PROPERTY+"> \""+regex+"\" ;\n" +
                 "\t\t<"+ LinguisticPhenomena.REPLACE_WITH_DATA_PROPERTY+"> \""+replacement+"\"";
     }

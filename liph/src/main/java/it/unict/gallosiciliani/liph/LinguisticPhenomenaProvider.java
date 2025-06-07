@@ -1,4 +1,4 @@
-package it.unict.gallosiciliani.webapp.ontologies;
+package it.unict.gallosiciliani.liph;
 
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 

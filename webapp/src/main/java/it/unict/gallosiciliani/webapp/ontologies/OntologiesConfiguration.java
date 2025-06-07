@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.webapp.ontologies;
 
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenaProvider;
 import org.apache.jena.ontology.OntDocumentManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

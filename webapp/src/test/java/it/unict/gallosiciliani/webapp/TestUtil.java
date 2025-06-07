@@ -69,9 +69,19 @@ public class TestUtil {
      * @return a novel linguistic phenomenon
      */
     public LinguisticPhenomenon createPhenomenon(){
+        return createPhenomenon("http://test.org/");
+    }
+
+    /**
+     * Create a linguistic phenomenon for test purposes
+     * @param namespace the namespace where the novel phenomenon will be defined
+     * @return a novel linguistic phenomenon
+     */
+    public LinguisticPhenomenon createPhenomenon(final String namespace){
         final LinguisticPhenomenon p=new LinguisticPhenomenon();
-        p.setId("http://test.org/phenomenon"+n);
+        p.setId(namespace+"phenomenon"+n);
         p.setLabel("phenomenon"+n);
+        p.setComment("Description of phenomenon"+n);
         n++;
         return p;
     }
