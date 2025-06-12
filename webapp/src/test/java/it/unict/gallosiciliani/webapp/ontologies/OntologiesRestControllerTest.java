@@ -60,14 +60,6 @@ public class OntologiesRestControllerTest {
                 .andExpect(content().string(expectedFile));
     }
 
-    @Test
-    void shouldLexicaRedirectToAboxHTMLPage() throws Exception {
-        mockMvc.perform(get("/ns/lexica")
-                .accept("text/html")).andExpect(redirectedUrl("/lexica/"));
-        mockMvc.perform(get("/ns/lexica/")
-                .accept("text/html")).andExpect(redirectedUrl("/lexica/"));
-    }
-
     /**
      * Test that the ontology is returned as a raw file when the mime-type requested is TTL
      * @param path relative path for the request

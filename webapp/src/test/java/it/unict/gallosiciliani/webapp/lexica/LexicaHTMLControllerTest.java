@@ -82,7 +82,7 @@ public class LexicaHTMLControllerTest {
 
         when(lexicaService.findAllLexica()).thenReturn(expected);
 
-        mockMvc.perform(get("/lexica/").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
+        mockMvc.perform(get("/ns/lexica/").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
                 .andExpect(xpath("//a[@href='lexicon?id="+expectedIRI1+"']").string("Title of the expected lexicon 1"))
                 .andExpect(xpath("//a[@href='lexicon?id="+expectedIRI2+"']").string("Title of the expected lexicon 2"));
     }
@@ -101,7 +101,7 @@ public class LexicaHTMLControllerTest {
             when(lexicaService.findLexiconByIRI(l3e.lexicon.getId())).thenReturn(l3e.lexicon);
             when(lexicaService.findEntries(l3e.lexicon, EntrySelector.ALL))
                     .thenReturn(l3e.pageABEntries);
-            return mockMvc.perform(get("/lexica/lexicon").param("id", l3e.lexicon.getId())
+            return mockMvc.perform(get("/ns/lexica/lexicon").param("id", l3e.lexicon.getId())
                             .accept(MediaType.TEXT_HTML).locale(locale))
                     .andExpect(status().isOk());
         }
@@ -116,7 +116,7 @@ public class LexicaHTMLControllerTest {
             when(lexicaService.findEntries(l3e.lexicon, EntrySelector.ALL))
                     .thenReturn(l3e.pageABEntries);
 
-            return mockMvc.perform(post("/lexica/lexicon")
+            return mockMvc.perform(post("/ns/lexica/lexicon")
                     .param("id", l3e.lexicon.getId())
                     .param("pos", selector.getPos())
                     .param("featureType", selector.getFeatureType())

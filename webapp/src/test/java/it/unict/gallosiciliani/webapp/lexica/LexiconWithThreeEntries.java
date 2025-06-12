@@ -87,7 +87,7 @@ public class LexiconWithThreeEntries {
     }
 
     public LexiconWithThreeEntries(){
-        this("http://test.org/lexica/lexicon#lexicon", "http://test.org/lexica/lexicon");
+        this("http://test.org/ns/lexica/lexicon#lexicon", "http://test.org/lexica/lexicon");
     }
 
     public LexicalEntry getEntry(final Entry e){

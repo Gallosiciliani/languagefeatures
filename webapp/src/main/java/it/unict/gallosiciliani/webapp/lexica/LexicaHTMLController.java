@@ -39,6 +39,7 @@ public class LexicaHTMLController {
     }
 
     @GetMapping(value={"/lexicon"})
+    @Deprecated
     String viewLexicon(final @RequestParam URI id,
                               final Model model,
                               final Locale locale){
