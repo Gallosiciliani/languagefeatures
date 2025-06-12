@@ -19,7 +19,7 @@
                                                                            <https://gallosiciliani.unict.it/ns/gs-features>;
                                                                <http://purl.org/dc/terms/source> :trovatoMenza2020 ;
                                                                rdfs:label "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
-                                                               owl:versionInfo "0.5.0" ;
+                                                               owl:versionInfo "0.6.0" ;
                                                               dcterms:contributor "Daniele Francesco Santamaria" ,
                                                                                   "Domenico Cantone" ,
                                                                                   "Marianna Nicolosi Asmundo" ,
@@ -31,7 +31,7 @@
                                                                                   "Angela Castiglione",
                                                                                   "Sara Natalia Cardullo";
                                                               dcterms:created "2024-12-30"^^xsd:date ;
-                                                              dcterms:modified "2025-03-11"^^xsd:date ;
+                                                              dcterms:modified "2025-06-12"^^xsd:date ;
                                                               dcterms:creator "Cristiano Longo" ;
                                                               dcterms:description """Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga
 

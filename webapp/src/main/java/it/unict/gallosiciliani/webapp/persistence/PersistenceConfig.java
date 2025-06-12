@@ -28,7 +28,7 @@ public class PersistenceConfig {
         final Map<String, String> props = new HashMap<>();
         props.put(JOPAPersistenceProperties.ONTOLOGY_URI_KEY, "https://gallosiciliani.unict.it/ns/lexica");
         // Here we set up basic storage access properties - driver class, physical location of the storage
-        props.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, "nicosiaesperlinga-deriv.ttl");
+        props.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, "nicosiaesperlinga.ttl");
         props.put(JOPAPersistenceProperties.DATA_SOURCE_CLASS, JenaDataSource.class.getName());
         // Let's use Jena TDB for storage
         props.put(JenaOntoDriverProperties.JENA_STORAGE_TYPE, appProps.getJenaStorageType());

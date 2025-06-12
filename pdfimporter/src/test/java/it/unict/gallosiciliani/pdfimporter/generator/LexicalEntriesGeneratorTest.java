@@ -70,7 +70,7 @@ public class LexicalEntriesGeneratorTest {
 
     @Test
     void shouldIgnoreLemmaWithPosNotRepresentingNounsOrVerbs(){
-        pdc.lemma("a lemma");
+        pdc.lemma("alemma");
         for(final String ignored : POSExamples.getExamples(POS.IGNORED)){
             pdc.pos(ignored);
             verifyNoInteractions(utils.getLec());
@@ -108,7 +108,7 @@ public class LexicalEntriesGeneratorTest {
      */
     @Test
     void shouldIgnoreLemmasWithoutPOS(){
-        pdc.lemma("discard me");
+        pdc.lemma("discardme");
 
         checkIsWorking();
     }

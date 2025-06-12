@@ -39,7 +39,7 @@ public class PDFLexiconConverter implements LexiconConverter {
                                final int startPage,
                                final int endPage,
                                final String lemmaLang){
-        entriesGenerator=new LexicalEntriesGenerator(consumer, iris, posIndividualProvider, lemmaLang);
+        entriesGenerator=new LexicalEntriesGenerator(new FilterOutPolyrematicConsumer(consumer), iris, posIndividualProvider, lemmaLang);
         this.startPage=startPage;
         this.endPage=endPage;
     }

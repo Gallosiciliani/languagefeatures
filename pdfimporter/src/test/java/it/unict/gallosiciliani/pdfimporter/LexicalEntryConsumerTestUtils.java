@@ -27,10 +27,6 @@ import java.util.function.Consumer;
  */
 public class LexicalEntryConsumerTestUtils {
 
-    private interface LexicalEntryConsumer extends Consumer<LexicalEntry>{
-
-    }
-
     public static class Expected{
         public final String lemma;
         public final POS pos;
@@ -73,8 +69,8 @@ public class LexicalEntryConsumerTestUtils {
      */
     public LexicalEntryConsumerTestUtils(final String ns, final POSIndividualProvider posProvider,
                                          final String expectedLemmaLang){
-        lec= Mockito.mock(LexicalEntryConsumer.class);
-        o= Mockito.inOrder(lec);
+        lec=Mockito.mock(LexicalEntryConsumer.class);
+        o=Mockito.inOrder(lec);
         this.ns=ns;
         this.posProvider=posProvider;
         this.expectedIRIProvider=new SequentialIRIProvider(ns);
