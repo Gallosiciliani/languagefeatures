@@ -82,8 +82,8 @@ public class OntologiesRestController {
      * Redirect to the web page of lexica when the requested mime type is HTML
      * @return ABox in TTL format
      */
-    @GetMapping(value = {"lexica/", "lexica", "lexica/nicosiaesperlinga"}, produces = "text/html")
-    public RedirectView redirectAboxHTML(){
-        return new RedirectView("/lexica/");
-    }
+//    @GetMapping(value = {"lexica/", "lexica", "lexica/nicosiaesperlinga"}, produces = "text/html")
+//    public RedirectView redirectAboxHTML(){
+//        return new RedirectView("/lexica/");
+//    }
 }

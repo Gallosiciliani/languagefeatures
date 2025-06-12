@@ -3,6 +3,7 @@ package it.unict.gallosiciliani.webapp.ontologies;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenaProvider;
+import it.unict.gallosiciliani.webapp.WebAppProperties;
 import org.apache.jena.ontology.OntDocumentManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,9 +35,9 @@ public class OntologiesConfiguration {
     }
 
     @Bean
-    ABox aBox(){
+    ABox aBox(WebAppProperties properties){
         try {
-            final String str= Files.readString(Path.of("nicosiaesperlinga.ttl"));
+            final String str= Files.readString(Path.of(properties.getFile()));
             return new ABox(str);
         } catch (IOException e) {
             return new ABox("ERROR: "+e.getMessage());

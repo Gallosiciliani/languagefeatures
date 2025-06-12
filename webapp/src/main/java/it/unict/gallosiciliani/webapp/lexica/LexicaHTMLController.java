@@ -18,7 +18,7 @@ import java.util.Locale;
  * @author Cristiano Longo
  */
 @Controller
-@RequestMapping("/lexica")
+@RequestMapping("/ns/lexica")
 @Slf4j
 public class LexicaHTMLController {
 

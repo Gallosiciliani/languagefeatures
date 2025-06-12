@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class WebAppProperties {
     private boolean loadData=true;
+    private String file;
     private PagingProperties paging;
     // Available storage types using the {@link cz.cvut.kbss.ontodriver.jena.JenaDataSource}
     private String jenaStorageType;
