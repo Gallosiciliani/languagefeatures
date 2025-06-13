@@ -73,7 +73,7 @@ public class LexicaHTMLController {
         return "lexica/viewLexicon";
     }
 
-    @PostMapping(value={"/lexicon"})
+    @PostMapping(value={"/lexicon", "/nicosiaesperlinga"})
     String viewLexicon(final @RequestParam URI id,
                               final @ModelAttribute EntrySelector selector,
                               final Model model,

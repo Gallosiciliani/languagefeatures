@@ -7,7 +7,6 @@ import it.unict.gallosiciliani.importing.iri.IRIProvider;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lemonety.EtyLink;
 import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
-
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -18,7 +17,6 @@ import java.util.function.Consumer;
 public class EtymologyImporter implements Consumer<DerivationPathNode> {
     private final EntityManager entityManager;
     private final EtymologyDerivationImporter derivationImporter;
-
 
     public EtymologyImporter(final EntityManager entityManager,
                       final IRIProvider iriProvider,

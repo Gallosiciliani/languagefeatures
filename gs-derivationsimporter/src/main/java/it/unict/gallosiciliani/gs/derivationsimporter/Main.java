@@ -53,7 +53,8 @@ public class Main {
             em.getTransaction().begin();
             for (CSVRecord record : sourceParser) {
                 final DerivationPathNode d=parser.parse(record.get(0), Locale.getDefault());
-//                log.debug("Importing {}", derivationIO.print(d, Locale.getDefault()));
+                System.out.println("Importing "+derivationIO.print(d, Locale.getDefault()));
+                log.info("Importing {}", derivationIO.print(d, Locale.getDefault()));
                 importer.accept(d);
                 n++;
             }
@@ -70,7 +71,7 @@ public class Main {
             gs.getRegexLinguisticPhenomena().forEach((p)->{
                 final LinguisticPhenomenon p0=new LinguisticPhenomenon();
                 p0.setId(p.getId());
-                em.persist(p0);
+                //em.persist(p0);
                 label2Lp.put(p.getLabel(), p0);
             });
             em.getTransaction().commit();

@@ -116,7 +116,7 @@ public class LexicaHTMLControllerTest {
             when(lexicaService.findEntries(l3e.lexicon, EntrySelector.ALL))
                     .thenReturn(l3e.pageABEntries);
 
-            return mockMvc.perform(post("/ns/lexica/lexicon")
+            return mockMvc.perform(post("/ns/lexica/nicosiaesperlinga")
                     .param("id", l3e.lexicon.getId())
                     .param("pos", selector.getPos())
                     .param("featureType", selector.getFeatureType())

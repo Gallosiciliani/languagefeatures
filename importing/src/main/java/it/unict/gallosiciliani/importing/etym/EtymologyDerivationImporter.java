@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.importing.etym;
 
+import cz.cvut.kbss.jopa.exceptions.NoUniqueResultException;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.MultilingualString;
 import cz.cvut.kbss.jopa.model.query.TypedQuery;
@@ -13,6 +14,7 @@ import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Ontolex;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +23,7 @@ import java.util.function.Function;
 /**
  * @author Cristiano Longo
  */
+@Slf4j
 class EtymologyDerivationImporter {
     private final EntityManager entityManager;
     private final IRIProvider iriProvider;
@@ -56,7 +59,12 @@ class EtymologyDerivationImporter {
     void importDerivation(final DerivationPathNode n){
         final TypedQuery<LexicalEntry> query=entityManager.createNativeQuery("SELECT ?x WHERE {?x <"+ Ontolex.CANONICAL_FORM_OBJ_PROPERTY+"> ?f . "+
                 "?f <"+Ontolex.WRITTEN_REP_DATA_PROPERTY+"> ?w . FILTER (STR(?w)=\""+n.get()+"\") }", LexicalEntry.class);
-        lemmaEntry=query.getSingleResult();
+        try {
+            lemmaEntry = query.getSingleResult();
+        }catch(NoUniqueResultException e){
+            log.error("Multiple entries for the single form {}", n.get());
+            lemmaEntry=query.getResultList().get(0);
+        }
         etymologyIRIProvider=iriProvider.getLexicalEntryIRIs(lemmaEntry).getEtymologyIRIs();
         importDerivation(n, (writtenRep)-> lemmaEntry.getCanonicalForm());
     }

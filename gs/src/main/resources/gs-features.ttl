@@ -29,11 +29,10 @@
 
 This work has been created in the scope of the project PRIN 2022 PNRR “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
                                                   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-                                                  dcterms:modified "2025-05-29" ;
+                                                  dcterms:modified "2025-06-13" ;
                                                   dcterms:title "Gallo-Sicilian features"@en ;
                                                   rdfs:comment "Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily." ;
                                                   rdfs:label "Gallo-Sicilian features" ;
-                                                  eurio:isResultOf <https://gallosiciliani.unict.it/ns/projects/gallosiciliani2023Project> ;
                                                   owl:versionInfo "2.0.1" .
 
 #################################################################
@@ -1706,8 +1705,8 @@ xsd:date rdf:type rdfs:Datatype .
                        :Leniz ,
                        :Palat ,
                        :Vocal ;
-      rdfs:label "Aferesi"@it ,
-                 "Apheresis"@en .
+      rdfs:comment "The loss or deletion of one or more sounds at the begin- ning of a word." ;
+      rdfs:label "Apheresis" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#Assib
@@ -1721,8 +1720,8 @@ xsd:date rdf:type rdfs:Datatype .
                         :Leniz ,
                         :Palat ,
                         :Vocal ;
-       rdfs:label "Assibilation"@en ,
-                  "Assibilazione"@it .
+       rdfs:comment "The process by which non-sibilant consonants (typi- cally plosives or affricates) change into sibilant sounds." ;
+       rdfs:label "Assibilation" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#Degem
@@ -1735,8 +1734,8 @@ xsd:date rdf:type rdfs:Datatype .
                         :Leniz ,
                         :Palat ,
                         :Vocal ;
-       rdfs:label "Degemination"@en ,
-                  "Degeminazione"@it .
+       rdfs:comment "The reduction of all long (or double) consonants into short (or single) ones." ;
+       rdfs:label "Degemination" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#Deretr
@@ -1748,8 +1747,8 @@ xsd:date rdf:type rdfs:Datatype .
                          :Leniz ,
                          :Palat ,
                          :Vocal ;
-        rdfs:label "Deretroflessione"@it ,
-                   "Deretroflexion"@en .
+        rdfs:comment "The elimination of the retroflexed pronunciation of a consonant." ;
+        rdfs:label "Deretroflexion" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#Dissim
@@ -1780,7 +1779,9 @@ xsd:date rdf:type rdfs:Datatype .
       rdfs:subClassOf liph:LinguisticPhenomenon ;
       owl:disjointWith :Leniz ,
                        :Palat ,
-                       :Vocal .
+                       :Vocal ;
+      rdfs:comment "Elimination of some allophonic variants according to a specific phonological context, such as the unstressed position." ;
+      rdfs:label "Elimination" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#GalloSicilianFeature
@@ -1792,7 +1793,7 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#Inf
 :Inf rdf:type owl:Class ;
-     rdfs:subClassOf liph:LinguisticPhenomenon .
+     rdfs:subClassOf :Palat .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#Leniz
@@ -1800,16 +1801,16 @@ xsd:date rdf:type rdfs:Datatype .
        rdfs:subClassOf liph:LinguisticPhenomenon ;
        owl:disjointWith :Palat ,
                         :Vocal ;
-       rdfs:label "Lenition"@en ,
-                  "Lenizione"@it .
+       rdfs:comment "The softening of the intervocalic voiceless (both fricative and plosive) consonants." ;
+       rdfs:label "Lenition" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#Palat
 :Palat rdf:type owl:Class ;
        rdfs:subClassOf liph:LinguisticPhenomenon ;
        owl:disjointWith :Vocal ;
-       rdfs:label "Palatalization"@en ,
-                  "Palatalizzazione"@it .
+       rdfs:comment "Vocalic palatalization, i.e., the phonological process by which the low, central vowel /a/ shifts towards a more fronted and sometimes slightly raised position, typically resulting in a vowel like /æ/, /E/, or /e/, in a palatal or fronting phonetic environment." ;
+       rdfs:label "Palatalization" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#Vocal
@@ -1821,6 +1822,11 @@ xsd:date rdf:type rdfs:Datatype .
 #################################################################
 #    Individuals
 #################################################################
+
+###  https://gallosiciliani.unict.it/ns/gs-features
+<https://gallosiciliani.unict.it/ns/gs-features> rdf:type owl:NamedIndividual ;
+                                                 eurio:isResultOf <https://gallosiciliani.unict.it/ns/projects/gallosiciliani2023Project> .
+
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#afer.1
 :afer.1 rdf:type owl:NamedIndividual ,
@@ -3137,6 +3143,10 @@ xsd:date rdf:type rdfs:Datatype .
            liph:replaceWith "$1àö" ;
            rdfs:comment "-àli > àö" ;
            rdfs:label "vocal.9.b" .
+
+
+###  https://gallosiciliani.unict.it/ns/projects/gallosiciliani2023Project
+<https://gallosiciliani.unict.it/ns/projects/gallosiciliani2023Project> rdf:type owl:NamedIndividual .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

@@ -6,6 +6,7 @@
         <div class="container" th:replace="~{base :: header (title=${lexicontitle})}"></div>
 
         <form class="form-inline" th:object="${selector}" method="post">
+            <input type="hidden" name="id" th:value="${lexicon}"></input>
             <div class="form-group">
                 <label th:text="|#{galloitalici.kb.lexica.selection.label} #{galloitalici.kb.lexica.selection.pos.label}|">Select label</label>
                 <select class="custom-select" th:field="*{pos}">
