@@ -20,6 +20,7 @@
         <module>gs</module>
         <module>sicilian</module>
         <module>importing</module>
+        <module>projects</module>
         <module>webapp</module>
         <module>pdfimporter</module>
         <module>csvimporter</module>

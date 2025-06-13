@@ -3,6 +3,7 @@ package it.unict.gallosiciliani.webapp.ontologies;
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.util.OntologyLoader;
+import it.unict.gallosiciliani.projects.Projects;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -29,6 +30,9 @@ public class OntologiesRestControllerTest {
     @MockBean
     ABox abox;
 
+    @MockBean
+    Projects projects;
+
     @Test
     void testAutowire(){
         assertNotNull(liph);
@@ -42,6 +46,13 @@ public class OntologiesRestControllerTest {
     @Test
     void shouldReturnGSFeaturesOntologyTTL() throws Exception {
         shouldReturnOntologyInTTLFormat("/ns/gs-features", gsFeatures);
+    }
+
+    @Test
+    void shouldReturnProjects() throws Exception {
+        shouldReturnOntologyInTTLFormat("/ns/projects", projects);
+        shouldReturnOntologyInTTLFormat("/ns/projects/", projects);
+        shouldReturnOntologyInTTLFormat("/ns/projects/gallosiciliani2023Project", projects);
     }
 
     @Test

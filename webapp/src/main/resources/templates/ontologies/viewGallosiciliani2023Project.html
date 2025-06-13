@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{base :: head}"></head>
+<body>
+<div class="container">
+    <div class="container" th:replace="~{base :: header (title=${project.label})}"></div>
+    <div class="container">
+        <p th:text="${project.comment}">Project description</p>
+    </div>
+    <div class="container">
+        <p>The following OWL vocabularies and datasets have been developed in the scope of this project.</p>
+        <ul class="list-group">
+            <li class="list-group-item" th:each="r : ${results}">
+                <a th:href="@{${r.id}}" th:text="${r.label}"></a>
+            </li>
+        </ul>
+    </div>
+    <!--div class="container">
+        <table class="table table-bordered">
+            <tr th:each="p: ${phenomena}" th:id="${p.label}">
+                <td th:text="${p.label}">label</td>
+                <td th:text="${p.comment}">comment</td>
+            </tr>
+        </table>
+    </div -->
+</div>
+</body>
+</html>

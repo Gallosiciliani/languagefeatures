@@ -15,11 +15,10 @@
                                                                owl:imports <http://purl.org/ontology/bibo/> ,
                                                                            <http://www.geonames.org/ontology> ,
                                                                            <http://www.w3.org/ns/lemon/lime> ,
-                                                                           <https://gallosiciliani.unict.it/ns/liph>,
                                                                            <https://gallosiciliani.unict.it/ns/gs-features>;
                                                                <http://purl.org/dc/terms/source> :trovatoMenza2020 ;
                                                                rdfs:label "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
-                                                               owl:versionInfo "0.6.0" ;
+                                                               owl:versionInfo "0.7.0" ;
                                                               dcterms:contributor "Daniele Francesco Santamaria" ,
                                                                                   "Domenico Cantone" ,
                                                                                   "Marianna Nicolosi Asmundo" ,
@@ -31,15 +30,16 @@
                                                                                   "Angela Castiglione",
                                                                                   "Sara Natalia Cardullo";
                                                               dcterms:created "2024-12-30"^^xsd:date ;
-                                                              dcterms:modified "2025-06-12"^^xsd:date ;
+                                                              dcterms:modified "2025-06-13"^^xsd:date ;
                                                               dcterms:creator "Cristiano Longo" ;
-                                                              dcterms:description """Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga
-
+                                                              dcterms:description """An OWL dataset of nouns and verbs from the Gallo-Sicilian variety
+                                                                                     spoken in Nicosia and Sperlinga. The dataset includes etymological information, expressed in terms of language features, for lexical expressions borrowed from Sicilian,
+                                                                                                                                                        thereby enabling automated analysis of borrowing processes.
 This work has been created in the scope of the project PRIN 2022 PNRR \"Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
                                                               dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                                                               dcterms:title "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
                                                               rdfs:comment "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
-                                                              eurio:isResultOf liph:gallosiciliani2023Project .
+                                                              eurio:isResultOf <https://gallosiciliani.unict.it/ns/projects/gallosiciliani2023Project> .
 
 
 #################################################################
@@ -56,6 +56,11 @@ This work has been created in the scope of the project PRIN 2022 PNRR \"Contact-
          lime:linguisticCatalog <http://www.lexinfo.net/ontologies/2.0/lexinfo> ;
          rdfs:label "Nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
          dcterms:title "Nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
+         rdfs:comment  """An OWL dataset of nouns and verbs from the Gallo-Sicilian variety
+                                                                                                           spoken in Nicosia and Sperlinga. The dataset includes etymological information, expressed in terms of language features, for lexical expressions borrowed from Sicilian,
+                                                                                                                                                                              thereby enabling automated analysis of borrowing processes.
+                      This work has been created in the scope of the project PRIN 2022 PNRR \"Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
+
          lime:entry :entryManual0, :entryManual1, :entryManual2, :entryManual3, :entryManual4, :entryManual5,
             :entryManual6 .
 

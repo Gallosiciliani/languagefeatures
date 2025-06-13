@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.webapp.ontologies;
 
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
+import it.unict.gallosiciliani.projects.Projects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,9 @@ public class OntologiesRestController {
 
     @Autowired
     ABox abox;
+
+    @Autowired
+    Projects projects;
 
     /**
      * Provide the base ontology to define language features.
@@ -78,12 +82,8 @@ public class OntologiesRestController {
         return abox.getOntologyAsStr();
     }
 
-    /**
-     * Redirect to the web page of lexica when the requested mime type is HTML
-     * @return ABox in TTL format
-     */
-//    @GetMapping(value = {"lexica/", "lexica", "lexica/nicosiaesperlinga"}, produces = "text/html")
-//    public RedirectView redirectAboxHTML(){
-//        return new RedirectView("/lexica/");
-//    }
+    @GetMapping(value = {"projects", "projects/", "projects/gallosiciliani2023Project"}, produces = "text/turtle")
+    public String getGalloSiciliani2023Project(){
+        return projects.getOntologyAsStr();
+    }
 }
