@@ -8,7 +8,9 @@
 @base <https://gallosiciliani.unict.it/ns/test/defs#> .
 
 <https://gallosiciliani.unict.it/ns/test/defs> rdf:type owl:Ontology ;
-                                                owl:imports <https://gallosiciliani.unict.it/ns/liph> .
+                                                owl:imports <https://gallosiciliani.unict.it/ns/liph> ;
+                                                rdfs:label "defs";
+                                                rdfs:comment "comment".
 
 ###  https://gallosiciliani.unict.it/ns/test/defs#atob
 :atob rdf:type liph:FiniteStateLinguisticPhenomenon ;

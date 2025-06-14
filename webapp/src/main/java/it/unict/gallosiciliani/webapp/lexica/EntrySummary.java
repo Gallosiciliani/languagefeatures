@@ -44,12 +44,12 @@ public interface EntrySummary {
 
 
     /**
-     * Components of the latin etymon. May be there is just one component, if the etymon is simple.
+     * Components of the  etymon. May be there is just one component, if the etymon is simple.
      * Maybe there are no components at all in the case the etymon is not available.
      *
      * @return SortedSet of {@link Form}
      */
-    SortedSet<Form> getLatinEtymon();
+    SortedSet<Form> getEtymon();
 
     /**
      * Labels representing the phonetic features of this entry

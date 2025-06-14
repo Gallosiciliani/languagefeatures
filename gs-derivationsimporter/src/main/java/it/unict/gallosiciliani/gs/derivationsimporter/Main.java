@@ -53,12 +53,13 @@ public class Main {
             em.getTransaction().begin();
             for (CSVRecord record : sourceParser) {
                 final DerivationPathNode d=parser.parse(record.get(0), Locale.getDefault());
-                System.out.println("Importing "+derivationIO.print(d, Locale.getDefault()));
-                log.info("Importing {}", derivationIO.print(d, Locale.getDefault()));
+                System.out.println("Importing "+record.get(0));
                 importer.accept(d);
                 n++;
             }
             em.getTransaction().commit();
+            System.out.println("Missing lemmas "+importer.getMissingLemmas());
+            System.out.println("Lemmas corresponding with multiple entries "+importer.getMultipleEntriesLemmas());
         }
         log.info("Imported {} derivations",n);
     }

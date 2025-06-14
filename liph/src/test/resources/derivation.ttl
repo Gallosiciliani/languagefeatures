@@ -8,7 +8,9 @@
 @base <https://gallosiciliani.unict.it/ns/test#> .
 
 <https://gallosiciliani.unict.it/ns/test/derivation> rdf:type owl:Ontology ;
-                                           owl:imports <https://gallosiciliani.unict.it/ns/lpont> .
+                                           owl:imports <https://gallosiciliani.unict.it/ns/liph> ;
+                                            rdfs:label "label";
+                                            rdfs:comment "comment".
 
 #################################################################
 #    Object Properties

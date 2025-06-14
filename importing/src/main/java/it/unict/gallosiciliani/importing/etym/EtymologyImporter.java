@@ -7,6 +7,8 @@ import it.unict.gallosiciliani.importing.iri.IRIProvider;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lemonety.EtyLink;
 import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
+
+import java.util.Collection;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -28,7 +30,8 @@ public class EtymologyImporter implements Consumer<DerivationPathNode> {
 
     @Override
     public void accept(final DerivationPathNode derivationPathNode) {
-        derivationImporter.importDerivation(derivationPathNode);
+        if (!derivationImporter.importDerivation(derivationPathNode))
+            return;
         final Etymology etymology=new Etymology();
         final EtymologyIRIProvider etymologyIRIProvider=derivationImporter.getEtymologyIRIProvider();
         etymology.setId(etymologyIRIProvider.getEtymolgyIRI());
@@ -40,8 +43,17 @@ public class EtymologyImporter implements Consumer<DerivationPathNode> {
         etymology.getStartingLink().setEtyTarget(entry);
         etymology.getStartingLink().setEtySubTarget(entry.getCanonicalForm());
         etymology.getStartingLink().setEtySubSource(Set.of(derivationImporter.getEtymon()));
+        etymology.setLabel(derivationImporter.getEtymon().getWrittenRep().get());
 
         entityManager.persist(etymology.getStartingLink());
         entityManager.persist(etymology);
+    }
+
+    public Collection<String> getMissingLemmas(){
+        return derivationImporter.getMissingLemmas();
+    }
+
+    public Collection<String> getMultipleEntriesLemmas(){
+        return derivationImporter.getMultipleEntriesLemmas();
     }
 }

@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.importing.etym;
 
+import cz.cvut.kbss.jopa.exceptions.NoResultException;
 import cz.cvut.kbss.jopa.exceptions.NoUniqueResultException;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.MultilingualString;
@@ -16,8 +17,7 @@ import it.unict.gallosiciliani.liph.model.lemon.ontolex.Ontolex;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -28,6 +28,12 @@ class EtymologyDerivationImporter {
     private final EntityManager entityManager;
     private final IRIProvider iriProvider;
     private final String etymonLanguageTag;
+    @Getter
+    private final Collection<String> missingLemmas=new LinkedList<>();
+    @Getter
+    private final Collection<String> multipleEntriesLemmas=new LinkedList<>();
+
+
 
     @Getter
     private LexicalEntry lemmaEntry;
@@ -56,17 +62,24 @@ class EtymologyDerivationImporter {
         return etymon;
     }
 
-    void importDerivation(final DerivationPathNode n){
+    boolean importDerivation(final DerivationPathNode n){
         final TypedQuery<LexicalEntry> query=entityManager.createNativeQuery("SELECT ?x WHERE {?x <"+ Ontolex.CANONICAL_FORM_OBJ_PROPERTY+"> ?f . "+
                 "?f <"+Ontolex.WRITTEN_REP_DATA_PROPERTY+"> ?w . FILTER (STR(?w)=\""+n.get()+"\") }", LexicalEntry.class);
         try {
-            lemmaEntry = query.getSingleResult();
-        }catch(NoUniqueResultException e){
-            log.error("Multiple entries for the single form {}", n.get());
-            lemmaEntry=query.getResultList().get(0);
+            try {
+                lemmaEntry = query.getSingleResult();
+            } catch (NoUniqueResultException e) {
+                log.error("Multiple entries for the single form {}", n.get());
+                lemmaEntry = query.getResultList().get(0);
+                multipleEntriesLemmas.add(n.get());
+            }
+            etymologyIRIProvider = iriProvider.getLexicalEntryIRIs(lemmaEntry).getEtymologyIRIs();
+            importDerivation(n, (writtenRep) -> lemmaEntry.getCanonicalForm());
+            return true;
+        }catch(NoResultException e){
+            missingLemmas.add(n.get());
+            return false;
         }
-        etymologyIRIProvider=iriProvider.getLexicalEntryIRIs(lemmaEntry).getEtymologyIRIs();
-        importDerivation(n, (writtenRep)-> lemmaEntry.getCanonicalForm());
     }
 
     private LexicalObject importDerivation(final DerivationPathNode n, final Function<String, LexicalObject> targetProvider) {

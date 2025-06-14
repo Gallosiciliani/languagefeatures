@@ -210,10 +210,10 @@ public class LexicaHTMLControllerTest {
     public void shouldShowSimpleNotLinkedLatinEtymonAsIs() throws Exception {
         final LexiconWithThreeEntries l3e = new LexiconWithThreeEntries();
         final Form etymonForm = setSimpleLatinEtymon(l3e.entryA);
-        final String expectedEtymon = etymonForm.getLabel();
+        final String expectedEtymon = etymonForm.getWrittenRep().get();
         final String etymologyLabel = messageSource.getMessage("galloitalici.kb.lexica.etymology", new Object[0], locale);
         GETperformer.perform(l3e)
-                .andExpect(xpath("//tbody[1]/tr/th[text()='"+etymologyLabel+"']/following-sibling::td/ul/li[1]")
+                .andExpect(xpath("//tbody[1]/tr/th[text()='"+etymologyLabel+"']/following-sibling::td/ol/li[1]")
                         .string(expectedEtymon));
     }
 
@@ -252,14 +252,14 @@ public class LexicaHTMLControllerTest {
     public void shouldProvideLinkForSimpleLinkedLatinEtymon() throws Exception {
         final LexiconWithThreeEntries l3e = new LexiconWithThreeEntries();
         final Form etymonForm = setSimpleLatinEtymon(l3e.entryA);
-        final String expectedEtymon = etymonForm.getLabel();
+        final String expectedEtymon = etymonForm.getWrittenRep().get();
         final URI expectedEtymonURI = URI.create("http://anexternalresource.org");
         etymonForm.setSeeAlso(expectedEtymonURI);
         final String etymologyLabel = messageSource.getMessage("galloitalici.kb.lexica.etymology", new Object[0], locale);
 
         GETperformer.perform(l3e)
                 .andExpect(xpath("//tbody[1]/tr/"+
-                        "th[text()='"+etymologyLabel+"']/following-sibling::td/ul/li[1]/"+
+                        "th[text()='"+etymologyLabel+"']/following-sibling::td/ol/li[1]/"+
                         "a[@href='"+expectedEtymonURI+"']")
                         .string(expectedEtymon));
     }
@@ -297,8 +297,8 @@ public class LexicaHTMLControllerTest {
         final String etymologyLabel = messageSource.getMessage("galloitalici.kb.lexica.etymology", new Object[0], locale);
         if (expectedComponents.length==componentNum)
             return r;
-        return checkExpectedEtymonSubcomponent(r.andExpect(xpath("//tbody["+entryNum+"]/tr/th[text()='"+etymologyLabel+"']/following-sibling::td/ul/li["+(componentNum+1)+"]")
-                .string(expectedComponents[componentNum].getLabel())), entryNum, componentNum+1, expectedComponents);
+        return checkExpectedEtymonSubcomponent(r.andExpect(xpath("//tbody["+entryNum+"]/tr/th[text()='"+etymologyLabel+"']/following-sibling::td/ol/li["+(componentNum+1)+"]")
+                .string(expectedComponents[componentNum].getWrittenRep().get())), entryNum, componentNum+1, expectedComponents);
     }
 
     @Test

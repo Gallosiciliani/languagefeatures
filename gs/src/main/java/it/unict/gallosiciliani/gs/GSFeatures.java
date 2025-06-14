@@ -8,9 +8,6 @@ import it.unict.gallosiciliani.liph.util.LinguisticPhenomenonByLabelRetrieverImp
 import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.vocabulary.RDFS;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,7 +40,6 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonBy
     public static final String[] CATEGORY_CLASSES={LENIZ_CLASS, DEGEM_CLASS, ASSIB_CLASS, DISSIM_CLASS, DITT_CLASS,
             VOCAL_CLASS, AFER_CLASS, ELIM_CLASS, PALAT_CLASS};
 
-    private final String name;
     private final List<LinguisticPhenomenon> regexLinguisticPhenomena;
     private final LinguisticPhenomenonByLabelRetriever phenomenonByLabelRetriever;
 
@@ -51,26 +47,15 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonBy
      * Private constructor, use factory methods.
      */
     public GSFeatures() throws IOException {
-        super("gs-features.ttl");
+        super("gs-features.ttl", IRI);
         final RegexLinguisticPhenomenaReader reader=new RegexLinguisticPhenomenaReader();
         reader.read(getModel(), new FiniteStatePhenomenaQuery());
         regexLinguisticPhenomena=reader.getFeatures();
         phenomenonByLabelRetriever=LinguisticPhenomenonByLabelRetrieverImpl.build(regexLinguisticPhenomena);
-        name=retrieveOntologyName();
     }
 
     @Override
     public LinguisticPhenomenon getByLabel(final String label, final Locale locale) {
         return phenomenonByLabelRetriever.getByLabel(label, locale);
-    }
-
-    /**
-     * Get the label of the ontology individual
-     * @return value of the label property for the ontology individual
-     */
-    private String retrieveOntologyName(){
-        final Resource ontologyIndividual=getModel().getResource(IRI);
-        final Statement s=ontologyIndividual.getProperty(RDFS.label);
-        return s.getString();
     }
 }

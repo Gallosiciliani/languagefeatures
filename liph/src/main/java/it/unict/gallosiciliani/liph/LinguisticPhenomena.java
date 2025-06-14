@@ -1,11 +1,13 @@
 package it.unict.gallosiciliani.liph;
 
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.util.OntologyItem;
 import it.unict.gallosiciliani.liph.util.OntologyLoader;
+import lombok.Getter;
 
 import java.io.IOException;
 import java.util.Comparator;
-import java.util.Locale;
+import java.util.List;
 
 /**
  * An ontology which allows to define linguistic phenomena
@@ -41,7 +43,12 @@ public class LinguisticPhenomena extends OntologyLoader {
     public static final Comparator<LinguisticPhenomenon> COMPARATOR_BY_IRI= Comparator.comparing(LinguisticPhenomenon::getId);
     public static final LinguisticPhenomenonLabelProvider DEFAULT_LABEL_PROVIDER= (linguisticPhenomenon, locale) -> linguisticPhenomenon.getLabel();
 
+    @Getter
+    public final List<OntologyItem> classes;
+
     public LinguisticPhenomena() throws IOException {
-        super("liph.ttl");
+        super("liph.ttl", IRI);
+        classes=null;
     }
+
 }

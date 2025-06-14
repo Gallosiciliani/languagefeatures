@@ -1,11 +1,14 @@
 package it.unict.gallosiciliani.webapp.ontologies;
 
 import it.unict.gallosiciliani.gs.GSFeatures;
+import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+import it.unict.gallosiciliani.liph.util.OntologyItem;
 import it.unict.gallosiciliani.projects.Projects;
 import it.unict.gallosiciliani.projects.model.eurio.Project;
 import it.unict.gallosiciliani.projects.model.eurio.Result;
 import it.unict.gallosiciliani.webapp.TestUtil;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,6 +33,9 @@ public class OntologiesHTMLControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @MockBean
+    LinguisticPhenomena liph;
 
     @MockBean
     Projects projects;
@@ -97,6 +103,41 @@ public class OntologiesHTMLControllerTest {
                 .andExpect(xpath("//a[@href='"+r1.getId()+"']").string(r1.getLabel()))
                 .andExpect(xpath("//a[@href='"+r2.getId()+"']").string(r2.getLabel()))
                 .andExpect(xpath("//a[@href='"+r3.getId()+"']").string(r3.getLabel()));
+    }
+
+    //LIPH
+    private ResultActions getLiphHTMLPage() throws Exception {
+        return getHTMLPage("/ns/liph");
+    }
+
+    @Test
+    @Disabled
+    void shouldShowTitleInLiphPage() throws Exception {
+        final String expectedTitle="expected title";
+        when(liph.getName()).thenReturn(expectedTitle);
+        getLiphHTMLPage().andExpect(xpath("//h1").string(expectedTitle));
+    }
+
+    @Test
+    @Disabled
+    void shouldShowCommentInLiphPage() throws Exception {
+        final String expectedComment="expected comment";
+        when(liph.getComment()).thenReturn(expectedComment);
+        getLiphHTMLPage().andExpect(xpath("//p").string(expectedComment));
+    }
+
+    @Test
+    @Disabled
+    void shouldShowLiphClasses() throws Exception {
+        final OntologyItem c1=new OntologyItem(LinguisticPhenomena.NS+"c1", "c1label", "c1comment");
+        final OntologyItem c2=new OntologyItem(LinguisticPhenomena.NS+"c1", "c1label", "c1comment");
+        when(liph.getClasses()).thenReturn(List.of(c1,c2));
+        getLiphHTMLPage().andExpect(xpath("//h2[id='#c1']").string(c1.getLabel()));
+
+//        fi
+//        final String expectedComment="expected comment";
+//        when(liph.getComment()).thenReturn(expectedComment);
+//        getLiphHTMLPage().andExpect(xpath("//p").string(expectedComment));
     }
 
     // GS FEATURES

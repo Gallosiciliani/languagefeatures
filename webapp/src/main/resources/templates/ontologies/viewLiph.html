@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{base :: head}"></head>
+<body>
+<div class="container">
+    <div class="container" th:replace="~{base :: header (title=${title})}"></div>
+    <div class="container">
+        <div class="container">
+            <p th:text="${comment}">Project description</p>
+        </div>
+        <h2>Classes</h2>
+        <h2>Object Properties</h2>
+        <h2>Datatype Properties</h2>
+    </div>
+</div>
+</body>
+</html>

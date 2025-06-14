@@ -9,7 +9,9 @@
 @base <https://gallosiciliani.unict.it/ns/test/derivations#> .
 
 <https://gallosiciliani.unict.it/ns/test/derivations> rdf:type owl:Ontology ;
-                                                       owl:imports <https://gallosiciliani.unict.it/ns/test/defs> .
+                                                       owl:imports <https://gallosiciliani.unict.it/ns/test/defs> ;
+                                                        rdfs:label "label";
+                                                        rdfs:comment "comment".
 
 #################################################################
 #    Individuals

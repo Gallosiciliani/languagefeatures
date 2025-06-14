@@ -7,7 +7,9 @@
 @base <https://gallosiciliani.unict.it/ns/projects/> .
 
 <https://gallosiciliani.unict.it/ns/projects> rdf:type owl:Ontology ;
-                                               owl:imports <http://data.europa.eu/s66/v2.4#> .
+                                               owl:imports <http://data.europa.eu/s66/v2.4#> ;
+                                               rdfs:label "The Gallo-Siciliani initiative projects";
+                                               rdfs:comment "The Gallo-Siciliani initiative projects".
 
 #################################################################
 #    Individuals

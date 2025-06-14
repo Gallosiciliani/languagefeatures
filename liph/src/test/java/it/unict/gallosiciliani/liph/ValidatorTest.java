@@ -58,7 +58,7 @@ public class ValidatorTest {
     @Test
     void testValidDerivation() throws IOException {
         when(phenomenon.apply("ax")).thenReturn(Set.of("bx", "cx"));
-        try(final OntologyLoader l = new OntologyLoader("derivation.ttl")){
+        try(final OntologyLoader l = new OntologyLoader("derivation.ttl", "https://gallosiciliani.unict.it/ns/test/derivation")){
             final Validator actual = new Validator(l.getModel());
             actual.accept(phenomenon);
             assertEquals(1, actual.getProcessedDerivations());
@@ -73,7 +73,7 @@ public class ValidatorTest {
     }
 
     private void testDerivation() throws IOException {
-        try(final OntologyLoader l = new OntologyLoader("derivation.ttl")){
+        try(final OntologyLoader l = new OntologyLoader("derivation.ttl", "https://gallosiciliani.unict.it/ns/test/derivation")){
             final Validator actual = new Validator(l.getModel());
             actual.accept(phenomenon);
             assertEquals(1, actual.getProcessedDerivations());
@@ -98,8 +98,8 @@ public class ValidatorTest {
 
     @Test
     void shouldRetriveDerivationsFromModel() throws IOException {
-        try (final OntologyLoader data = new OntologyLoader("derivations.ttl");
-             final OntologyLoader defs = new OntologyLoader("defs.ttl")) {
+        try (final OntologyLoader data = new OntologyLoader("derivations.ttl", "https://gallosiciliani.unict.it/ns/test/derivations");
+             final OntologyLoader defs = new OntologyLoader("defs.ttl", "https://gallosiciliani.unict.it/ns/test/defs")) {
             final Validator actual = new Validator(data.getModel());
             actual.validate(defs.getModel());
             assertEquals(2, actual.getProcessedDerivations());

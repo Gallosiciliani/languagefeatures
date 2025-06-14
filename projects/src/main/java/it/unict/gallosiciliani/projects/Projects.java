@@ -26,7 +26,7 @@ public class Projects extends OntologyLoader {
      *
      */
     public Projects() throws IOException {
-        super("projects.ttl");
+        super("projects.ttl", IRI);
         gallosiciliani2023Project=createGallosiciliani2023Project();
     }
 

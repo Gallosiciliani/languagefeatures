@@ -99,8 +99,8 @@ public class EtymologyImporterTest {
         try(final EntityManagerFactoryHelper emf=new InMemoryEntityManagerFactoryHelper();
             final EntityManager em=emf.createEntityManager()){
             em.getTransaction().begin();
-            em.persist(p);
-            em.persist(q);
+//            em.persist(p);
+//            em.persist(q);
             em.persist(lemmaForm);
             em.persist(lemmaEntry);
             em.getTransaction().commit();

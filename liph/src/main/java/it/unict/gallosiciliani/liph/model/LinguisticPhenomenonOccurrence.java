@@ -1,5 +1,6 @@
 package it.unict.gallosiciliani.liph.model;
 
+import cz.cvut.kbss.jopa.model.annotations.CascadeType;
 import cz.cvut.kbss.jopa.model.annotations.FetchType;
 import cz.cvut.kbss.jopa.model.annotations.OWLClass;
 import cz.cvut.kbss.jopa.model.annotations.OWLObjectProperty;
@@ -17,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @OWLClass(iri= LinguisticPhenomena.LINGUISTIC_PHENOMENON_OCCURRENCE_CLASS)
 @Data
 public class LinguisticPhenomenonOccurrence extends Thing {
-    @OWLObjectProperty(iri=LinguisticPhenomena.OCCURRENCE_OF_OBJ_PROPERTY, fetch= FetchType.EAGER)
+    @OWLObjectProperty(iri=LinguisticPhenomena.OCCURRENCE_OF_OBJ_PROPERTY, fetch= FetchType.EAGER, cascade = CascadeType.PERSIST)
     LinguisticPhenomenon occurrenceOf;
     @OWLObjectProperty(iri=LinguisticPhenomena.SOURCE_OBJ_PROPERTY, fetch= FetchType.EAGER)
     LexicalObject source;

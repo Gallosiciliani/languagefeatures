@@ -5,6 +5,7 @@ import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
 import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
+import it.unict.gallosiciliani.liph.model.owl.Thing;
 import it.unict.gallosiciliani.webapp.derivation.DerivationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class EntrySummarizer {
             }
 
             @Override
-            public SortedSet<Form> getLatinEtymon() {
+            public SortedSet<Form> getEtymon() {
                 return etyComponents;
             }
 
@@ -103,8 +104,21 @@ public class EntrySummarizer {
      */
     private SortedSet<Form> getEtymonComponents(final LexicalEntry src){
         final Etymology etymology=getEtymology(src);
-        if (etymology==null || etymology.getLabel()==null)
+        if (etymology==null)
             return Collections.emptySortedSet();
+
+        final Set<Form> etySubSource = etymology.getStartingLink().getEtySubSource();
+        if (etySubSource.size()==1) {
+            final TreeSet<Form> singleton=new TreeSet<>(Thing.COMPARATOR_BY_IRI);
+            singleton.addAll(etySubSource);
+            return singleton;
+        }
+
+        //in the case of multiple etymon components, etymology label serves the components ordering
+        if (etymology.getLabel()==null)
+            return Collections.emptySortedSet();
+
+
         /*
          * Here we assume that all the subcomponents of the etymon are reported in
          * etymology.getName, separated by '+'. So, the ordering of subcomponents is derived by
@@ -116,7 +130,6 @@ public class EntrySummarizer {
             return p1 - p2;
         };
         final SortedSet<Form> components = new TreeSet<>(subtermsComparator);
-        final Set<Form> etySubSource = etymology.getStartingLink().getEtySubSource();
         for (Form form : etySubSource) {
             if (form.getLabel() != null) {
                 components.add(form);
