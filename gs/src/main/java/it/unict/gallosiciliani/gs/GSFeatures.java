@@ -37,10 +37,11 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonBy
     public static final String VOCAL_CLASS=NS+"Vocal";
     public static final String AFER_CLASS=NS+"Afer";
     public static final String ELIM_CLASS =NS+"Elim";
+    public static final String PALAT_CLASS=NS+"Palat";
     public static final String INF_CLASS =NS+"Inf";
 
     public static final String[] CATEGORY_CLASSES={LENIZ_CLASS, DEGEM_CLASS, ASSIB_CLASS, DISSIM_CLASS, DITT_CLASS,
-            VOCAL_CLASS, AFER_CLASS, ELIM_CLASS, INF_CLASS};
+            VOCAL_CLASS, AFER_CLASS, ELIM_CLASS, PALAT_CLASS};
 
     private final String name;
     private final List<LinguisticPhenomenon> regexLinguisticPhenomena;

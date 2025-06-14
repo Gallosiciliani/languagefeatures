@@ -9,6 +9,6 @@ public class RootController {
 
     @GetMapping(value={"", "/","/ns", "/ns/"})
     RedirectView redirectHome(){
-        return new RedirectView("/ns/projects");
+        return new RedirectView("/ns/projects/gallosiciliani2023Project");
     }
 }
