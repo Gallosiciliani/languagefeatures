@@ -32,7 +32,7 @@ public class OntologiesRestController {
      * Provide the base ontology to define language features.
      * @return the ontology in TTL format
      */
-    @GetMapping(value = "liph", produces = "text/turtle")
+    @GetMapping(value = {"liph", "liph/ttl"}, produces = "text/turtle")
     public String getLanguageFeaturesOntology(){
         return liph.getOntologyAsStr();
     }
@@ -59,7 +59,7 @@ public class OntologiesRestController {
      * Provide the ontology with features defined in the scope of the Galloitalici project
      * @return the ontology in TTL format
      */
-    @GetMapping(value = "gs-features", produces = "text/turtle")
+    @GetMapping(value = {"gs-features", "gs-features/ttl"}, produces = "text/turtle")
     public String getGSFeaturesOntology(){
         return gsFeatures.getOntologyAsStr();
     }
@@ -77,7 +77,7 @@ public class OntologiesRestController {
      * Provide a ttl version of the data stored in the ABox
      * @return ABox in TTL format
      */
-    @GetMapping(value = {"lexica/nicosiaesperlinga", "lexica", "lexica/"}, produces = "text/turtle")
+    @GetMapping(value = {"lexica/nicosiaesperlinga", "lexica/nicosiaesperlinga/ttl", "lexica", "lexica/"}, produces = "text/turtle")
     public String getAbox(){
         return abox.getOntologyAsStr();
     }

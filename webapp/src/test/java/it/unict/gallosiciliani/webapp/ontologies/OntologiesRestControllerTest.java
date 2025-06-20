@@ -41,11 +41,13 @@ public class OntologiesRestControllerTest {
     @Test
     void shouldReturnLiphOntologyTTL() throws Exception {
         shouldReturnOntologyInTTLFormat("/ns/liph", liph);
+        shouldReturnOntologyInTTLFormat("/ns/liph/ttl", liph);
     }
 
     @Test
     void shouldReturnGSFeaturesOntologyTTL() throws Exception {
         shouldReturnOntologyInTTLFormat("/ns/gs-features", gsFeatures);
+        shouldReturnOntologyInTTLFormat("/ns/gs-features/ttl", gsFeatures);
     }
 
     @Test
@@ -60,6 +62,7 @@ public class OntologiesRestControllerTest {
         shouldReturnAboxTTL("/ns/lexica");
         shouldReturnAboxTTL("/ns/lexica/");
         shouldReturnAboxTTL("/ns/lexica/nicosiaesperlinga");
+        shouldReturnAboxTTL("/ns/lexica/nicosiaesperlinga/ttl");
     }
 
     private void shouldReturnAboxTTL(final String path) throws Exception {

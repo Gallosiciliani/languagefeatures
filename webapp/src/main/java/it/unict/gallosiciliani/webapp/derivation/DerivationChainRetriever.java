@@ -18,7 +18,6 @@ import java.util.*;
 public class DerivationChainRetriever {
 
     private final Form etymon;
-    private final Form lemma;
     /**
      * -- GETTER --
      *  Get the linguistic phenomena occurrences in the chain from etymon to lemma, but in reversed
@@ -30,7 +29,6 @@ public class DerivationChainRetriever {
 
     public DerivationChainRetriever(final Form lemma, final Form etymon, final EntityManager entityManager){
         this.etymon=etymon;
-        this.lemma=lemma;
         final TypedQuery<LinguisticPhenomenonOccurrence> query=entityManager.createNativeQuery("SELECT ?o WHERE {\n"+
                 "\t?etymon <"+ LinguisticPhenomena.DERIVES_OBJ_PROPERTY+"> ?x .\n"+
                 "\t?o <"+ LinguisticPhenomena.SOURCE_OBJ_PROPERTY+"> ?x ;\n"+
