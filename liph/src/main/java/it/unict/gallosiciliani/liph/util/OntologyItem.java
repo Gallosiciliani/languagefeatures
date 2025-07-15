@@ -1,20 +1,26 @@
 package it.unict.gallosiciliani.liph.util;
 
-import lombok.Getter;
 
 /**
  * A generic ontology item, may be a class, a property or an individual
  */
-@Getter
-public class OntologyItem {
+public interface OntologyItem {
 
-    private final String iri;
-    private final String label;
-    private final String comment;
+    /**
+     * IRI characterizing the ontology item
+     * @return ontology IRI
+     */
+    String getIri();
 
-    public OntologyItem(final String iri, final String label, final String comment){
-        this.iri=iri;
-        this.label=label;
-        this.comment=comment;
-    }
+    /**
+     * Item label
+     * @return Item label
+     */
+    String getLabel();
+
+    /**
+     * Human readable item description
+     * @return item comment
+     */
+    String getComment();
 }

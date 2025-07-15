@@ -8,7 +8,6 @@ import it.unict.gallosiciliani.projects.Projects;
 import it.unict.gallosiciliani.projects.model.eurio.Project;
 import it.unict.gallosiciliani.projects.model.eurio.Result;
 import it.unict.gallosiciliani.webapp.TestUtil;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -42,6 +41,9 @@ public class OntologiesHTMLControllerTest {
 
     @MockBean
     GSFeatures gsFeatures;
+
+    final OntologyItem liphc1=createTestOntologyItem(LinguisticPhenomena.NS, "c1");
+    final OntologyItem liphc2=createTestOntologyItem(LinguisticPhenomena.NS, "c2");
 
     private ResultActions getHTMLPage(final String pageIRI) throws Exception {
         return mockMvc.perform(get(pageIRI).accept(MediaType.TEXT_HTML)).andExpect(status().isOk());
@@ -111,7 +113,6 @@ public class OntologiesHTMLControllerTest {
     }
 
     @Test
-    @Disabled
     void shouldShowTitleInLiphPage() throws Exception {
         final String expectedTitle="expected title";
         when(liph.getName()).thenReturn(expectedTitle);
@@ -119,27 +120,72 @@ public class OntologiesHTMLControllerTest {
     }
 
     @Test
-    @Disabled
     void shouldShowCommentInLiphPage() throws Exception {
         final String expectedComment="expected comment";
         when(liph.getComment()).thenReturn(expectedComment);
         getLiphHTMLPage().andExpect(xpath("//p").string(expectedComment));
     }
 
-    @Test
-    @Disabled
-    void shouldShowLiphClasses() throws Exception {
-        final OntologyItem c1=new OntologyItem(LinguisticPhenomena.NS+"c1", "c1label", "c1comment");
-        final OntologyItem c2=new OntologyItem(LinguisticPhenomena.NS+"c1", "c1label", "c1comment");
-        when(liph.getClasses()).thenReturn(List.of(c1,c2));
-        getLiphHTMLPage().andExpect(xpath("//h2[id='#c1']").string(c1.getLabel()));
 
-//        fi
-//        final String expectedComment="expected comment";
-//        when(liph.getComment()).thenReturn(expectedComment);
-//        getLiphHTMLPage().andExpect(xpath("//p").string(expectedComment));
+    @Test
+    void shouldShowLiphClasses() throws Exception {
+        when(liph.getNamespace()).thenReturn(LinguisticPhenomena.NS);
+        when(liph.getClasses()).thenReturn(List.of(liphc1,liphc2));
+        testLiphItems();
     }
 
+    private void testLiphItems() throws Exception {
+        getLiphHTMLPage().andExpect(xpath("//h3[@id='c1']").string(liphc1.getLabel()))
+                .andExpect(xpath("//h3[@id='c1']/following-sibling::p").string(liphc1.getComment()))
+                .andExpect(xpath("//h3[@id='c2']").string(liphc2.getLabel()))
+                .andExpect(xpath("//h3[@id='c2']/following-sibling::p").string(liphc2.getComment()));
+    }
+
+    @Test
+    void shouldShowLiphObjProperties() throws Exception {
+        when(liph.getNamespace()).thenReturn(LinguisticPhenomena.NS);
+        when(liph.getObjProperties()).thenReturn(List.of(liphc1,liphc2));
+        testLiphItems();
+    }
+
+    @Test
+    void shouldShowLiphDataProperties() throws Exception {
+        when(liph.getNamespace()).thenReturn(LinguisticPhenomena.NS);
+        when(liph.getDataProperties()).thenReturn(List.of(liphc1,liphc2));
+        testLiphItems();
+    }
+
+
+    @Test
+    void shouldShowLiphItems() throws Exception {
+        final OntologyItem c1=createTestOntologyItem(LinguisticPhenomena.NS, "c1");
+        final OntologyItem c2=createTestOntologyItem(LinguisticPhenomena.NS, "c2");
+        when(liph.getNamespace()).thenReturn(LinguisticPhenomena.NS);
+        when(liph.getClasses()).thenReturn(List.of(c1,c2));
+        getLiphHTMLPage().andExpect(xpath("//h3[@id='c1']").string(c1.getLabel()))
+                .andExpect(xpath("//h3[@id='c1']/following-sibling::p").string(c1.getComment()))
+                .andExpect(xpath("//h3[@id='c2']").string(c2.getLabel()))
+                .andExpect(xpath("//h3[@id='c2']/following-sibling::p").string(c2.getComment()));
+    }
+
+    private OntologyItem createTestOntologyItem(final String ns, final String id){
+        return new OntologyItem() {
+            @Override
+            public String getIri() {
+                return ns+id;
+            }
+
+            @Override
+            public String getLabel() {
+                return "label"+id;
+            }
+
+            @Override
+            public String getComment() {
+                return "comment"+id;
+            }
+        };
+    }
     // GS FEATURES
     private ResultActions getGSFeaturesHTMLPage() throws Exception {
         return getHTMLPage("/ns/gs-features");

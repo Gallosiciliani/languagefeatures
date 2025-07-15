@@ -43,12 +43,25 @@ public class LinguisticPhenomena extends OntologyLoader {
     public static final Comparator<LinguisticPhenomenon> COMPARATOR_BY_IRI= Comparator.comparing(LinguisticPhenomenon::getId);
     public static final LinguisticPhenomenonLabelProvider DEFAULT_LABEL_PROVIDER= (linguisticPhenomenon, locale) -> linguisticPhenomenon.getLabel();
 
+    public static final String[] CLASSES={LEXICAL_OBJECT_CLASS, LINGUISTIC_PHENOMENON_CLASS,LINGUISTIC_PHENOMENON_OCCURRENCE_CLASS, FINITE_STATE_LINGUISTIC_PHENOMENON_CLASS};
+    public static final String[] OBJ_PROPERTIES={DERIVES_OBJ_PROPERTY, OCCURRENCE_OF_OBJ_PROPERTY, SOURCE_OBJ_PROPERTY, TARGET_OBJ_PROPERTY};
+    public static final String[] DATA_PROPERTIES={WRITTEN_REP_DATA_PROPERTY, MATCHING_PATTERN_DATA_PROPERTY, REPLACE_WITH_DATA_PROPERTY};
+
     @Getter
     public final List<OntologyItem> classes;
 
+    @Getter
+    public final List<OntologyItem> objProperties;
+
+    @Getter
+    public final List<OntologyItem> dataProperties;
+
     public LinguisticPhenomena() throws IOException {
         super("liph.ttl", IRI);
-        classes=null;
+
+        classes=retrieve(CLASSES);
+        objProperties=retrieve(OBJ_PROPERTIES);
+        dataProperties=retrieve(DATA_PROPERTIES);
     }
 
 }
