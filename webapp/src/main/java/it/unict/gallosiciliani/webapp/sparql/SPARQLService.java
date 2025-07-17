@@ -3,6 +3,7 @@ package it.unict.gallosiciliani.webapp.sparql;
 import cz.cvut.kbss.jopa.exceptions.OWLPersistenceException;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.Query;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.query.*;
 import org.apache.jena.sparql.resultset.ResultsFormat;
@@ -22,6 +23,14 @@ public class SPARQLService {
     @Autowired
     EntityManager entityManager;
 
+    private Dataset dataset;
+
+    @PostConstruct
+    void initJenaDataset(){
+        dataset=entityManager.unwrap(Dataset.class);
+        if (dataset==null) throw new IllegalStateException("Jena Dataset not available");
+    }
+
     /**
      * Perform a SPARQL query on the knowledge base. The resultset is returned in
      * the CSV format as described in <a href="https://www.w3.org/TR/2013/REC-sparql11-results-csv-tsv-20130321/">SPARQL 1.1 Query Results CSV and TSV Formats</a>
@@ -30,7 +39,8 @@ public class SPARQLService {
      * @return the query result in CSV format
      */
     public String performSelectQuery(final String query, final ResultsFormat format) throws SPARQLQueryException {
-        return performSelectQueryEntityManager(query);
+        //return performSelectQueryEntityManager(query);
+        return performSelectQueryJena(query, format);
     }
 
     /**
@@ -50,7 +60,6 @@ public class SPARQLService {
     }
 
     private String performSelectQueryJena(final String query, final ResultsFormat format) throws SPARQLQueryException {
-        final Dataset dataset=entityManager.unwrap(Dataset.class);
         try {
             final QueryExecutionDatasetBuilder builder = QueryExecutionDatasetBuilder.create().query(query).dataset(dataset);
             final ByteArrayOutputStream out = new ByteArrayOutputStream();
