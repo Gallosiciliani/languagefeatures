@@ -11,10 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.net.URI;
 import java.util.Locale;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -35,15 +37,83 @@ public class SPARQLRestControllerTest {
     private MessageSource messageSource;
 
     @Test
-    void shouldReturnResultsAsCSV() throws Exception, SPARQLQueryException {
-        final String query = "SELECT ?x ?y ?x WHERE {?x ?y ?z}";
-        final String expected = "?x,?y,?z\n\r" + "x,y,z\n\r";
-        when(sparqlService.performSelectQuery(query, ResultsFormat.FMT_RS_CSV)).thenReturn(expected);
+    void testdUrlEncodedPostQueryReturnResultsAsCSV() throws Exception, SPARQLQueryException {
+        sendQueryUrlEncodedPost(ResultsFormat.FMT_RS_CSV);
+    }
 
-        mockMvc.perform(post("/sparql").param("query", query).contentType(MediaType.APPLICATION_FORM_URLENCODED))
+    private void sendQueryUrlEncodedPost(final ResultsFormat resultsFormat) throws SPARQLQueryException, Exception {
+        final String query = "SELECT ?x ?y ?x WHERE {?x ?y ?z}";
+        final String expected = "expected result";
+        when(sparqlService.performSelectQuery(query, resultsFormat)).thenReturn(expected);
+
+
+        mockMvc.perform(post("/sparql").param("query", query).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .accept(resultsFormat.getSymbol()))
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith("text/csv"))
+                .andExpect(content().contentTypeCompatibleWith(resultsFormat.getSymbol()))
                 .andExpect(content().string(expected));
+    }
+
+    @Test
+    void testUrlEncodedPostReturnResultsAsXML() throws Exception, SPARQLQueryException {
+        sendQueryUrlEncodedPost(ResultsFormat.FMT_RS_XML);
+    }
+
+    @Test
+    void testUrlEncodedPostReturnResultsAsJson() throws Exception, SPARQLQueryException {
+        sendQueryUrlEncodedPost(ResultsFormat.FMT_RS_JSON);
+    }
+
+    @Test
+    void testGetQueryReturnResultsAsCSV() throws Exception, SPARQLQueryException {
+        sendQueryGet(ResultsFormat.FMT_RS_CSV);
+    }
+
+    private void sendQueryGet(final ResultsFormat resultsFormat) throws SPARQLQueryException, Exception {
+        final String query = "SELECT ?x ?y ?x WHERE {?x ?y ?z}";
+        final String expected = "expected result";
+        when(sparqlService.performSelectQuery(query, resultsFormat)).thenReturn(expected);
+
+        mockMvc.perform(get(URI.create("/sparql")).param("query", query).accept(resultsFormat.getSymbol()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(resultsFormat.getSymbol()))
+                .andExpect(content().string(expected));
+    }
+
+    @Test
+    void testGetQueryReturnResultsAsXML() throws Exception, SPARQLQueryException {
+        sendQueryGet(ResultsFormat.FMT_RS_XML);
+    }
+
+    @Test
+    void testGetQueryReturnResultsAsJson() throws Exception, SPARQLQueryException {
+        sendQueryGet(ResultsFormat.FMT_RS_JSON);
+    }
+
+    @Test
+    void testPostQueryReturnResultsAsCSV() throws Exception, SPARQLQueryException {
+        sendQueryPostDirect(ResultsFormat.FMT_RS_CSV);
+    }
+
+    private void sendQueryPostDirect(final ResultsFormat resultsFormat) throws SPARQLQueryException, Exception {
+        final String query = "SELECT ?x ?y ?x WHERE {?x ?y ?z}";
+        final String expected = "expected result";
+        when(sparqlService.performSelectQuery(query, resultsFormat)).thenReturn(expected);
+
+        mockMvc.perform(post("/sparql").contentType("application/sparql-query").content(query).accept(resultsFormat.getSymbol()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(resultsFormat.getSymbol()))
+                .andExpect(content().string(expected));
+    }
+
+    @Test
+    void testPostQueryReturnResultsAsXML() throws Exception, SPARQLQueryException {
+        sendQueryPostDirect(ResultsFormat.FMT_RS_XML);
+    }
+
+    @Test
+    void testPostQueryReturnResultsAsJson() throws Exception, SPARQLQueryException {
+        sendQueryPostDirect(ResultsFormat.FMT_RS_JSON);
     }
 
     @Test
@@ -57,7 +127,7 @@ public class SPARQLRestControllerTest {
         final String[] errorMessageParameters = {cause.getMessage()};
         final String expectedErrorMessage = messageSource.getMessage("galloitailici.kb.sparql.error", errorMessageParameters, locale);
 
-        mockMvc.perform(post("/sparql").param("query", query).contentType(MediaType.APPLICATION_FORM_URLENCODED).locale(locale))
+        mockMvc.perform(post("/sparql").param("query", query).contentType(MediaType.APPLICATION_FORM_URLENCODED).accept(ResultsFormat.FMT_RS_CSV.getSymbol()).locale(locale))
                 .andExpect(status().is(HttpStatus.BAD_REQUEST.value()))
                 .andExpect(xpath("//form//textarea[@name='query']").string(query))
                 .andExpect(content().string(containsString(expectedErrorMessage)));

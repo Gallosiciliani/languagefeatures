@@ -4,11 +4,19 @@ import cz.cvut.kbss.jopa.model.EntityManager;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lime;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFactory;
 import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.apache.jena.vocabulary.DCTerms;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,30 +32,62 @@ public class SPARQLServiceTest {
     @Autowired
     EntityManager entityManager;
 
+    private final Lexicon l1=createTestLexicon();
+    private final Lexicon l2=createTestLexicon();
+    private final Lexicon l3=createTestLexicon();
+    private int n=1;
+
+    private Lexicon createTestLexicon(){
+        final Lexicon l=new Lexicon();
+        l.setId("http://test.org/lexicon"+n);
+        l.setTitle("Lexicon "+n);
+        n++;
+        return l;
+    }
+
     /**
-     * Assuming that in the knowledge base there are the three default lexica.
+     * Select query with a single variable and result in CSV
      */
     @Test
-    void shouldConvertResultSetWithSingleVariableToCSV() throws SPARQLQueryException {
-        final Lexicon l1=new Lexicon();
-        l1.setId("http://test.org/lexicon1");
-        final Lexicon l2=new Lexicon();
-        l2.setId("http://test.org/lexicon2");
-        final Lexicon l3=new Lexicon();
-        l3.setId("http://test.org/lexicon3");
+    void shouldConvertResultSetWithSingleVariableToCSV() throws SPARQLQueryException, IOException {
+        shouldConvertResultSetWithSingleVariable(ResultsFormat.FMT_RS_CSV);
+    }
 
-        final String expected ="x\r\n"+
-                l1.getId()+"\r\n"+
-                l2.getId()+"\r\n"+
-                l3.getId()+"\r\n";
+    /**
+     * Select query with a single variable and result in XML
+     */
+    @Test
+    void shouldConvertResultSetWithSingleVariableToXML() throws SPARQLQueryException, IOException {
+        shouldConvertResultSetWithSingleVariable(ResultsFormat.FMT_RS_XML);
+    }
 
+    /**
+     * Select query with a single variable and result in JSON
+     */
+    @Test
+    void shouldConvertResultSetWithSingleVariableToJSON() throws SPARQLQueryException, IOException {
+        shouldConvertResultSetWithSingleVariable(ResultsFormat.FMT_RS_JSON);
+    }
+
+    /**
+     * Select query with a single variable
+     */
+    private void shouldConvertResultSetWithSingleVariable(final ResultsFormat resultFormat) throws SPARQLQueryException, IOException {
         PersistenceTestUtils.build().persist(l1).persist(l2).persist(l3).execute(entityManager);
-
         try {
-            final String actual = sparqlService.performSelectQuery("SELECT ?x where {" +
+            final String actual=sparqlService.performSelectQuery("SELECT ?x where {" +
                     "?x a <" + Lime.LEXICON_CLASS + "> ." +
-                    "} ORDER BY ?x", ResultsFormat.FMT_RS_CSV);
-            assertEquals(expected, actual);
+                    "} ORDER BY ?x", resultFormat);
+            try(final InputStream is= IOUtils.toInputStream(actual, StandardCharsets.UTF_8)){
+                final ResultSet actualRs=ResultSetFactory.load(is, resultFormat);
+                final QuerySolution s1=actualRs.next();
+                assertEquals(s1.get("x").toString(), l1.getId());
+                final QuerySolution s2=actualRs.next();
+                assertEquals(s2.get("x").toString(), l2.getId());
+                final QuerySolution s3=actualRs.next();
+                assertEquals(s3.get("x").toString(), l3.getId());
+                assertFalse(actualRs.hasNext());
+            }
         }finally {
             PersistenceTestUtils.build().remove(l3).remove(l2).remove(l1).execute(entityManager);
         }
@@ -58,15 +98,6 @@ public class SPARQLServiceTest {
      */
     @Test
     void shouldConvertResultSetWithMultipleVariablesToCSV() throws SPARQLQueryException {
-        final Lexicon l1=new Lexicon();
-        l1.setId("http://test.org/lexicon1");
-        l1.setTitle("Lexicon 1");
-        final Lexicon l2=new Lexicon();
-        l2.setId("http://test.org/lexicon2");
-        l2.setTitle("Lexicon 2");
-        final Lexicon l3=new Lexicon();
-        l3.setId("http://test.org/lexicon3");
-        l3.setTitle("Lexicon 3");
 
         final String expected ="x,title\r\n"+
                 l1.getId()+","+l1.getTitle()+"\r\n"+

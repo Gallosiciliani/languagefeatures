@@ -1,8 +1,6 @@
 package it.unict.gallosiciliani.webapp.sparql;
 
-import cz.cvut.kbss.jopa.exceptions.OWLPersistenceException;
 import cz.cvut.kbss.jopa.model.EntityManager;
-import cz.cvut.kbss.jopa.model.query.Query;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.query.*;
@@ -11,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -39,26 +36,16 @@ public class SPARQLService {
      * @return the query result in CSV format
      */
     public String performSelectQuery(final String query, final ResultsFormat format) throws SPARQLQueryException {
-        //return performSelectQueryEntityManager(query);
         return performSelectQueryJena(query, format);
     }
 
     /**
-     * Perform a SPARQL query on the knowledge base. The resultset is returned in
-     * the CSV format as described in <a href="https://www.w3.org/TR/2013/REC-sparql11-results-csv-tsv-20130321/">SPARQL 1.1 Query Results CSV and TSV Formats</a>
+     * Perform a SPARQL query on the knowledge base using Jena ARQ.
      *
      * @param query the SPARQL query
-     * @return the query result in CSV format
+     * @param format requested results format
+     * @return the query result in the requested format
      */
-    private String performSelectQueryEntityManager(final String query) throws SPARQLQueryException {
-        final Query q = entityManager.createNativeQuery(query);
-        try {
-            return SPARQLResultToCSVConverter.getResultAsCSV(q);
-        } catch(final OWLPersistenceException|IOException e){
-            throw new SPARQLQueryException(query,e);
-        }
-    }
-
     private String performSelectQueryJena(final String query, final ResultsFormat format) throws SPARQLQueryException {
         try {
             final QueryExecutionDatasetBuilder builder = QueryExecutionDatasetBuilder.create().query(query).dataset(dataset);
