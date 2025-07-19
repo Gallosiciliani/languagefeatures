@@ -4,12 +4,11 @@ import cz.cvut.kbss.jopa.model.EntityManager;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.query.*;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.ResultSetMgr;
 import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 
 /**
  * @author Cristiano Longo
@@ -49,11 +48,13 @@ public class SPARQLService {
     private String performSelectQueryJena(final String query, final ResultsFormat format) throws SPARQLQueryException {
         try {
             final QueryExecutionDatasetBuilder builder = QueryExecutionDatasetBuilder.create().query(query).dataset(dataset);
-            final ByteArrayOutputStream out = new ByteArrayOutputStream();
+            final Lang outLang=ResultsFormat.convert(format);
             try (final QueryExecution e = builder.build()) {
-                final ResultSet rs = e.execSelect();
-                ResultSetFormatter.output(out, rs, format);
-                return out.toString(StandardCharsets.UTF_8);
+                if (e.getQuery().isAskType())
+                    return ResultSetMgr.asString(e.execAsk(), outLang);
+                if (e.getQuery().isSelectType())
+                    return ResultSetMgr.asString(e.execSelect(), outLang);
+                throw new UnsupportedOperationException("Unsupported query type");
             }
         } catch (final QueryParseException e) {
             throw new SPARQLQueryException(query, e);

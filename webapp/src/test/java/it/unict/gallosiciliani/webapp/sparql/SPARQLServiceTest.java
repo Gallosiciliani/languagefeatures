@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.webapp.sparql;
 
 import cz.cvut.kbss.jopa.model.EntityManager;
+import cz.cvut.kbss.jopa.vocabulary.RDF;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lime;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
@@ -8,7 +9,11 @@ import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFactory;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.resultset.ResultSetReader;
+import org.apache.jena.riot.resultset.ResultSetReaderRegistry;
 import org.apache.jena.sparql.resultset.ResultsFormat;
+import org.apache.jena.sparql.resultset.SPARQLResult;
 import org.apache.jena.vocabulary.DCTerms;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,5 +127,22 @@ public class SPARQLServiceTest {
         final SPARQLQueryException e = assertThrows(SPARQLQueryException.class, ()->sparqlService.performSelectQuery(query, ResultsFormat.FMT_RS_CSV));
         assertEquals(query, e.getQuery());
         assertNotNull(e.getCause());
+    }
+
+    @Test
+    public void sendAskQueryCSV() throws SPARQLQueryException, IOException {
+        PersistenceTestUtils.build().persist(l1).execute(entityManager);
+        final ResultSetReader reader= ResultSetReaderRegistry.getFactory(Lang.CSV).create(Lang.CSV);
+        try {
+            final String actual = sparqlService.performSelectQuery("ASK {?x <"+ RDF.TYPE+"> <"+Lime.LEXICON_CLASS+">}",
+                    ResultsFormat.FMT_RS_CSV);
+            try(final InputStream is=IOUtils.toInputStream(actual, StandardCharsets.UTF_8)) {
+                final SPARQLResult result=reader.readAny(is, null);
+                assertTrue(result.isBoolean());
+                assertTrue(result.getBooleanResult());
+            }
+        } finally {
+            PersistenceTestUtils.build().remove(l3).remove(l2).remove(l1).execute(entityManager);
+        }
     }
 }
