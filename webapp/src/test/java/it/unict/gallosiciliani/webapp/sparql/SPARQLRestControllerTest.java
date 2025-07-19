@@ -44,7 +44,7 @@ public class SPARQLRestControllerTest {
     private void sendQueryUrlEncodedPost(final ResultsFormat resultsFormat) throws SPARQLQueryException, Exception {
         final String query = "SELECT ?x ?y ?x WHERE {?x ?y ?z}";
         final String expected = "expected result";
-        when(sparqlService.performSelectQuery(query, resultsFormat)).thenReturn(expected);
+        when(sparqlService.query(query, resultsFormat)).thenReturn(expected);
 
 
         mockMvc.perform(post("/sparql").param("query", query).contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -72,7 +72,7 @@ public class SPARQLRestControllerTest {
     private void sendQueryGet(final ResultsFormat resultsFormat) throws SPARQLQueryException, Exception {
         final String query = "SELECT ?x ?y ?x WHERE {?x ?y ?z}";
         final String expected = "expected result";
-        when(sparqlService.performSelectQuery(query, resultsFormat)).thenReturn(expected);
+        when(sparqlService.query(query, resultsFormat)).thenReturn(expected);
 
         mockMvc.perform(get(URI.create("/sparql")).param("query", query).accept(resultsFormat.getSymbol()))
                 .andExpect(status().isOk())
@@ -98,7 +98,7 @@ public class SPARQLRestControllerTest {
     private void sendQueryPostDirect(final ResultsFormat resultsFormat) throws SPARQLQueryException, Exception {
         final String query = "SELECT ?x ?y ?x WHERE {?x ?y ?z}";
         final String expected = "expected result";
-        when(sparqlService.performSelectQuery(query, resultsFormat)).thenReturn(expected);
+        when(sparqlService.query(query, resultsFormat)).thenReturn(expected);
 
         mockMvc.perform(post("/sparql").contentType("application/sparql-query").content(query).accept(resultsFormat.getSymbol()))
                 .andExpect(status().isOk())
@@ -121,7 +121,7 @@ public class SPARQLRestControllerTest {
         final String query = "wrongquery";
         final OWLPersistenceException cause = new OWLPersistenceException("error cause");
 
-        when(sparqlService.performSelectQuery(query, ResultsFormat.FMT_RS_CSV)).thenThrow(new SPARQLQueryException(query, cause));
+        when(sparqlService.query(query, ResultsFormat.FMT_RS_CSV)).thenThrow(new SPARQLQueryException(query, cause));
         final Locale locale = Locale.ENGLISH;
 
         final String[] errorMessageParameters = {cause.getMessage()};
