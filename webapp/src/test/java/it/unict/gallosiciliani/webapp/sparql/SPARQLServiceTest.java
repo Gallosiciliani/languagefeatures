@@ -11,6 +11,7 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFParser;
 import org.apache.jena.riot.resultset.ResultSetReader;
@@ -18,6 +19,7 @@ import org.apache.jena.riot.resultset.ResultSetReaderRegistry;
 import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.apache.jena.sparql.resultset.SPARQLResult;
 import org.apache.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.RDFS;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -160,7 +162,23 @@ public class SPARQLServiceTest {
         } finally {
             PersistenceTestUtils.build().remove(l1).execute(entityManager);
         }
-
-
     }
+
+    @Test
+    public void constructQuery() throws SPARQLQueryException {
+        PersistenceTestUtils.build().persist(l1).execute(entityManager);
+        try{
+            final String actual=sparqlService.query("CONSTRUCT {?x <"+ RDFS.label.getURI()+"> ?title} WHERE {?x <"+DCTerms.NS+"title> ?title}",
+                    ResultsFormat.FMT_RDF_TTL);
+            final Model actualModel= ModelFactory.createDefaultModel();
+            RDFParser.fromString(actual, Lang.TTL).parse(actualModel);
+            final Resource actualResource=actualModel.getResource(l1.getId());
+            assertNotNull(actualResource);
+            assertEquals(l1.getTitle(), actualResource.getProperty(RDFS.label).getObject().toString());
+            assertNotNull(actualModel.getResource(l1.getId()));
+        } finally {
+            PersistenceTestUtils.build().remove(l1).execute(entityManager);
+        }
+    }
+
 }

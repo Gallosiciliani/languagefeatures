@@ -69,6 +69,8 @@ public class SPARQLService {
                     return ResultSetMgr.asString(e.execSelect(), outLang);
                 if (e.getQuery().isDescribeType())
                     return RDFWriter.source(e.execDescribe()).lang(outLang).asString();
+                if (e.getQuery().isConstructType())
+                    return RDFWriter.source(e.execConstruct()).lang(outLang).asString();
                 throw new UnsupportedOperationException("Unsupported query type");
             }
         } catch (final QueryParseException e) {
