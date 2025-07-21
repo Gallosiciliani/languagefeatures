@@ -59,7 +59,7 @@ public class SPARQLServiceTest {
      * Select query with a single variable and result in CSV
      */
     @Test
-    void shouldConvertResultSetWithSingleVariableToCSV() throws SPARQLQueryException, IOException {
+    void shouldConvertResultSetWithSingleVariableToCSV() throws UnableToPerformSPARQLQueryException, IOException {
         shouldConvertResultSetWithSingleVariable(ResultsFormat.FMT_RS_CSV);
     }
 
@@ -67,7 +67,7 @@ public class SPARQLServiceTest {
      * Select query with a single variable and result in XML
      */
     @Test
-    void shouldConvertResultSetWithSingleVariableToXML() throws SPARQLQueryException, IOException {
+    void shouldConvertResultSetWithSingleVariableToXML() throws UnableToPerformSPARQLQueryException, IOException {
         shouldConvertResultSetWithSingleVariable(ResultsFormat.FMT_RS_XML);
     }
 
@@ -75,14 +75,14 @@ public class SPARQLServiceTest {
      * Select query with a single variable and result in JSON
      */
     @Test
-    void shouldConvertResultSetWithSingleVariableToJSON() throws SPARQLQueryException, IOException {
+    void shouldConvertResultSetWithSingleVariableToJSON() throws UnableToPerformSPARQLQueryException, IOException {
         shouldConvertResultSetWithSingleVariable(ResultsFormat.FMT_RS_JSON);
     }
 
     /**
      * Select query with a single variable
      */
-    private void shouldConvertResultSetWithSingleVariable(final ResultsFormat resultFormat) throws SPARQLQueryException, IOException {
+    private void shouldConvertResultSetWithSingleVariable(final ResultsFormat resultFormat) throws UnableToPerformSPARQLQueryException, IOException {
         PersistenceTestUtils.build().persist(l1).persist(l2).persist(l3).execute(entityManager);
         try {
             final String actual=sparqlService.query("SELECT ?x where {" +
@@ -107,7 +107,7 @@ public class SPARQLServiceTest {
      * Assuming that in the knowledge base there are the three default lexica.
      */
     @Test
-    void shouldConvertResultSetWithMultipleVariablesToCSV() throws SPARQLQueryException {
+    void shouldConvertResultSetWithMultipleVariablesToCSV() throws UnableToPerformSPARQLQueryException {
 
         final String expected ="x,title\r\n"+
                 l1.getId()+","+l1.getTitle()+"\r\n"+
@@ -129,13 +129,13 @@ public class SPARQLServiceTest {
     @Test
     public void shouldThrowExceptionOnWrongQuery() {
         final String query = "Not a sparql query";
-        final SPARQLQueryException e = assertThrows(SPARQLQueryException.class, ()->sparqlService.query(query, ResultsFormat.FMT_RS_CSV));
+        final UnableToPerformSPARQLQueryException e = assertThrows(UnableToPerformSPARQLQueryException.class, ()->sparqlService.query(query, ResultsFormat.FMT_RS_CSV));
         assertEquals(query, e.getQuery());
         assertNotNull(e.getCause());
     }
 
     @Test
-    public void askQueryCSV() throws SPARQLQueryException, IOException {
+    public void askQueryCSV() throws UnableToPerformSPARQLQueryException, IOException {
         PersistenceTestUtils.build().persist(l1).execute(entityManager);
         final ResultSetReader readerCSV=ResultSetReaderRegistry.getFactory(Lang.CSV).create(Lang.CSV);
         try {
@@ -152,7 +152,7 @@ public class SPARQLServiceTest {
     }
 
     @Test
-    public void describeQuery() throws SPARQLQueryException {
+    public void describeQuery() throws UnableToPerformSPARQLQueryException {
         PersistenceTestUtils.build().persist(l1).execute(entityManager);
         try{
             final String actual=sparqlService.query("DESCRIBE ?x WHERE {?x <"+DCTerms.NS+"title> \""+l1.getTitle()+"\"}", ResultsFormat.FMT_RDF_TTL);
@@ -165,7 +165,7 @@ public class SPARQLServiceTest {
     }
 
     @Test
-    public void constructQuery() throws SPARQLQueryException {
+    public void constructQuery() throws UnableToPerformSPARQLQueryException {
         PersistenceTestUtils.build().persist(l1).execute(entityManager);
         try{
             final String actual=sparqlService.query("CONSTRUCT {?x <"+ RDFS.label.getURI()+"> ?title} WHERE {?x <"+DCTerms.NS+"title> ?title}",
@@ -180,5 +180,4 @@ public class SPARQLServiceTest {
             PersistenceTestUtils.build().remove(l1).execute(entityManager);
         }
     }
-
 }

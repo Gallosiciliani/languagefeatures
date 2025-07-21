@@ -37,11 +37,11 @@ public class SPARQLRestControllerTest {
     private MessageSource messageSource;
 
     @Test
-    void testdUrlEncodedPostQueryReturnResultsAsCSV() throws Exception, SPARQLQueryException {
+    void testdUrlEncodedPostQueryReturnResultsAsCSV() throws Exception, UnableToPerformSPARQLQueryException {
         sendQueryUrlEncodedPost(ResultsFormat.FMT_RS_CSV);
     }
 
-    private void sendQueryUrlEncodedPost(final ResultsFormat resultsFormat) throws SPARQLQueryException, Exception {
+    private void sendQueryUrlEncodedPost(final ResultsFormat resultsFormat) throws UnableToPerformSPARQLQueryException, Exception {
         final String query = "SELECT ?x ?y ?x WHERE {?x ?y ?z}";
         final String expected = "expected result";
         when(sparqlService.query(query, resultsFormat)).thenReturn(expected);
@@ -55,21 +55,21 @@ public class SPARQLRestControllerTest {
     }
 
     @Test
-    void testUrlEncodedPostReturnResultsAsXML() throws Exception, SPARQLQueryException {
+    void testUrlEncodedPostReturnResultsAsXML() throws Exception, UnableToPerformSPARQLQueryException {
         sendQueryUrlEncodedPost(ResultsFormat.FMT_RS_XML);
     }
 
     @Test
-    void testUrlEncodedPostReturnResultsAsJson() throws Exception, SPARQLQueryException {
+    void testUrlEncodedPostReturnResultsAsJson() throws Exception, UnableToPerformSPARQLQueryException {
         sendQueryUrlEncodedPost(ResultsFormat.FMT_RS_JSON);
     }
 
     @Test
-    void testGetQueryReturnResultsAsCSV() throws Exception, SPARQLQueryException {
+    void testGetQueryReturnResultsAsCSV() throws Exception, UnableToPerformSPARQLQueryException {
         sendQueryGet(ResultsFormat.FMT_RS_CSV);
     }
 
-    private void sendQueryGet(final ResultsFormat resultsFormat) throws SPARQLQueryException, Exception {
+    private void sendQueryGet(final ResultsFormat resultsFormat) throws UnableToPerformSPARQLQueryException, Exception {
         final String query = "SELECT ?x ?y ?x WHERE {?x ?y ?z}";
         final String expected = "expected result";
         when(sparqlService.query(query, resultsFormat)).thenReturn(expected);
@@ -81,21 +81,21 @@ public class SPARQLRestControllerTest {
     }
 
     @Test
-    void testGetQueryReturnResultsAsXML() throws Exception, SPARQLQueryException {
+    void testGetQueryReturnResultsAsXML() throws Exception, UnableToPerformSPARQLQueryException {
         sendQueryGet(ResultsFormat.FMT_RS_XML);
     }
 
     @Test
-    void testGetQueryReturnResultsAsJson() throws Exception, SPARQLQueryException {
+    void testGetQueryReturnResultsAsJson() throws Exception, UnableToPerformSPARQLQueryException {
         sendQueryGet(ResultsFormat.FMT_RS_JSON);
     }
 
     @Test
-    void testPostQueryReturnResultsAsCSV() throws Exception, SPARQLQueryException {
+    void testPostQueryReturnResultsAsCSV() throws Exception, UnableToPerformSPARQLQueryException {
         sendQueryPostDirect(ResultsFormat.FMT_RS_CSV);
     }
 
-    private void sendQueryPostDirect(final ResultsFormat resultsFormat) throws SPARQLQueryException, Exception {
+    private void sendQueryPostDirect(final ResultsFormat resultsFormat) throws UnableToPerformSPARQLQueryException, Exception {
         final String query = "SELECT ?x ?y ?x WHERE {?x ?y ?z}";
         final String expected = "expected result";
         when(sparqlService.query(query, resultsFormat)).thenReturn(expected);
@@ -107,21 +107,21 @@ public class SPARQLRestControllerTest {
     }
 
     @Test
-    void testPostQueryReturnResultsAsXML() throws Exception, SPARQLQueryException {
+    void testPostQueryReturnResultsAsXML() throws Exception, UnableToPerformSPARQLQueryException {
         sendQueryPostDirect(ResultsFormat.FMT_RS_XML);
     }
 
     @Test
-    void testPostQueryReturnResultsAsJson() throws Exception, SPARQLQueryException {
+    void testPostQueryReturnResultsAsJson() throws Exception, UnableToPerformSPARQLQueryException {
         sendQueryPostDirect(ResultsFormat.FMT_RS_JSON);
     }
 
     @Test
-    void shouldReturn400OnWrongQuery() throws Exception, SPARQLQueryException {
+    void shouldReturn400OnWrongQuery() throws Exception, UnableToPerformSPARQLQueryException {
         final String query = "wrongquery";
         final OWLPersistenceException cause = new OWLPersistenceException("error cause");
 
-        when(sparqlService.query(query, ResultsFormat.FMT_RS_CSV)).thenThrow(new SPARQLQueryException(query, cause));
+        when(sparqlService.query(query, ResultsFormat.FMT_RS_CSV)).thenThrow(new UnableToPerformSPARQLQueryException(query, cause));
         final Locale locale = Locale.ENGLISH;
 
         final String[] errorMessageParameters = {cause.getMessage()};

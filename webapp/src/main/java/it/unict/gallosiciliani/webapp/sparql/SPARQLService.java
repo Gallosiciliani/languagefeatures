@@ -47,7 +47,7 @@ public class SPARQLService {
      * @param query the SPARQL query
      * @return the query result in CSV format
      */
-    public String query(final String query, final ResultsFormat format) throws SPARQLQueryException {
+    public String query(final String query, final ResultsFormat format) throws UnableToPerformSPARQLQueryException {
         return performSelectQueryJena(query, format);
     }
 
@@ -58,7 +58,7 @@ public class SPARQLService {
      * @param format requested results format
      * @return the query result in the requested format
      */
-    private String performSelectQueryJena(final String query, final ResultsFormat format) throws SPARQLQueryException {
+    private String performSelectQueryJena(final String query, final ResultsFormat format) throws UnableToPerformSPARQLQueryException {
         try {
             final QueryExecutionDatasetBuilder builder = QueryExecutionDatasetBuilder.create().query(query).dataset(dataset);
             final Lang outLang=convert(format);
@@ -71,10 +71,10 @@ public class SPARQLService {
                     return RDFWriter.source(e.execDescribe()).lang(outLang).asString();
                 if (e.getQuery().isConstructType())
                     return RDFWriter.source(e.execConstruct()).lang(outLang).asString();
-                throw new UnsupportedOperationException("Unsupported query type");
+                throw new UnableToPerformSPARQLQueryException(query, new UnsupportedSPARQLQueryException(query));
             }
         } catch (final QueryParseException e) {
-            throw new SPARQLQueryException(query, e);
+            throw new UnableToPerformSPARQLQueryException(query, e);
         }
     }
 
