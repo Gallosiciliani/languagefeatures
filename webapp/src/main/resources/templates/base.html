@@ -35,6 +35,11 @@
         </div>
         <h1 th:text="${title}">Page title missing</h1>
     </div>
+    <!-- specific for ontologies and dataset -->
+    <div class="container" th:fragment="ontology(comment)">
+        <p th:text="${comment}">Project description missing</p>
+        <a class="btn btn-primary mb-2" th:text="#{galloitalici.kb.ttl}" th:href="@{?ttl}">Download</a>
+    </div>
 <ul>
     <li th:each="lexicon : ${lexica}">
         <a th:href="@{${lexicon.id}}" th:text="${lexicon.title}"></a>

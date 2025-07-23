@@ -2,11 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{base :: head}"></head>
 <body>
-<div class="container">
     <div class="container" th:replace="~{base :: header (title=${title})}"></div>
-        <div class="container">
-            <p th:text="${comment}">Project description</p>
-        </div>
+    <div class="container" th:replace="~{base :: ontology (comment=${comment})}"></div>
 
     <div class="container">
         <h2>Classes</h2>
@@ -35,6 +32,5 @@
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

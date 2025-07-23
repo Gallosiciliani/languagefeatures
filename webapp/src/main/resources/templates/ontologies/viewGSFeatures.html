@@ -2,8 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{base :: head}"></head>
 <body>
-<div class="container">
     <div class="container" th:replace="~{base :: header (title=${title})}"></div>
+    <div class="container" th:replace="~{base :: ontology (comment=${comment})}"></div>
+
     <div class="container">
         <table class="table table-bordered">
             <tr th:each="p: ${phenomena}" th:id="${p.label}">
@@ -12,6 +13,5 @@
             </tr>
         </table>
     </div>
-</div>
 </body>
 </html>

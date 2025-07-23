@@ -2,22 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{base :: head}"></head>
 <body>
+<div class="container" th:replace="~{base :: header (title=${project.label})}"></div>
+<div class="container" th:replace="~{base :: ontology (comment=${project.comment})}"></div>
 <div class="container">
-    <div class="container" th:replace="~{base :: header (title=${project.label})}"></div>
-    </div>
-    <div class="container">
-        <div class="container">
-            <p th:text="${project.comment}">Project description</p>
-            <p>The following OWL vocabularies and datasets have been developed in the scope of this project.</p>
-        </div>
-        <div class="container">
-            <ul class="list-group">
-                <li class="list-group-item" th:each="r : ${results}">
-                    <a th:href="@{${r.id}}" th:text="${r.label}"></a>
-                    <a th:href="@{|${r.id}/ttl|}" th:text="|(#{galloitalici.kb.ttl})|"></a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <p>The following OWL vocabularies and datasets have been developed in the scope of this project.</p>
+    <ul class="list-group">
+        <li class="list-group-item" th:each="r : ${results}">
+            <a th:href="@{${r.id}}" th:text="${r.label}"></a>
+        </li>
+    </ul>
+</div>
 </body>
 </html>

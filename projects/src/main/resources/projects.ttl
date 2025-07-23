@@ -33,7 +33,7 @@
                            <http://data.europa.eu/s66#hasResult> <https://gallosiciliani.unict.it/ns/gs-features> ,
                                                                  <https://gallosiciliani.unict.it/ns/liph> ,
                                                                  <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#lexicon> ;
-                           rdfs:comment "Research project “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T" ;
+                           rdfs:comment "Research project 'Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily', founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T" ;
                            rdfs:label "Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily" .
 
 

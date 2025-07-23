@@ -2,9 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{base :: head}"></head>
 <body>
-    <div class="container">
         <div class="container" th:replace="~{base :: header (title=${lexicontitle})}"></div>
+        <div class="container">
+            <a class="btn btn-primary mb-2" th:text="#{galloitalici.kb.ttl}" th:href="@{?ttl}">Download</a>
+        </div>
 
+        <div class="container">
         <form class="form-inline" th:object="${selector}" method="post">
             <input type="hidden" name="id" th:value="${lexicon}"></input>
             <div class="form-group">
