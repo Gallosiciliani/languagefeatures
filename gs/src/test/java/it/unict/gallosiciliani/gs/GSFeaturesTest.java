@@ -3,6 +3,7 @@ package it.unict.gallosiciliani.gs;
 import it.unict.gallosiciliani.liph.model.FiniteStateLinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.*;
+import it.unict.gallosiciliani.liph.util.HashedOntologyItem;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -1232,4 +1233,41 @@ public class GSFeaturesTest {
             assertNotNull(gs.getName());
         }
     }
+
+    @Test
+    void shouldReturnAllCategories() throws IOException {
+        final String[] allExpected={AFER_CLASS, ASSIB_CLASS, DEGEM_CLASS, DERETR_CLASS, DISSIM_CLASS, DITT_CLASS,
+                ELIM_CLASS, LENIZ_CLASS, PALAT_CLASS, VOCAL_CLASS,};
+
+        try(final GSFeatures gs = new GSFeatures()) {
+            final List<GSFeaturesCategory> allActual=gs.getCategories();
+            final Iterator<GSFeaturesCategory> actualIt=allActual.iterator();
+            for (String s : allExpected) {
+                assertTrue(actualIt.hasNext());
+                final GSFeaturesCategory actual = actualIt.next();
+                assertEquals(s, actual.getIri());
+                assertEquals(s, NS + actual.getId());
+                assertNotNull(actual.getLabel());
+                assertNotNull(actual.getComment());
+            }
+            assertFalse(actualIt.hasNext());
+        }
+
+    }
+
+    @Test
+    void shouldReturnApheresisCategoryChildren() throws IOException {
+        try(final GSFeatures gs = new GSFeatures()) {
+            final GSFeaturesCategory actualApheresis=gs.getCategories().get(0);
+            assertEquals(AFER_CLASS, actualApheresis.getIri());
+            final Set<HashedOntologyItem> actualApheresisChildren=actualApheresis.getMembers();
+            assertEquals(1, actualApheresisChildren.size());
+            final HashedOntologyItem afer1=actualApheresisChildren.iterator().next();
+            assertEquals(NS+"afer.1", afer1.getIri());
+            assertEquals("afer.1", afer1.getLabel());
+            assertEquals("a- > -", afer1.getComment());
+        }
+
+    }
+
 }

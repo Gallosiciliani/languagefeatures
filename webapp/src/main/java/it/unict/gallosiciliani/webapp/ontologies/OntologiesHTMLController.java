@@ -2,7 +2,6 @@ package it.unict.gallosiciliani.webapp.ontologies;
 
 import it.unict.gallosiciliani.gs.GSFeatures;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
-import it.unict.gallosiciliani.liph.util.OntologyItem;
 import it.unict.gallosiciliani.projects.Projects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,25 +31,17 @@ public class OntologiesHTMLController {
     String getLiph(final Model model){
         model.addAttribute("title", liph.getName());
         model.addAttribute("comment", liph.getComment());
-        model.addAttribute("classes", asInternalItems(liph.getClasses(), liph.getNamespace()));
-        model.addAttribute("objproperties", asInternalItems(liph.getObjProperties(), liph.getNamespace()));
-        model.addAttribute("dataproperties", asInternalItems(liph.getDataProperties(), liph.getNamespace()));
+        model.addAttribute("classes", liph.getClasses());
+        model.addAttribute("objproperties", liph.getObjProperties());
+        model.addAttribute("dataproperties", liph.getDataProperties());
         return "ontologies/viewLiph.html";
-    }
-
-    private List<HashedOntologyInternalItem> asInternalItems(final List<OntologyItem> items, final String ontologyNS){
-        final List<HashedOntologyInternalItem> res=new ArrayList<>(items.size());
-        for(final OntologyItem i : items)
-            res.add(new HashedOntologyInternalItem(i, ontologyNS));
-        return res;
-//        return items.stream().map((i)->{return new HashedOntologyInternalItem(i, ontologyNS);}).toList();
     }
 
     @GetMapping(value = "gs-features", params = "!ttl")
     String getGsFeatures(final Model model){
         model.addAttribute("title", gsFeatures.getName());
         model.addAttribute("comment", gsFeatures.getComment());
-        model.addAttribute("phenomena", gsFeatures.getRegexLinguisticPhenomena());
+        model.addAttribute("categories", gsFeatures.getCategories());
         return "ontologies/viewGSFeatures.html";
     }
 

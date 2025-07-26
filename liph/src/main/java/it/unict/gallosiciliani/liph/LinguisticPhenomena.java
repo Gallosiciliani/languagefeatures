@@ -1,7 +1,7 @@
 package it.unict.gallosiciliani.liph;
 
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
-import it.unict.gallosiciliani.liph.util.OntologyItem;
+import it.unict.gallosiciliani.liph.util.HashedOntologyItem;
 import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import lombok.Getter;
 
@@ -48,20 +48,20 @@ public class LinguisticPhenomena extends OntologyLoader {
     public static final String[] DATA_PROPERTIES={WRITTEN_REP_DATA_PROPERTY, MATCHING_PATTERN_DATA_PROPERTY, REPLACE_WITH_DATA_PROPERTY};
 
     @Getter
-    public final List<OntologyItem> classes;
+    public final List<HashedOntologyItem> classes;
 
     @Getter
-    public final List<OntologyItem> objProperties;
+    public final List<HashedOntologyItem> objProperties;
 
     @Getter
-    public final List<OntologyItem> dataProperties;
+    public final List<HashedOntologyItem> dataProperties;
 
     public LinguisticPhenomena() throws IOException {
         super("liph.ttl", IRI);
 
-        classes=retrieve(CLASSES);
-        objProperties=retrieve(OBJ_PROPERTIES);
-        dataProperties=retrieve(DATA_PROPERTIES);
+        classes=retrieveHashed(CLASSES);
+        objProperties=retrieveHashed(OBJ_PROPERTIES);
+        dataProperties=retrieveHashed(DATA_PROPERTIES);
     }
 
 }

@@ -1,12 +1,14 @@
 package it.unict.gallosiciliani.webapp;
 
 import cz.cvut.kbss.jopa.model.MultilingualString;
+import it.unict.gallosiciliani.gs.GSFeaturesCategory;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.LexicalObject;
+import it.unict.gallosiciliani.liph.util.HashedOntologyItem;
 
 import java.util.HashSet;
 
@@ -84,6 +86,43 @@ public class TestUtil {
         p.setComment("Description of phenomenon"+n);
         n++;
         return p;
+    }
+
+    /**
+     * Create a {@link it.unict.gallosiciliani.gs.GSFeaturesCategory} for test purposes
+     * @param namespace the namespace where the novel phenomenon will be defined
+     * @return a novel linguistic phenomenon
+     */
+    public GSFeaturesCategory createCategory(final String namespace){
+        final GSFeaturesCategory c=new GSFeaturesCategory(namespace+"category"+n, namespace);
+        c.setLabel("category"+n);
+        c.setComment("Description of category"+n);
+        n++;
+        return c;
+    }
+
+
+    /**
+     * Create a {@link HashedOntologyItem} for test purposes and add it to a {@link GSFeaturesCategory}
+     * @param namespace the namespace where the novel phenomenon will be defined
+     * @param parent the category where the new item will be added
+     * @return the created item
+     */
+    public HashedOntologyItem addChild(final String namespace, final GSFeaturesCategory parent){
+        final int m=n++;
+        final HashedOntologyItem i=new HashedOntologyItem(namespace+"item"+m, namespace) {
+            @Override
+            public String getLabel() {
+                return "label"+m;
+            }
+
+            @Override
+            public String getComment() {
+                return "comment"+m;
+            }
+        };
+        parent.addMember(i);
+        return i;
     }
 
     /**

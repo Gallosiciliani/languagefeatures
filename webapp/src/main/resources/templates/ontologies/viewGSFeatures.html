@@ -7,10 +7,17 @@
 
     <div class="container">
         <table class="table table-bordered">
-            <tr th:each="p: ${phenomena}" th:id="${p.label}">
-                <td th:text="${p.label}">label</td>
-                <td th:text="${p.comment}">comment</td>
-            </tr>
+            <tbody th:each="c: ${categories}" >
+                <tr th:id="${c.id}">
+                    <th scope="col" th:text="${c.label}">missing label</th>
+                    <th scope="col" th:text="${c.comment}">missing comment</th>
+                </tr>
+                <tr th:each="p: ${c.members}" th:id="${p.id}">
+                    <td th:text="${p.label}">missing label</td>
+                    <td th:text="${p.comment}">missing comment</td>
+                </tr>
+
+            </tbody>
         </table>
     </div>
 </body>

@@ -11,8 +11,9 @@
 @base <https://gallosiciliani.unict.it/ns/gs-features#> .
 
 <https://gallosiciliani.unict.it/ns/gs-features> rdf:type owl:Ontology ;
-                                                  owl:versionIRI <https://gallosiciliani.unict.it/ns/gs-features/2.0.1> ;
+                                                  owl:versionIRI <https://gallosiciliani.unict.it/ns/gs-features/2.0.2> ;
                                                   owl:imports <https://gallosiciliani.unict.it/ns/liph/2.0.0> ;
+                                                  eurio:isResultOf <https://gallosiciliani.unict.it/ns/projects/gallosiciliani2023Project> ;
                                                   dcterms:contributor "Alessandro De Angelis" ,
                                                                       "Angela Castiglione" ,
                                                                       "Daniele Francesco Santamaria" ,
@@ -29,11 +30,11 @@
 
 This work has been created in the scope of the project PRIN 2022 PNRR “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
                                                   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-                                                  dcterms:modified "2025-06-13" ;
+                                                  dcterms:modified "2025-07-25" ;
                                                   dcterms:title "Gallo-Sicilian features"@en ;
                                                   rdfs:comment "Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily." ;
                                                   rdfs:label "Gallo-Sicilian features" ;
-                                                  owl:versionInfo "2.0.1" .
+                                                  owl:versionInfo "2.0.2" .
 
 #################################################################
 #    Datatypes
@@ -1705,7 +1706,7 @@ xsd:date rdf:type rdfs:Datatype .
                        :Leniz ,
                        :Palat ,
                        :Vocal ;
-      rdfs:comment "The loss or deletion of one or more sounds at the begin- ning of a word." ;
+      rdfs:comment "The loss or deletion of one or more sounds at the beginning of a word." ;
       rdfs:label "Apheresis" .
 
 
@@ -1759,8 +1760,8 @@ xsd:date rdf:type rdfs:Datatype .
                          :Leniz ,
                          :Palat ,
                          :Vocal ;
-        rdfs:label "Dissimilation"@en ,
-                   "Dissimilazione"@it .
+        rdfs:comment "The process by which two adjacent segments that share some features change to become less like each other." ;
+        rdfs:label "Dissimilation"@en .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#Ditt
@@ -1770,8 +1771,8 @@ xsd:date rdf:type rdfs:Datatype .
                        :Leniz ,
                        :Palat ,
                        :Vocal ;
-      rdfs:label "Diphthongization"@en ,
-                 "Dittongazione"@it .
+      rdfs:comment "The turning of a stressed vowel into a diphthong, which is a (functionally) single vowel that starts out in the position of one monophthong and ends up in the position of another." ;
+      rdfs:label "Diphthongization"@en .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#Elim
@@ -1816,7 +1817,9 @@ xsd:date rdf:type rdfs:Datatype .
 ###  https://gallosiciliani.unict.it/ns/gs-features#Vocal
 :Vocal rdf:type owl:Class ;
        rdfs:subClassOf liph:LinguisticPhenomenon ;
-       rdfs:label "Vocal" .
+       rdfs:comment """Representing the adaptation of a loanword to the vocalic system of the receiving
+language.""" ;
+       rdfs:label "Vocalization" .
 
 
 #################################################################
@@ -1824,12 +1827,12 @@ xsd:date rdf:type rdfs:Datatype .
 #################################################################
 
 ###  https://gallosiciliani.unict.it/ns/gs-features
-<https://gallosiciliani.unict.it/ns/gs-features> rdf:type owl:NamedIndividual ;
-                                                 eurio:isResultOf <https://gallosiciliani.unict.it/ns/projects/gallosiciliani2023Project> .
+<https://gallosiciliani.unict.it/ns/gs-features> rdf:type owl:NamedIndividual .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#afer.1
 :afer.1 rdf:type owl:NamedIndividual ,
+                 :Afer ,
                  :GalloSicilianFeature ,
                  liph:FiniteStateLinguisticPhenomenon ;
         liph:matchingPattern "^a(.)" ;

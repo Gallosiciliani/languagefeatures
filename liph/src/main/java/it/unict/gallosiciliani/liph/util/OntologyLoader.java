@@ -73,15 +73,32 @@ public class OntologyLoader implements AutoCloseable{
         };
     }
 
+    public HashedOntologyItem retrieveHashed(final String iri){
+        final Resource r=model.getResource(iri);
+        final String label=r.getProperty(RDFS.label).getString();
+        final String comment=r.getProperty(RDFS.comment).getString();
+        return new HashedOntologyItem(iri, getNamespace()) {
+            @Override
+            public String getLabel() {
+                return label;
+            }
+
+            @Override
+            public String getComment() {
+                return comment;
+            }
+        };
+    }
+
     /**
      * Retrieve information about multiple ontology items
      * @param itemIris IRIs of the ontology items
      * @return a list of {@link OntologyItem} providing basic information about the items
      */
-    public List<OntologyItem> retrieve(final String[] itemIris){
-        final List<OntologyItem> result=new ArrayList<>(itemIris.length);
+    public List<HashedOntologyItem> retrieveHashed(final String[] itemIris){
+        final List<HashedOntologyItem> result=new ArrayList<>(itemIris.length);
         for(final String iri : itemIris)
-            result.add(retrieve(iri));
+            result.add(retrieveHashed(iri));
         return result;
     }
 

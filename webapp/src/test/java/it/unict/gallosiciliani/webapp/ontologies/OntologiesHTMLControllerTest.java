@@ -1,9 +1,9 @@
 package it.unict.gallosiciliani.webapp.ontologies;
 
 import it.unict.gallosiciliani.gs.GSFeatures;
+import it.unict.gallosiciliani.gs.GSFeaturesCategory;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
-import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
-import it.unict.gallosiciliani.liph.util.OntologyItem;
+import it.unict.gallosiciliani.liph.util.HashedOntologyItem;
 import it.unict.gallosiciliani.projects.Projects;
 import it.unict.gallosiciliani.projects.model.eurio.Project;
 import it.unict.gallosiciliani.projects.model.eurio.Result;
@@ -42,8 +42,8 @@ public class OntologiesHTMLControllerTest {
     @MockBean
     GSFeatures gsFeatures;
 
-    final OntologyItem liphc1=createTestOntologyItem(LinguisticPhenomena.NS, "c1");
-    final OntologyItem liphc2=createTestOntologyItem(LinguisticPhenomena.NS, "c2");
+    final HashedOntologyItem liphc1= createTestLiphItem("c1");
+    final HashedOntologyItem liphc2= createTestLiphItem("c2");
 
     private ResultActions getHTMLPage(final String pageIRI) throws Exception {
         return mockMvc.perform(get(pageIRI).accept(MediaType.TEXT_HTML)).andExpect(status().isOk());
@@ -158,8 +158,8 @@ public class OntologiesHTMLControllerTest {
 
     @Test
     void shouldShowLiphItems() throws Exception {
-        final OntologyItem c1=createTestOntologyItem(LinguisticPhenomena.NS, "c1");
-        final OntologyItem c2=createTestOntologyItem(LinguisticPhenomena.NS, "c2");
+        final HashedOntologyItem c1= createTestLiphItem("c1");
+        final HashedOntologyItem c2= createTestLiphItem("c2");
         when(liph.getNamespace()).thenReturn(LinguisticPhenomena.NS);
         when(liph.getClasses()).thenReturn(List.of(c1,c2));
         getLiphHTMLPage().andExpect(xpath("//h3[@id='c1']").string(c1.getLabel()))
@@ -168,13 +168,8 @@ public class OntologiesHTMLControllerTest {
                 .andExpect(xpath("//h3[@id='c2']/following-sibling::p").string(c2.getComment()));
     }
 
-    private OntologyItem createTestOntologyItem(final String ns, final String id){
-        return new OntologyItem() {
-            @Override
-            public String getIri() {
-                return ns+id;
-            }
-
+    private HashedOntologyItem createTestLiphItem(final String id){
+        return new HashedOntologyItem(LinguisticPhenomena.NS+id, LinguisticPhenomena.NS) {
             @Override
             public String getLabel() {
                 return "label"+id;
@@ -203,14 +198,25 @@ public class OntologiesHTMLControllerTest {
         when(gsFeatures.getName()).thenReturn("a title");
 
         final TestUtil util=new TestUtil();
-        final LinguisticPhenomenon p1=util.createPhenomenon(GSFeatures.NS);
-        final LinguisticPhenomenon p2=util.createPhenomenon(GSFeatures.NS);
+        final GSFeaturesCategory c1=util.createCategory(GSFeatures.NS);
+        final HashedOntologyItem i11=util.addChild(GSFeatures.NS, c1);
+        final GSFeaturesCategory c2=util.createCategory(GSFeatures.NS);
+        final HashedOntologyItem i21= util.addChild(GSFeatures.NS, c2);
+        final HashedOntologyItem i22= util.addChild(GSFeatures.NS, c2);
 
-        final List<LinguisticPhenomenon> phenomena=List.of(p1,p2);
-        when(gsFeatures.getRegexLinguisticPhenomena()).thenReturn(phenomena);
 
-        getGSFeaturesHTMLPage().andExpect(xpath("//table/tr/td[1]").string(p1.getLabel()));
-        getGSFeaturesHTMLPage().andExpect(xpath("//table/tr/td[2]").string(p1.getComment()));
+        when(gsFeatures.getCategories()).thenReturn(List.of(c1, c2));
+
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c1.getId()+"']/th[1]").string(c1.getLabel()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c1.getId()+"']/th[2]").string(c1.getComment()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+i11.getId()+"']/td[1]").string(i11.getLabel()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+i11.getId()+"']/td[2]").string(i11.getComment()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c2.getId()+"']/th[1]").string(c2.getLabel()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c2.getId()+"']/th[2]").string(c2.getComment()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+i21.getId()+"']/td[1]").string(i21.getLabel()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+i21.getId()+"']/td[2]").string(i21.getComment()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+i22.getId()+"']/td[1]").string(i22.getLabel()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+i22.getId()+"']/td[2]").string(i22.getComment()));
     }
 
 }
