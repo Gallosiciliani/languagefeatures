@@ -88,14 +88,15 @@ public class SPARQLServiceTest {
             final String actual=sparqlService.query("SELECT ?x where {" +
                     "?x a <" + Lime.LEXICON_CLASS + "> ." +
                     "} ORDER BY ?x", resultFormat);
+            System.out.println("shouldConvertResultSetWithSingleVariable "+actual);
             try(final InputStream is= IOUtils.toInputStream(actual, StandardCharsets.UTF_8)){
                 final ResultSet actualRs=ResultSetFactory.load(is, resultFormat);
                 final QuerySolution s1=actualRs.next();
-                assertEquals(s1.get("x").toString(), l1.getId());
+                assertEquals(l1.getId(), s1.get("x").toString());
                 final QuerySolution s2=actualRs.next();
-                assertEquals(s2.get("x").toString(), l2.getId());
+                assertEquals(l2.getId(), s2.get("x").toString());
                 final QuerySolution s3=actualRs.next();
-                assertEquals(s3.get("x").toString(), l3.getId());
+                assertEquals(l3.getId(), s3.get("x").toString());
                 assertFalse(actualRs.hasNext());
             }
         }finally {

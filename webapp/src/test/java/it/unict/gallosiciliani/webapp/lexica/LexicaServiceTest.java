@@ -4,6 +4,7 @@ import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.cvut.kbss.jopa.model.query.Query;
 import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
+import it.unict.gallosiciliani.liph.model.lemon.lime.Lime;
 import it.unict.gallosiciliani.webapp.TestUtil;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
@@ -11,6 +12,7 @@ import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -61,6 +63,8 @@ public class LexicaServiceTest {
         } finally {
             PersistenceTestUtils.build().remove(b).remove(a).remove(c).execute(entityManager);
         }
+        assertTrue(entityManager.createNativeQuery("SELECT ?x WHERE {?x a <"+ Lime.LEXICON_CLASS+">}").getResultList().isEmpty(), "NOT CLEANED UP!");
+        assertTrue(lexicaService.findAllLexica().isEmpty());
 
     }
 
@@ -74,6 +78,7 @@ public class LexicaServiceTest {
         } finally {
             t.cleanup(entityManager);
         }
+        assertTrue(lexicaService.findAllLexica().isEmpty());
     }
 
     @Test
@@ -105,6 +110,7 @@ public class LexicaServiceTest {
         } finally {
             lexiconWithThreeEntries.cleanup(entityManager);
         }
+        assertTrue(lexicaService.findAllLexica().isEmpty());
     }
 
     @Test
@@ -131,6 +137,7 @@ public class LexicaServiceTest {
         } finally {
             lexiconWithThreeEntries.cleanup(entityManager);
         }
+        assertTrue(lexicaService.findAllLexica().isEmpty());
     }
 
     @Test

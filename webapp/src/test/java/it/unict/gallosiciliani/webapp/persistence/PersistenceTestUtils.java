@@ -92,18 +92,6 @@ public class PersistenceTestUtils {
         return updateQuery("INSERT DATA {<"+subject.getId()+"> <"+popertyIRI+"> <"+object.getId()+">}");
     }
 
-    /**
-     * Persist an assertion
-     *
-     * @param src assertion subject
-     * @param p asserted property
-     * @param dst assertion object
-     * @return this object
-     */
-    public PersistenceTestUtils persist(final LexicalObject src, final LinguisticPhenomenon p, final LexicalObject dst){
-        return persist(src, p.getId(), dst);
-    }
-
     public PersistenceTestUtils remove(final PartOfSpeech pos) {
         actions.add((final EntityManager entityManager) -> {
             final PartOfSpeech p = entityManager.merge(pos);
