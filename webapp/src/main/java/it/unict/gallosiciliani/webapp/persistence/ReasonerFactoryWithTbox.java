@@ -39,6 +39,7 @@ public class ReasonerFactoryWithTbox implements ReasonerFactory {
             throw new IllegalStateException("TBox not set");
         if (reasoner!=null){
             log.warn("Reasoner already created");
+            return reasoner;
             //throw new IllegalStateException("Reasoner already set");
         }
         final PelletReasoner r=PelletReasonerFactory.theInstance().create(resource);

@@ -12,4 +12,5 @@ public class WebAppProperties {
     private PagingProperties paging;
     // Available storage types using the {@link cz.cvut.kbss.ontodriver.jena.JenaDataSource}
     private String jenaStorageType;
+    private boolean sparql=false;
 }

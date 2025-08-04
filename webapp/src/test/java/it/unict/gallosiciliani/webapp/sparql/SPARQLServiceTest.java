@@ -20,6 +20,7 @@ import org.apache.jena.sparql.resultset.ResultsFormat;
 import org.apache.jena.sparql.resultset.SPARQLResult;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDFS;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,14 +40,20 @@ public class SPARQLServiceTest {
     @Autowired
     SPARQLService sparqlService;
 
-    @Autowired
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     private final Lexicon l1=createTestLexicon();
     private final Lexicon l2=createTestLexicon();
     private final Lexicon l3=createTestLexicon();
     private int n=1;
 
+    /**
+     * Use the same entity manager of SPARQL service
+     */
+    @BeforeEach
+    void setEntityManager(){
+        entityManager= sparqlService.entityManager;
+    }
     private Lexicon createTestLexicon(){
         final Lexicon l=new Lexicon();
         l.setId("http://test.org/lexicon"+n);
