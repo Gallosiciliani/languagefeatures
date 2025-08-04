@@ -12,6 +12,7 @@ import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
 import it.unict.gallosiciliani.webapp.persistence.PersistenceTestUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,14 +25,18 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 public class LexicaServiceTest {
 
-    @Autowired
-    EntityManager entityManager;
+    private EntityManager entityManager;
     @Autowired
     LexicaService lexicaService;
     @Autowired
     WebAppProperties props;
 
     private final TestUtil util=new TestUtil();
+
+    @BeforeEach
+    void setupEntityManager(){
+        entityManager=lexicaService.entityManager;
+    }
 
     @Test
     void ensureUsingInMemoryStorage(){
