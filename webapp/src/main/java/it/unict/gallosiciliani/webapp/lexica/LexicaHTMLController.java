@@ -38,7 +38,7 @@ public class LexicaHTMLController {
         return "lexica/viewAll";
     }
 
-    @GetMapping(value={"/lexicon"}, params = "!ttl")
+    @GetMapping(value={"/lexicon"}, params = "!ttl", produces = "!text/turtle")
     @Deprecated
     String viewLexicon(final @RequestParam URI id,
                               final Model model,
@@ -49,7 +49,7 @@ public class LexicaHTMLController {
     /**
      * Assuming that the specified lexicon is in the knowledge base
      */
-    @GetMapping(value={"/nicosiaesperlinga", "/nicosiaesperlinga/"}, params = "!ttl")
+    @GetMapping(value={"/nicosiaesperlinga", "/nicosiaesperlinga/"}, params = "!ttl", produces = "!text/turtle")
     String viewNicosiaESperlinga(final Model model,
                        final Locale locale){
         return viewLexiconInternal("https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#lexicon", EntrySelector.ALL, model, locale);

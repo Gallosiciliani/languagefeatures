@@ -27,7 +27,7 @@ public class OntologiesHTMLController {
     @Autowired
     Projects projects;
 
-    @GetMapping(value = "liph", params = "!ttl")
+    @GetMapping(value = "liph", params = "!ttl", produces = "!text/turtle")
     String getLiph(final Model model){
         model.addAttribute("title", liph.getName());
         model.addAttribute("comment", liph.getComment());
@@ -37,7 +37,7 @@ public class OntologiesHTMLController {
         return "ontologies/viewLiph.html";
     }
 
-    @GetMapping(value = "gs-features", params = "!ttl")
+    @GetMapping(value = "gs-features", params = "!ttl", produces = "!text/turtle")
     String getGsFeatures(final Model model){
         model.addAttribute("title", gsFeatures.getName());
         model.addAttribute("comment", gsFeatures.getComment());
@@ -45,7 +45,7 @@ public class OntologiesHTMLController {
         return "ontologies/viewGSFeatures.html";
     }
 
-    @GetMapping(value={"projects", "projects/", "projects/", "projects/gallosiciliani2023Project"}, params="!ttl")
+    @GetMapping(value={"projects", "projects/", "projects/", "projects/gallosiciliani2023Project"}, params="!ttl", produces = "!text/turtle")
     String getGallosiciliani2023Project(final Model model){
         model.addAttribute("project", projects.getGallosiciliani2023Project());
         //we need the following to sort the project results
