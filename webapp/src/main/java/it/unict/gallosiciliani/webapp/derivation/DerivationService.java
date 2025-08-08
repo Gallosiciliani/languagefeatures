@@ -6,9 +6,10 @@ import it.unict.gallosiciliani.derivations.strategy.DerivationBuilderWithStrateg
 import it.unict.gallosiciliani.derivations.strategy.NearestStrategySelector;
 import it.unict.gallosiciliani.derivations.strategy.TargetedDerivationStrategyFactory;
 import it.unict.gallosiciliani.derivations.strategy.TargetedDerivationStrategySelectorFactory;
-import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.Form;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.util.DerivationChainRetriever;
 import it.unict.gallosiciliani.sicilian.SicilianVocabulary;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenaProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,22 +96,19 @@ public class DerivationService {
      */
     public List<LinguisticPhenomenonOccurrence> getDerivationChain(final Form lemma, final Form etymon){
         final DerivationChainRetriever r=new DerivationChainRetriever(lemma, etymon, entityManager);
-        final List<LinguisticPhenomenonOccurrence> derivation=r.getOccurrencesSorted();
-        fillPhenomenaFields(derivation);
-        return derivation;
+        r.fillPhenomenaFields(lpProvider);
+        return r.getOccurrencesSorted();
     }
 
     /**
-     * This is a workaround due to the fact that JOPA is unable to retrieve individuals in imported ontologies
-     * @param phenomena the penomena
+     * Retrieve from the knowledge base a list of {@link LinguisticPhenomenonOccurrence}
+     * representing a chain of occurrences deriving the lemma of the specified entry from the etymon specified in the entry
+     * etymology.      *
+     * @param entry a lexical entry
+     * @return a list of {@link LinguisticPhenomenonOccurrence} such that the source of each item is the target of the preceding one.
      */
-    private void fillPhenomenaFields(List<LinguisticPhenomenonOccurrence> phenomena) {
-        for(final LinguisticPhenomenonOccurrence o: phenomena){
-            final LinguisticPhenomenon p=o.getOccurrenceOf();
-            final LinguisticPhenomenon pWithData=lpProvider.getById(p.getId());
-            p.setLabel(pWithData.getLabel());
-            p.setComment(pWithData.getComment());
-        }
+    public List<LinguisticPhenomenonOccurrence> getDerivationChain(final LexicalEntry entry){
+        return DerivationChainRetriever.retrieve(entry, entityManager, lpProvider);
     }
 
 }

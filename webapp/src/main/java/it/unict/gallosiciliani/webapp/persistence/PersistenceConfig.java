@@ -8,6 +8,7 @@ import cz.cvut.kbss.jopa.model.JOPAPersistenceProvider;
 import cz.cvut.kbss.ontodriver.config.OntoDriverProperties;
 import cz.cvut.kbss.ontodriver.jena.JenaDataSource;
 import cz.cvut.kbss.ontodriver.jena.config.JenaOntoDriverProperties;
+import it.unict.gallosiciliani.liph.util.ReasonerFactoryWithTbox;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
 import it.unict.gallosiciliani.webapp.ontologies.TBox;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +53,7 @@ public class PersistenceConfig {
     @Bean(name = "entityManager")
     public EntityManager entityManager(final EntityManagerFactory entityManagerFactory,
                                        final TBox tbox) {
-        ReasonerFactoryWithTbox.theInstance().setTBox(tbox);
+        ReasonerFactoryWithTbox.theInstance().setTBox(tbox.all);
         return entityManagerFactory.createEntityManager();
     }
 }

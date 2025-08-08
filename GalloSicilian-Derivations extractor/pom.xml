@@ -1,25 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>it.unict.gallosiciliani</groupId>
         <artifactId>liphtools</artifactId>
         <version>2.3.0</version>
     </parent>
-
-    <artifactId>importing</artifactId>
+    <artifactId>gs-derivationsextractor</artifactId>
+    <name>GalloSicilian-derivations extractor</name>
     <dependencies>
+        <dependency>
+            <groupId>it.unict.gallosiciliani</groupId>
+            <artifactId>gs</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>
             <artifactId>derivations</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
-            <version>3.0.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

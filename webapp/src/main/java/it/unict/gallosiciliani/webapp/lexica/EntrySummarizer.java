@@ -50,7 +50,6 @@ public class EntrySummarizer {
         final String partOfSpeechMessageId = LexInfo.getMessageId(src.getPartOfSpeech());
         final String partOfSpeech = messageSource.getMessage(partOfSpeechMessageId, new Object[0], locale);
         final SortedSet<Form> etyComponents = getEtymonComponents(src);
-        final SortedSet<String> featureLabels = new TreeSet<>();
         final List<LinguisticPhenomenonOccurrence> derivation=getDerivation(src);
         return new EntrySummary() {
 
@@ -70,11 +69,6 @@ public class EntrySummarizer {
             }
 
             @Override
-            public SortedSet<String> getPhoneticFeatureLabels() {
-                return featureLabels;
-            }
-
-            @Override
             public List<LinguisticPhenomenonOccurrence> getDerivation() {
                 return derivation;
             }
@@ -88,13 +82,7 @@ public class EntrySummarizer {
     }
 
     private List<LinguisticPhenomenonOccurrence> getDerivation(final LexicalEntry src) {
-        final Etymology etymology=getEtymology(src);
-        if (etymology==null) return Collections.emptyList();
-        final Set<Form> etySubSource = etymology.getStartingLink().getEtySubSource();
-        if (etySubSource==null || etySubSource.isEmpty()) return Collections.emptyList();
-        final Form lemma=src.getCanonicalForm();
-        final Form etymon=etySubSource.iterator().next();
-        return derivationService.getDerivationChain(lemma, etymon);
+        return derivationService.getDerivationChain(src);
     }
 
     /**

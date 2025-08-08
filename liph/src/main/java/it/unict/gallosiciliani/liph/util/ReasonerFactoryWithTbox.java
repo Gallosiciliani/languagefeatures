@@ -1,6 +1,5 @@
-package it.unict.gallosiciliani.webapp.persistence;
+package it.unict.gallosiciliani.liph.util;
 
-import it.unict.gallosiciliani.webapp.ontologies.TBox;
 import lombok.extern.slf4j.Slf4j;
 import openllet.jena.PelletReasoner;
 import openllet.jena.PelletReasonerFactory;
@@ -17,8 +16,8 @@ public class ReasonerFactoryWithTbox implements ReasonerFactory {
 //private final ReasonerFactory delegate = OWLMiniReasonerFactory.theInstance();
 // NO private final ReasonerFactory delegate = TransitiveReasonerFactory.theInstance();
     private static final ReasonerFactoryWithTbox INSTANCE=new ReasonerFactoryWithTbox();
-    private static TBox tbox;
     private static Reasoner reasoner;
+    private static Model tboxModel;
 
     /**
      * This method is required for all {@link ReasonerFactory} implementations
@@ -29,13 +28,15 @@ public class ReasonerFactoryWithTbox implements ReasonerFactory {
         return INSTANCE;
     }
 
-    public void setTBox(final TBox tbox){
-        ReasonerFactoryWithTbox.tbox=tbox;
+
+    public void setTBox(final Model tboxModel){
+        ReasonerFactoryWithTbox.tboxModel=tboxModel;
+        reasoner=null;
     }
 
     @Override
     public Reasoner create(Resource resource) {
-        if (tbox==null)
+        if (tboxModel==null)
             throw new IllegalStateException("TBox not set");
         if (reasoner!=null){
             log.warn("Reasoner already created");
@@ -43,7 +44,7 @@ public class ReasonerFactoryWithTbox implements ReasonerFactory {
             //throw new IllegalStateException("Reasoner already set");
         }
         final PelletReasoner r=PelletReasonerFactory.theInstance().create(resource);
-        reasoner = r.bindFixedSchema(tbox.all);
+        reasoner = r.bindFixedSchema(tboxModel);
         return reasoner;
     }
 

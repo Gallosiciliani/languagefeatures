@@ -9,7 +9,7 @@ import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 public interface DerivationPathNode {
     /**
      * String obtained by applying the transformation to the
-     * lexeme in the previous derivation path.
+     * lexical object in the previous derivation path.
      */
     String get();
 

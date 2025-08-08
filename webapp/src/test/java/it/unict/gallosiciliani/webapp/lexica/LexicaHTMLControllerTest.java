@@ -317,7 +317,7 @@ public class LexicaHTMLControllerTest {
         final LexicalObject intermediateForm=util.createForm();
         final LinguisticPhenomenonOccurrence o1=util.createPhenomenonOccurrence(p, intermediateForm, lemma, true);
         final LinguisticPhenomenonOccurrence o2=util.createPhenomenonOccurrence(q,etymonForm, intermediateForm, true);
-        when(derivationService.getDerivationChain(lemma, etymonForm)).thenReturn(List.of(o1, o2));
+        when(derivationService.getDerivationChain(entry)).thenReturn(List.of(o1, o2));
         final String etymologyLabel = messageSource.getMessage("galloitalici.kb.lexica.etymology", new Object[0], locale);
 
         GETperformer.perform(l3e)

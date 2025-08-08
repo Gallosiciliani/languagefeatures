@@ -12,7 +12,7 @@
     </properties>
     <groupId>it.unict.gallosiciliani</groupId>
     <artifactId>liphtools</artifactId>
-    <version>2.2.0</version>
+    <version>2.3.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>liph</module>
@@ -26,6 +26,7 @@
         <module>csvimporter</module>
         <module>sicilian-derivationbuilder</module>
         <module>gs-derivationsimporter</module>
+        <module>GalloSicilian-Derivations extractor</module>
     </modules>
 
     <dependencyManagement>
