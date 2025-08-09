@@ -5,6 +5,7 @@ import cz.cvut.kbss.jopa.model.query.TypedQuery;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenaProvider;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
+import it.unict.gallosiciliani.liph.model.lemon.ontolex.Ontolex;
 import it.unict.gallosiciliani.liph.model.lemonety.LemonEty;
 import it.unict.gallosiciliani.liph.util.DerivationChainRetriever;
 
@@ -27,8 +28,10 @@ public class DerivationDataReader implements Iterator<DerivationRawData> {
         this.entityManager=entityManager;
         this.lpProvider=lpProvider;
         final TypedQuery<LexicalEntry> q= entityManager.createNativeQuery("SELECT DISTINCT ?x WHERE {" +
-                "\t?x <"+ LemonEty.ETYMOLOGY_OBJ_PROPERTY+"> ?etymology . \n"+
-                "} ORDER BY ?x", LexicalEntry.class);
+                "\t?x <"+ LemonEty.ETYMOLOGY_OBJ_PROPERTY+"> ?etymology ; \n"+
+                "\t\t<"+ Ontolex.CANONICAL_FORM_OBJ_PROPERTY +"> ?f . \n"+
+                "\t?f <"+ Ontolex.WRITTEN_REP_DATA_PROPERTY +"> ?w ; \n"+
+                "} ORDER BY ?w", LexicalEntry.class);
         entriesIt=q.getResultStream().iterator();
     }
 

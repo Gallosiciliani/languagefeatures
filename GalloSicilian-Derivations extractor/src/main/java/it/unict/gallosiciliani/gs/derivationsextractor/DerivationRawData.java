@@ -6,7 +6,8 @@ import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import java.util.List;
 
 /**
- * Raw data concerning a derivation, extracted from the knowledge base
+ * Raw data concerning a derivation, extracted from the knowledge base.
+ * The lexical entry MUST have an etymology. It may have an empty derivation chain.
  */
 public interface DerivationRawData {
 

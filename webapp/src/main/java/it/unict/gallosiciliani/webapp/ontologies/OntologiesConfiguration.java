@@ -6,7 +6,6 @@ import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenaProvider;
 import it.unict.gallosiciliani.liph.model.lemon.lime.Lexicon;
 import it.unict.gallosiciliani.projects.Projects;
-import it.unict.gallosiciliani.projects.model.eurio.Project;
 import it.unict.gallosiciliani.webapp.WebAppProperties;
 import org.apache.jena.ontology.OntDocumentManager;
 import org.apache.jena.rdf.model.Model;
@@ -78,6 +77,6 @@ public class OntologiesConfiguration {
 
     @Bean
     LinguisticPhenomenaProvider linguisticPhenomenaProvider(final GSFeatures gsFeatures){
-        return new LinguisticPhenomenaProvider(gsFeatures.getRegexLinguisticPhenomena());
+        return gsFeatures.getLpProvider();
     }
 }

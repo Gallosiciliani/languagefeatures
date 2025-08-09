@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.gs;
 
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenaProvider;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenonByLabelRetriever;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.regex.FiniteStatePhenomenaQuery;
@@ -51,6 +52,7 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonBy
     private final List<LinguisticPhenomenon> regexLinguisticPhenomena;
     private final LinguisticPhenomenonByLabelRetriever phenomenonByLabelRetriever;
     private final List<GSFeaturesCategory> categories;
+    private final LinguisticPhenomenaProvider lpProvider;
 
     /**
      * Private constructor, use factory methods.
@@ -62,6 +64,7 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonBy
         regexLinguisticPhenomena=reader.getFeatures();
         phenomenonByLabelRetriever=LinguisticPhenomenonByLabelRetrieverImpl.build(regexLinguisticPhenomena);
         categories=retrieveCategories(getModel());
+        lpProvider=new LinguisticPhenomenaProvider(regexLinguisticPhenomena);
     }
 
 

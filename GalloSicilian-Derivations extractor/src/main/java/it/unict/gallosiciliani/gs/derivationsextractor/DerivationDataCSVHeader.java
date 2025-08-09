@@ -5,7 +5,7 @@ package it.unict.gallosiciliani.gs.derivationsextractor;
  */
 public enum DerivationDataCSVHeader {
 
-    ID("id"), TYPE("verbo/nome");
+    ID("id"), LEMMA("lemma vnisp"), TYPE("verbo/nome"), DERIVATION("derivazione");
 
     private final String caption;
 

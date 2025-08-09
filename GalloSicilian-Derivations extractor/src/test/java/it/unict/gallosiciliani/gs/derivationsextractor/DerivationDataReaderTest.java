@@ -1,7 +1,5 @@
-package it.unict.gallosiciliani.derivationsextractor;
+package it.unict.gallosiciliani.gs.derivationsextractor;
 
-import it.unict.gallosiciliani.gs.derivationsextractor.DerivationDataReader;
-import it.unict.gallosiciliani.gs.derivationsextractor.DerivationRawData;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +17,7 @@ public class DerivationDataReaderTest{
 
     @Test
     void shouldReadEntriesWithEtymology() throws IOException {
-        try(DerivationDataTestBed testBed=new DerivationDataTestBed()) {
+        try(PersistedDerivationDataTestBed testBed=new PersistedDerivationDataTestBed()) {
             final DerivationDataReader r = new DerivationDataReader(testBed.entityManager, testBed.lpProvider);
             final DerivationRawData actual1 = r.next();
             assertEquals(testBed.entryWithDerivation.getId(), actual1.getEntry().getId());
@@ -31,7 +29,7 @@ public class DerivationDataReaderTest{
 
     @Test
     void shouldReadDerivationChain() throws IOException {
-        try(DerivationDataTestBed testBed=new DerivationDataTestBed()) {
+        try(PersistedDerivationDataTestBed testBed=new PersistedDerivationDataTestBed()) {
             final DerivationDataReader r = new DerivationDataReader(testBed.entityManager, testBed.lpProvider);
             final DerivationRawData actualEntry = r.next();
 
@@ -54,7 +52,7 @@ public class DerivationDataReaderTest{
 
     @Test
     void shouldReadEntryWithEtymologyButNoDerivation() throws IOException {
-        try(DerivationDataTestBed testBed=new DerivationDataTestBed()) {
+        try(PersistedDerivationDataTestBed testBed=new PersistedDerivationDataTestBed()) {
             final DerivationDataReader r = new DerivationDataReader(testBed.entityManager, testBed.lpProvider);
             r.next();
             final DerivationRawData actual = r.next();
