@@ -15,12 +15,14 @@ import it.unict.gallosiciliani.liph.model.lexinfo.PartOfSpeech;
 import java.util.Collections;
 import java.util.List;
 
-public class DerivationDataTestBed {
+public class DerivationDataTestBed{
     protected static final String NS = "http://test.org/derivationDataReaderTest#";
     protected static final String ENTRY_LANG = "und";
     public final LinguisticPhenomenon p = createLinguisticPhenomenon("p");
     public final LinguisticPhenomenon q = createLinguisticPhenomenon("q");
-    public final LinguisticPhenomenaProvider lpProvider = new LinguisticPhenomenaProvider(List.of(p, q));
+    public final LinguisticPhenomenon r = createLinguisticPhenomenon("r");
+    public final LinguisticPhenomenon s = createLinguisticPhenomenon("s");
+    public final LinguisticPhenomenaProvider lpProvider = new LinguisticPhenomenaProvider(List.of(p, q, r, s));
     public final PartOfSpeech noun=new PartOfSpeech();
     public final PartOfSpeech verb=new PartOfSpeech();
 

@@ -47,6 +47,11 @@ public class DerivationDataReader implements Iterator<DerivationRawData> {
 
         return new DerivationRawData() {
             @Override
+            public LinguisticPhenomenaProvider getEligibleLinguisticPhenomena() {
+                return lpProvider;
+            }
+
+            @Override
             public LexicalEntry getEntry() {
                 return e;
             }

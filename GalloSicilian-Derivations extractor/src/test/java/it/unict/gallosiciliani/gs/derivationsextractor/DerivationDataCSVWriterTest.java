@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.gs.derivationsextractor;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
+import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -22,8 +25,16 @@ import static org.mockito.Mockito.when;
  */
 public class DerivationDataCSVWriterTest {
 
+    final LinguisticPhenomenon p=new LinguisticPhenomenon();
+    final LinguisticPhenomenon q=new LinguisticPhenomenon();
+
     private final CSVFormat format=CSVFormat.Builder.create().setHeader(DerivationDataCSVHeader.getHeaderRow()).build();
     private final DerivationExtData data=createTestData();
+
+    DerivationDataCSVWriterTest(){
+        p.setLabel("p");
+        q.setLabel("q");
+    }
 
     private DerivationExtData createTestData() {
         final DerivationExtData data=mock(DerivationExtData.class);
@@ -93,15 +104,22 @@ public class DerivationDataCSVWriterTest {
     @Test
     void shouldWriteDerivation() throws IOException{
         final String expected="x<-p--y<-q--z";
-        final LinguisticPhenomenon p=new LinguisticPhenomenon();
-        p.setLabel("p");
-        final LinguisticPhenomenon q=new LinguisticPhenomenon();
-        q.setLabel("q");
         final DerivationPathNode derivation=new DerivationPathNodeImpl("x", p, new DerivationPathNodeImpl("y", q, new DerivationPathNodeImpl("z")));
         when(data.getDerivation()).thenReturn(derivation);
         final CSVRecord actual=produceRow(data);
         assertEquals(expected, actual.get(DerivationDataCSVHeader.DERIVATION.toString()));
     }
 
+
+    @Test
+    void shouldWriteMissed() throws IOException {
+        final SortedSet<LinguisticPhenomenon> missed=new TreeSet<>(LinguisticPhenomena.COMPARATOR_BY_LABEL);
+        missed.add(p);
+        missed.add(q);
+        when(data.getMissed()).thenReturn(missed);
+        final CSVRecord actual=produceRow(data);
+        assertEquals(p.getLabel()+" "+q.getLabel(), actual.get(DerivationDataCSVHeader.MISSED.toString()));
+
+    }
 
 }

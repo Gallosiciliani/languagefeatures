@@ -41,6 +41,7 @@ public class LinguisticPhenomena extends OntologyLoader {
     public static final String REPLACEMENT_ANN_PROPERTY=NS+"replacement";
 
     public static final Comparator<LinguisticPhenomenon> COMPARATOR_BY_IRI= Comparator.comparing(LinguisticPhenomenon::getId);
+    public static final Comparator<LinguisticPhenomenon> COMPARATOR_BY_LABEL= Comparator.comparing(LinguisticPhenomenon::getLabel);
     public static final LinguisticPhenomenonLabelProvider DEFAULT_LABEL_PROVIDER= (linguisticPhenomenon, locale) -> linguisticPhenomenon.getLabel();
 
     public static final String[] CLASSES={LEXICAL_OBJECT_CLASS, LINGUISTIC_PHENOMENON_CLASS,LINGUISTIC_PHENOMENON_OCCURRENCE_CLASS, FINITE_STATE_LINGUISTIC_PHENOMENON_CLASS};

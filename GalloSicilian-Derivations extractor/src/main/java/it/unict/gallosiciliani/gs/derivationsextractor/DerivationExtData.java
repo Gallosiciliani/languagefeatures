@@ -2,12 +2,15 @@ package it.unict.gallosiciliani.gs.derivationsextractor;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
+import it.unict.gallosiciliani.derivations.MissedPhenomenaFinder;
+import it.unict.gallosiciliani.liph.LinguisticPhenomena;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import lombok.Getter;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * All the information of interest concerning a single derivation. Perform all the required calculations
@@ -22,13 +25,17 @@ public class DerivationExtData {
     private final boolean noun;
     @Getter
     private final DerivationPathNode derivation;
+    @Getter
+    private final SortedSet<LinguisticPhenomenon> missed;
 
 
-    public DerivationExtData(final DerivationRawData src){
-        final LexicalEntry entry=src.getEntry();
-        lemma=entry.getCanonicalForm().getWrittenRep().get();
-        noun=LexInfo.NOUN_INDIVIDUAL.equals(entry.getPartOfSpeech().getId());
-        derivation=derivationChain2PathNode(src);
+
+    public DerivationExtData(final DerivationRawData src) {
+        final LexicalEntry entry = src.getEntry();
+        lemma = entry.getCanonicalForm().getWrittenRep().get();
+        noun = LexInfo.NOUN_INDIVIDUAL.equals(entry.getPartOfSpeech().getId());
+        derivation = derivationChain2PathNode(src);
+        missed = new MissedPhenomenaFinder(src.getEligibleLinguisticPhenomena().getAll()).getMissedPhenomena(derivation, LinguisticPhenomena.COMPARATOR_BY_LABEL);
     }
 
     private DerivationPathNode derivationChain2PathNode(final DerivationRawData src) {
@@ -52,4 +59,6 @@ public class DerivationExtData {
         return new DerivationPathNodeImpl(o.getTarget().getWrittenRep().get(), o.getOccurrenceOf(),
                 derivationChain2PathNode(derivationChain.subList(1, derivationChain.size()), etymonPathNode));
     }
+
+
 }

@@ -3,10 +3,7 @@ package it.unict.gallosiciliani.derivations;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -27,11 +24,22 @@ public class MissedPhenomenaFinder {
      * @param n derivation
      * @return missed phenomena
      */
-    public Collection<LinguisticPhenomenon> getMissedPhenomena(final DerivationPathNode n){
-        final Set<LinguisticPhenomenon> performedPhenomena=new TreeSet<>(LinguisticPhenomena.COMPARATOR_BY_IRI);
+    public SortedSet<LinguisticPhenomenon> getMissedPhenomena(final DerivationPathNode n){
+        return getMissedPhenomena(n,LinguisticPhenomena.COMPARATOR_BY_IRI);
+    }
+
+    /**
+     *
+     * @param n derivation
+     * @return missed phenomena
+     */
+    public SortedSet<LinguisticPhenomenon> getMissedPhenomena(final DerivationPathNode n, final Comparator<LinguisticPhenomenon> sorter){
+        final Set<LinguisticPhenomenon> performedPhenomena=new TreeSet<>(sorter);
         final String etymon=traverse(n, performedPhenomena);
         final Stream<LinguisticPhenomenon> expectedPhenomena=eligiblePhenomena.stream().filter((p)->!p.apply(etymon).isEmpty());
-        return expectedPhenomena.filter((p)->!performedPhenomena.contains(p)).toList();
+        final SortedSet<LinguisticPhenomenon> res=new TreeSet<>(sorter);
+        expectedPhenomena.filter((p)->!performedPhenomena.contains(p)).forEach(res::add);
+        return res;
     }
 
     /**

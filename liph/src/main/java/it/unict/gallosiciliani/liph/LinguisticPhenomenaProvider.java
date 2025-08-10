@@ -10,7 +10,6 @@ import java.util.TreeMap;
  * Provide linguistic phenomena instances with the specified IRI
  *
  * @author Cristiano Longo
- * TODO move into liph core
  */
 public class LinguisticPhenomenaProvider {
     private final List<LinguisticPhenomenon> phenomena;

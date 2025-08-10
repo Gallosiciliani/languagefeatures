@@ -23,7 +23,8 @@ public class PersistedDerivationDataTestBed extends DerivationDataTestBed implem
 
 
     private final LinguisticPhenomena liph;
-    private final EntityManagerFactoryHelper factory=new InMemoryEntityManagerFactoryHelper(Map.of(OntoDriverProperties.REASONER_FACTORY_CLASS, ReasonerFactoryWithTbox.class.getName()));
+    private final EntityManagerFactoryHelper factory=new InMemoryEntityManagerFactoryHelper(Map.of(
+            OntoDriverProperties.REASONER_FACTORY_CLASS, ReasonerFactoryWithTbox.class.getName()));
     public final EntityManager entityManager;
 
     public PersistedDerivationDataTestBed() throws IOException {

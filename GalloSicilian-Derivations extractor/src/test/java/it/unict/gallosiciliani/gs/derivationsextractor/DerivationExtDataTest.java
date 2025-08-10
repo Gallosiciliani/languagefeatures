@@ -2,12 +2,14 @@ package it.unict.gallosiciliani.gs.derivationsextractor;
 
 import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
+import it.unict.gallosiciliani.liph.LinguisticPhenomenaProvider;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
 import it.unict.gallosiciliani.liph.model.lemon.ontolex.LexicalEntry;
 import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -25,6 +27,7 @@ public class DerivationExtDataTest {
         final DerivationRawData rawData=mock(DerivationRawData.class);
         when(rawData.getEntry()).thenReturn(dummyEntry);
         when(rawData.getDerivationChain()).thenReturn(Collections.emptyList());
+        when(rawData.getEligibleLinguisticPhenomena()).thenReturn(new LinguisticPhenomenaProvider(Collections.emptyList()));
         return rawData;
     }
 
@@ -82,6 +85,26 @@ public class DerivationExtDataTest {
     private void check(final LinguisticPhenomenonOccurrence expected, final DerivationPathNode actual){
         assertEquals(expected.getTarget().getWrittenRep().get(), actual.get());
         assertEquals(expected.getOccurrenceOf().getLabel(), actual.getLinguisticPhenomenon().getLabel());
+    }
+
+    @Test
+    void shouldProvideMissedPhenomena(){
+        final ActionablePhenomenon p=new ActionablePhenomenon().set(testBed.p);
+        p.setOut(Set.of("y"));
+        final LinguisticPhenomenon q=new ActionablePhenomenon().set(testBed.q);
+        final ActionablePhenomenon r=new ActionablePhenomenon().set(testBed.r);
+        r.setOut(Set.of("w"));
+        final ActionablePhenomenon s=new ActionablePhenomenon().set(testBed.s);
+        s.setOut(Set.of("w"));
+
+        when(rawData.getEntry()).thenReturn(testBed.entryWithDerivation);
+        when(rawData.getDerivationChain()).thenReturn(testBed.derivation);
+        when(rawData.getEligibleLinguisticPhenomena()).thenReturn(new LinguisticPhenomenaProvider(List.of(s, r, q, p))); //NOTE that they are not in alphabetic order
+
+        final Iterator<LinguisticPhenomenon> actualIt=new DerivationExtData(rawData).getMissed().iterator();
+        assertEquals(r.getId(), actualIt.next().getId());
+        assertEquals(s.getId(), actualIt.next().getId());
+        assertFalse(actualIt.hasNext());
     }
 
 }
