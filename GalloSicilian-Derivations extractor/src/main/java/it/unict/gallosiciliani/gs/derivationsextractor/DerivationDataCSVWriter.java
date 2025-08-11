@@ -9,6 +9,7 @@ import org.apache.commons.csv.CSVPrinter;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.function.Consumer;
 
@@ -20,6 +21,7 @@ import java.util.function.Consumer;
 public class DerivationDataCSVWriter implements AutoCloseable, Consumer<DerivationExtData> {
     public static final String NOUN="nome";
     public static final String VERB="verbo";
+    public static final String NA="";
     private final CSVPrinter printer;
     private final DerivationIOUtil derivationIOUtil=new DerivationIOUtil();
 
@@ -45,6 +47,8 @@ public class DerivationDataCSVWriter implements AutoCloseable, Consumer<Derivati
             printer.print(derivationData.isNoun() ? NOUN : VERB);
             printer.print(derivationIOUtil.print(derivationData.getDerivation(), Locale.getDefault()));
             printer.print(asString(derivationData.getMissed()));
+            final Optional<Float> rate=derivationData.getGalloItalicityRate();
+            printer.print(rate.map(aFloat -> String.format("%.3f", aFloat)).orElse(NA));
             printer.println();
         }catch (final IOException e){
             System.err.println("Unable to write row "+rowNum);

@@ -2,7 +2,6 @@ package it.unict.gallosiciliani.gs.derivationsextractor;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
-import it.unict.gallosiciliani.derivations.MissedPhenomenaFinder;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
@@ -25,8 +24,7 @@ public class DerivationExtData {
     private final boolean noun;
     @Getter
     private final DerivationPathNode derivation;
-    @Getter
-    private final SortedSet<LinguisticPhenomenon> missed;
+    private final DerivationPhenomena phenomena;
 
 
 
@@ -35,7 +33,9 @@ public class DerivationExtData {
         lemma = entry.getCanonicalForm().getWrittenRep().get();
         noun = LexInfo.NOUN_INDIVIDUAL.equals(entry.getPartOfSpeech().getId());
         derivation = derivationChain2PathNode(src);
-        missed = new MissedPhenomenaFinder(src.getEligibleLinguisticPhenomena().getAll()).getMissedPhenomena(derivation, LinguisticPhenomena.COMPARATOR_BY_LABEL);
+        phenomena=new MissedPhenomenaFinder(src.getEligibleLinguisticPhenomena().getAll()).getMissedPhenomena(derivation, LinguisticPhenomena.COMPARATOR_BY_LABEL);
+
+
     }
 
     private DerivationPathNode derivationChain2PathNode(final DerivationRawData src) {
@@ -61,4 +61,18 @@ public class DerivationExtData {
     }
 
 
+    public SortedSet<LinguisticPhenomenon> getMissed(){
+        return phenomena.getMissedPhenomena();
+    }
+    /**
+     * features / (features + missed phenomena)
+     * It does not apply to empty derivations
+     * @return not available, if the derivation is empty. The GalloItalicity rate otherwise.
+     */
+    public Optional<Float> getGalloItalicityRate(){
+        if (derivation.prev()==null) return Optional.empty();
+        final float expected=phenomena.getSuitablePhenomena().size();
+        final float missed=phenomena.getMissedPhenomena().size();
+        return Optional.of(1f-(missed/expected));
+    }
 }

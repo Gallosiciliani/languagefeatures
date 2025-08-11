@@ -107,4 +107,37 @@ public class DerivationExtDataTest {
         assertFalse(actualIt.hasNext());
     }
 
+    @Test
+    void shouldProvideGalloitalicityRate(){
+        final ActionablePhenomenon p=new ActionablePhenomenon().set(testBed.p);
+        p.setOut(Set.of("y"));
+        final LinguisticPhenomenon q=new ActionablePhenomenon().set(testBed.q);
+        final ActionablePhenomenon r=new ActionablePhenomenon().set(testBed.r);
+        r.setOut(Set.of("w"));
+
+        when(rawData.getEntry()).thenReturn(testBed.entryWithDerivation);
+        when(rawData.getDerivationChain()).thenReturn(testBed.derivation);
+        when(rawData.getEligibleLinguisticPhenomena()).thenReturn(new LinguisticPhenomenaProvider(List.of(p,q,r)));
+
+        final Optional<Float> actual=new DerivationExtData(rawData).getGalloItalicityRate();
+        assertFalse(actual.isEmpty());
+        assertEquals(0.5f, actual.get());
+    }
+
+    @Test
+    void shouldProvideRateNotAvailableOnEmptyDerivationChain(){
+        final ActionablePhenomenon p=new ActionablePhenomenon().set(testBed.p);
+        p.setOut(Set.of("y"));
+        final LinguisticPhenomenon q=new ActionablePhenomenon().set(testBed.q);
+        final ActionablePhenomenon r=new ActionablePhenomenon().set(testBed.r);
+        r.setOut(Set.of("w"));
+
+        when(rawData.getEntry()).thenReturn(testBed.entryWithEtymonButNoDerivation);
+        when(rawData.getDerivationChain()).thenReturn(Collections.emptyList());
+        when(rawData.getEligibleLinguisticPhenomena()).thenReturn(new LinguisticPhenomenaProvider(List.of(p,q,r)));
+
+        final Optional<Float> actual=new DerivationExtData(rawData).getGalloItalicityRate();
+        assertTrue(actual.isEmpty());
+    }
+
 }

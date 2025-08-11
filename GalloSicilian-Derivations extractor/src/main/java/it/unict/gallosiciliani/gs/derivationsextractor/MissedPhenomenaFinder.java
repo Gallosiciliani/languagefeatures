@@ -1,10 +1,10 @@
-package it.unict.gallosiciliani.derivations;
+package it.unict.gallosiciliani.gs.derivationsextractor;
 
+import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * Given a derivation, get all the phenomena that were eligible to be applied bus have not.
@@ -24,22 +24,37 @@ public class MissedPhenomenaFinder {
      * @param n derivation
      * @return missed phenomena
      */
-    public SortedSet<LinguisticPhenomenon> getMissedPhenomena(final DerivationPathNode n){
+    public DerivationPhenomena getMissedPhenomena(final DerivationPathNode n){
         return getMissedPhenomena(n,LinguisticPhenomena.COMPARATOR_BY_IRI);
     }
 
     /**
-     *
      * @param n derivation
      * @return missed phenomena
      */
-    public SortedSet<LinguisticPhenomenon> getMissedPhenomena(final DerivationPathNode n, final Comparator<LinguisticPhenomenon> sorter){
+    public DerivationPhenomena getMissedPhenomena(final DerivationPathNode n, final Comparator<LinguisticPhenomenon> sorter){
         final Set<LinguisticPhenomenon> performedPhenomena=new TreeSet<>(sorter);
         final String etymon=traverse(n, performedPhenomena);
-        final Stream<LinguisticPhenomenon> expectedPhenomena=eligiblePhenomena.stream().filter((p)->!p.apply(etymon).isEmpty());
-        final SortedSet<LinguisticPhenomenon> res=new TreeSet<>(sorter);
-        expectedPhenomena.filter((p)->!performedPhenomena.contains(p)).forEach(res::add);
-        return res;
+        final SortedSet<LinguisticPhenomenon> expected=new TreeSet<>(sorter);
+        final SortedSet<LinguisticPhenomenon> missed=new TreeSet<>(sorter);
+        eligiblePhenomena.forEach((p)->{
+            if (!p.apply(etymon).isEmpty()){
+                expected.add(p);
+                if (!performedPhenomena.contains(p))
+                    missed.add(p);
+            }
+        });
+        return new DerivationPhenomena(){
+            @Override
+            public Set<LinguisticPhenomenon> getSuitablePhenomena() {
+                return expected;
+            }
+
+            @Override
+            public SortedSet<LinguisticPhenomenon> getMissedPhenomena() {
+                return missed;
+            }
+        };
     }
 
     /**

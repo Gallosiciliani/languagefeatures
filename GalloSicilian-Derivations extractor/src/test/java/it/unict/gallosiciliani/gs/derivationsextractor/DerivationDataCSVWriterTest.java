@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -119,6 +120,23 @@ public class DerivationDataCSVWriterTest {
         when(data.getMissed()).thenReturn(missed);
         final CSVRecord actual=produceRow(data);
         assertEquals(p.getLabel()+" "+q.getLabel(), actual.get(DerivationDataCSVHeader.MISSED.toString()));
+
+    }
+
+    @Test
+    void shouldWriteGalloitalicityRateRounded() throws IOException {
+        final float r=0.123956f;
+        when(data.getGalloItalicityRate()).thenReturn(Optional.of(r));
+        final CSVRecord actual=produceRow(data);
+        assertEquals("0.124", actual.get(DerivationDataCSVHeader.RATE.toString()));
+
+    }
+
+    @Test
+    void shouldWriteEmptyGalloitalicityRate() throws IOException {
+        when(data.getGalloItalicityRate()).thenReturn(Optional.empty());
+        final CSVRecord actual=produceRow(data);
+        assertEquals(DerivationDataCSVWriter.NA, actual.get(DerivationDataCSVHeader.RATE.toString()));
 
     }
 

@@ -6,7 +6,7 @@ package it.unict.gallosiciliani.gs.derivationsextractor;
 public enum DerivationDataCSVHeader {
 
     ID("id"), LEMMA("lemma vnisp"), TYPE("verbo/nome"), DERIVATION("derivazione"),
-    MISSED("tratti disattesi");
+    MISSED("tratti disattesi"), RATE("nuovo indice di galloitalicità");
 
     private final String caption;
 
