@@ -67,7 +67,6 @@ public class GSFeaturesTest {
             RegexLinguisticPhenomenaReader r=new RegexLinguisticPhenomenaReader();
             r.read(ont.getModel(), new FiniteStatePhenomenaQuery());
             final List<LinguisticPhenomenon> allRegexFeatures=r.getFeatures();
-//            final List<LinguisticPhenomenon> allRegexFeatures = ont.getRegexLinguisticPhenomena();
             assertFalse(allRegexFeatures.isEmpty());
             for (final LinguisticPhenomenon f : allRegexFeatures)
                 if (iri.equals(f.getId())){
@@ -1268,6 +1267,26 @@ public class GSFeaturesTest {
             assertEquals("a- > -", afer1.getComment());
         }
 
+    }
+
+    @Test
+    void shouldReturnInfFeaturesUnderPalat() throws IOException {
+        try(final GSFeatures gs = new GSFeatures()) {
+            final GSFeaturesCategory actualPalat=getPalat(gs);
+            int n=0;
+            for(final HashedOntologyItem f: actualPalat.getMembers()){
+                if (f.getId().startsWith("inf."))
+                    n++;
+            }
+            assertNotEquals(0, n, "No inf feature found under Palat");
+        }
+    }
+
+    GSFeaturesCategory getPalat(final GSFeatures gs){
+        for(final GSFeaturesCategory c: gs.getCategories())
+            if (GSFeatures.PALAT_CLASS.equals(c.getIri())) return c;
+        fail("No Palat Features Category");
+        return null;
     }
 
 }

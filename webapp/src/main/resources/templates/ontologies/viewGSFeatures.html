@@ -9,8 +9,8 @@
         <table class="table table-bordered">
             <tbody th:each="c: ${categories}" >
                 <tr th:id="${c.id}">
-                    <th scope="col" th:text="${c.label}">missing label</th>
-                    <th scope="col" th:text="${c.comment}">missing comment</th>
+                    <th scope="row" th:text="${c.label}">missing label</th>
+                    <td th:text="${c.comment}">missing comment</td>
                 </tr>
                 <tr th:each="p: ${c.members}" th:id="${p.id}">
                     <td th:text="${p.label}">missing label</td>

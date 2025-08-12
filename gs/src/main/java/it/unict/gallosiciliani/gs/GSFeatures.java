@@ -72,7 +72,7 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonBy
 
     private List<GSFeaturesCategory> retrieveCategories(final Model model) {
         final String queryString="SELECT distinct ?category ?label ?comment WHERE {\n"+
-                "?feature a <https://gallosiciliani.unict.it/ns/gs-features#GalloSicilianFeature>;\n"+
+                "?feature a <"+GSFeatures.GALLOSICILIAN_FEATURE_CLASS+">;\n"+
                 "\t a ?category .\n"+
                 "?category <"+ RDFS.subClassOf.getURI()+"> <"+LinguisticPhenomena.LINGUISTIC_PHENOMENON_CLASS+">;\n"+
                 "\t <"+RDFS.label.getURI()+"> ?label;\n"+
@@ -108,8 +108,8 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonBy
         c.setLabel(row.getLiteral("label").getString());
         c.setComment(row.getLiteral("comment").getString());
         final String childrenQueryStr="SELECT ?x ?label ?comment WHERE {\n"+
-                "?x a <"+categoryIri+">;\n"+
-                "\t <"+RDFS.label.getURI()+"> ?label;\n"+
+                "?x a ?category. ?category <"+RDFS.subClassOf+">* <"+categoryIri+"> .\n"+
+                "?x <"+RDFS.label.getURI()+"> ?label;\n"+
                 "\t <"+RDFS.comment.getURI()+"> ?comment .}";
         try(final QueryExecution ex=QueryExecutionDatasetBuilder.create().model(model).query(childrenQueryStr).build()){
             final ResultSet rs=ex.execSelect();
