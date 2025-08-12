@@ -11,13 +11,14 @@ import it.unict.gallosiciliani.liph.model.lemonety.EtyLink;
 import it.unict.gallosiciliani.liph.model.lemonety.Etymology;
 import it.unict.gallosiciliani.liph.model.lexinfo.LexInfo;
 import it.unict.gallosiciliani.liph.model.lexinfo.PartOfSpeech;
+import it.unict.gallosiciliani.liph.util.HashedOntologyItem;
 
 import java.util.Collections;
 import java.util.List;
 
 public class DerivationDataTestBed{
-    protected static final String NS = "http://test.org/derivationDataReaderTest#";
-    protected static final String ENTRY_LANG = "und";
+    public static final String NS = "http://test.org/derivationDataTestBed#";
+    public static final String ENTRY_LANG = "und";
     public final LinguisticPhenomenon p = createLinguisticPhenomenon("p");
     public final LinguisticPhenomenon q = createLinguisticPhenomenon("q");
     public final LinguisticPhenomenon r = createLinguisticPhenomenon("r");
@@ -56,7 +57,7 @@ public class DerivationDataTestBed{
      */
     private static LinguisticPhenomenon createLinguisticPhenomenon(String phenomenonId) {
         final LinguisticPhenomenon p=new LinguisticPhenomenon();
-        p.setId("phenomenon"+phenomenonId);
+        p.setId(NS+"phenomenon"+phenomenonId);
         p.setLabel("phenomenon "+phenomenonId);
         p.setComment("Comment for phenomenon "+phenomenonId);
         return p;
@@ -103,5 +104,20 @@ public class DerivationDataTestBed{
         o2.setOccurrenceOf(q);
         return List.of(o2, o1);
     }
+
+    public HashedOntologyItem createHashedOntologyItem(final LinguisticPhenomenon p){
+        return new HashedOntologyItem(p.getId(), NS) {
+            @Override
+            public String getLabel() {
+                return "Label"+getId();
+            }
+
+            @Override
+            public String getComment() {
+                return "Comment"+getId();
+            }
+        };
+    }
+
 
 }

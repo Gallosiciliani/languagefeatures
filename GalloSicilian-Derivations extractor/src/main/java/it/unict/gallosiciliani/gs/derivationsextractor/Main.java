@@ -42,7 +42,7 @@ public class Main {
                 final EntityManager entityManager=emFactory.createEntityManager();
                 final GSFeatures gs=new GSFeatures();
                 final FileWriter out=new FileWriter(outputCSVFile);
-                final DerivationDataCSVWriter writer=new DerivationDataCSVWriter(out)){
+                final DerivationDataCSVWriter writer=new DerivationDataCSVWriter(out, gs.getCategories())){
                 final DerivationDataReader reader=new DerivationDataReader(entityManager, gs.getLpProvider());
                 int n=0;
                 System.out.print("Extracting ");

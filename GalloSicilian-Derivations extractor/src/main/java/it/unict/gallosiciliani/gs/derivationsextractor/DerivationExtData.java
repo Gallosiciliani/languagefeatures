@@ -2,6 +2,8 @@ package it.unict.gallosiciliani.gs.derivationsextractor;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
+import it.unict.gallosiciliani.derivations.DerivationPathNodeIterable;
+import it.unict.gallosiciliani.gs.GSFeaturesCategory;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
@@ -18,6 +20,7 @@ import java.util.*;
  * @author Cristiano Longo
  */
 public class DerivationExtData {
+
     @Getter
     private final String lemma;
     @Getter
@@ -25,8 +28,6 @@ public class DerivationExtData {
     @Getter
     private final DerivationPathNode derivation;
     private final DerivationPhenomena phenomena;
-
-
 
     public DerivationExtData(final DerivationRawData src) {
         final LexicalEntry entry = src.getEntry();
@@ -74,5 +75,19 @@ public class DerivationExtData {
         final float expected=phenomena.getSuitablePhenomena().size();
         final float missed=phenomena.getMissedPhenomena().size();
         return Optional.of(1f-(missed/expected));
+    }
+
+    /**
+     * Retrieve all the categories of phenomena occurring in the derivation
+     *
+     * @param categoryRetriever all the categories
+     * @return categories of phenomena occurring in the derivation
+     */
+    public Set<GSFeaturesCategory> getCategories(final GSFeaturesCategoryRetriever categoryRetriever){
+        final Set<GSFeaturesCategory> res=new TreeSet<>(GSFeaturesCategory.COMPARATOR_BY_IRI);
+        for(final DerivationPathNode n: new DerivationPathNodeIterable(derivation))
+            if (n.getLinguisticPhenomenon()!=null)
+                res.add(categoryRetriever.get(n.getLinguisticPhenomenon()));
+        return res;
     }
 }

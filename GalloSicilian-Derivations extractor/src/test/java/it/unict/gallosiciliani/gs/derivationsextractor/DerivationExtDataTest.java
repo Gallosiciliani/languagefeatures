@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.gs.derivationsextractor;
 
 import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
+import it.unict.gallosiciliani.gs.GSFeaturesCategory;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenaProvider;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
@@ -138,6 +139,20 @@ public class DerivationExtDataTest {
 
         final Optional<Float> actual=new DerivationExtData(rawData).getGalloItalicityRate();
         assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    void shouldRetrieveCategories(){
+        final GSFeaturesCategory c1=new GSFeaturesCategory(DerivationDataTestBed.NS+"c1", "http://test.org/categories#");
+        c1.addMember(testBed.createHashedOntologyItem(testBed.p));
+        c1.addMember(testBed.createHashedOntologyItem(testBed.q));
+        final GSFeaturesCategory c2=new GSFeaturesCategory(DerivationDataTestBed.NS+"c2", "http://test.org/categories#");
+        c2.addMember(testBed.createHashedOntologyItem(testBed.r));
+        when(rawData.getEntry()).thenReturn(testBed.entryWithDerivation);
+        when(rawData.getDerivationChain()).thenReturn(testBed.derivation);
+        final Iterator<GSFeaturesCategory> actualIt=new DerivationExtData(rawData).getCategories(new GSFeaturesCategoryRetriever(List.of(c1, c2))).iterator();
+        assertEquals(DerivationDataTestBed.NS+"c1", actualIt.next().getIri());
+        assertFalse(actualIt.hasNext());
     }
 
 }

@@ -4,6 +4,7 @@ import it.unict.gallosiciliani.liph.util.HashedOntologyItem;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -11,6 +12,8 @@ import java.util.TreeSet;
  * A set of gallo-sicilian features
  */
 public class GSFeaturesCategory extends HashedOntologyItem {
+
+    public static final Comparator<GSFeaturesCategory> COMPARATOR_BY_IRI= Comparator.comparing(HashedOntologyItem::getIri);
 
     @Getter
     @Setter

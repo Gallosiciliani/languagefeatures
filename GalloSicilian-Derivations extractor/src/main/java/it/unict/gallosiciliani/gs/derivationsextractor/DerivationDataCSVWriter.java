@@ -1,16 +1,14 @@
 package it.unict.gallosiciliani.gs.derivationsextractor;
 
 import it.unict.gallosiciliani.derivations.io.DerivationIOUtil;
+import it.unict.gallosiciliani.gs.GSFeaturesCategory;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import lombok.Getter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.SortedSet;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -22,14 +20,21 @@ public class DerivationDataCSVWriter implements AutoCloseable, Consumer<Derivati
     public static final String NOUN="nome";
     public static final String VERB="verbo";
     public static final String NA="";
+    public static final String YES="sì";
+    public static final String NO="no";
+
     private final CSVPrinter printer;
     private final DerivationIOUtil derivationIOUtil=new DerivationIOUtil();
+    private final List<GSFeaturesCategory> categories;
+    private final GSFeaturesCategoryRetriever categoryRetriever;
 
     @Getter
     private int printedRows=0;
 
-    public DerivationDataCSVWriter(final Appendable out) throws IOException {
-        printer=new CSVPrinter(out, CSVFormat.Builder.create().setHeader(DerivationDataCSVHeader.getHeaderRow()).build());
+    public DerivationDataCSVWriter(final Appendable out, final List<GSFeaturesCategory> categories) throws IOException {
+        printer=new CSVPrinter(out, CSVFormat.Builder.create().setHeader(DerivationDataCSVHeader.getHeaderRow(categories)).build());
+        this.categories=categories;
+        categoryRetriever=new GSFeaturesCategoryRetriever(categories);
     }
 
     @Override
@@ -49,6 +54,7 @@ public class DerivationDataCSVWriter implements AutoCloseable, Consumer<Derivati
             printer.print(asString(derivationData.getMissed()));
             final Optional<Float> rate=derivationData.getGalloItalicityRate();
             printer.print(rate.map(aFloat -> String.format("%.3f", aFloat)).orElse(NA));
+            print(derivationData.getCategories(categoryRetriever));
             printer.println();
         }catch (final IOException e){
             System.err.println("Unable to write row "+rowNum);
@@ -69,5 +75,14 @@ public class DerivationDataCSVWriter implements AutoCloseable, Consumer<Derivati
                 b.append(" ");
         }
         return b.toString();
+    }
+
+    /**
+     * Print category fields
+     * @param foundCategories all categories of features in the derivation
+     */
+    private void print(final Set<GSFeaturesCategory> foundCategories) throws IOException {
+        for(final GSFeaturesCategory c: categories)
+            printer.print(foundCategories.contains(c)?YES:NO);
     }
 }

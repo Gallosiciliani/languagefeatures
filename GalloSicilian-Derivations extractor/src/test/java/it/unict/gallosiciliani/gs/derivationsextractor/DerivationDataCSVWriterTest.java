@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.gs.derivationsextractor;
 
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
+import it.unict.gallosiciliani.gs.GSFeaturesCategory;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import org.apache.commons.csv.CSVFormat;
@@ -11,12 +12,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.List;
-import java.util.Optional;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -28,8 +27,11 @@ public class DerivationDataCSVWriterTest {
 
     final LinguisticPhenomenon p=new LinguisticPhenomenon();
     final LinguisticPhenomenon q=new LinguisticPhenomenon();
+    final GSFeaturesCategory c1=new GSFeaturesCategory("http://test/categories#c1", "http://test/categories#");
+    final GSFeaturesCategory c2=new GSFeaturesCategory("http://test/categories#c2", "http://test/categories#");
+    final List<GSFeaturesCategory> categories=List.of(c1,c2);
 
-    private final CSVFormat format=CSVFormat.Builder.create().setHeader(DerivationDataCSVHeader.getHeaderRow()).build();
+    private final CSVFormat format=CSVFormat.Builder.create().setHeader(DerivationDataCSVHeader.getHeaderRow(categories)).build();
     private final DerivationExtData data=createTestData();
 
     DerivationDataCSVWriterTest(){
@@ -47,7 +49,7 @@ public class DerivationDataCSVWriterTest {
     @Test
     void shouldWriteHeaders() throws IOException {
         final StringWriter producedCSV=new StringWriter();
-        final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV);
+        final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, List.of(c1, c2));
         w.close();
         System.out.println(producedCSV.getBuffer().toString());
         final CSVParser p=CSVParser.parse(producedCSV.toString(), CSVFormat.DEFAULT);
@@ -67,7 +69,7 @@ public class DerivationDataCSVWriterTest {
 
     private CSVRecord produceRow(final DerivationExtData data) throws IOException {
         final StringWriter producedCSV=new StringWriter();
-        try(final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV)){
+        try(final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, categories)){
             w.accept(data);
             w.close();
             System.out.println(producedCSV.getBuffer().toString());
@@ -78,6 +80,7 @@ public class DerivationDataCSVWriterTest {
             return actualRecords.get(1);
         }
     }
+
     @Test
     void shouldWriteLemma() throws IOException {
         final String expectedLemma="expectedLemma";
@@ -138,6 +141,29 @@ public class DerivationDataCSVWriterTest {
         final CSVRecord actual=produceRow(data);
         assertEquals(DerivationDataCSVWriter.NA, actual.get(DerivationDataCSVHeader.RATE.toString()));
 
+    }
+
+    @Test
+    void shouldWriteHeadersForCategories() throws IOException {
+        final CSVRecord actualNoCategories=produceHeader(Collections.emptyList());
+        final CSVRecord actualTwoCategories=produceHeader(List.of(c1, c2));
+        assertEquals(actualNoCategories.toList().size()+2, actualTwoCategories.toList().size());
+    }
+
+    private CSVRecord produceHeader(final List<GSFeaturesCategory> categories) throws IOException {
+        final StringWriter producedCSV=new StringWriter();
+        final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, categories);
+        w.close();
+        final CSVParser parser=CSVParser.parse(producedCSV.toString(), CSVFormat.DEFAULT);
+        return parser.getRecords().get(0);
+    }
+
+    @Test
+    void shouldWriteCategories() throws IOException {
+        when(data.getCategories(any())).thenReturn(Set.of(c1));
+        final CSVRecord actualRecord=produceRow(data);
+        assertEquals(DerivationDataCSVWriter.YES, actualRecord.get(c1.getId()));
+        assertEquals(DerivationDataCSVWriter.NO, actualRecord.get(c2.getId()));
     }
 
 }
