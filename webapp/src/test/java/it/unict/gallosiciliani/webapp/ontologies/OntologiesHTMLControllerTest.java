@@ -207,12 +207,12 @@ public class OntologiesHTMLControllerTest {
 
         when(gsFeatures.getCategories()).thenReturn(List.of(c1, c2));
 
-        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c1.getId()+"']/th[1]").string(c1.getLabel()));
-        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c1.getId()+"']/th[2]").string(c1.getComment()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c1.getId()+"']/th").string(c1.getLabel()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c1.getId()+"']/td").string(c1.getComment()));
         getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+i11.getId()+"']/td[1]").string(i11.getLabel()));
         getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+i11.getId()+"']/td[2]").string(i11.getComment()));
-        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c2.getId()+"']/th[1]").string(c2.getLabel()));
-        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c2.getId()+"']/th[2]").string(c2.getComment()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c2.getId()+"']/th").string(c2.getLabel()));
+        getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+c2.getId()+"']/td").string(c2.getComment()));
         getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+i21.getId()+"']/td[1]").string(i21.getLabel()));
         getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+i21.getId()+"']/td[2]").string(i21.getComment()));
         getGSFeaturesHTMLPage().andExpect(xpath("//tr[@id='"+i22.getId()+"']/td[1]").string(i22.getLabel()));
