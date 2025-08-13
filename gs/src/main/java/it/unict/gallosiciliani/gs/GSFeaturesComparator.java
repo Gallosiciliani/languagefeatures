@@ -40,6 +40,11 @@ public class GSFeaturesComparator implements Comparator<HashedOntologyItem> {
          */
         private String subFeature;
 
+        /**
+         * The third of the id, when present
+         */
+        private int subSubFeature;
+
     }
 
     @Override
@@ -50,7 +55,9 @@ public class GSFeaturesComparator implements Comparator<HashedOntologyItem> {
         if (categoryComparizon!=0) return categoryComparizon;
         final int featureNumDiff=lp.getFeatureNumber()-lq.getFeatureNumber();
         if (featureNumDiff!=0) return featureNumDiff;
-        return lp.getSubFeature().compareTo(lq.getSubFeature());
+        final int subFeatureComparison=lp.getSubFeature().compareTo(lq.getSubFeature());
+        if (subFeatureComparison!=0) return subFeatureComparison;
+        return lp.getSubSubFeature()-lq.getSubSubFeature();
     }
 
     /**
@@ -64,6 +71,8 @@ public class GSFeaturesComparator implements Comparator<HashedOntologyItem> {
         l.setCategory(parts[0]);
         l.setFeatureNumber(parts.length>1 ? Integer.parseInt(parts[1]) : IdParts.NO_NUMBER);
         l.setSubFeature(parts.length>2 ? parts[2] : "");
+        l.setSubSubFeature(parts.length>3 ? Integer.parseInt(parts[3]) : IdParts.NO_NUMBER);
+        if (parts.length>4) throw new IllegalArgumentException("Found feature with more than 4 id parts "+p.getId());
         return l;
     }
 }

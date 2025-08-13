@@ -52,6 +52,19 @@ public class RegexLinguisticPhenomenonCheckerFactory {
     }
 
     /**
+     * Test transformations with rules of the form -src -> -replacement
+     * where - are placeholders for any character.
+     *
+     * @param src         part to be replaced
+     * @param replacement replacement string
+     * @return this object
+     */
+    public RegexLinguisticPhenomenonCheckerFactory atTheEnd(final boolean strict, final String src, final String replacement) {
+        build(replacement).atTheEnd(strict, src);
+        return this;
+    }
+
+    /**
      * Test transformations with rules of the form -s- -> -replacement-
      * where the first - is a placeholder for vowels and the latter one stands for
      * any character.
@@ -74,8 +87,17 @@ public class RegexLinguisticPhenomenonCheckerFactory {
         return this;
     }
 
+    public RegexLinguisticPhenomenonCheckerFactory atTheBeginning(final boolean strict, final String src, final String replacement) {
+        build(replacement).atTheBeginning(strict, src);
+        return this;
+    }
+
     public RegexLinguisticPhenomenonCheckerFactory inside(final String src, final String replacement) {
         build(replacement).inside(true, src);
+        return this;
+    }
+    public RegexLinguisticPhenomenonCheckerFactory inside(boolean strict, final String src, final String replacement) {
+        build(replacement).inside(strict, src);
         return this;
     }
 

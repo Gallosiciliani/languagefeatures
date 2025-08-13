@@ -29,7 +29,8 @@ public class GSFeaturesCategory extends HashedOntologyItem {
     }
 
     public void addMember(final HashedOntologyItem member){
-        members.add(member);
+        if (!members.add(member))
+            throw new IllegalArgumentException("Duplicate category member "+member.getIri());
     }
 
 }

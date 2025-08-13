@@ -57,6 +57,12 @@ public class GSFeaturesComparatorTest {
         assertTrue(compare("assib.1.b", "assib.1.a") > 0);
     }
 
+    @Test
+    void shouldTakeIntoAccountFourthParts(){
+        assertTrue(compare("inf.3.b.1", "inf.3.b.2") < 0);
+        assertTrue(compare("inf.3.b.2", "inf.3.b.1") > 0);
+    }
+
     int compare(final String pId, final String qId){
         final HashedOntologyItem p=mock(HashedOntologyItem.class);
         when(p.getId()).thenReturn(pId);

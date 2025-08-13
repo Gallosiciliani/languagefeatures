@@ -43,16 +43,6 @@ public class GSFeaturesTest {
         }
     }
 
-    /**
-     * Get a helper to test the feature with the IRI.
-     * @param featureIRI final feature code
-     * @return helper to test the specified feature
-     */
-    @Deprecated
-    private RegexLinguisticPhenomenonChecker getChecker(final String featureIRI, final String replacement) throws IOException {
-        return getChecker(featureIRI).build(replacement);
-    }
-
     private RegexLinguisticPhenomenonCheckerFactory getChecker(final String featureIRI) throws IOException {
         try(final GSFeatures ont = new GSFeatures()) {
             final GSFeaturesCategoryRetriever categoryRetriever=new GSFeaturesCategoryRetriever(ont.getCategories());
@@ -294,7 +284,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem1() throws IOException{
-        getChecker(NS+"degem.1","it").betweenVowels(true, "tt");
+        getChecker(NS+"degem.1").category(DEGEM_CLASS).betweenVowels(true, "tt","it");
     }
 
     /**
@@ -303,7 +293,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem2() throws IOException{
-        getChecker(NS+"degem.2","t").replacing("tt");
+        getChecker(NS+"degem.2").category(DEGEM_CLASS).replacing("tt","t");
     }
 
     /**
@@ -311,7 +301,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem3() throws IOException{
-        getChecker(NS+"degem.3","d").replacing("dd");
+        getChecker(NS+"degem.3").category(DEGEM_CLASS).replacing("dd","d");
     }
 
     /**
@@ -319,7 +309,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem4() throws IOException {
-        getChecker(NS+"degem.4","dd").replacing("ḍḍ");
+        getChecker(NS+"degem.4").category(DEGEM_CLASS).replacing("ḍḍ","dd");
     }
 
     /**
@@ -327,7 +317,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem5() throws IOException{
-        getChecker(NS+"degem.5","p").replacing("pp");
+        getChecker(NS+"degem.5").category(DEGEM_CLASS).replacing("pp","p");
     }
 
     /**
@@ -335,9 +325,9 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem6() throws IOException{
-        getChecker(NS+"degem.6","b")
-                .inside(false, "bb")
-                .atTheEnd(false, "bb")
+        getChecker(NS+"degem.6").category(DEGEM_CLASS)
+                .inside(false, "bb","b")
+                .atTheEnd(false, "bb","b")
                 .notApply("bb456");
     }
 
@@ -347,8 +337,10 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem7() throws IOException{
-        getChecker(NS+"degem.7","c").atTheBeginning(false, "cc")
-                .inside(false, "cc").notApply("123ccari")
+        getChecker(NS+"degem.7").category(DEGEM_CLASS)
+                .atTheBeginning(false, "cc","c")
+                .inside(false, "cc","c")
+                .notApply("123ccari")
                 .derives("zzìcca", "zzìca")
                 .derives("123ccar", "123car")
                 .derives("123ccarx", "123carx");
@@ -359,7 +351,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem8() throws IOException {
-        getChecker(NS+"degem.8").atTheEnd("ccàri","chè");
+        getChecker(NS+"degem.8").category(DEGEM_CLASS).atTheEnd("ccàri","chè");
     }
 
     /**
@@ -368,7 +360,9 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem9() throws IOException{
-        getChecker(NS+"degem.9","g").atTheBeginning(false, "gg").inside(false, "gg")
+        getChecker(NS+"degem.9").category(DEGEM_CLASS)
+                .atTheBeginning(false, "gg", "g")
+                .inside(false, "gg","g")
                 .notApply("123ggari")
                 .derives("123gga", "123ga")
                 .derives("123ggar", "123gar")
@@ -380,7 +374,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem10() throws IOException {
-        getChecker(NS+"degem.10").atTheEnd("ggàri", "ghè");
+        getChecker(NS+"degem.10").category(DEGEM_CLASS).atTheEnd("ggàri", "ghè");
     }
 
 
@@ -389,7 +383,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem11() throws IOException{
-        getChecker(NS+"degem.11","f").replacing("ff");
+        getChecker(NS+"degem.11").category(DEGEM_CLASS).replacing("ff","f");
     }
 
     /**
@@ -398,7 +392,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem12() throws IOException{
-        getChecker(NS+"degem.12","v").replacing("vv");
+        getChecker(NS+"degem.12").category(DEGEM_CLASS).replacing("vv","v");
     }
 
     /**
@@ -407,7 +401,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem13() throws IOException{
-        getChecker(NS+"degem.13","s").atTheBeginning(true, "ss");
+        getChecker(NS+"degem.13").category(DEGEM_CLASS).atTheBeginning("ss","s");
     }
 
     /**
@@ -416,7 +410,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem15() throws IOException{
-        getChecker(NS+"degem.15","ẕẕ").replacing("żż");
+        getChecker(NS+"degem.15").category(DEGEM_CLASS).replacing("żż","ẕẕ");
     }
 
 
@@ -426,7 +420,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem16() throws IOException{
-        getChecker(NS+"degem.16","m").replacing("mm");
+        getChecker(NS+"degem.16").category(DEGEM_CLASS).replacing("mm","m");
     }
 
     /**
@@ -434,7 +428,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem17() throws IOException{
-        getChecker(NS+"degem.17","n").replacing("nn");
+        getChecker(NS+"degem.17").category(DEGEM_CLASS).replacing("nn","n");
     }
 
     /**
@@ -442,7 +436,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem18() throws IOException{
-        getChecker(NS+"degem.18","dd").atTheBeginning(true, "l");
+        getChecker(NS+"degem.18").category(DEGEM_CLASS).atTheBeginning("l","dd");
     }
 
     /**
@@ -450,7 +444,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem19() throws IOException{
-        getChecker(NS+"degem.19","").betweenVowels(true, "ll");
+        getChecker(NS+"degem.19").category(DEGEM_CLASS).betweenVowels(true, "ll", "");
     }
 
     /**
@@ -458,7 +452,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem20() throws IOException{
-        getChecker(NS+"degem.20","").betweenVowels(true, "ḍḍ");
+        getChecker(NS+"degem.20").category(DEGEM_CLASS).betweenVowels(true, "ḍḍ","");
     }
 
     /**
@@ -466,7 +460,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem22() throws IOException{
-        getChecker(NS+"degem.22","dr").replacing("ḍḍr");
+        getChecker(NS+"degem.22").category(DEGEM_CLASS).replacing("ḍḍr","dr");
     }
 
     /**
@@ -474,7 +468,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDegem23() throws IOException{
-        getChecker(NS+"degem.23","tr").replacing("ṭṭṛ");
+        getChecker(NS+"degem.23").category(DEGEM_CLASS).replacing("ṭṭṛ","tr");
     }
 
     //ASSIBILAZIONE
@@ -489,7 +483,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib1a() throws IOException{
-        getChecker(NS+"assib.1.a","sge").replacing("si");
+        getChecker(NS+"assib.1.a").category(ASSIB_CLASS).replacing("si","sge");
     }
 
     /**
@@ -498,7 +492,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib1b() throws IOException{
-        getChecker(NS+"assib.1.b","sgë").replacing("si");
+        getChecker(NS+"assib.1.b").category(ASSIB_CLASS).replacing("si","sgë");
     }
 
     /**
@@ -507,7 +501,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib1c() throws IOException{
-        getChecker(NS+"assib.1.c","sgi").replacing("si");
+        getChecker(NS+"assib.1.c").category(ASSIB_CLASS).replacing("si","sgi");
     }
 
     /**
@@ -515,7 +509,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib2() throws IOException{
-        getChecker(NS+"assib.2","sgì").replacing("sì");
+        getChecker(NS+"assib.2").category(ASSIB_CLASS).replacing("sì","sgì");
     }
 
     /**
@@ -523,8 +517,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib3() throws IOException{
-        getChecker(NS+"assib.3","sgï")
-                .replacing("sï");
+        getChecker(NS+"assib.3").category(ASSIB_CLASS)
+                .replacing("sï","sgï");
     }
 
     /**
@@ -532,8 +526,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib4() throws IOException{
-        getChecker(NS+"assib.4","sge")
-                .replacing("ce");
+        getChecker(NS+"assib.4").category(ASSIB_CLASS)
+                .replacing("ce","sge");
     }
 
     /**
@@ -541,8 +535,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib5() throws IOException{
-        getChecker(NS+"assib.5","sgè")
-                .replacing("cè");
+        getChecker(NS+"assib.5").category(ASSIB_CLASS)
+                .replacing("cè","sgè");
     }
 
     /*
@@ -554,8 +548,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib6a() throws IOException{
-        getChecker(NS+"assib.6.a","sge")
-                .replacing("ci");
+        getChecker(NS+"assib.6.a").category(ASSIB_CLASS)
+                .replacing("ci","sge");
     }
 
     /**
@@ -564,7 +558,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib6b() throws IOException{
-        getChecker(NS+"assib.6.b","sgë").atTheEnd(true,"ci");
+        getChecker(NS+"assib.6.b").category(ASSIB_CLASS).atTheEnd("ci","sgë");
     }
 
     /**
@@ -573,8 +567,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib6c() throws IOException{
-        getChecker(NS+"assib.6.c", "sgi")
-                .replacing("ci");
+        getChecker(NS+"assib.6.c").category(ASSIB_CLASS)
+                .replacing("ci","sgi");
     }
 
     /**
@@ -583,8 +577,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib7() throws IOException{
-        getChecker(NS+"assib.7","sgì")
-                .replacing("cì");
+        getChecker(NS+"assib.7").category(ASSIB_CLASS)
+                .replacing("cì","sgì");
     }
 
     /**
@@ -592,8 +586,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib8() throws IOException{
-        getChecker(NS+"assib.7","sgì")
-                .replacing("cì");
+        getChecker(NS+"assib.7").category(ASSIB_CLASS)
+                .replacing("cì","sgì");
     }
 
     /**
@@ -601,7 +595,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib9() throws IOException{
-        getChecker(NS+"assib.9")
+        getChecker(NS+"assib.9").category(ASSIB_CLASS)
                 .replacing("nce", "nze")
                         .replacing("ncè","nzè")
                                 .replacing("nci","nzi")
@@ -615,7 +609,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib10() throws IOException{
-        getChecker(NS+"assib.10")
+        getChecker(NS+"assib.10").category(ASSIB_CLASS)
                 .replacing("nge","nẕe")
                 .replacing("ngè","nẕè")
                 .replacing("ngi","nẕi")
@@ -629,7 +623,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib11() throws IOException{
-        getChecker(NS+"assib.11")
+        getChecker(NS+"assib.11").category(ASSIB_CLASS)
                 .notEndingprecededByVowel("rce","rze")
                 .endingPrecededByVowel("rcè", "rzè")
                 .notEndingprecededByVowel("rci","rzi")
@@ -642,7 +636,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib12() throws IOException{
-        getChecker(NS+"assib.12")
+        getChecker(NS+"assib.12").category(ASSIB_CLASS)
                 .atTheBeginning("ce","zze")
                 .atTheBeginning("cè", "zzè")
                 .atTheBeginning("ci", "zzi")
@@ -655,7 +649,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib13() throws IOException {
-        getChecker(NS + "assib.13")
+        getChecker(NS + "assib.13").category(ASSIB_CLASS)
                 .atTheBeginning("ge", "ẕẕe")
                 .atTheBeginning("gè", "ẕẕè")
                 .atTheBeginning("gi", "ẕẕi")
@@ -669,7 +663,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib14() throws IOException{
-        getChecker(NS+"assib.14")
+        getChecker(NS+"assib.14").category(ASSIB_CLASS)
                 .atTheBeginning("se", "zze")
                 .atTheBeginning("sè", "zzè")
                 .atTheBeginning("si", "zzi")
@@ -682,7 +676,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib15() throws IOException{
-        getChecker(NS+"assib.15").inside("ii","ẕẕ");
+        getChecker(NS+"assib.15").category(ASSIB_CLASS).inside("ii","ẕẕ");
     }
 
     /**
@@ -690,7 +684,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib16() throws IOException{
-        getChecker(NS+"assib.16").atTheEnd("ìiri","ẕẕö");
+        getChecker(NS+"assib.16").category(ASSIB_CLASS).atTheEnd("ìiri","ẕẕö");
     }
 
     /**
@@ -698,7 +692,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testAssib17() throws IOException{
-        getChecker(NS+"assib.17").replacing("ggi", "i");
+        getChecker(NS+"assib.17").category(ASSIB_CLASS).replacing("ggi", "i");
     }
 
     // Dissimilazione dei nessi MB e ND
@@ -708,8 +702,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testDissim1() throws IOException{
-        getChecker(NS+"dissim.1","mb")
-                .replacing("mm");
+        getChecker(NS+"dissim.1").category(DISSIM_CLASS)
+                .replacing("mm","mb");
     }
 
     /**
@@ -717,8 +711,9 @@ public class GSFeaturesTest {
      */
     @Test
     void testDissim2() throws IOException{
-        getChecker(NS+"dissim.2").replacing("nn", "nd");
-        getChecker(NS+"dissim.2").derives("munnàri", "mundàri");
+        getChecker(NS+"dissim.2").category(DISSIM_CLASS)
+                .replacing("nn", "nd")
+                .derives("munnàri", "mundàri");
     }
 
     // Dittongazione non metafonetica
@@ -728,7 +723,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDitt1a() throws IOException{
-        getChecker(NS+"ditt.1.a")
+        getChecker(NS+"ditt.1.a").category(DITT_CLASS)
                 .atTheBeginning("è", "iè");
     }
 
@@ -737,12 +732,13 @@ public class GSFeaturesTest {
      */
     @Test
     void testDitt1b() throws IOException{
-        final RegexLinguisticPhenomenonCheckerFactory c=getChecker(NS+"ditt.1.b")
+        getChecker(NS+"ditt.1.b").category(DITT_CLASS)
                 .notApply("è456")
                 .notApply("iè456")
                 .notApply("123iè456")
-                .notApply("123iè");
-        c.build("iè").inside(false, "è").atTheEnd(false, "è");
+                .notApply("123iè").
+                inside(false, "è", "iè")
+                .atTheEnd(false, "è", "iè");
     }
 
     /**
@@ -750,7 +746,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDitt2a() throws IOException{
-        getChecker(NS+"ditt.2.a")
+        getChecker(NS+"ditt.2.a").category(DITT_CLASS)
                 .atTheBeginning("ò", "uò");
     }
 
@@ -759,12 +755,13 @@ public class GSFeaturesTest {
      */
     @Test
     void testDitt2b() throws IOException{
-        final RegexLinguisticPhenomenonCheckerFactory c=getChecker(NS+"ditt.2.b")
+        getChecker(NS+"ditt.2.b").category(DITT_CLASS)
                 .notApply("ò456")
                 .notApply("uò456")
                 .notApply("123uò456")
-                .notApply("123uò");
-        c.build("uò").inside(false, "ò").atTheEnd(false, "ò");
+                .notApply("123uò")
+                .inside(false, "ò", "uò")
+                .atTheEnd(false, "ò", "uò");
     }
 
     // Mantenimento del sistema vocalico settentrionale
@@ -775,7 +772,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testVocal2a() throws IOException{
-        getChecker(NS+"vocal.2.a", "ë").atTheEnd(true, "i");
+        getChecker(NS+"vocal.2.a").category(VOCAL_CLASS).atTheEnd("i", "ë");
     }
 
     /**
@@ -784,7 +781,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testVocal5a() throws IOException{
-        getChecker(NS+"vocal.5.a", "ö").replacing("u");
+        getChecker(NS+"vocal.5.a").category(VOCAL_CLASS).replacing("u", "ö");
     }
 
     /**
@@ -793,7 +790,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testVocal5c() throws IOException{
-        getChecker(NS+"vocal.5.c", "ö̀").replacing("ù");
+        getChecker(NS+"vocal.5.c").category(VOCAL_CLASS).replacing("ù", "ö̀");
     }
 
     /**
@@ -801,7 +798,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testVocal7a() throws IOException {
-        getChecker(NS+"vocal.7.a").atTheEnd("i", "e");
+        getChecker(NS+"vocal.7.a").category(VOCAL_CLASS).atTheEnd("i", "e");
     }
 
     /**
@@ -810,9 +807,8 @@ public class GSFeaturesTest {
     @Test
     void testVocal7b() throws IOException{
 
-        final RegexLinguisticPhenomenonChecker checker=getChecker(NS+"vocal.7.b","e")
-                .atTheBeginning(false, "i").inside(false, "i");
-
+        final RegexLinguisticPhenomenonChecker checker=getChecker(NS+"vocal.7.b").category(VOCAL_CLASS)
+                .atTheBeginning(false, "i","e").inside(false, "i","e").build();
         for(final char vowel: RegexLinguisticPhenomenonChecker.VOWELS.toCharArray()){
             if (vowel!='i')
                 checker.notApply("i"+vowel+"456").notApply("123i"+vowel+"456").notApply("123i"+vowel);
@@ -825,14 +821,14 @@ public class GSFeaturesTest {
      */
     @Test
     void testVocal8a() throws IOException{
-        getChecker(NS+"vocal.8.a","e")
+        getChecker(NS+"vocal.8.a").category(VOCAL_CLASS)
                 .notApply("cu456")
                 .notApply("123cu456")
                 .notApply("123cu")
                 .notApply("gu456")
                 .notApply("123gu456")
                 .notApply("gu456")
-                .replacing("u");
+                .replacing("u","e");
     }
 
     /**
@@ -840,8 +836,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testVocal8b() throws IOException{
-        getChecker(NS+"vocal.8.b","che")
-                .replacing("cu");
+        getChecker(NS+"vocal.8.b").category(VOCAL_CLASS)
+                .replacing("cu","che");
     }
 
     /**
@@ -849,8 +845,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testVocal8c() throws IOException{
-        getChecker(NS+"vocal.8.c","ghe")
-                .replacing("gu");
+        getChecker(NS+"vocal.8.c").category(VOCAL_CLASS)
+                .replacing("gu","ghe");
     }
 
     /**
@@ -858,7 +854,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testVocal9a() throws IOException{
-        getChecker(NS+"vocal.9.a").atTheEnd("èri", "èrö");
+        getChecker(NS+"vocal.9.a").category(VOCAL_CLASS).atTheEnd("èri", "èrö");
     }
 
     /**
@@ -867,7 +863,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testVocal9b() throws IOException{
-        getChecker(NS+"vocal.9.b").atTheEnd("àli", "àö");
+        getChecker(NS+"vocal.9.b").category(VOCAL_CLASS).atTheEnd("àli", "àö");
     }
 
     /**
@@ -876,7 +872,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testVocal10() throws IOException{
-        getChecker(NS+"vocal.10").replacing("ì", "ë̀");
+        getChecker(NS+"vocal.10").category(VOCAL_CLASS).replacing("ì", "ë̀");
     }
     // Aferesi di a-
 
@@ -885,8 +881,8 @@ public class GSFeaturesTest {
      */
     @Test
     void testAfer1() throws IOException{
-        getChecker(NS+"afer.1","")
-                .atTheBeginning(true, "a");
+        getChecker(NS+"afer.1").category(AFER_CLASS)
+                .atTheBeginning("a","");
     }
 
     // Palatalizzazione di /a/
@@ -895,7 +891,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat1() throws IOException{
-        getChecker(NS+"palat.1").atTheEnd("càri", "chè");
+        getChecker(NS+"palat.1").category(PALAT_CLASS).atTheEnd("càri", "chè");
     }
 
     /**
@@ -903,7 +899,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat2() throws IOException{
-        getChecker(NS+"palat.2").atTheEnd("càrisi",  "chèssë");
+        getChecker(NS+"palat.2").category(PALAT_CLASS).atTheEnd("càrisi",  "chèssë");
     }
 
     /**
@@ -911,7 +907,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat3() throws IOException{
-        getChecker(NS+"palat.3").atTheEnd("gàri", "ghè");
+        getChecker(NS+"palat.3").category(PALAT_CLASS).atTheEnd("gàri", "ghè");
     }
 
     /**
@@ -919,7 +915,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat4() throws IOException{
-        getChecker(NS+"palat.4").atTheEnd("gàrisi", "ghèssë");
+        getChecker(NS+"palat.4").category(PALAT_CLASS).atTheEnd("gàrisi", "ghèssë");
     }
 
     /**
@@ -927,7 +923,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat5() throws IOException{
-        getChecker(NS+"palat.5").atTheEnd("àri", "è")
+        getChecker(NS+"palat.5").category(PALAT_CLASS).atTheEnd("àri", "è")
                 .notApply("123càri")
                 .notApply("123cari")
                 .notApply("123gàri")
@@ -942,7 +938,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat6() throws IOException{
-        getChecker(NS+"palat.6")
+        getChecker(NS+"palat.6").category(PALAT_CLASS)
                 .atTheEnd("àrisi", "èssë")
                 .notApply("123càrisi")
                 .notApply("123gàrisi")
@@ -954,7 +950,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat7() throws IOException{
-        getChecker(NS+"palat.7").atTheEnd("ciàri", "cè");
+        getChecker(NS+"palat.7").category(PALAT_CLASS).atTheEnd("ciàri", "cè");
     }
 
     /**
@@ -962,7 +958,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat8() throws IOException{
-        getChecker(NS+"palat.8").atTheEnd("iàrisi", "èssë");
+        getChecker(NS+"palat.8").category(PALAT_CLASS).atTheEnd("iàrisi", "èssë");
     }
 
     /**
@@ -970,7 +966,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat9() throws IOException{
-        getChecker(NS+"palat.9").atTheEnd("giàri", "gè");
+        getChecker(NS+"palat.9").category(PALAT_CLASS).atTheEnd("giàri", "gè");
     }
 
     /**
@@ -978,7 +974,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat10() throws IOException{
-        getChecker(NS+"palat.10").atTheEnd( "ïàri", "ïè");
+        getChecker(NS+"palat.10").category(PALAT_CLASS).atTheEnd( "ïàri", "ïè");
     }
 
     /**
@@ -986,7 +982,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat11() throws IOException{
-        getChecker(NS+"palat.11").atTheEnd("ïàrisi","ïèssë");
+        getChecker(NS+"palat.11").category(PALAT_CLASS).atTheEnd("ïàrisi","ïèssë");
     }
 
     /**
@@ -994,7 +990,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat12() throws IOException{
-        getChecker(NS+"palat.12").atTheEnd("àrini","ènë");
+        getChecker(NS+"palat.12").category(PALAT_CLASS).atTheEnd("àrini","ènë");
     }
 
     /**
@@ -1002,7 +998,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testPalat13() throws IOException{
-        getChecker(NS+"palat.13").atTheEnd("arisìnni","èssenë");
+        getChecker(NS+"palat.13").category(PALAT_CLASS).atTheEnd("arisìnni","èssenë");
     }
 
     //  Eliminazione di varianti allofoniche siciliane in posizione debole
@@ -1012,7 +1008,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testElim1() throws IOException{
-        getChecker(NS+"elim.1", "b").atTheBeginning(true, "v");
+        getChecker(NS+"elim.1").category(ELIM_CLASS).atTheBeginning("v", "b");
     }
 
     /**
@@ -1020,7 +1016,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testElim2() throws IOException{
-        getChecker(NS+"elim.2", "b").atTheBeginning(true, "bb");
+        getChecker(NS+"elim.2").category(ELIM_CLASS).atTheBeginning(true, "bb", "b");
     }
 
     /**
@@ -1028,7 +1024,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testElim3() throws IOException{
-        getChecker(NS+"elim.3", "br").atTheBeginning(true, "r");
+        getChecker(NS+"elim.3").category(ELIM_CLASS).atTheBeginning(true, "r", "br");
     }
 
     /*
@@ -1041,7 +1037,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testElim4a() throws IOException{
-        getChecker(NS+"elim.4.a", "g").atTheBeginning(true, "i");
+        getChecker(NS+"elim.4.a").category(ELIM_CLASS).atTheBeginning(true, "i", "g");
     }
 
     /**
@@ -1050,7 +1046,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testElim4b() throws IOException{
-        getChecker(NS+"elim.4.b", "gi").atTheBeginning(true, "i");
+        getChecker(NS+"elim.4.b").category(ELIM_CLASS).atTheBeginning(true, "i","gi");
     }
 
     /**
@@ -1058,7 +1054,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testElim5() throws IOException{
-        getChecker(NS+"elim.5", "gr").atTheBeginning(true, "r");
+        getChecker(NS+"elim.5").category(ELIM_CLASS).atTheBeginning(true, "r", "gr");
     }
 
     // Deretroflessione
@@ -1068,7 +1064,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDeretr1() throws IOException{
-        getChecker(NS+"deretr.1", "tr").replacing("ṭṛ");
+        getChecker(NS+"deretr.1").category(DERETR_CLASS).replacing("ṭṛ", "tr");
     }
 
     /**
@@ -1088,7 +1084,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDeretr2() throws IOException{
-        getChecker(NS+"deretr.2", "ttr").replacing("ṭṭṛ");
+        getChecker(NS+"deretr.2").category(DERETR_CLASS).replacing("ṭṭṛ", "ttr");
     }
 
     /**
@@ -1097,7 +1093,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDeretr3() throws IOException{
-        getChecker(NS+"deretr.3", "str").replacing("ṣṭṛ");
+        getChecker(NS+"deretr.3").category(DERETR_CLASS).replacing("ṣṭṛ", "str");
     }
 
     // Desinenze infiniti (=INF)
@@ -1106,7 +1102,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf1() throws IOException{
-        getChecker(NS+"inf.1").atTheEnd("ìri", "ë̀");
+        getChecker(NS+"inf.1").category(PALAT_CLASS).atTheEnd("ìri", "ë̀");
     }
 
     /**
@@ -1114,7 +1110,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf2() throws IOException{
-        getChecker(NS+"inf.2").atTheEnd("ìri","ì");
+        getChecker(NS+"inf.2").category(PALAT_CLASS).atTheEnd("ìri","ì");
     }
 
     /**
@@ -1122,7 +1118,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf3a() throws IOException{
-        getChecker(NS+"inf.3.a").atTheEnd("iri","ö")
+        getChecker(NS+"inf.3.a").category(PALAT_CLASS).atTheEnd("iri","ö")
                 .notApply("123ciri")
                 .notApply("123giri")
                 .notApply("123jiri")
@@ -1134,7 +1130,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf3b1() throws IOException{
-        getChecker(NS+"inf.3.b.1")
+        getChecker(NS+"inf.3.b.1").category(PALAT_CLASS)
                 .atTheEnd("ciri", "ciö");
     }
 
@@ -1143,7 +1139,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf3b2() throws IOException{
-        getChecker(NS+"inf.3.b.2")
+        getChecker(NS+"inf.3.b.2").category(PALAT_CLASS)
                 .atTheEnd("giri","giö");
     }
 
@@ -1152,7 +1148,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf3b3() throws IOException{
-        getChecker(NS+"inf.3.b.3")
+        getChecker(NS+"inf.3.b.3").category(PALAT_CLASS)
                 .atTheEnd("chjiri", "chjiö");
     }
 
@@ -1161,7 +1157,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf3b4() throws IOException{
-        getChecker(NS+"inf.3.b.4")
+        getChecker(NS+"inf.3.b.4").category(PALAT_CLASS)
                 .atTheEnd("ghjiri", "ghjiö");
     }
 
@@ -1170,7 +1166,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf3c() throws IOException{
-        getChecker(NS+"inf.3.c")
+        getChecker(NS+"inf.3.c").category(PALAT_CLASS)
                 .atTheEnd("jiri","jö");
     }
 
@@ -1179,7 +1175,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf3d() throws IOException{
-        getChecker(NS+"inf.3.d")
+        getChecker(NS+"inf.3.d").category(PALAT_CLASS)
                 .atTheEnd("hiri","hjö");
     }
 
@@ -1188,7 +1184,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf4() throws IOException{
-        getChecker(NS+"inf.4").atTheEnd("ìri","ìsciö");
+        getChecker(NS+"inf.4").category(PALAT_CLASS).atTheEnd("ìri","ìsciö");
     }
 
     /**
@@ -1196,7 +1192,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf5() throws IOException{
-        getChecker(NS+"inf.5")
+        getChecker(NS+"inf.5").category(PALAT_CLASS)
                 .atTheEnd("ìrisi", "essë")
                 .notApply("123scìrisi");
     }
@@ -1206,7 +1202,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf6() throws IOException{
-        getChecker(NS+"inf.6").atTheEnd("scìrisi","essë");
+        getChecker(NS+"inf.6").category(PALAT_CLASS).atTheEnd("scìrisi","essë");
     }
 
     /**
@@ -1214,7 +1210,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testInf7() throws IOException{
-        getChecker(NS+"inf.7").atTheEnd("ìricci","ë̀ghjë");
+        getChecker(NS+"inf.7").category(PALAT_CLASS).atTheEnd("ìricci","ë̀ghjë");
     }
 
     @Test
@@ -1266,8 +1262,10 @@ public class GSFeaturesTest {
             final GSFeaturesCategory actualPalat=getPalat(gs);
             int n=0;
             for(final HashedOntologyItem f: actualPalat.getMembers()){
-                if (f.getId().startsWith("inf."))
+                if (f.getId().startsWith("inf.")) {
                     n++;
+                    System.out.println(f.getId());
+                }
             }
             assertNotEquals(0, n, "No inf feature found under Palat");
         }
