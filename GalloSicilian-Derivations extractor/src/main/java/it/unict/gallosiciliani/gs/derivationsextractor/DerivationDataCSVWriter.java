@@ -2,6 +2,7 @@ package it.unict.gallosiciliani.gs.derivationsextractor;
 
 import it.unict.gallosiciliani.derivations.io.DerivationIOUtil;
 import it.unict.gallosiciliani.gs.GSFeaturesCategory;
+import it.unict.gallosiciliani.gs.GSFeaturesCategoryRetriever;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import lombok.Getter;
 import org.apache.commons.csv.CSVFormat;
@@ -55,6 +56,7 @@ public class DerivationDataCSVWriter implements AutoCloseable, Consumer<Derivati
             final Optional<Float> rate=derivationData.getGalloItalicityRate();
             printer.print(rate.map(aFloat -> String.format("%.3f", aFloat)).orElse(NA));
             print(derivationData.getCategories(categoryRetriever));
+            print(derivationData.getFeatures());
             printer.println();
         }catch (final IOException e){
             System.err.println("Unable to write row "+rowNum);
@@ -84,5 +86,15 @@ public class DerivationDataCSVWriter implements AutoCloseable, Consumer<Derivati
     private void print(final Set<GSFeaturesCategory> foundCategories) throws IOException {
         for(final GSFeaturesCategory c: categories)
             printer.print(foundCategories.contains(c)?YES:NO);
+    }
+
+    private void print(final List<LinguisticPhenomenon> phenomena) throws IOException {
+        int i=0;
+        for(final LinguisticPhenomenon p: phenomena){
+            printer.print(p.getLabel());
+            i++;
+        }
+        for(int j=i; j<DerivationDataCSVHeader.FEATURE_HEADERS.length; j++)
+            printer.print(NA);
     }
 }

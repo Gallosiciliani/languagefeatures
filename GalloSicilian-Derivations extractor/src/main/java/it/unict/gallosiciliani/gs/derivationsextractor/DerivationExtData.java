@@ -4,6 +4,7 @@ import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeImpl;
 import it.unict.gallosiciliani.derivations.DerivationPathNodeIterable;
 import it.unict.gallosiciliani.gs.GSFeaturesCategory;
+import it.unict.gallosiciliani.gs.GSFeaturesCategoryRetriever;
 import it.unict.gallosiciliani.liph.LinguisticPhenomena;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
@@ -88,6 +89,23 @@ public class DerivationExtData {
         for(final DerivationPathNode n: new DerivationPathNodeIterable(derivation))
             if (n.getLinguisticPhenomenon()!=null)
                 res.add(categoryRetriever.get(n.getLinguisticPhenomenon()));
+        return res;
+    }
+
+    /**
+     * Features as they occur in the derivation (from lemma to etymon)
+     * @return {@link LinguisticPhenomenon} in the derivation
+     */
+    public List<LinguisticPhenomenon> getFeatures(){
+        return getFeatures(derivation);
+    }
+
+    private List<LinguisticPhenomenon> getFeatures(final DerivationPathNode n){
+        if (n.prev()==null)
+            return new LinkedList<>();
+
+        final List<LinguisticPhenomenon> res=getFeatures(n.prev());
+        res.add(0, n.getLinguisticPhenomenon());
         return res;
     }
 }

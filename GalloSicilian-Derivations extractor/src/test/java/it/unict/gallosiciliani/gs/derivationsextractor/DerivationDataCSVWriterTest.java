@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -49,7 +49,7 @@ public class DerivationDataCSVWriterTest {
     @Test
     void shouldWriteHeaders() throws IOException {
         final StringWriter producedCSV=new StringWriter();
-        final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, List.of(c1, c2));
+        final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, Collections.emptyList());
         w.close();
         System.out.println(producedCSV.getBuffer().toString());
         final CSVParser p=CSVParser.parse(producedCSV.toString(), CSVFormat.DEFAULT);
@@ -150,10 +150,18 @@ public class DerivationDataCSVWriterTest {
         assertEquals(actualNoCategories.toList().size()+2, actualTwoCategories.toList().size());
     }
 
+    @Test
+    void shouldWriteHeadersForFeatures() throws IOException {
+        final List<String> actualHeaders=produceHeader(categories).toList();
+        for(final DerivationDataCSVHeader h: DerivationDataCSVHeader.FEATURE_HEADERS)
+            assertTrue(actualHeaders.contains(h.toString()), "header "+h+" is missing");
+    }
+
     private CSVRecord produceHeader(final List<GSFeaturesCategory> categories) throws IOException {
         final StringWriter producedCSV=new StringWriter();
         final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, categories);
         w.close();
+        System.out.println(producedCSV);
         final CSVParser parser=CSVParser.parse(producedCSV.toString(), CSVFormat.DEFAULT);
         return parser.getRecords().get(0);
     }
@@ -166,4 +174,13 @@ public class DerivationDataCSVWriterTest {
         assertEquals(DerivationDataCSVWriter.NO, actualRecord.get(c2.getId()));
     }
 
+    @Test
+    void shouldWriteFeatures() throws IOException {
+        when(data.getFeatures()).thenReturn(List.of(q, p));
+        final CSVRecord actualRecord=produceRow(data);
+        assertEquals(q.getLabel(), actualRecord.get(DerivationDataCSVHeader.FEATURE_HEADERS[0].toString()));
+        assertEquals(p.getLabel(), actualRecord.get(DerivationDataCSVHeader.FEATURE_HEADERS[1].toString()));
+        for(int i=2; i<DerivationDataCSVHeader.FEATURE_HEADERS.length; i++)
+            assertEquals(DerivationDataCSVWriter.NA, actualRecord.get(DerivationDataCSVHeader.FEATURE_HEADERS[i].toString()));
+    }
 }

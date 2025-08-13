@@ -48,35 +48,26 @@ public class GSFeaturesTest {
      * @param featureIRI final feature code
      * @return helper to test the specified feature
      */
+    @Deprecated
     private RegexLinguisticPhenomenonChecker getChecker(final String featureIRI, final String replacement) throws IOException {
         return getChecker(featureIRI).build(replacement);
     }
 
     private RegexLinguisticPhenomenonCheckerFactory getChecker(final String featureIRI) throws IOException {
-        return new RegexLinguisticPhenomenonCheckerFactory(getFeature(featureIRI));
-    }
-
-    /**
-     * Get the feature with the specified IRI
-     * @param iri phenomenon IRI
-     * @return the phenomenon with the specified IRI
-     * @throws IllegalArgumentException if no such phenomenon exists among GS features
-     */
-    private LinguisticPhenomenon getFeature(final String iri) throws IOException {
         try(final GSFeatures ont = new GSFeatures()) {
+            final GSFeaturesCategoryRetriever categoryRetriever=new GSFeaturesCategoryRetriever(ont.getCategories());
             RegexLinguisticPhenomenaReader r=new RegexLinguisticPhenomenaReader();
             r.read(ont.getModel(), new FiniteStatePhenomenaQuery());
             final List<LinguisticPhenomenon> allRegexFeatures=r.getFeatures();
             assertFalse(allRegexFeatures.isEmpty());
             for (final LinguisticPhenomenon f : allRegexFeatures)
-                if (iri.equals(f.getId())){
+                if (featureIRI.equals(f.getId())){
                     final String expectedLabel=f.getId().substring(NS.length());
                     assertEquals(f.getId(), ont.getByLabel(expectedLabel, null).getId());
-                    return f;
+                    return new RegexLinguisticPhenomenonCheckerFactory(f, categoryRetriever);
                 }
-            throw new IllegalArgumentException("Unable to get feature " + iri);
+            throw new IllegalArgumentException("Unable to get feature " + featureIRI);
         }
-
     }
 
     /**
@@ -85,11 +76,12 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz1() throws IOException {
-        final RegexLinguisticPhenomenonChecker checker= getChecker(NS+"leniz.1","g")
-                .betweenVowels(true, "c");
+        final RegexLinguisticPhenomenonCheckerFactory checker= getChecker(NS+"leniz.1")
+                .betweenVowels(true, "c", "g");
         for(final char v: RegexLinguisticPhenomenonChecker.VOWELS.toCharArray())
                 checker.derives("123"+v+"ch456", "123"+v+"gh456");
         checker.notApply("accutiddari");
+        checker.category(LENIZ_CLASS);
     }
 
     /**
@@ -97,8 +89,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz2() throws IOException{
-        getChecker(NS+"leniz.2","gr").betweenVowels(true, "cr");
-
+        getChecker(NS+"leniz.2").category(LENIZ_CLASS).betweenVowels(true, "cr","gr");
     }
 
     /**
@@ -106,7 +97,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz3() throws IOException{
-        getChecker(NS+"leniz.3","v").betweenVowels(true, "p");
+        getChecker(NS+"leniz.3").category(LENIZ_CLASS).betweenVowels(true, "p","v");
     }
 
     /**
@@ -114,7 +105,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz4() throws IOException{
-        getChecker(NS+"leniz.4","vr").betweenVowels(true, "pr");
+        getChecker(NS+"leniz.4").category(LENIZ_CLASS).betweenVowels(true, "pr","vr");
     }
 
     /**
@@ -122,7 +113,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz5() throws IOException{
-        getChecker(NS+"leniz.5","d").betweenVowels(true, "t");
+        getChecker(NS+"leniz.5").category(LENIZ_CLASS).betweenVowels(true, "t","d");
     }
 
     /**
@@ -130,7 +121,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz6() throws IOException{
-        getChecker(NS+"leniz.6","ì").atTheEnd(true, "ìtu");
+        getChecker(NS+"leniz.6").category(LENIZ_CLASS).atTheEnd("ìtu","ì");
     }
 
     /**
@@ -138,7 +129,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz7() throws IOException{
-        getChecker(NS+"leniz.7","à").atTheEnd(true, "àtu");
+        getChecker(NS+"leniz.7").category(LENIZ_CLASS).atTheEnd("àtu","à");
     }
 
     /**
@@ -146,7 +137,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz8() throws IOException{
-        getChecker(NS+"leniz.8","ù").atTheEnd(true, "ùtu");
+        getChecker(NS+"leniz.8").category(LENIZ_CLASS).atTheEnd("ùtu","ù");
     }
 
     /**
@@ -154,7 +145,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz9() throws IOException{
-        getChecker(NS+"leniz.9","ë̀").atTheEnd(true, "ìti");
+        getChecker(NS+"leniz.9").category(LENIZ_CLASS).atTheEnd("ìti","ë̀");
     }
 
     /**
@@ -162,7 +153,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz10() throws IOException{
-        getChecker(NS+"leniz.10", "ir").betweenVowels(true, "ṭṛ");
+        getChecker(NS+"leniz.10").category(LENIZ_CLASS).betweenVowels(true, "ṭṛ", "ir");
     }
 
     /**
@@ -170,7 +161,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz11() throws IOException{
-        getChecker(NS+"leniz.11", "ir").betweenVowels(true, "dr");
+        getChecker(NS+"leniz.11").category(LENIZ_CLASS).betweenVowels(true, "dr", "ir");
     }
 
     /**
@@ -178,7 +169,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz12() throws IOException{
-        getChecker(NS+"leniz.12","").betweenVowels(true, "l");
+        getChecker(NS+"leniz.12").category(LENIZ_CLASS).betweenVowels(true, "l","");
     }
 
     /**
@@ -186,7 +177,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz13() throws IOException{
-        getChecker(NS+"leniz.13","àn").atTheEnd(true, "àni");
+        getChecker(NS+"leniz.13").category(LENIZ_CLASS).atTheEnd("àni","àn");
     }
 
     /**
@@ -194,7 +185,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz14() throws IOException{
-        getChecker(NS+"leniz.14","ö̀n").atTheEnd(true, "ùni");
+        getChecker(NS+"leniz.14").category(LENIZ_CLASS).atTheEnd("ùni","ö̀n");
     }
 
     /**
@@ -202,7 +193,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz16() throws IOException{
-        getChecker(NS+"leniz.16","ìn").atTheEnd(true, "ìnu");
+        getChecker(NS+"leniz.16").category(LENIZ_CLASS).atTheEnd("ìnu","ìn");
     }
 
     /**
@@ -210,7 +201,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz17() throws IOException{
-        getChecker(NS+"leniz.17","ùn").atTheEnd(true, "ùnu");
+        getChecker(NS+"leniz.17").category(LENIZ_CLASS).atTheEnd("ùnu","ùn");
     }
 
     /*
@@ -223,7 +214,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz19a() throws IOException{
-       getChecker(NS+"leniz.19.a", "ghj").betweenVowels(true, "chi");
+       getChecker(NS+"leniz.19.a").category(LENIZ_CLASS).betweenVowels(true, "chi", "ghj");
     }
 
     /**
@@ -232,7 +223,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz19b() throws IOException{
-        getChecker(NS+"leniz.19.b", "ghï").betweenVowels(true, "chi");
+        getChecker(NS+"leniz.19.b").category(LENIZ_CLASS).betweenVowels(true, "chi", "ghï");
     }
 
     /**
@@ -241,7 +232,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz19c() throws IOException{
-        getChecker(NS+"leniz.19.c", "ghj").betweenVowels(true, "chì");
+        getChecker(NS+"leniz.19.c").category(LENIZ_CLASS).betweenVowels(true, "chì", "ghj");
     }
 
     /**
@@ -250,7 +241,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz19d() throws IOException{
-        getChecker(NS+"leniz.19.d", "ghï").betweenVowels(true, "chì");
+        getChecker(NS+"leniz.19.d").category(LENIZ_CLASS).betweenVowels(true, "chì", "ghï");
     }
 
     /**
@@ -259,7 +250,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz19e() throws IOException{
-        getChecker(NS+"leniz.19.e", "ghj").betweenVowels(true, "chj");
+        getChecker(NS+"leniz.19.e").category(LENIZ_CLASS).betweenVowels(true, "chj", "ghj");
     }
 
     /**
@@ -268,7 +259,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz19f() throws IOException{
-        getChecker(NS+"leniz.19.f", "ghï").betweenVowels(true, "chj");
+        getChecker(NS+"leniz.19.f").category(LENIZ_CLASS).betweenVowels(true, "chj", "ghï");
     }
 
     /**
@@ -277,7 +268,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz19g() throws IOException{
-        getChecker(NS+"leniz.19.g", "ghj").betweenVowels(true, "chï");
+        getChecker(NS+"leniz.19.g").category(LENIZ_CLASS).betweenVowels(true, "chï","ghj");
     }
 
     /**
@@ -286,7 +277,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz19h() throws IOException{
-        getChecker(NS+"leniz.19.h", "ghï").betweenVowels(true, "chï");
+        getChecker(NS+"leniz.19.h").category(LENIZ_CLASS).betweenVowels(true, "chï", "ghï");
     }
 
     /**
@@ -294,7 +285,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testLeniz20() throws IOException{
-        getChecker(NS+"leniz.20","sbr").replacing("spr");
+        getChecker(NS+"leniz.20").category(LENIZ_CLASS).replacing("spr", "sbr");
     }
 
     /**
@@ -1085,7 +1076,7 @@ public class GSFeaturesTest {
      */
     @Test
     void testDeretr1Trazzera() throws IOException{
-        final LinguisticPhenomenon deretr1=getFeature(NS+"deretr.1");
+        final LinguisticPhenomenon deretr1=getChecker(NS+"deretr.1").getPhenomenon();
         final Set<String> actual0=deretr1.apply("ṭṛazziera");
         assertEquals(1, actual0.size());
         assertEquals("trazziera", actual0.iterator().next());

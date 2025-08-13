@@ -1,6 +1,5 @@
-package it.unict.gallosiciliani.gs.derivationsextractor;
+package it.unict.gallosiciliani.gs;
 
-import it.unict.gallosiciliani.gs.GSFeaturesCategory;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.util.OntologyItem;
 

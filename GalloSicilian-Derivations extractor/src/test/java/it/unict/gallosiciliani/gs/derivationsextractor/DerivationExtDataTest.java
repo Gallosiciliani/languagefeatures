@@ -3,6 +3,7 @@ package it.unict.gallosiciliani.gs.derivationsextractor;
 import cz.cvut.kbss.jopa.model.MultilingualString;
 import it.unict.gallosiciliani.derivations.DerivationPathNode;
 import it.unict.gallosiciliani.gs.GSFeaturesCategory;
+import it.unict.gallosiciliani.gs.GSFeaturesCategoryRetriever;
 import it.unict.gallosiciliani.liph.LinguisticPhenomenaProvider;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenonOccurrence;
@@ -153,6 +154,15 @@ public class DerivationExtDataTest {
         final Iterator<GSFeaturesCategory> actualIt=new DerivationExtData(rawData).getCategories(new GSFeaturesCategoryRetriever(List.of(c1, c2))).iterator();
         assertEquals(DerivationDataTestBed.NS+"c1", actualIt.next().getIri());
         assertFalse(actualIt.hasNext());
+    }
+
+    @Test
+    void shouldRetrieveDerivation(){
+        when(rawData.getDerivationChain()).thenReturn(testBed.derivation);
+        final Iterator<LinguisticPhenomenon> actual=new DerivationExtData(rawData).getFeatures().iterator();
+        assertSame(testBed.q, actual.next());
+        assertSame(testBed.p, actual.next());
+        assertFalse(actual.hasNext());
     }
 
 }

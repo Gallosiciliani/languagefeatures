@@ -1,15 +1,21 @@
 package it.unict.gallosiciliani.gs;
 
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+import lombok.Getter;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Helper class for {@link RegexLinguisticPhenomenonChecker}
  */
 public class RegexLinguisticPhenomenonCheckerFactory {
+    @Getter
     private final LinguisticPhenomenon phenomenon;
+    private final GSFeaturesCategoryRetriever categoryRetriever;
 
-    public RegexLinguisticPhenomenonCheckerFactory(final LinguisticPhenomenon phenomenon) {
+    public RegexLinguisticPhenomenonCheckerFactory(final LinguisticPhenomenon phenomenon, final GSFeaturesCategoryRetriever categoryRetriever) {
         this.phenomenon = phenomenon;
+        this.categoryRetriever= categoryRetriever;
     }
 
     public RegexLinguisticPhenomenonChecker build(final String... replacements) {
@@ -78,4 +84,25 @@ public class RegexLinguisticPhenomenonCheckerFactory {
         return this;
     }
 
+    /**
+     * Test transformations with rules of the form -s- -> -replacement-
+     * where - are placeholders for vowels.
+     *
+     * @param strict if true, the phenomenon does not apply outside vowels (for example, at the beginning of the string)
+     * @param src    parts to be replaced
+     */
+    public RegexLinguisticPhenomenonCheckerFactory betweenVowels(boolean strict, final String src, final String replacement) {
+        build(replacement).betweenVowels(strict, src);
+        return this;
+    }
+
+    /**
+     * Ensure that the phenomenon belongs to the specified category
+     * @param categoryIRI IRI characterizing the category
+     * @return this factory
+     */
+    public RegexLinguisticPhenomenonCheckerFactory category(final String categoryIRI){
+        assertEquals(categoryIRI, categoryRetriever.get(phenomenon).getIri());
+        return this;
+    }
 }

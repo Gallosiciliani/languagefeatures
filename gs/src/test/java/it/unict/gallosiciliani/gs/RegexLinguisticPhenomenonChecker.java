@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.gs;
 
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
+import lombok.Getter;
 
 import java.util.*;
 
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class RegexLinguisticPhenomenonChecker {
     public static final String VOWELS = "aàáäeèéëë̀iìíïoòóöö̀uùúü"; //TODO
 
+    @Getter
     private final LinguisticPhenomenon phenomenon;
     private final String[] replacements;
 
