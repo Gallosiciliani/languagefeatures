@@ -11,7 +11,7 @@
 
     <artifactId>gsderivationsimporter</artifactId>
     <name>GalloSicilian-Derivations importer</name>
-    <description>Extract derivations from a derivations file and put them in a OWL ontology which must contain the derivation lemmas.</description>
+    <description>Extract derivations from a derivations file and put them into an OWL ontology which must contain the derivation lemmas.</description>
     <dependencies>
         <dependency>
             <groupId>it.unict.gallosiciliani</groupId>

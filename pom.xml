@@ -26,7 +26,7 @@
         <module>csvimporter</module>
         <module>sicilian-derivationbuilder</module>
         <module>gs-derivationsimporter</module>
-        <module>GalloSicilian-Derivations extractor</module>
+        <module>gs-derivationsextractor</module>
     </modules>
 
     <dependencyManagement>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
-            <version>1.12.0</version>
+            <version>1.14.0</version>
         </dependency>
         <!-- see https://central.sonatype.com/artifact/cz.cvut.kbss.jopa/jopa-all -->
 <!--        <dependency>-->
