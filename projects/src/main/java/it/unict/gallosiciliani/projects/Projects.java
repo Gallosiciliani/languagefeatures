@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.projects;
 
 
+import it.unict.gallosiciliani.liph.util.OntologyItem;
 import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import it.unict.gallosiciliani.projects.model.eurio.Project;
 import it.unict.gallosiciliani.projects.model.eurio.Result;
@@ -36,8 +37,9 @@ public class Projects extends OntologyLoader {
     private Project createGallosiciliani2023Project(){
         final Project p=new Project();
         p.setId(NS+"gallosiciliani2023Project");
-        p.setLabel("Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily");
-        p.setComment("Research project “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\\\\\\\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T");
+        final OntologyItem pi=retrieve(p.getId());
+        p.setLabel(pi.getLabel());
+        p.setComment(pi.getComment());
 
         liph.setId("https://gallosiciliani.unict.it/ns/liph");
         gsFeatures.setId("https://gallosiciliani.unict.it/ns/gs-features");

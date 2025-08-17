@@ -1,0 +1,100 @@
+@prefix : <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcatapit: <http://dati.gov.it/onto/dcatapit#> .
+@base <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow#> .
+
+<https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow> rdf:type owl:Ontology ;
+                                                                        owl:imports <http://dati.gov.it/onto/dcatapit/2.0> ,
+                                                                                    <http://www.w3.org/ns/dcat3> ,
+                                                                                    foaf: ;
+                                                                        rdfs:comment "All the software and the intermediate datasets used to generate the dataset of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga." ;
+                                                                        rdfs:label "Production workflow of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" .
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://creativecommons.org/licenses/by/4.0/
+<http://creativecommons.org/licenses/by/4.0/> rdf:type owl:NamedIndividual .
+
+
+###  http://publications.europa.eu/resource/authority/data-theme/TECH
+<http://publications.europa.eu/resource/authority/data-theme/TECH> rdf:type owl:NamedIndividual .
+
+
+###  http://publications.europa.eu/resource/authority/file-type/RDF_TURTLE
+<http://publications.europa.eu/resource/authority/file-type/RDF_TURTLE> rdf:type owl:NamedIndividual .
+
+
+###  http://publications.europa.eu/resource/authority/frequency/NOT_PLANNED
+<http://publications.europa.eu/resource/authority/frequency/NOT_PLANNED> rdf:type owl:NamedIndividual .
+
+
+###  https://unict.it
+<https://unict.it> rdf:type owl:NamedIndividual ,
+                            dcatapit:Agent .
+
+
+###  https://gallosiciliani.unict.it/ns/nicosiesperlinga
+<https://gallosiciliani.unict.it/ns/nicosiesperlinga> rdf:type owl:NamedIndividual .
+
+
+###  https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow#catalog
+:catalog rdf:type owl:NamedIndividual ,
+                  <https://dati.gov.it/onto/dcatapit#Catalog> ,
+                  <https://www.w3.org/ns/dcat#Catalog> ;
+         dcat:dataset <https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl> ;
+         dct:description "All the software and the intermediate datasets used to generate the dataset of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga."@en ;
+         dct:modified "2025-08-16"^^xsd:date ;
+         dct:title "Production workflow of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga"@en .
+
+
+###  https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow#nicosiaesperlinga-base.ttl-dist
+:nicosiaesperlinga-base.ttl-dist rdf:type owl:NamedIndividual ,
+                                          dcatapit:Distribution ,
+                                          dcat:Distribution ;
+                                 dct:format <http://publications.europa.eu/resource/authority/file-type/RDF_TURTLE> ;
+                                 dct:license <http://creativecommons.org/licenses/by/4.0/> ;
+                                 dcat:accessURL <https://gallosiciliani.unict.it/ns/nicosiesperlinga> .
+
+
+###  https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow/nicosiaesperlinga-base.ttl
+<https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow/nicosiaesperlinga-base.ttl> rdf:type owl:NamedIndividual ,
+                                                                                                           dcatapit:Dataset ,
+                                                                                                           dcat:Dataset ;
+                                                                                                  dct:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/NOT_PLANNED> ;
+                                                                                                  dct:rightsHolder <https://unict.it> ;
+                                                                                                  dct:spatial <https://sws.geonames.org/6539189/> ,
+                                                                                                              <https://sws.geonames.org/6539191/> ;
+                                                                                                  dcat:distribution <https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl-dist> ;
+                                                                                                  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/TECH> ;
+                                                                                                  dct:identifier "uni_ct:D.gs3" ;
+                                                                                                  dct:description "Description of the Lexicon of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga. Base OWL ontology containing just the ontology, the lexicon and some entries, which will has to be populated with all the remaining lexical entries in the Gallo-Italic variety spoken in Nicosia e Sperlinga"@en ;
+                                                                                                  dct:modified "2025-08-05"^^xsd:date ;
+                                                                                                  dct:title "nicosiaesperlinga-base.ttl"@en .
+
+
+###  https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl
+<https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl> rdf:type owl:NamedIndividual .
+
+
+###  https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl-dist
+<https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl-dist> rdf:type owl:NamedIndividual .
+
+
+###  https://sws.geonames.org/6539189/
+<https://sws.geonames.org/6539189/> rdf:type owl:NamedIndividual .
+
+
+###  https://sws.geonames.org/6539191/
+<https://sws.geonames.org/6539191/> rdf:type owl:NamedIndividual .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{base :: head}"></head>
+<body>
+<div class="container" th:replace="~{base :: header (title='Production workflow for the ontology of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga')}"></div>
+<div class="container" th:replace="~{base :: ontology (comment='This page describes all the production steps for the ontology of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga, among with the utilized software tools and the intermediate products.')}"></div>
+<div class="container" id="nicosiaesperlinga-base.ttl">
+    <p><a th:href="nicosiaesperlinga-base.ttl" type="text/turtle">nicosiaesperlinga-base.ttl</a>
+        is an OWL ontology providing the Lexicon metadata. It is the base OWL ontology containing just the ontology individual, the lexicon one and some entries, which will has to be populated with all the remaining lexical entries in the Gallo-Italic variety spoken in Nicosia e Sperlinga.
+</div>
+</body>
+</html>

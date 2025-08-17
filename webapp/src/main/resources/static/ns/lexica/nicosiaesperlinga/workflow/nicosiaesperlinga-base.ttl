@@ -1,0 +1,133 @@
+PREFIX :        <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX eurio:   <http://data.europa.eu/s66#>
+PREFIX gs:      <https://gallosiciliani.unict.it/ns/gs-features#>
+PREFIX lime:    <http://www.w3.org/ns/lemon/lime#>
+PREFIX liph:    <https://gallosiciliani.unict.it/ns/liph#>
+PREFIX owl:     <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:     <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+<https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga>
+        rdf:type             owl:Ontology;
+        rdfs:comment         "An OWL dataset of nouns and verbs from the Gallo-Sicilian variety spoken in Nicosia and Sperlinga. The dataset includes etymological information, expressed in terms of language features, for lexical expressions borrowed from Sicilian, thereby enabling automated analysis of borrowing processes.\nThis work has been created in the scope of the project PRIN 2022 PNRR \"Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.";
+        rdfs:label           "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga";
+        eurio:isResultOf     <https://gallosiciliani.unict.it/ns/projects/gallosiciliani2023Project>;
+        dcterms:contributor  "Vincenzo Nicolò Di Caro" , "Sara Natalia Cardullo" , "Angela Castiglione" , "Daniele Francesco Santamaria" , "Domenico Cantone" , "Salvatore Menza" , "Elvira Assenza" , "Alessandro De Angelis" , "Marianna Nicolosi Asmundo" , "Michele Cosentino";
+        dcterms:created      "2024-12-30"^^xsd:date;
+        dcterms:creator      "Cristiano Longo";
+        dcterms:description  "An OWL dataset of nouns and verbs from the Gallo-Sicilian variety spoken in Nicosia and Sperlinga. The dataset includes etymological information, expressed in terms of language features, for lexical expressions borrowed from Sicilian, thereby enabling automated analysis of borrowing processes.\nThis work has been created in the scope of the project PRIN 2022 PNRR \"Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.";
+        dcterms:license      <https://creativecommons.org/licenses/by/4.0/>;
+        dcterms:modified     "2025-08-05"^^xsd:date;
+        dcterms:source       :trovatoMenza2020;
+        dcterms:title        "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga";
+        owl:imports          <http://www.w3.org/ns/lemon/lime> , <http://www.geonames.org/ontology> , <http://purl.org/ontology/bibo/> , <https://gallosiciliani.unict.it/ns/gs-features>;
+        owl:versionInfo      "1.0.0" .
+
+:lexicon  rdf:type              lime:Lexicon , owl:NamedIndividual;
+        rdfs:comment         "An OWL dataset of nouns and verbs from the Gallo-Sicilian variety spoken in Nicosia and Sperlinga. The dataset includes etymological information, expressed in terms of language features, for lexical expressions borrowed from Sicilian, thereby enabling automated analysis of borrowing processes.\nThis work has been created in the scope of the project PRIN 2022 PNRR \"Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.";
+        rdfs:label           "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga";
+        eurio:isResultOf     <https://gallosiciliani.unict.it/ns/projects/gallosiciliani2023Project>;
+        dcterms:contributor  "Vincenzo Nicolò Di Caro" , "Sara Natalia Cardullo" , "Angela Castiglione" , "Daniele Francesco Santamaria" , "Domenico Cantone" , "Salvatore Menza" , "Elvira Assenza" , "Alessandro De Angelis" , "Marianna Nicolosi Asmundo" , "Michele Cosentino";
+        dcterms:created      "2024-12-30"^^xsd:date;
+        dcterms:creator      "Cristiano Longo";
+        dcterms:description  "An OWL dataset of nouns and verbs from the Gallo-Sicilian variety spoken in Nicosia and Sperlinga. The dataset includes etymological information, expressed in terms of language features, for lexical expressions borrowed from Sicilian, thereby enabling automated analysis of borrowing processes.\nThis work has been created in the scope of the project PRIN 2022 PNRR \"Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.";
+        dcterms:license      <https://creativecommons.org/licenses/by/4.0/>;
+        dcterms:modified     "2025-08-05"^^xsd:date;
+        dcterms:source       :trovatoMenza2020;
+        dcterms:title        "Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga";
+
+        dcterms:coverage        <https://sws.geonames.org/6539191/> , <https://sws.geonames.org/6539189/>;
+        dcterms:language        <https://glottolog.org/resource/languoid/id/gall1279>;
+        lime:language           "mis";
+        lime:linguisticCatalog  <http://www.lexinfo.net/ontologies/2.0/lexinfo> .
+
+###  https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#trovatoMenza2020
+:trovatoMenza2020 rdf:type owl:NamedIndividual ,
+                           <http://purl.org/ontology/bibo/Book> ;
+                  <http://prismstandard.org/namespaces/1.2/basic/isbn> "978-88-944987-7-6" ;
+                  dcterms:title "Vocabolario del dialetto galloitalico di Nicosia e Sperlinga" ;
+                  rdfs:label "Vocabolario del dialetto galloitalico di Nicosia e Sperlinga" .
+
+# The parser is not able to recognize some entries because they are reported with a different font w.r.t. the most part of lemmas.
+# see https://github.com/Gallosiciliani/languagefeatures/issues/15
+# Such lemmas are manually reported here.
+
+:entryManual0  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#verb>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual0-canonicalForm .
+
+:entryManual0-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "nziteghjë"@mis .
+
+:entryManual1  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#verb>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual1-canonicalForm .
+
+:entryManual1-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "pözzessë"@mis .
+
+:entryManual2  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#verb>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual2-canonicalForm .
+
+:entryManual2-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "sbaghjèghjela"@mis .
+
+:entryManual3  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#verb>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual3-canonicalForm .
+
+:entryManual3-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "stöghjè"@mis .
+
+:entryManual4  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#noun>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual4-canonicalForm .
+
+:entryManual4-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "të̀la"@mis .
+
+:entryManual5  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#noun>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual5-canonicalForm .
+
+:entryManual5-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "travönëtö"@mis .
+
+:entryManual6  rdf:type  <http://www.w3.org/ns/lemon/ontolex#LexicalEntry>;
+        <http://www.lexinfo.net/ontology/3.0/lexinfo#partOfSpeech>
+                <http://www.lexinfo.net/ontology/3.0/lexinfo#noun>;
+        <http://www.w3.org/ns/lemon/ontolex#canonicalForm>
+                :entryManual6-canonicalForm .
+
+:entryManual6-canonicalForm
+        rdf:type  <http://www.w3.org/ns/lemon/ontolex#Form>;
+        <http://www.w3.org/ns/lemon/ontolex#writtenRep>
+                "trazzièra"@mis .
