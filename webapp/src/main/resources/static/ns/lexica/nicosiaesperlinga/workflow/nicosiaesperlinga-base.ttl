@@ -42,7 +42,10 @@ PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
         dcterms:coverage        <https://sws.geonames.org/6539191/> , <https://sws.geonames.org/6539189/>;
         dcterms:language        <https://glottolog.org/resource/languoid/id/gall1279>;
         lime:language           "mis";
-        lime:linguisticCatalog  <http://www.lexinfo.net/ontologies/2.0/lexinfo> .
+        lime:linguisticCatalog  <http://www.lexinfo.net/ontologies/2.0/lexinfo> ;
+                 lime:entry :entryManual0, :entryManual1, :entryManual2, :entryManual3, :entryManual4, :entryManual5,
+                    :entryManual6 .
+
 
 ###  https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#trovatoMenza2020
 :trovatoMenza2020 rdf:type owl:NamedIndividual ,

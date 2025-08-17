@@ -73,12 +73,34 @@
                                                                                                   dct:rightsHolder <https://unict.it> ;
                                                                                                   dct:spatial <https://sws.geonames.org/6539189/> ,
                                                                                                               <https://sws.geonames.org/6539191/> ;
-                                                                                                  dcat:distribution <https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl-dist> ;
+                                                                                                  dcat:distribution :nicosiaesperlinga-base.ttl-dist ;
                                                                                                   dcat:theme <http://publications.europa.eu/resource/authority/data-theme/TECH> ;
                                                                                                   dct:identifier "uni_ct:D.gs3" ;
                                                                                                   dct:description "Description of the Lexicon of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga. Base OWL ontology containing just the ontology, the lexicon and some entries, which will has to be populated with all the remaining lexical entries in the Gallo-Italic variety spoken in Nicosia e Sperlinga"@en ;
                                                                                                   dct:modified "2025-08-05"^^xsd:date ;
                                                                                                   dct:title "nicosiaesperlinga-base.ttl"@en .
+
+
+<https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow/nicosiaesperlinga-lemmas.ttl> rdf:type owl:NamedIndividual ,
+                                                                                                           dcatapit:Dataset ,
+                                                                                                           dcat:Dataset ;
+                                                                                                  dct:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/NOT_PLANNED> ;
+                                                                                                  dct:rightsHolder <https://unict.it> ;
+                                                                                                  dct:spatial <https://sws.geonames.org/6539189/> ,
+                                                                                                              <https://sws.geonames.org/6539191/> ;
+                                                                                                  dcat:distribution :nicosiaesperlinga-lemmas.ttl-dist ;
+                                                                                                  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/TECH> ;
+                                                                                                  dct:identifier "uni_ct:D.gs4" ;
+                                                                                                  dct:description "Ontology of all the nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga."@en ;
+                                                                                                  dct:modified "2025-08-05"^^xsd:date ;
+                                                                                                  dct:title "nicosiaesperlinga-lemmas.ttl" .
+
+:nicosiaesperlinga-lemmas.ttl-dist rdf:type owl:NamedIndividual ,
+                                          dcatapit:Distribution ,
+                                          dcat:Distribution ;
+                                 dct:format <http://publications.europa.eu/resource/authority/file-type/RDF_TURTLE> ;
+                                 dct:license <http://creativecommons.org/licenses/by/4.0/> ;
+                                 dcat:accessURL <https://gallosiciliani.unict.it/ns/nicosiesperlinga> .
 
 
 ###  https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl

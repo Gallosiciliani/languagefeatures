@@ -4,9 +4,17 @@
 <body>
 <div class="container" th:replace="~{base :: header (title='Production workflow for the ontology of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga')}"></div>
 <div class="container" th:replace="~{base :: ontology (comment='This page describes all the production steps for the ontology of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga, among with the utilized software tools and the intermediate products.')}"></div>
-<div class="container" id="nicosiaesperlinga-base.ttl">
-    <p><a th:href="nicosiaesperlinga-base.ttl" type="text/turtle">nicosiaesperlinga-base.ttl</a>
+<div class="container">
+    <p><a id="nicosiaesperlinga-base.ttl" th:href="nicosiaesperlinga-base.ttl" type="text/turtle">nicosiaesperlinga-base.ttl</a>
         is an OWL ontology providing the Lexicon metadata. It is the base OWL ontology containing just the ontology individual, the lexicon one and some entries, which will has to be populated with all the remaining lexical entries in the Gallo-Italic variety spoken in Nicosia e Sperlinga.
+    </p>
+    <p><a th:href="pdfimporter.jar" type="application/java-archive">pdfimporter</a> is a tool that extracts
+    lemmas from the <a href="https://www.csfls.it/res/edizioni/catalogo/als/materiali-ricerche-dellals/alsm39-salvatore-trovato-salvatore-menza-vocabolario-dialetto-galloitalico-nicosia-sperlinga/">Vocabolario
+            del dialetto galloitalico di Nicosia e Sperlinga</a> and places the corresponding entries into nicosiaesperlinga-base.ttl.</p>
+    <p>Thus, running the following command in the same directory with nicosiaesperlinga-base.ttl
+    will produce <a id="nicosiaesperlinga-lemmas.ttl" th:href="nicosiaesperlinga-lemmas.ttl" type="text/turtle">nicosiaesperlinga-lemmas.ttl</a>, i.e.,
+    an ontology with all the nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga.</p>
+    <pre><code> java -jar pdfimporter.jar nicosiaesperlinga.pdf</code></pre>
 </div>
 </body>
 </html>
