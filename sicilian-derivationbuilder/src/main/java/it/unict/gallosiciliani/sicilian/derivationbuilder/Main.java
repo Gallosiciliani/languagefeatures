@@ -85,8 +85,8 @@ public class Main implements Consumer<String> {
 
 
     public static void main(final String[] args) throws IOException {
-        final String ontologyFile=args[0];
-        final String outputFile=args[1];
+        final String ontologyFile=args.length>0 ? args[0] : "nicosiaesperlinga-lemmas.ttl";
+        final String outputFile=args.length>1? args[1] : "derivations-bf.csv";
         System.out.println("Writing derivations from Sicilian of lemmas in "+ontologyFile+" to "+outputFile);
         final Main m=new Main(ontologyFile);
 

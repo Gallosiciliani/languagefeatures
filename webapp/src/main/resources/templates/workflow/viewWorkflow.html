@@ -15,6 +15,16 @@
     will produce <a id="nicosiaesperlinga-lemmas.ttl" th:href="nicosiaesperlinga-lemmas.ttl" type="text/turtle">nicosiaesperlinga-lemmas.ttl</a>, i.e.,
     an ontology with all the nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga.</p>
     <pre><code> java -jar pdfimporter.jar nicosiaesperlinga.pdf</code></pre>
+
+    <p><a th:href="sicilian-derivationbuilder.jar" type="application/java-archive">sicilian-derivationbuilder</a> finds
+        out, using a brute force approach, all the possible derivations through <a href="/ns/gs-features">Gallo-Sicilian Features</a>
+        which transform Sicilian etymons into lemmas in nicosiaesperlinga-lemmas.ttl.</p>
+    <pre><code> java -jar sicilian-derivationbuilder.jar nicosiaesperlinga-lemmas.ttl</code></pre>
+
+    <p>It produces the file <a th:href="derivations-bf.csv" type="text/csv">derivations-bf.csv</a>, enumerating one derivation per row.
+    These derivations have the form
+    <code> lemma <--feature_label_1--intermediate_form_1<-- ... intermediate_form_n<--feature_label_n<--sicilian_etymon java</code>
+    </p>
 </div>
 </body>
 </html>

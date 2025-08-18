@@ -50,7 +50,9 @@
 :catalog rdf:type owl:NamedIndividual ,
                   <https://dati.gov.it/onto/dcatapit#Catalog> ,
                   <https://www.w3.org/ns/dcat#Catalog> ;
-         dcat:dataset <https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl> ;
+         dcatapit:dataset <https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl>,
+             <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow/nicosiaesperlinga-lemmas.ttl>;
+
          dct:description "All the software and the intermediate datasets used to generate the dataset of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga."@en ;
          dct:modified "2025-08-16"^^xsd:date ;
          dct:title "Production workflow of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga"@en .

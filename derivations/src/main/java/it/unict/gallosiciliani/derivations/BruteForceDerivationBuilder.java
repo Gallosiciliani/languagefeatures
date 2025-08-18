@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class BruteForceDerivationBuilder implements DerivationBuilder{
 
@@ -71,19 +70,11 @@ public class BruteForceDerivationBuilder implements DerivationBuilder{
                 if (entry.getDerivation().isEmpty())
                     continue;
                 n++;
-                final String lemma=entry.getDerivation().iterator().next().get();
-                final String missedPhenomena=getMissedPhenomena(lemma, phenomenonLabelProvider, locale);
                 for (final DerivationPathNode d : entry.getDerivation())
-                    printer.printRecord(derivationIOUtil.print(d, locale), missedPhenomena);
+                    printer.printRecord(derivationIOUtil.print(d, locale));
             }
         }
         return n;
-    }
-
-    private String getMissedPhenomena(final String lemma, final LinguisticPhenomenonLabelProvider phenomenonLabelProvider, final Locale locale){
-        return phenomena.stream().filter((p)->!p.apply(lemma).isEmpty())
-                .map(p -> phenomenonLabelProvider.getLabel(p, locale))
-                .collect(Collectors.joining(" "));
     }
 
     public Collection<DerivationPathNode> getDerivations(){
