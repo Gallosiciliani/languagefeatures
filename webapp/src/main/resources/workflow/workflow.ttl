@@ -8,6 +8,7 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix dcatapit: <http://dati.gov.it/onto/dcatapit#> .
+@prefix workflow_item: <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow/> .
 @base <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow#> .
 
 <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow> rdf:type owl:Ontology ;
@@ -50,9 +51,11 @@
 :catalog rdf:type owl:NamedIndividual ,
                   <https://dati.gov.it/onto/dcatapit#Catalog> ,
                   <https://www.w3.org/ns/dcat#Catalog> ;
-         dcatapit:dataset <https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl>,
-             <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow/nicosiaesperlinga-lemmas.ttl>,
-             <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow/derivations-bf.csv>;
+         dcatapit:dataset workflow_item:nicosiaesperlinga-base.ttl,
+             workflow_item:nicosiaesperlinga-lemmas.ttl,
+             workflow_item:derivations-bf.csv,
+             workflow_item:derivations-revised.csv,
+             <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga>;
 
          dct:description "All the software and the intermediate datasets used to generate the dataset of Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga."@en ;
          dct:modified "2025-08-16"^^xsd:date ;
@@ -65,11 +68,11 @@
                                           dcat:Distribution ;
                                  dct:format <http://publications.europa.eu/resource/authority/file-type/RDF_TURTLE> ;
                                  dct:license <http://creativecommons.org/licenses/by/4.0/> ;
-                                 dcat:accessURL <https://gallosiciliani.unict.it/ns/nicosiesperlinga> .
+                                 dcat:accessURL workflow_item:nicosiaesperlinga-base.ttl .
 
 
 ###  https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow/nicosiaesperlinga-base.ttl
-<https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow/nicosiaesperlinga-base.ttl> rdf:type owl:NamedIndividual ,
+workflow_item:nicosiaesperlinga-base.ttl rdf:type owl:NamedIndividual ,
                                                                                                            dcatapit:Dataset ,
                                                                                                            dcat:Dataset ;
                                                                                                   dct:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/NOT_PLANNED> ;
@@ -84,7 +87,7 @@
                                                                                                   dct:title "nicosiaesperlinga-base.ttl"@en .
 
 
-<https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow/nicosiaesperlinga-lemmas.ttl> rdf:type owl:NamedIndividual ,
+workflow_item:nicosiaesperlinga-lemmas.ttl rdf:type owl:NamedIndividual ,
                                                                                                            dcatapit:Dataset ,
                                                                                                            dcat:Dataset ;
                                                                                                   dct:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/NOT_PLANNED> ;
@@ -103,10 +106,10 @@
                                           dcat:Distribution ;
                                  dct:format <http://publications.europa.eu/resource/authority/file-type/RDF_TURTLE> ;
                                  dct:license <http://creativecommons.org/licenses/by/4.0/> ;
-                                 dcat:accessURL <https://gallosiciliani.unict.it/ns/nicosiesperlinga/workflow/> .
+                                 dcat:accessURL workflow_item:nicosiaesperlinga-lemmas.ttl .
 
 
-<https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga/workflow/derivations-bf.csv> rdf:type owl:NamedIndividual ,
+workflow_item:derivations-bf.csv rdf:type owl:NamedIndividual ,
                                                                                                            dcatapit:Dataset ,
                                                                                                            dcat:Dataset ;
                                                                                                   dct:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/NOT_PLANNED> ;
@@ -123,14 +126,7 @@
                                           dcat:Distribution ;
                                  dct:format <http://publications.europa.eu/resource/authority/file-type/CSV> ;
                                  dct:license <http://creativecommons.org/licenses/by/4.0/> ;
-                                 dcat:accessURL <https://gallosiciliani.unict.it/ns/nicosiesperlinga/workflow/> .
-
-###  https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl
-<https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl> rdf:type owl:NamedIndividual .
-
-
-###  https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl-dist
-<https://gallosiciliani.unict.it/ns/nicosiesperlinga/nicosiaesperlinga-base.ttl-dist> rdf:type owl:NamedIndividual .
+                                 dcat:accessURL workflow_item:derivations-bf.csv .
 
 
 ###  https://sws.geonames.org/6539189/
@@ -139,6 +135,48 @@
 
 ###  https://sws.geonames.org/6539191/
 <https://sws.geonames.org/6539191/> rdf:type owl:NamedIndividual .
+
+workflow_item:derivations-revised.csv rdf:type owl:NamedIndividual ,
+                                                                                                           dcatapit:Dataset ,
+                                                                                                           dcat:Dataset ;
+                                                                                                  dct:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/NOT_PLANNED> ;
+                                                                                                  dct:rightsHolder <https://unict.it> ;
+                                                                                                  dcat:distribution :derivations-revised.csv-dist ;
+                                                                                                  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/TECH> ;
+                                                                                                  dct:identifier "uni_ct:D.gs6" ;
+                                                                                                  dct:description "Derivations file revised and reworked by lexicographers that removed multiple derivations for the same lemma, remove unplausible ones, and add further derivations"@en ;
+                                                                                                  dct:modified "2025-08-21"^^xsd:date ;
+                                                                                                  dct:title "derivations-revised.csv" .
+
+:derivations-revised.csv-dist rdf:type owl:NamedIndividual ,
+                                          dcatapit:Distribution ,
+                                          dcat:Distribution ;
+                                 dct:format <http://publications.europa.eu/resource/authority/file-type/CSV> ;
+                                 dct:license <http://creativecommons.org/licenses/by/4.0/> ;
+                                 dcat:accessURL workflow_item:derivations-revised.csv .
+
+
+<https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga> rdf:type owl:NamedIndividual ,
+                                                                                                           dcatapit:Dataset ,
+                                                                                                           dcat:Dataset ;
+                                                                                                  dct:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/NOT_PLANNED> ;
+                                                                                                  dct:rightsHolder <https://unict.it> ;
+                                                                                                  dcat:distribution :nicosiaesperlinga-dist ;
+                                                                                                  dcat:theme <http://publications.europa.eu/resource/authority/data-theme/TECH> ;
+                                                                                                  dct:identifier "uni_ct:D.gs7" ;
+                                                                                                  dct:description "An OWL dataset of nouns and verbs from the Gallo-Sicilian variety spoken in Nicosia and Sperlinga. The dataset includes etymological information, expressed in terms of language features, for lexical expressions borrowed from Sicilian, thereby enabling automated analysis of borrowing processes."@en ;
+                                                                                                  dct:modified "2025-08-21"^^xsd:date ;
+                                                                                                  dct:title "Nouns and verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga" ;
+                                                                                                dct:spatial <https://sws.geonames.org/6539189/> ,
+                                                                                                            <https://sws.geonames.org/6539191/> .
+
+
+:nicosiaesperlinga-dist rdf:type owl:NamedIndividual ,
+                                          dcatapit:Distribution ,
+                                          dcat:Distribution ;
+                                 dct:format <http://publications.europa.eu/resource/authority/file-type/RDF_TURTLE> ;
+                                 dct:license <http://creativecommons.org/licenses/by/4.0/> ;
+                                 dcat:accessURL <https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga> .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
