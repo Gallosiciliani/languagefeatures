@@ -27,6 +27,7 @@
         <module>sicilian-derivationbuilder</module>
         <module>gs-derivationsimporter</module>
         <module>gs-derivationsextractor</module>
+        <module>liph-validator</module>
     </modules>
 
     <dependencyManagement>

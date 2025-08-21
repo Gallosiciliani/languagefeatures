@@ -1,5 +1,6 @@
-package it.unict.gallosiciliani.liph;
+package it.unict.gallosiciliani.liph.validator;
 
+import it.unict.gallosiciliani.liph.LiphDerivation;
 import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 import it.unict.gallosiciliani.liph.util.OntologyLoader;
 import org.junit.jupiter.api.BeforeEach;

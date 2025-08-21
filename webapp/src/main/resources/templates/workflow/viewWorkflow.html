@@ -33,15 +33,28 @@
     after the manual intervention of lexicographers.</p>
 
     <p>These derivations are then imported into the final ontology of nouns and verbs in the gallo-italic variety spoken in Nicosia e
-        Sperlinga using <a th:href="gs-derivationsimporter.jar">gs-derivationsimporter</a>. This tool takes as input three arguments:</p>
+        Sperlinga using <a th:href="gs-derivationsimporter.jar" type="application/java-archive">gs-derivationsimporter</a>. This tool takes as input three arguments:</p>
     <ol>
         <li>the derivation file,</li>
         <li>the OWL TTL file where the derivations will be placed and</li>
         <li>the language tag for the etymons.</li>
     </ol>
     <p>When run without arguments, it searches for derivations-revised.csv as derivations file,
-    copies nicosiaesperlinga-lemmas.ttl into nicosiaesperlinga.ttl and places derivations in it
+    copies nicosiaesperlinga-lemmas.ttl into <a th:href="@{https://gallosicliani.unict.it/ns/nicosiaesperlinga}">nicosiaesperlinga.ttl</a> and places derivations in it
     indicating <code>sic</code> as language tag for etymons.</p>
+
+    <pre><code> java -jar gs-derivationsimporter.jar</code></pre>
+
+    <p>In the end, the imported derivations can be verified by means of <a th:href="liph-validator.jar" type="application/java-archive">liph-validator</a>,
+    a tool that checks that all the derivation steps occurring in a ontology are compliant with the definition of the linguistic phenomena they refers to.
+        More in details, liph-validator takes as arguments</p>
+    <ol>
+        <li>an ontology containing <a th:href="@{https://gallosiciliani.unict.it/ns/liph#LinguisticPhenomenonOccurrence}">linguistic phenomena occurrences</a> and</li>
+        <li>another ontology containing <a th:href="@{https://gallosiciliani.unict.it/ns/liph#FiniteStateLinguisticPhenomenon}">finite state definitions</a> of the linguistic phenomena.</li>
+    </ol>
+    <p>In our context</p>
+    <pre><code> java -jar liph-validator.jar nicosiaesperlinga.ttl https://gallosiciliani.unict.it/ns/gs-features?ttl</code></pre>
+
 </div>
 </body>
 </html>
