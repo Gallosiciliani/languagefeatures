@@ -25,6 +25,23 @@
     These derivations have the form
     <code> lemma <--feature_label_1--intermediate_form_1<-- ... intermediate_form_n<--feature_label_n<--sicilian_etymon java</code>
     </p>
+
+    <p>This file is then revised and reworked by lexicographers that eliminate multiple derivations for the same lemma,
+    remove unplausible one, and add further derivations produced using the <a href="/derivation">online derivation tool</a>.</p>
+
+    <p><a th:href="derivations-revised.csv" type="text/csv">derivations-revised.csv</a> is the file that resulted
+    after the manual intervention of lexicographers.</p>
+
+    <p>These derivations are then imported into the final ontology of nouns and verbs in the gallo-italic variety spoken in Nicosia e
+        Sperlinga using <a th:href="gs-derivationsimporter.jar">gs-derivationsimporter</a>. This tool takes as input three arguments:</p>
+    <ol>
+        <li>the derivation file,</li>
+        <li>the OWL TTL file where the derivations will be placed and</li>
+        <li>the language tag for the etymons.</li>
+    </ol>
+    <p>When run without arguments, it searches for derivations-revised.csv as derivations file,
+    copies nicosiaesperlinga-lemmas.ttl into nicosiaesperlinga.ttl and places derivations in it
+    indicating <code>sic</code> as language tag for etymons.</p>
 </div>
 </body>
 </html>

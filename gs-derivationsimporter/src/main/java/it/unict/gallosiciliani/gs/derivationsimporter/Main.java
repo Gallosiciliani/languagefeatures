@@ -15,9 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Map;
@@ -36,13 +38,13 @@ public class Main {
     public static final String NS="https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#";
 
     public static void main(final String[] args) throws IOException {
-        final String derivationFile=args[0];
-        final String ontologyFile=args[1];
-        final String sourceLanguageTag=args[2];
+        final String derivationFile=args.length>0 ? args[0] : "derivations-revised.csv";
+        final String ontologyFile=args.length>1 ? args[1] : copyNicosiaESperlingaFinal();
+        final String sourceLanguageTag=args.length>2 ? args[2] : "sic"; //assuming sicilian etymons
         int n=0;
 
         final DerivationIOUtil derivationIO=new DerivationIOUtil();
-        log.info("Importing derivations from {} to {}",derivationFile,ontologyFile);
+        log.info("Importing derivations from {} to {} with etymon language tag {}",derivationFile,ontologyFile, sourceLanguageTag);
         try(final CSVParser sourceParser=CSVParser.parse(new File(derivationFile), StandardCharsets.UTF_8, CSVFormat.DEFAULT);
             final EntityManagerFactoryHelper emf=new FileEntityManagerFactoryHelper(ontologyFile)){
             final EntityManager em=emf.createEntityManager();
@@ -78,6 +80,11 @@ public class Main {
             em.getTransaction().commit();
             return (label, locale) -> label2Lp.get(label);
         }
+    }
+
+    private static String copyNicosiaESperlingaFinal() throws IOException {
+        IOUtils.copy(new URL("file:nicosiaesperlinga-lemmas.ttl"), new File("nicosiaesperlinga.ttl"));
+        return "nicosiaesperlinga.ttl";
     }
 
 }
