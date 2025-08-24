@@ -45,7 +45,7 @@
 
     <pre><code> java -jar gs-derivationsimporter.jar</code></pre>
 
-    <p>In the end, the imported derivations can be verified by means of <a th:href="liph-validator.jar" type="application/java-archive">liph-validator</a>,
+    <p>The imported derivations can be verified by means of <a th:href="liph-validator.jar" type="application/java-archive">liph-validator</a>,
     a tool that checks that all the derivation steps occurring in a ontology are compliant with the definition of the linguistic phenomena they refers to.
         More in details, liph-validator takes as arguments</p>
     <ol>
@@ -54,6 +54,112 @@
     </ol>
     <p>In our context</p>
     <pre><code> java -jar liph-validator.jar nicosiaesperlinga.ttl https://gallosiciliani.unict.it/ns/gs-features?ttl</code></pre>
+
+
+    <p><a th:href="@{gs-derivationsextractor.jar}" type="application/java-archive">gs-derivationsextractor</a> allows one to
+    produce a CSV file useful for statistical purposes enumerating all the derivations in an OWL ontology in turtle format,
+        provided that the linguistic phenomena in the derivations are in the <a th:href="@{/ns/gs-features}">GalloSicilian Features Ontology</a>.</p>
+    <p>The former argument of gs-derivationsextractor is the ontology file in turtle format, whereas the latter is the name
+    of the CSV file which will be produced.</p>
+
+    <pre><code> java -jar gs-derivationsextractor.jar nicosiaesperlinga.ttl derivations-ext.csv</code></pre>
+
+    <p>The generated file <a th:href="@{derivations-ext.csv}">derivations-ext.csv</a> has the following columns:</p>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th scope="row">id</th>
+            <td>a unique identifier for the row</td>
+        </tr>
+        <tr>
+            <th scope="row">lemma vnisp</th>
+            <td>indicating the Gallo-Sicilian lemma ending the derivation</td>
+        </tr>
+        <tr>
+            <th scope="row">derivazione</th>
+            <td>containing the derivation</td>
+        </tr>
+        <tr>
+            <th scope="row">tratti disattesi</th>
+            <td>enumerating all the Gallo-Sicilian features which could have affected the etymon, but are not in the derivation</td>
+        </tr>
+        <tr>
+            <th scope="row">nuovo indice di galloitalicità</th>
+            <td>the rate between the total number of the Gallo-Sicilian features which could have
+        affected the etymon and those that occurred in the derivation</td>
+        </tr>
+        <tr>
+            <th scope="row">Afer</th>
+            <td>`sì` if there is some feature belonging to the category <a th:href="@{/ns/gs-features#Afer}">Apheresis</a>, `no` otherwise</td>
+        </tr>
+        <tr>
+            <th scope="row">Assib</th>
+            <td>`sì` if there is some feature belonging to the category <a th:href="@{/ns/gs-features#Assib}">Assibilation</a>, `no` otherwise</td>
+        </tr>
+        <tr>
+            <th scope="row">Degem</th>
+            <td>`sì` if there is some feature belonging to the category <a th:href="@{/ns/gs-features#Degem}">Degemination</a>, `no` otherwise;</td>
+        </tr>
+        <tr>
+            <th scope="row">Deretr</th>
+            <td>`sì` if there is some feature belonging to the category <a th:href="@{/ns/gs-features#Deretr}">Deretroflexion</a>, `no` otherwise</td>
+        </tr>
+        <tr>
+            <th scope="row">Dissim</th>
+            <td>`sì` if there is some feature belonging to the category <a th:href="@{/ns/gs-features#Dissim}">Dissimilation</a>, `no` otherwise</td>
+        </tr>
+        <tr>
+            <th scope="row">Ditt</th>
+            <td>sì` if there is some feature belonging to the category <a th:href="@{/ns/gs-features#Ditt}">Diphthongization</a>, `no` otherwise</td>
+        </tr>
+        <tr>
+            <th scope="row">Leniz</th>
+            <td>`sì` if there is some feature belonging to the category <a th:href="@{/ns/gs-features#Leniz}">Lenition</a>, `no` otherwise</td>
+        </tr>
+        <tr>
+            <th scope="row">Palat</th>
+            <td>`sì` if there is some feature belonging to the category <a th:href="@{/ns/gs-features#Palat}">Palatalization</a>, `no` otherwise</td>
+        </tr>
+        <tr>
+            <th scope="row">Vocal</th>
+            <td>`sì` if there is some feature belonging to the category <a th:href="@{/ns/gs-features#Vocal}">Vocalization</a>, `no` otherwise</td>
+        </tr>
+        <tr>
+            <th scope="row">microtratto 1</th>
+            <td>for the first feature in the derivation, if any</td>
+        </tr>
+        <tr>
+            <th scope="row">microtratto 2</th>
+            <td>for the second feature in the derivation, if any</td>
+        </tr>
+        <tr>
+            <th scope="row">microtratto 3</th>
+            <td>for the third feature in the derivation, if any</td>
+        </tr>
+        <tr>
+            <th scope="row">microtratto 4</th>
+            <td>for the fourth feature in the derivation, if any</td>
+        </tr>
+        <tr>
+            <th scope="row">microtratto 5</th>
+            <td>for the fifth feature in the derivation, if any</td>
+        </tr>
+        <tr>
+            <th scope="row">microtratto 6</th>
+            <td>for the sixth feature in the derivation, if any</td>
+        </tr>
+        <tr>
+            <th scope="row">microtratto 7</th>
+            <td>for the seventh feature in the derivation, if any</td>
+        </tr>
+        <tr>
+            <th scope="row">microtratto 8</th>
+            <td>for the eighth feature in the derivation, if any</td>
+        </tr>
+        </tbody>
+    </table>
+
 
 </div>
 </body>

@@ -14,7 +14,6 @@
                                            owl:versionIRI <https://gallosiciliani.unict.it/ns/liph/2.0.0> ;
                                            owl:imports <http://www.w3.org/ns/lemon/ontolex> ,
                                                        <https://gallosiciliani.unict.it/ns/projects> ;
-                                           eurio:isResultOf <https://gallosiciliani.unict.it/ns/projects/gallosiciliani2023Project> ;
                                            dcterms:contributor "Daniele Francesco Santamaria" ,
                                                                "Domenico Cantone" ,
                                                                "Marianna Nicolosi Asmundo" ,
@@ -24,11 +23,16 @@
                                            dcterms:creator "Cristiano Longo" ;
                                            dcterms:description """The Linguistic Phenomena Ontology is an Ontolex-lemon extension devoted to represent linguistic phenomena.  We denote as linguistic phenomena those kinds of phenomena which cause modifications of language expressions. In general, a linguistic phenomenon occurs by turning a parent expression into a target expression in the language under consideration, where the parent expression may have been inherited from the parent language, or it may have been borrowed from a foreign language.
 
-In addition, the ontology provides the regex and replacement properties to describe a linguistic phenomenon operatioanally in a machine-actionable way.
+Generic linguistic phenomena are represented by the class LinguisticPhenomenon.
+In addition, the ontology provides the FiniteStateLinguisticPhenomenon class and the datatype properties matchingPattern and replaceWith to describe a linguistic phenomenon operationally in a machine-actionable way.
+
+Linguistic phenomena occurrences can be modeled throught the LinguisticPhenomenonOccurrence class and the properties source and target.
+
+Finally, the derives property is used to model linguistic phenomena occurrences chains.
 
 This work has been created in the scope of the project PRIN 2022 PNRR “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T."""@en ;
                                            dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-                                           dcterms:modified "2025-13-06" ;
+                                           dcterms:modified "2025-07-15" ;
                                            dcterms:title "The Linguistic Phenomena Ontology (LiPh)"@en ;
                                            vann:preferredNamespacePrefix "liph" ;
                                            vann:preferredNamespaceUri "https://gallosiciliani.unict.it/ns/liph#" ;
@@ -121,21 +125,21 @@ vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
 ###  https://gallosiciliani.unict.it/ns/liph#occurrenceOf
 :occurrenceOf rdf:type owl:ObjectProperty ,
                        owl:FunctionalProperty ;
-              rdfs:comment "denotes that an individual is an occurrence of a specific linguistic phenomenon" ;
-              rdfs:label "is occurrence of" .
+              rdfs:comment "Denotes that an individual is an occurrence of a specific linguistic phenomenon." ;
+              rdfs:label "occurrenceOf" .
 
 
 ###  https://gallosiciliani.unict.it/ns/liph#source
 :source rdf:type owl:ObjectProperty ,
                  owl:FunctionalProperty ;
-        rdfs:comment "The source lexical object, modified by the linguistic phenomenon" ;
+        rdfs:comment "The source lexical object, modified by the linguistic phenomenon." ;
         rdfs:label "source" .
 
 
 ###  https://gallosiciliani.unict.it/ns/liph#target
 :target rdf:type owl:ObjectProperty ,
                  owl:FunctionalProperty ;
-        rdfs:comment "How a source lexical object has been modified by the linguistic phenomenon" ;
+        rdfs:comment "How a source lexical object has been modified by the linguistic phenomenon." ;
         rdfs:label "target" .
 
 
@@ -153,7 +157,7 @@ vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
                  rdfs:domain :FiniteStateLinguisticPhenomenon ;
                  rdfs:range xsd:string ;
                  rdfs:comment "A regular expression indicating the parts of a lexical expression which are subject to be replaced" ;
-                 rdfs:label "matching pattern" .
+                 rdfs:label "matchingPattern" .
 
 
 ###  https://gallosiciliani.unict.it/ns/liph#replaceWith
@@ -161,12 +165,15 @@ vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
                       owl:FunctionalProperty ;
              rdfs:domain :FiniteStateLinguisticPhenomenon ;
              rdfs:range xsd:string ;
-             rdfs:comment "How the matched parts of a lexical expression have to be replaced" .
+             rdfs:comment "How the matched parts of a lexical expression have to be replaced," ;
+             rdfs:label "replaceWith" .
 
 
 ###  https://gallosiciliani.unict.it/ns/liph#writtenRep
 :writtenRep rdf:type owl:DatatypeProperty ;
-            rdfs:range rdf:langString .
+            rdfs:range rdf:langString ;
+            rdfs:comment "A generalization of the writtenRep property of OntoLex." ;
+            rdfs:label "writtenRep" .
 
 
 #################################################################
@@ -188,8 +195,8 @@ vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
                                                    owl:onProperty :replaceWith ;
                                                    owl:someValuesFrom xsd:string
                                                  ] ;
-                                 rdfs:comment "An executable phenomenon described in terms of regular relations." ;
-                                 rdfs:label "Finite-State Linguistic Phenomenon" .
+                                 rdfs:comment "An executable phenomenon described in terms of regular relations, using the data-properties matchingPattern and replaceWith." ;
+                                 rdfs:label "FiniteStateLinguisticPhenomenon" .
 
 
 ###  https://gallosiciliani.unict.it/ns/liph#LexicalObject
@@ -204,15 +211,15 @@ vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
                                ] ;
                owl:disjointWith :LinguisticPhenomenon ,
                                 :LinguisticPhenomenonOccurrence ;
-               rdfs:comment "A generic object representing a lexical expression involved in some lexical processes is some way." ;
-               rdfs:label "lexical object" .
+               rdfs:comment "A generic object representing a lexical expression someway involved in a lexical process." ;
+               rdfs:label "LexicalObject" .
 
 
 ###  https://gallosiciliani.unict.it/ns/liph#LinguisticPhenomenon
 :LinguisticPhenomenon rdf:type owl:Class ;
                       owl:disjointWith :LinguisticPhenomenonOccurrence ;
-                      rdfs:comment "Instances of this class represent linguistic phenomena, i.e., phenomena that change lexical expressions." ;
-                      rdfs:label "Simple Linguistic Phenomenon" .
+                      rdfs:comment "A phenomenon that change lexical expressions. Our linguistic phenomena are relations over orthographical forms. We don't exclude that this class could be used also for other kinds of phenomena." ;
+                      rdfs:label "LinguisticPhenomenon" .
 
 
 ###  https://gallosiciliani.unict.it/ns/liph#LinguisticPhenomenonOccurrence
@@ -233,8 +240,16 @@ vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
                                                   owl:onProperty :occurrenceOf ;
                                                   owl:allValuesFrom :LinguisticPhenomenon
                                                 ] ;
-                                rdfs:comment "Occurrence of a linguistic phenomenon. Individuals of this class are the reified counterpart of assertions involving linguistic phenomena." ;
-                                rdfs:label "Linguistic Phenomenon Occurence" .
+                                rdfs:comment "An occurrence of a linguistic phenomenon. A linguistic phenomenon occurs when an expression from a source language (indicated with the source property) is transformed into one in a recipient language (indicated with the target property). Individuals of this class are the reified counterpart of assertions involving linguistic phenomena." ;
+                                rdfs:label "LinguisticPhenomenonOccurence" .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://gallosiciliani.unict.it/ns/liph
+<https://gallosiciliani.unict.it/ns/liph> eurio:isResultOf <https://gallosiciliani.unict.it/ns/projects/gallosiciliani2023Project> .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
