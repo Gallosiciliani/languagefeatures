@@ -5,6 +5,7 @@
 <div class="container" th:replace="~{base :: header (title=${project.label})}"></div>
 <div class="container" th:replace="~{base :: ontology (comment=${project.comment})}"></div>
 <div class="container">
+    <h2>Ontologies and Software</h2>
     <p>The following OWL vocabularies and datasets have been developed in the scope of this project.</p>
     <ul class="list-group">
         <li class="list-group-item" th:each="r : ${results}">
@@ -23,7 +24,8 @@
 </div>
 
 <div class="container">
-    <p>Finally, the scientific works funded by the project are the followings:</p>
+    <h2>Research Papers</h2>
+    <p>The scientific works funded by the project are the followings:</p>
     <ul class="list-group">
         <li class="list-group-item">
             <a th:href="@{https://www.mdpi.com/2226-471X/8/3/163}">The Strange Case of the Gallo-Italic Dialects of Sicily: Preservation and Innovation in Contact-Induced Change</a>
@@ -37,6 +39,20 @@
         <li class="list-group-item">
             <a th:href="@{https://ceur-ws.org/Vol-3809/paper2.pdf}">An OWL Ontology for Linguistic Phenomena with
                 Applications to Gallo-Italic Dialects in Sicily</a>
+        </li>
+        <li class="list-group-item">
+            <a th:href="@{https://www.libraweb.net/riviste.php?chiave=8}">Grammatiche scisse nel contatto linguistico:
+                il caso delle minoranze galloitaliche in Sicilia. Parte prima</a>
+        </li>
+        <li class="list-group-item">
+            <a th:href="@{https://www.pendragon.it/catalogo/riviste/rivista-italiana-di-dialettologia/rivista-italiana-di-dialettologia-48-detail.html}">Sulla questione dell’alternanza tra perfetto analitico e perfetto sintetico in siciliano</a>
+        </li>
+        <li class="list-group-item">
+            <a th:href="@{https://onlinelibrary.wiley.com/doi/10.1111/1467-968X.12292}">REVISITING SYNTACTIC MICROVARIATION AND DIACHRONY IN THE DUAL COMPLEMENTIZER SYSTEMS OF UPPER SOUTHERN ITALY</a>
+        </li>
+        <li class="list-group-item">
+            <a th:href="@{https://forumeditrice.it/percorsi/lingua-e-letteratura/convegni/lingue-minoritarie-italiano-nel-mondo}">Bad rules, good rules: il caso della marcatura differenziale
+                dell’oggetto in un dialetto galloitalico di Sicilia</a>
         </li>
     </ul>
 </div>
