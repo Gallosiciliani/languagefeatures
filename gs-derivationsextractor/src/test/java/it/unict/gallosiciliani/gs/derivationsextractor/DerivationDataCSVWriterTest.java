@@ -27,16 +27,20 @@ public class DerivationDataCSVWriterTest {
 
     final LinguisticPhenomenon p=new LinguisticPhenomenon();
     final LinguisticPhenomenon q=new LinguisticPhenomenon();
+    final LinguisticPhenomenon r=new LinguisticPhenomenon();
     final GSFeaturesCategory c1=new GSFeaturesCategory("http://test/categories#c1", "http://test/categories#");
     final GSFeaturesCategory c2=new GSFeaturesCategory("http://test/categories#c2", "http://test/categories#");
     final List<GSFeaturesCategory> categories=List.of(c1,c2);
+    final List<LinguisticPhenomenon> phenomena=List.of(p, q, r);
 
-    private final CSVFormat format=CSVFormat.Builder.create().setHeader(DerivationDataCSVHeader.getHeaderRow(categories)).build();
+    private final CSVFormat format;
     private final DerivationExtData data=createTestData();
 
     DerivationDataCSVWriterTest(){
         p.setLabel("p");
         q.setLabel("q");
+        r.setLabel("s");
+        format=CSVFormat.Builder.create().setHeader(DerivationDataCSVHeader.getHeaderRow(categories, phenomena)).build();
     }
 
     private DerivationExtData createTestData() {
@@ -49,7 +53,7 @@ public class DerivationDataCSVWriterTest {
     @Test
     void shouldWriteHeaders() throws IOException {
         final StringWriter producedCSV=new StringWriter();
-        final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, Collections.emptyList());
+        final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, Collections.emptyList(), Collections.emptyList());
         w.close();
         System.out.println(producedCSV.getBuffer().toString());
         final CSVParser p=CSVParser.parse(producedCSV.toString(), CSVFormat.DEFAULT);
@@ -69,7 +73,7 @@ public class DerivationDataCSVWriterTest {
 
     private CSVRecord produceRow(final DerivationExtData data) throws IOException {
         final StringWriter producedCSV=new StringWriter();
-        try(final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, categories)){
+        try(final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, categories, phenomena)){
             w.accept(data);
             w.close();
             System.out.println(producedCSV.getBuffer().toString());
@@ -145,21 +149,21 @@ public class DerivationDataCSVWriterTest {
 
     @Test
     void shouldWriteHeadersForCategories() throws IOException {
-        final CSVRecord actualNoCategories=produceHeader(Collections.emptyList());
-        final CSVRecord actualTwoCategories=produceHeader(List.of(c1, c2));
+        final CSVRecord actualNoCategories=produceHeader(Collections.emptyList(), phenomena);
+        final CSVRecord actualTwoCategories=produceHeader(List.of(c1, c2), phenomena);
         assertEquals(actualNoCategories.toList().size()+2, actualTwoCategories.toList().size());
     }
 
     @Test
     void shouldWriteHeadersForFeatures() throws IOException {
-        final List<String> actualHeaders=produceHeader(categories).toList();
-        for(final DerivationDataCSVHeader h: DerivationDataCSVHeader.FEATURE_HEADERS)
-            assertTrue(actualHeaders.contains(h.toString()), "header "+h+" is missing");
+        final List<String> actualHeaders=produceHeader(categories, phenomena).toList();
+        for(final LinguisticPhenomenon p: phenomena)
+            assertTrue(actualHeaders.contains(p.getLabel()), "header "+p.getLabel()+" is missing");
     }
 
-    private CSVRecord produceHeader(final List<GSFeaturesCategory> categories) throws IOException {
+    private CSVRecord produceHeader(final List<GSFeaturesCategory> categories, List<LinguisticPhenomenon> phenomena) throws IOException {
         final StringWriter producedCSV=new StringWriter();
-        final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, categories);
+        final DerivationDataCSVWriter w=new DerivationDataCSVWriter(producedCSV, categories, phenomena);
         w.close();
         System.out.println(producedCSV);
         final CSVParser parser=CSVParser.parse(producedCSV.toString(), CSVFormat.DEFAULT);
@@ -176,11 +180,14 @@ public class DerivationDataCSVWriterTest {
 
     @Test
     void shouldWriteFeatures() throws IOException {
-        when(data.getFeatures()).thenReturn(List.of(q, p));
+        when(data.isOccurred(p)).thenReturn(true);
+        when(data.isOccurred(q)).thenReturn(false);
+        when(data.isApply(q)).thenReturn(true);
+        when(data.isOccurred(r)).thenReturn(false);
+        when(data.isApply(r)).thenReturn(false);
         final CSVRecord actualRecord=produceRow(data);
-        assertEquals(q.getLabel(), actualRecord.get(DerivationDataCSVHeader.FEATURE_HEADERS[0].toString()));
-        assertEquals(p.getLabel(), actualRecord.get(DerivationDataCSVHeader.FEATURE_HEADERS[1].toString()));
-        for(int i=2; i<DerivationDataCSVHeader.FEATURE_HEADERS.length; i++)
-            assertEquals(DerivationDataCSVWriter.NA, actualRecord.get(DerivationDataCSVHeader.FEATURE_HEADERS[i].toString()));
+        assertEquals(DerivationDataCSVWriter.YES, actualRecord.get(p.getLabel()));
+        assertEquals(DerivationDataCSVWriter.NO, actualRecord.get(q.getLabel()));
+        assertEquals(DerivationDataCSVWriter.NA, actualRecord.get(r.getLabel()));
     }
 }

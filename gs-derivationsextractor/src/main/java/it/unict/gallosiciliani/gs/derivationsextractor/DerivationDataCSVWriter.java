@@ -18,9 +18,10 @@ import java.util.function.Consumer;
  * @author Cristiano Longo
  */
 public class DerivationDataCSVWriter implements AutoCloseable, Consumer<DerivationExtData> {
+
     public static final String NOUN="nome";
     public static final String VERB="verbo";
-    public static final String NA="";
+    public static final String NA="NA";
     public static final String YES="sì";
     public static final String NO="no";
 
@@ -28,14 +29,16 @@ public class DerivationDataCSVWriter implements AutoCloseable, Consumer<Derivati
     private final DerivationIOUtil derivationIOUtil=new DerivationIOUtil();
     private final List<GSFeaturesCategory> categories;
     private final GSFeaturesCategoryRetriever categoryRetriever;
+    private final List<LinguisticPhenomenon> phenomena;
 
     @Getter
     private int printedRows=0;
 
-    public DerivationDataCSVWriter(final Appendable out, final List<GSFeaturesCategory> categories) throws IOException {
-        printer=new CSVPrinter(out, CSVFormat.Builder.create().setHeader(DerivationDataCSVHeader.getHeaderRow(categories)).build());
+    public DerivationDataCSVWriter(final Appendable out, final List<GSFeaturesCategory> categories, List<LinguisticPhenomenon> phenomena) throws IOException {
+        printer=new CSVPrinter(out, CSVFormat.Builder.create().setHeader(DerivationDataCSVHeader.getHeaderRow(categories, phenomena)).build());
         this.categories=categories;
         categoryRetriever=new GSFeaturesCategoryRetriever(categories);
+        this.phenomena=phenomena;
     }
 
     @Override
@@ -56,7 +59,7 @@ public class DerivationDataCSVWriter implements AutoCloseable, Consumer<Derivati
             final Optional<Float> rate=derivationData.getGalloItalicityRate();
             printer.print(rate.map(aFloat -> String.format("%.3f", aFloat)).orElse(NA));
             print(derivationData.getCategories(categoryRetriever));
-            print(derivationData.getFeatures());
+            printPhenomena(derivationData);
             printer.println();
         }catch (final IOException e){
             System.err.println("Unable to write row "+rowNum);
@@ -88,13 +91,11 @@ public class DerivationDataCSVWriter implements AutoCloseable, Consumer<Derivati
             printer.print(foundCategories.contains(c)?YES:NO);
     }
 
-    private void print(final List<LinguisticPhenomenon> phenomena) throws IOException {
-        int i=0;
-        for(final LinguisticPhenomenon p: phenomena){
-            printer.print(p.getLabel());
-            i++;
-        }
-        for(int j=i; j<DerivationDataCSVHeader.FEATURE_HEADERS.length; j++)
-            printer.print(NA);
+    private void printPhenomena(DerivationExtData derivationData) throws IOException {
+        for(final LinguisticPhenomenon p: phenomena)
+            if (derivationData.isOccurred(p))
+                printer.print(YES);
+            else
+                printer.print(derivationData.isApply(p) ? NO : NA);
     }
 }

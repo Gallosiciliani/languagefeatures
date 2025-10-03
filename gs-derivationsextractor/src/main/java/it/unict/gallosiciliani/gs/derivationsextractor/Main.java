@@ -44,7 +44,7 @@ public class Main {
                 final EntityManager entityManager=emFactory.createEntityManager();
                 final GSFeatures gs=new GSFeatures();
                 final FileWriter out=new FileWriter(outputCSVFile);
-                final DerivationDataCSVWriter writer=new DerivationDataCSVWriter(out, gs.getCategories())){
+                final DerivationDataCSVWriter writer=new DerivationDataCSVWriter(out, gs.getCategories(), gs.getLpProvider().getAll())){
                 final DerivationDataReader reader=new DerivationDataReader(entityManager, gs.getLpProvider());
                 int n=0;
                 while (reader.hasNext()){
@@ -57,5 +57,4 @@ public class Main {
             }
         }
     }
-
 }

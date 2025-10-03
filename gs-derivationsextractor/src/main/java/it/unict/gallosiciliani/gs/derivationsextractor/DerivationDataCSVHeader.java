@@ -1,6 +1,7 @@
 package it.unict.gallosiciliani.gs.derivationsextractor;
 
 import it.unict.gallosiciliani.gs.GSFeaturesCategory;
+import it.unict.gallosiciliani.liph.model.LinguisticPhenomenon;
 
 import java.util.List;
 
@@ -10,13 +11,7 @@ import java.util.List;
 public enum DerivationDataCSVHeader {
 
     ID("id"), LEMMA("lemma vnisp"), TYPE("verbo/nome"), DERIVATION("derivazione"),
-    MISSED("tratti disattesi"), RATE("nuovo indice di galloitalicità"), FEATURE1("microtratto 1"),
-    FEATURE2("microtratto 2"), FEATURE3("microtratto 3"), FEATURE4("microtratto 4"),
-    FEATURE5("microtratto 5"), FEATURE6("microtratto 6"), FEATURE7("microtratto 7"),
-    FEATURE8("microtratto 8");
-
-    public static final DerivationDataCSVHeader[] FEATURE_HEADERS={FEATURE1, FEATURE2, FEATURE3, FEATURE4, FEATURE5,
-            FEATURE6, FEATURE7, FEATURE8};
+    MISSED("tratti disattesi"), RATE("nuovo indice di galloitalicità");
 
     private final String caption;
 
@@ -33,8 +28,8 @@ public enum DerivationDataCSVHeader {
      * Convert enums to string
      * @return an array of header strings
      */
-    public static String[] getHeaderRow(final List<GSFeaturesCategory> categories){
-        final String[] row=new String[6+categories.size()+FEATURE_HEADERS.length];
+    public static String[] getHeaderRow(final List<GSFeaturesCategory> categories, final List<LinguisticPhenomenon> phenomena){
+        final String[] row=new String[6+categories.size()+phenomena.size()];
         row[0]=ID.toString();
         row[1]=LEMMA.toString();
         row[2]=TYPE.toString();
@@ -44,8 +39,8 @@ public enum DerivationDataCSVHeader {
         int i=6;
         for(final GSFeaturesCategory c: categories)
             row[i++]=c.getId();
-        for(final DerivationDataCSVHeader featureHeader: FEATURE_HEADERS)
-            row[i++]=featureHeader.toString();
+        for(final LinguisticPhenomenon p: phenomena)
+            row[i++]=p.getLabel();
         return row;
     }
 }

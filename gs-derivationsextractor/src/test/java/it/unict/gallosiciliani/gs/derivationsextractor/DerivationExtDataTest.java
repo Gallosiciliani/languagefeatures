@@ -103,10 +103,20 @@ public class DerivationExtDataTest {
         when(rawData.getDerivationChain()).thenReturn(testBed.derivation);
         when(rawData.getEligibleLinguisticPhenomena()).thenReturn(new LinguisticPhenomenaProvider(List.of(s, r, q, p))); //NOTE that they are not in alphabetic order
 
+        final DerivationExtData d=new DerivationExtData(rawData);
         final Iterator<LinguisticPhenomenon> actualIt=new DerivationExtData(rawData).getMissed().iterator();
         assertEquals(r.getId(), actualIt.next().getId());
         assertEquals(s.getId(), actualIt.next().getId());
         assertFalse(actualIt.hasNext());
+
+        assertTrue(d.isApply(s));
+        assertFalse(d.isOccurred(s));
+        assertTrue(d.isApply(r));
+        assertFalse(d.isOccurred(r));
+        assertTrue(d.isApply(p));
+        assertTrue(d.isOccurred(p));
+        assertFalse(d.isApply(q));
+        assertTrue(d.isOccurred(q));
     }
 
     @Test
@@ -155,14 +165,4 @@ public class DerivationExtDataTest {
         assertEquals(DerivationDataTestBed.NS+"c1", actualIt.next().getIri());
         assertFalse(actualIt.hasNext());
     }
-
-    @Test
-    void shouldRetrieveDerivation(){
-        when(rawData.getDerivationChain()).thenReturn(testBed.derivation);
-        final Iterator<LinguisticPhenomenon> actual=new DerivationExtData(rawData).getFeatures().iterator();
-        assertSame(testBed.q, actual.next());
-        assertSame(testBed.p, actual.next());
-        assertFalse(actual.hasNext());
-    }
-
 }

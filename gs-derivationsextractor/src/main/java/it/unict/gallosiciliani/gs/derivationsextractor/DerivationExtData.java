@@ -30,14 +30,30 @@ public class DerivationExtData {
     private final DerivationPathNode derivation;
     private final DerivationPhenomena phenomena;
 
+    private final String etymon;
+    private final Set<String> phenomenaIRI;
+
     public DerivationExtData(final DerivationRawData src) {
         final LexicalEntry entry = src.getEntry();
         lemma = entry.getCanonicalForm().getWrittenRep().get();
         noun = LexInfo.NOUN_INDIVIDUAL.equals(entry.getPartOfSpeech().getId());
         derivation = derivationChain2PathNode(src);
         phenomena=new MissedPhenomenaFinder(src.getEligibleLinguisticPhenomena().getAll()).getMissedPhenomena(derivation, LinguisticPhenomena.COMPARATOR_BY_LABEL);
+        etymon=getEtymon(src.getDerivationChain());
+        phenomenaIRI=getPhenomenaIRI(src.getDerivationChain());
+    }
 
+    private String getEtymon(final List<LinguisticPhenomenonOccurrence> derivationChain){
+        if (derivationChain.isEmpty())
+            return null;
+        return derivationChain.get(derivationChain.size()-1).getSource().getWrittenRep().get();
+    }
 
+    private Set<String> getPhenomenaIRI(final List<LinguisticPhenomenonOccurrence> derivationChain){
+        final Set<String> res=new TreeSet<>();
+        for(final LinguisticPhenomenonOccurrence o: derivationChain)
+            res.add(o.getOccurrenceOf().getId());
+        return res;
     }
 
     private DerivationPathNode derivationChain2PathNode(final DerivationRawData src) {
@@ -92,20 +108,23 @@ public class DerivationExtData {
         return res;
     }
 
+
     /**
-     * Features as they occur in the derivation (from lemma to etymon)
-     * @return {@link LinguisticPhenomenon} in the derivation
+     * Check whether the linguistic phenomenon would produce some changes in the lemma characterizing the derivation.
+     *
+     * @param l a linguistic phenomenon
+     * @return true if the linguistic phenomenon would produce some changes in the lemma characterizing the derivation, false otherwise
      */
-    public List<LinguisticPhenomenon> getFeatures(){
-        return getFeatures(derivation);
+    public boolean isApply(final LinguisticPhenomenon l){
+       return etymon!=null && !l.apply(etymon).isEmpty();
     }
 
-    private List<LinguisticPhenomenon> getFeatures(final DerivationPathNode n){
-        if (n.prev()==null)
-            return new LinkedList<>();
-
-        final List<LinguisticPhenomenon> res=getFeatures(n.prev());
-        res.add(0, n.getLinguisticPhenomenon());
-        return res;
+    /**
+     * Check whether the specified phenomenon occurred in the derivation.
+     * @param l a linguistic phenomenon
+     * @return true if the specified phenomenon occurred in the derivation, false otherwise
+     */
+    public boolean isOccurred(final LinguisticPhenomenon l){
+        return phenomenaIRI.contains(l.getId());
     }
 }

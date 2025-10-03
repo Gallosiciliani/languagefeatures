@@ -19,6 +19,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.vocabulary.RDFS;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -30,7 +31,7 @@ import java.util.Locale;
 
 @Getter
 @Slf4j
-public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonByLabelRetriever{
+public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonByLabelRetriever {
     public static final String IRI = "https://gallosiciliani.unict.it/ns/gs-features";
     public static final String NS = IRI+"#";
     public static final String VERSION = "2.0.2";
@@ -53,6 +54,8 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonBy
     private final LinguisticPhenomenonByLabelRetriever phenomenonByLabelRetriever;
     private final List<GSFeaturesCategory> categories;
     private final LinguisticPhenomenaProvider lpProvider;
+    @Getter
+    private final Comparator<LinguisticPhenomenon> comparator;
 
     /**
      * Private constructor, use factory methods.
@@ -62,6 +65,8 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonBy
         final RegexLinguisticPhenomenaReader reader=new RegexLinguisticPhenomenaReader();
         reader.read(getModel(), new FiniteStatePhenomenaQuery());
         regexLinguisticPhenomena=reader.getFeatures();
+        comparator=createLinguisticPhenomenaComparator();
+        regexLinguisticPhenomena.sort(comparator);
         phenomenonByLabelRetriever=LinguisticPhenomenonByLabelRetrieverImpl.build(regexLinguisticPhenomena);
         categories=retrieveCategories(getModel());
         lpProvider=new LinguisticPhenomenaProvider(regexLinguisticPhenomena);
@@ -136,5 +141,28 @@ public class GSFeatures extends OntologyLoader implements LinguisticPhenomenonBy
             }
         }
         return c;
+    }
+
+    /**
+     * Create a comparator for linguistic phenomena in the gs-features ontology
+     * @return a comparator
+     */
+    private Comparator<LinguisticPhenomenon> createLinguisticPhenomenaComparator(){
+        final GSFeaturesComparator compatorDelegate=new GSFeaturesComparator();
+        return (p, q) -> compatorDelegate.compare(toHashedOntologyItem(p), toHashedOntologyItem(q));
+    }
+
+    private HashedOntologyItem toHashedOntologyItem(final LinguisticPhenomenon p){
+        return new HashedOntologyItem(p.getId(), NS) {
+            @Override
+            public String getLabel() {
+                return p.getLabel();
+            }
+
+            @Override
+            public String getComment() {
+                return p.getComment();
+            }
+        };
     }
 }
