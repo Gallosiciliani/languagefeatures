@@ -171,11 +171,27 @@ public class GSFeaturesTest {
     }
 
     /**
+     * -ànu > -àn
+     */
+    @Test
+    void testLeniz13b() throws IOException{
+        getChecker(NS+"leniz.13.b").category(LENIZ_CLASS).atTheEnd("ànu","àn");
+    }
+
+    /**
      * -ùni > -ö̀n
      */
     @Test
     void testLeniz14() throws IOException{
         getChecker(NS+"leniz.14").category(LENIZ_CLASS).atTheEnd("ùni","ö̀n");
+    }
+
+    /**
+     * -òni > -ö̀n
+     */
+    @Test
+    void testLeniz15() throws IOException{
+        getChecker(NS+"leniz.15").category(LENIZ_CLASS).atTheEnd("òni","ö̀n");
     }
 
     /**
@@ -448,6 +464,14 @@ public class GSFeaturesTest {
     }
 
     /**
+     * -ll- > -l-
+     */
+    @Test
+    void testDegem19b() throws IOException{
+        getChecker(NS+"degem.19.b").category(DEGEM_CLASS).betweenVowels(true, "ll", "l");
+    }
+
+    /**
      * -ḍḍ- > -
      */
     @Test
@@ -571,6 +595,7 @@ public class GSFeaturesTest {
                 .replacing("ci","sgi");
     }
 
+    // TODO assib.6.d -ci- > -sgi/sge overlaps with assib.6.b and assib.6.c
     /**
      * cì > sgi
      * @throws IOException on missing phenomenon
@@ -874,6 +899,29 @@ public class GSFeaturesTest {
     void testVocal10() throws IOException{
         getChecker(NS+"vocal.10").category(VOCAL_CLASS).replacing("ì", "ë̀");
     }
+
+    /**
+     * -a- > -e-
+     * @throws IOException if vocal.12 does not exist
+     *
+     * TODO it is unclear if - stays for consonants or any letter
+     */
+    @Test
+    void testVocal12() throws IOException{
+        getChecker(NS+"vocal.12").category(VOCAL_CLASS).inside("a","e");
+    }
+
+    /**
+     * -i > -ö
+     * @throws IOException if vocal.13 does not exist
+     */
+    @Test
+    void testVocal13() throws IOException{
+        getChecker(NS+"vocal.13").category(VOCAL_CLASS).atTheEnd("i", "ö");
+    }
+
+    //TODo vocal.11 u > ö | u > e if u is not preceded by c or g already expressed in vocal.5.a vocal.8.a
+
     // Aferesi di a-
 
     /**

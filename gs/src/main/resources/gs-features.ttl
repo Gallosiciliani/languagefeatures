@@ -30,11 +30,11 @@
 
 This work has been created in the scope of the project PRIN 2022 PNRR “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
                                                   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-                                                  dcterms:modified "2025-08-13" ;
+                                                  dcterms:modified "2025-10-04" ;
                                                   dcterms:title "Gallo-Sicilian features"@en ;
                                                   rdfs:comment "Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily." ;
                                                   rdfs:label "Gallo-Sicilian features" ;
-                                                  owl:versionInfo "2.0.1" .
+                                                  owl:versionInfo "2.1.0" .
 
 #################################################################
 #    Datatypes
@@ -2182,6 +2182,17 @@ language.""" ;
           rdfs:label "degem.19" .
 
 
+###  https://gallosiciliani.unict.it/ns/gs-features#degem.19.b
+:degem.19.b rdf:type owl:NamedIndividual ,
+                     :Degem ,
+                     :GalloSicilianFeature ,
+                     liph:FiniteStateLinguisticPhenomenon ;
+            liph:matchingPattern "([aàáäeèéëë̀iìíïoòóöö̀uùúü])ll([aàáäeèéëë̀iìíïoòóöö̀uùúü])" ;
+            liph:replaceWith "$1l$2" ;
+            rdfs:comment "-ll- > -l-" ;
+            rdfs:label "degem.19.b" .
+
+
 ###  https://gallosiciliani.unict.it/ns/gs-features#degem.2
 :degem.2 rdf:type owl:NamedIndividual ,
                   :Degem ,
@@ -2666,6 +2677,17 @@ language.""" ;
           rdfs:label "leniz.13" .
 
 
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.13.b
+:leniz.13.b rdf:type owl:NamedIndividual ,
+                     :GalloSicilianFeature ,
+                     :Leniz ,
+                     liph:FiniteStateLinguisticPhenomenon ;
+            liph:matchingPattern "(.)ànu$" ;
+            liph:replaceWith "$1àn" ;
+            rdfs:comment "-ànu > -àn" ;
+            rdfs:label "leniz.13.b" .
+
+
 ###  https://gallosiciliani.unict.it/ns/gs-features#leniz.14
 :leniz.14 rdf:type owl:NamedIndividual ,
                    :GalloSicilianFeature ,
@@ -2675,6 +2697,17 @@ language.""" ;
           liph:replaceWith "$1ö̀n" ;
           rdfs:comment "-ùni > -ö̀n" ;
           rdfs:label "leniz.14" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#leniz.15
+:leniz.15 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Leniz ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "(.)òni$" ;
+          liph:replaceWith "$1ö̀n" ;
+          rdfs:comment "-òni > -ö̀n" ;
+          rdfs:label "leniz.15" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#leniz.16
@@ -3038,6 +3071,28 @@ language.""" ;
           liph:replaceWith "ë̀" ;
           rdfs:comment "ì > ë̀" ;
           rdfs:label "vocal.10" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.12
+:vocal.12 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Vocal ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "(.)a(.)" ;
+          liph:replaceWith "$1e$2" ;
+          rdfs:comment "-a- > -e-" ;
+          rdfs:label "vocal.12" .
+
+
+###  https://gallosiciliani.unict.it/ns/gs-features#vocal.13
+:vocal.13 rdf:type owl:NamedIndividual ,
+                   :GalloSicilianFeature ,
+                   :Vocal ,
+                   liph:FiniteStateLinguisticPhenomenon ;
+          liph:matchingPattern "i$" ;
+          liph:replaceWith "ö" ;
+          rdfs:comment "-i > -ö" ;
+          rdfs:label "vocal.13" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#vocal.2.a

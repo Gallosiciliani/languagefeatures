@@ -59,6 +59,15 @@ public class OntologiesRestController {
      * Provide the ontology with features defined in the scope of the Galloitalici project
      * @return the ontology in TTL format
      */
+    @GetMapping(value = "gs-features/2.0.1", produces = "text/turtle")
+    public RedirectView getGSFeaturesOntology201(){
+        return new RedirectView("https://raw.githubusercontent.com/Gallosiciliani/languagefeatures/refs/heads/2.4.0/gs/src/main/resources/gs-features.ttl");
+    }
+
+    /**
+     * Provide the ontology with features defined in the scope of the Galloitalici project
+     * @return the ontology in TTL format
+     */
     @GetMapping(value = "gs-features", produces = "text/turtle")
     public String getGSFeaturesOntology(){
         return gsFeatures.getOntologyAsStr();
