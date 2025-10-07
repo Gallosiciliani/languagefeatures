@@ -933,6 +933,15 @@ public class GSFeaturesTest {
                 .atTheBeginning("a","");
     }
 
+    /**
+     * all- > l-
+     */
+    @Test
+    void testAfer1b() throws IOException{
+        getChecker(NS+"afer.1.b").category(AFER_CLASS)
+                .atTheBeginning("all","l");
+    }
+
     // Palatalizzazione di /a/
     /**
      * -càri > chè

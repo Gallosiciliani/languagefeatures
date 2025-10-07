@@ -30,7 +30,7 @@
 
 This work has been created in the scope of the project PRIN 2022 PNRR “Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily\", founded by the European Union – Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T.""" ;
                                                   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-                                                  dcterms:modified "2025-10-04" ;
+                                                  dcterms:modified "2025-10-07" ;
                                                   dcterms:title "Gallo-Sicilian features"@en ;
                                                   rdfs:comment "Linguistic phenomena characterizing Gallo-Italian varieties spoken in Sicily." ;
                                                   rdfs:label "Gallo-Sicilian features" ;
@@ -1839,6 +1839,16 @@ language.""" ;
         liph:replaceWith "$1" ;
         rdfs:comment "a- > -" ;
         rdfs:label "afer.1" .
+
+###  https://gallosiciliani.unict.it/ns/gs-features#afer.1.b
+:afer.1.b rdf:type owl:NamedIndividual ,
+                 :Afer ,
+                 :GalloSicilianFeature ,
+                 liph:FiniteStateLinguisticPhenomenon ;
+        liph:matchingPattern "^all" ;
+        liph:replaceWith "l" ;
+        rdfs:comment "all- > l-" ;
+        rdfs:label "afer.1.b" .
 
 
 ###  https://gallosiciliani.unict.it/ns/gs-features#assib.1.a
