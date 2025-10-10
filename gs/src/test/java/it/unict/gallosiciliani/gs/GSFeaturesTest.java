@@ -1304,11 +1304,16 @@ public class GSFeaturesTest {
             final GSFeaturesCategory actualApheresis=gs.getCategories().get(0);
             assertEquals(AFER_CLASS, actualApheresis.getIri());
             final Set<HashedOntologyItem> actualApheresisChildren=actualApheresis.getMembers();
-            assertEquals(1, actualApheresisChildren.size());
-            final HashedOntologyItem afer1=actualApheresisChildren.iterator().next();
+            assertEquals(2, actualApheresisChildren.size());
+            final Iterator<HashedOntologyItem> actualIt=actualApheresisChildren.iterator();
+            final HashedOntologyItem afer1=actualIt.next();
             assertEquals(NS+"afer.1", afer1.getIri());
             assertEquals("afer.1", afer1.getLabel());
             assertEquals("a- > -", afer1.getComment());
+            final HashedOntologyItem afer1b=actualIt.next();
+            assertEquals(NS+"afer.1.b", afer1b.getIri());
+            assertEquals("afer.1.b", afer1b.getLabel());
+            assertEquals("all- > l-", afer1b.getComment());
         }
 
     }

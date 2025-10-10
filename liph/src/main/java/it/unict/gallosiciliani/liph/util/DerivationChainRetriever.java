@@ -70,6 +70,7 @@ public class DerivationChainRetriever {
      */
     public void fillPhenomenaFields(final LinguisticPhenomenaProvider lpProvider) {
         for(final LinguisticPhenomenonOccurrence o: occurrencesSorted){
+            System.out.println(o.getId()+": "+o.getTarget().getWrittenRep().get()+" < "+o.getSource().getWrittenRep().get());
             final LinguisticPhenomenon p=o.getOccurrenceOf();
             final LinguisticPhenomenon pWithData=lpProvider.getById(p.getId());
             p.setLabel(pWithData.getLabel());

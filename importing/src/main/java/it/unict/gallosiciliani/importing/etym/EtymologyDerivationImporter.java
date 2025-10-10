@@ -91,6 +91,8 @@ class EtymologyDerivationImporter {
 
         final LinguisticPhenomenonOccurrence o=new LinguisticPhenomenonOccurrence();
         o.setId(iris.getOccurrenceIRI());
+        if (n.getLinguisticPhenomenon()==null)
+            throw new IllegalArgumentException("Derivation with null linguistic phenomenon");
         o.setOccurrenceOf(n.getLinguisticPhenomenon());
         o.setTarget(targetProvider.apply(n.get()));
         o.setSource(importDerivation(n.prev(), (sourceWrittenRep)->{

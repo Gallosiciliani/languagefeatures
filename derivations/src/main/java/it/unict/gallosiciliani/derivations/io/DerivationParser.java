@@ -44,6 +44,8 @@ public class DerivationParser {
         //the latter is the phenomenon label
         final String lexicalExpression=partPieces[0];
         final LinguisticPhenomenon phenomenon=phenomenonRetriever.getByLabel(partPieces[1], locale);
+        if (phenomenon==null)
+            throw new IllegalArgumentException("No such phenomenon "+partPieces[1]);
         return new DerivationPathNodeImpl(lexicalExpression, phenomenon, parse(parts, i+1, locale));
     }
 }
