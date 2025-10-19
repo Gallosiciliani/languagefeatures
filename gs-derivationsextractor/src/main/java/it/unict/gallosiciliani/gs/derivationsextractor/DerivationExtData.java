@@ -28,19 +28,26 @@ public class DerivationExtData {
     private final boolean noun;
     @Getter
     private final DerivationPathNode derivation;
-    private final DerivationPhenomena phenomena;
+    private final Set<LinguisticPhenomenon> suitablePhenomena;
+    private final SortedSet<LinguisticPhenomenon> missedPhenomena;
 
     private final String etymon;
     private final Set<String> phenomenaIRI;
 
-    public DerivationExtData(final DerivationRawData src) {
+    public DerivationExtData(final DerivationRawData src, final MissedPhenomenaProvider missedPhenomenaProvider) {
         final LexicalEntry entry = src.getEntry();
         lemma = entry.getCanonicalForm().getWrittenRep().get();
         noun = LexInfo.NOUN_INDIVIDUAL.equals(entry.getPartOfSpeech().getId());
         derivation = derivationChain2PathNode(src);
-        phenomena=new MissedPhenomenaFinder(src.getEligibleLinguisticPhenomena().getAll()).getMissedPhenomena(derivation, LinguisticPhenomena.COMPARATOR_BY_LABEL);
+        final DerivationPhenomena phenomena=new MissedPhenomenaFinder(src.getEligibleLinguisticPhenomena().getAll()).getMissedPhenomena(derivation, LinguisticPhenomena.COMPARATOR_BY_LABEL);
+        suitablePhenomena =phenomena.getSuitablePhenomena();
+        this.missedPhenomena=missedPhenomenaProvider==null ? phenomena.getMissedPhenomena() : missedPhenomenaProvider.getMissedPhenomena(lemma);
         etymon=getEtymon(src.getDerivationChain());
         phenomenaIRI=getPhenomenaIRI(src.getDerivationChain());
+    }
+
+    public DerivationExtData(final DerivationRawData src) {
+        this(src, null);
     }
 
     private String getEtymon(final List<LinguisticPhenomenonOccurrence> derivationChain){
@@ -80,7 +87,7 @@ public class DerivationExtData {
 
 
     public SortedSet<LinguisticPhenomenon> getMissed(){
-        return phenomena.getMissedPhenomena();
+        return missedPhenomena;
     }
     /**
      * features / (features + missed phenomena)
@@ -89,8 +96,8 @@ public class DerivationExtData {
      */
     public Optional<Float> getGalloItalicityRate(){
         if (derivation.prev()==null) return Optional.empty();
-        final float expected=phenomena.getSuitablePhenomena().size();
-        final float missed=phenomena.getMissedPhenomena().size();
+        final float expected= suitablePhenomena.size();
+        final float missed=missedPhenomena.size();
         return Optional.of(1f-(missed/expected));
     }
 

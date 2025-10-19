@@ -24,6 +24,6 @@ public class LinguisticPhenomenon extends Thing {
      * //TODO create an intermediate class for executable phenomena
      */
     public Set<String> apply(String src){
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Not applicable phenomenon "+getId());
     }
 }
