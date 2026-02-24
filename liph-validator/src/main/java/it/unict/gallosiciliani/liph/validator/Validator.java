@@ -36,6 +36,7 @@ public class Validator implements Consumer<LinguisticPhenomenon> {
 
     @Override
     public void accept(final LinguisticPhenomenon phenomenon){
+        System.out.println("Processing phenomenon "+phenomenon.getLabel());
         final ParameterizedSparqlString queryStr = new ParameterizedSparqlString("SELECT ?src ?srcr ?target ?targetr WHERE{\n" +
                 "\t?occurrence <"+ LinguisticPhenomena.OCCURRENCE_OF_OBJ_PROPERTY+"> ?phenomenon;\n"+
                 "\t\t<"+LinguisticPhenomena.SOURCE_OBJ_PROPERTY+"> ?src;\n"+
@@ -52,6 +53,7 @@ public class Validator implements Consumer<LinguisticPhenomenon> {
                 final String srcr = s.getLiteral("srcr").getString();
                 final String target = s.getResource("target").getURI();
                 final String targetr = s.getLiteral("targetr").getString();
+                System.out.println(srcr+"<-"+phenomenon.getLabel()+"--"+targetr);
                 if (!phenomenon.apply(srcr).contains(targetr)){
                     invalidDerivations.add(new LiphDerivation() {
                         @Override
