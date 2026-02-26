@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="it">
+<head> 
+  <div class="container-fluid">
+    <title>Progetto Galloitalico IT</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="bootstrap" href="bootstrap.htm">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+</head>
+
+<body>
+
+<!--nav-->
+     
+            <div class="row align-items-center">
+                <div class="col" style="border-right: solid 1px white">
+                    <img class="img-fluid"  src="/eu.png" alt="Finanziato dall'Unione Europea NextGenerationEU" />
+                </div>
+                <div class="col" style="border-right: solid 1px white">
+                    <img class="img-fluid" style="padding: 5%" src="/mur.png" alt="Ministero dell'Università e della Ricerca" />
+                </div>
+                <div class="col" style="border-right: solid 1px white">
+                    <img class="img-fluid" src="/italiadomani.png" alt="Italiadomani Piano nazionale di ripresa e resilenza" />
+                </div>
+                <div class="col" style="border-right: solid 1px white">
+                    <img class="img-fluid"  src="/unime.png" alt="Università di Messina" />
+                </div>
+                <div class="col">
+                    <img class="img-fluid" src="/unict.png" alt="Università di Catania" />
+                </div>
+            </div>
+     </div>
+
+<br>
+<br>
+<br>
+
+<div class="language-switch">
+  <a href="homepage_it.htm" class="flag-btn">
+    <img src="/it.jpg" alt="Italiano">
+  </a>
+  <a href="homepage.htm" class="flag-btn">
+    <img src="/uk.png" alt="English">
+  </a>
+</div>
+
+<div class="container mt-4">
+
+
+ <div class="testo">
+  <h1><strong>Contact-induced change and sociolinguistics:<br>
+     an experimental study on the Gallo-Italic dialects of Sicily</h1></strong>
+ </div>
+<br>
+<br>
+<br>
+
+ <div class="testo">
+  <strong><h3><strong> I dialetti galloitalici diffusi nella Sicilia centro-orientale rappresentano il risultato dell'immigrazione medievale di coloni provenienti dal Piemonte meridionale e dalla Liguria, dopo la conquista normanna dell'isola (1061-1091).</strong>
+     Per quanto riguarda la lingua parlata da queste comunità, emerge una particolarità: la maggior parte delle loro caratteristiche lessicali e sintattiche si è sviluppata attraverso il contatto con il siciliano, mentre a livello fonetico/fonologico è rimasta molto conservativa, mantenendo in gran parte i caratteri originari settentrionali.</h3></strong></div>
+<br>
+<br>
+
+<div class="container mt-4">
+  <div class="testo">
+  <h1><strong>Colonie galloitaliche in Sicilia</strong></h1><br>
+    <h3> Le <a href="galloitalic_colonies_it.htm">minoranze galloitaliche della Sicilia</a> sono ciò che resta di un vasto flusso migratorio che, tra la fine dell’XI e la metà XIII secolo, portò all’insediamento di consistenti gruppi di coloni dall’Italia nord-occidentale, sparsi in almeno 24 centri e casali ritenuti strategici, dislocati lungo l’asse verticale S. Lucia del Mela (sul Tirreno)-Butera (sul mare africano). Tale immigrazione fu incoraggiata, per motivi di natura demografica, politico-militare e religiosa, dalla monarchia normanna, in virtù dei legami con la dinastia Aleramica del Monferrato.</h3>
+
+</div>
+<br>
+<style> #map { height: 550px; } </style>
+   <div id="map"></div>
+                    <script>
+                        var map = L.map('map').setView([38.01471272187468, 15.130760956581053], 10);
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 17,
+                            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                        }).addTo(map);
+                        var marker = L.marker([38.01471272187468, 15.130760956581053]).addTo(map);
+                        var marker = L.marker([37.74840902991137, 14.397646359503925]).addTo(map);
+                        var marker = L.marker([38.01436538490911, 14.597930857528963]).addTo(map);
+                        var marker = L.marker([38.05127051255718, 14.970872005979421]).addTo(map);
+                        var marker = L.marker([38.02430848820566, 15.01398138427162]).addTo(map);
+                        var marker = L.marker([37.99870460109259, 15.18091415308601]).addTo(map);
+                        var marker = L.marker([37.87510835042897, 14.951022468974864]).addTo(map);
+                        var marker = L.marker([37.119949789747075, 14.93919615317975]).addTo(map);
+                        var marker = L.marker([37.38095324192448, 14.36815768879692]).addTo(map);
+                        var marker = L.marker([37.41537584596335, 14.445042831259446]).addTo(map);
+                        var marker = L.marker([37.76565921301142, 14.352298705326028]).addTo(map);
+                    </script>
+    </div>
+<br>
+<br>
+<br>
+
+<hr>
+
+<div class="testo">
+<h1><strong>Informazioni sul progetto</strong></h1>
+</div>
+<br>
+<div class="testo">
+<h3><p><strong>Descrizione</strong>: I dialetti galloitalici della Sicilia rappresentano il risultato di migrazioni medievali dall’Italia nord-occidentale. A causa del prolungato contatto con le varietà siciliane limitrofe, questi dialetti costituiscono un vero e proprio laboratorio naturale per indagare alcuni aspetti del contatto linguistico, in particolare il prestito strutturale, che intacca livelli della lingua quali fonologia, morfologia e sintassi. A tale riguardo, un aspetto finora non indagato riguarda il fatto che, mentre il lessico, la sintassi e la morfologia derivativa sono fortemente interferiti, il sistema fonetico e fonologico appaiono molto conservativi.
+  <br>
+  <br>
+  <strong>Finalità</strong>: Il presente progetto mira a indagare le cause soggiacenti a tali differenze, relativamente all’accettazione o meno di prestiti strutturali in diverse sotto-aree della grammatica della lingua ricevente. In tale prospettiva, i dialetti galloitalici della Sicilia costituiscono un banco di prova per la teoria generale sul contatto linguistico, specie in relazione alle dinamiche sociolinguistiche.
+  <br>
+  <br>
+  <strong>Risultati attesi</strong>: Una delle ipotesi da verificare nel presente progetto è che la notevole conservazione del sistema fonetico e fonologico, a fronte di una notevole quantità di prestiti lessicali, nasconda motivazioni di carattere sociolinguistico. 
+Un secondo punto di interesse teorico riguarda la disponibilità, da parte della lingua ricevente, ad accettare in larga misura il prestito strutturale. L’accoglimento di strutture sintattiche dal siciliano al galloitalico potrebbe dipendere dalla crescente presenza di galloitalici divenuti progressivamente sicilianofoni, con un conseguente e significativo aumento di parlanti bilingui.
+
+
+</p></h3>
+</div>
+
+<br>
+<hr>
+<br>
+
+<!--project results-->
+<div class="testo">
+  <h1><strong>Risultati del progetto</strong></h1>
+</div>
+<br>
+<div class="accordion">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <h2>Documenti di ricerca</h2>
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Assenza, Elvira, Castiglione, Angela, De Angelis, Alessandro & Menza, Salvatore (edd.) (comitato di redazione: Cardullo, Sara Natalia, Cosentino, Michele, & Di Caro, Vincenzo Nicolò) (2025), I dialetti galloitalici di Sicilia tra resistenza e assimilazione (“Progetto Galloitalici”, 4), Palermo, Centro di Studi Filologici e Linguistici Siciliani, pp. 365. <a href="https://www.csfls.it/res/edizioni/catalogo/progettogalloitalici/aavv-dialetti-galloitalici-resistenza-assimilazione-4-2025/">Link</a></li>
+            <li class="list-group-item">Assenza, Elvira (2025), “Ipotetiche dell’irrealtà nelle varietà lombardo sicule e nel siciliano: un confronto in diacronia”, in I dialetti galloitalici di Sicilia tra resistenza e assimilazione (“Progetto Galloitalici”, 4), Palermo, Centro di Studi Filologici e Linguistici Siciliani, pp. 143-161.</li>
+            <li class="list-group-item">Assenza, Elvira (in stampa), “Resistenza vs advergenza nelle ipotetiche dell’irrealtà del galloitalico di Sicilia: uno studio tra diacronia e sincronia”, in Atti del XXXI CILFR - Congresso internazionale di linguistica e filologia romanza (Lecce, 30 giugno-5 luglio 2025).</li>
+            <li class="list-group-item">Cantone, Domenico et al. (in press), “Modeling Linguistic Phenomena in Gallo-Italic Dialects: The Linguistic Phenomena Ontology”.</li>
+            <li class="list-group-item">Cantone, Domenico et al. (2025), “An Etymological Dataset for Nouns and Verbs in the Gallo-Italic Variety Spoken in Nicosia and Sperlinga”, in SWODCH’25: International Workshop on Semantic Web and Ontology Design for Cultural Heritage, Catania.</li>
+            <li class="list-group-item">Cantone, Domenico et al. (2025), “An OWL Ontology for Linguistic Phenomena with Applications to Gallo-Italic Dialects in Sicily”. <a href="https://ceur-ws.org/Vol-3809/paper2.pdf">Link</a></li>
+            <li class="list-group-item">Cardullo, Sara Natalia (2024), “Sulla questione dell’alternanza tra perfetto analitico e perfetto sintetico in siciliano”, «Rivista Italiana di Dialettologia» 48, pp. 15-34. <a href="https://www.pendragon.it/catalogo/riviste/rivista-italiana-di-dialettologia/rivista-italiana-di-dialettologia-48-detail.html">Link</a></li>
+            <li class="list-group-item">Cardullo, Sara Natalia & Groothuis, Kim (2024), “Revisiting syntactic microvariation and diachrony in the dual complementizer systems of upper southern Italy”, «Transactions of the Philological Society» 122(2), pp. 281-307. <a href="https://doi.org/10.1111/1467-968x.12292">Link</a></li>
+            <li class="list-group-item">Cardullo, Sara Natalia & Cosentino, Michele (in stampa), “Configurazioni del repertorio linguistico e identità linguistiche percepite nella “Lombardia siciliana”: il caso di Nicosia (EN)”, in Atti del XXXI CILFR - Congresso internazionale di linguistica e filologia romanza (Lecce, 30 giugno-5 luglio 2025).</li>
+            <li class="list-group-item">Cardullo, Sara Natalia et al. (in stampa), “I dialetti galloitalici di Sicilia: un laboratorio naturale per il contatto linguistico”, «Bollettino del Centro di Studi filologici e linguistici siciliani».</li>
+            <li class="list-group-item">Castiglione, Angela (in stampa), “Il contatto galloitalico-siciliano: note di sociolinguistica storica”, «Ricerche Linguistiche» 2025/3.</li>
+            <li class="list-group-item">Castiglione, Angela (in stampa), “Effetti del contatto e preservazione di tratti altoitaliani nella morfologia nominale dei dialetti galloitalici della Sicilia”, in Atti del XXXI CILFR - Congresso internazionale di linguistica e filologia romanza (Lecce, 30 giugno-5 luglio 2025).</li>
+            <li class="list-group-item">Castiglione, Angela & Menza, Salvatore (2025), “Sull’origine di da nelle varietà galloitaliche della Sicilia”, in I dialetti galloitalici di Sicilia tra resistenza e assimilazione (“Progetto Galloitalici”, 4), Palermo, Centro di Studi Filologici e Linguistici Siciliani, pp. 193-225.</li>
+            <li class="list-group-item">Castiglione, Angela (2025), “The gender system in the Gallo-Italic minority varieties in Sicily between convergence and diversity”, «Isogloss. Open Journal of Romance Linguistics» 11(6)/2, pp. 1-19. <a href="https://revistes.uab.cat/isogloss/article/view/v11-n6-castiglione">Link</a></li>
+            <li class="list-group-item">Castiglione, Angela (2025), “Grammatiche scisse nel contatto linguistico: il caso delle minoranze galloitaliche in Sicilia. Parte seconda”, «Incontri Linguistici» 48, pp. 51-66. <a href="https://www.libraweb.net/articoli3.php?chiave=202500801&rivista=8&articolo=202500801002">Link</a></li>
+            <li class="list-group-item">Castiglione, Angela (2024), “Grammatiche scisse nel contatto linguistico: il caso delle minoranze galloitaliche in Sicilia. Parte prima”, «Incontri Linguistici» 47, pp. 11-46. <a href="https://www.libraweb.net/articoli3.php?chiave=202400801&rivista=8&articolo=202400801001">Link</a></li>
+            <li class="list-group-item">De Angelis, Alessandro (2023), “The strange case of the Gallo-Italic dialects of Sicily. Preservation and innovation in contact-induced change”, «Languages» 8(163), pp. 1-18. <a href="https://www.mdpi.com/2226-471X/8/3/163">Link</a></li>
+            <li class="list-group-item">De Angelis, Alessandro (2025a), “Bad rules, good rules: il caso della marcatura differenziale dell’Oggetto in un dialetto galloitalico di Sicilia”, in Lingue minoritarie, italiano nel mondo. Strutture e aspetti sociolinguistici, Udine, Forum, pp. 163-176. <a href="https://forumeditrice.it/percorsi/lingua-e-letteratura/convegni/lingue-minoritarie-italiano-nel-mondo">Link</a></li>
+            <li class="list-group-item">De Angelis, Alessandro (2025b), “Strategie anti-lenitive nel galloitalico di Sicilia: sull’importazione di una regola fonologica”, in I dialetti galloitalici di Sicilia tra resistenza e assimilazione (“Progetto Galloitalici”, 4), Palermo, Centro di Studi Filologici e Linguistici Siciliani, pp. 127-142.</li>
+            <li class="list-group-item">De Angelis, Alessandro (2025c), “Il sistema dei pronomi tonici nicosiano e sanfratellano: un caso di conservazione per contatto?”, in I dialetti galloitalici di Sicilia tra resistenza e assimilazione (“Progetto Galloitalici”, 4), Palermo, Centro di Studi Filologici e Linguistici Siciliani, pp. 99-112.</li>
+            <li class="list-group-item">De Angelis, Alessandro (in stampa), “Sociofonetica e valori identitari nei dialetti galloitalici di Sicilia”, in Storia, lingue e culture dello Stretto, Messina, Di Nicolò, pp. 5-27.</li>
+            <li class="list-group-item">De Angelis, Alessandro (in preparazione), “Sull’origine del tipo lluna/ḍḍuna ‘luna’ nei dialetti galloitalici di Sicilia”, «Revue de linguistique romane».</li>
+            <li class="list-group-item">Di Caro, Vincenzo N. (2024), “Sulla creatività linguistica della perifrasi ‘mostrare a’ + infinito nel dialetto galloitalico di Nicosia”, Polyphonie, Vol. 15, Nr. 1/2024. <a href="https://riviste.unige.it/index.php/polyphonie/article/view/2396/3073">Link</a></li>
+            <li class="list-group-item">Di Caro, Vincenzo N. & Menza, Salvatore (2024), “Contact-induced change in Sicilian Gallo-Italic. The multipurpose Aviri a + Infinitive Construction in the dialect of Nicosia”, Annali di Ca’ Foscari - Serie occidentale, 58. <a href="https://edizionicafoscari.unive.it/it/edizioni4/riviste/annali-di-ca-foscari-serie-occidentale/2024/58/contact-induced-change-in-sicilian-gallo-italic/">Link</a></li>
+            <li class="list-group-item">Menza, Salvatore (2023), “L’alternanza dittongo/monottongo nei verbi völë̀ (‘volere’) e pödë̀ (‘potere’) in testi novecenteschi nel dialetto galloitalico di Nicosia”, «Cuadernos de Filología Italiana», 30, pp. 163-176. <a href="https://dx.doi.org/10.5209/cfit.83803">Link</a></li>
+            <li class="list-group-item">Menza, Salvatore (2023), “Ortografia e vitalità delle lingue di minoranza. Il caso del galloitalico di Nicosia tra identità e multilinguismo”, Polyphonie, Vol. 13 (1/2023).</li>
+            <li class="list-group-item">Menza, Salvatore (2024), Presentazione (§ 2) a S.C. Trovato, Cinquant'anni di storia linguistica della Sicilia, Alessandria, Edizioni dell'Orso, pp. XIII-XIX.</li>
+            <li class="list-group-item">Menza, Salvatore & Trovato, Salvatore C. (2025), “Il ruolo dell’ortografia nella produzione letteraria a Nicosia e San Fratello”, in I dialetti galloitalici di Sicilia tra resistenza e assimilazione (“Progetto Galloitalici”, 4), Palermo, Centro di Studi Filologici e Linguistici Siciliani.</li>
+            <li class="list-group-item">Menza, Salvatore (in stampa), “Il contatto tra siciliano e galloitalico attraverso un’analisi semiautomatica del lessico nicosiano”, in Atti del convegno “Vecchi e nuovi spazi dei dialetti e delle lingue di minoranza nell’Italia di oggi” (Sappada, 25-27 giugno 2025).</li>
+            <li class="list-group-item">Menza, Salvatore (in stampa), “Faire de la lexicographie dans les centres gallo-italiques de Sicile: modèles théoriques et ethnotextes. Le cas de Nicosia et de Sperlinga”, «Cahiers du dictionnaire».</li>    
+        </ul>
+      </div>
+    </div>
+  </div>
+   <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <h2>Database Nicosiano</h2>
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Questa sezione presenta il <a href="dbnicosiano.htm" >Database Nicosiano</a> e le sue caratteristiche.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <h2>Ontologie e Software</h2>
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+    <p>I seguenti vocabolari e set di dati OWL sono stati sviluppati nell'ambito di questo progetto.</p>
+          <ul>
+              <li>
+                  <a href="https://gallosiciliani.unict.it/ns/liph">The Linguistic Phenomena Ontology (LiPh)</a>
+              </li>
+              <li>
+                  <a href="https://gallosiciliani.unict.it/ns/gs-features">Gallo-Sicilian features</a>
+              </li>
+              <li>
+                  <a href="https://gallosiciliani.unict.it/ns/lexica/nicosiaesperlinga#lexicon">Nouns and Verbs of the Gallo-Italic variety spoken in Nicosia and Sperlinga</a>
+              </li>
+          </ul>
+       </div>
+      </div>
+    </div>
+  </div>
+  
+<br>
+<hr>
+<br>
+<!--card-->
+<div class="card-container mt-4">
+  <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title a">
+      <a href="dissemination_it.htm">Disseminazione</a>
+    </h5>
+  </div>
+</div>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title a">
+      <a href="conferences_it.htm"> Conferenze e workshop</a>
+    </h5>
+  </div>
+</div>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title a">
+      <a href="fieldwork_it.htm"> Dati dal lavoro<br>
+         sul campo</a>
+    </h5>
+  </div>
+</div>
+</div>
+
+<br>
+<hr>
+<br>
+<div class="testo">
+  <h1><strong>Il nostro Team</strong></h1>
+  <h2>Università degli Studi di Messina</h2>
+</div>
+<!--cardteam-->
+    <div class="card-container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Alessandro_DEANGELIS.png" class="img-tonda"></th>
+                      <th><div class="card-title">Alessandro DE ANGELIS</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Linguista (Coordinatore scientifico)</p>
+                    <p class="card-text">alessandro.deangelis@unime.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>
+            <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Angela_CASTIGLIONE.jpeg" class="img-tonda"></th>
+                      <th><div class="card-title">Angela CASTIGLIONE</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Linguista</p>
+                    <p class="card-text">angela.castiglione@unime.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>  
+        <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Elvira_ASSENZA.png" class="img-tonda"></th>
+                      <th><div class="card-title">Elvira ASSENZA</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Linguista</p>
+                    <p class="card-text">elvira.assenza@unime.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>  
+        <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Sara_Natalia_CARDULLO.png" class="img-tonda"></th>
+                      <th><div class="card-title">Sara Natalia CARDULLO</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Linguista</p>
+                    <p class="card-text">saranatalia.cardullo@unime.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>  <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Michele_Cosentino.png" class="img-tonda"></th>
+                      <th><div class="card-title">Michele COSENTINO</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Linguista</p>
+                    <p class="card-text">michele.cosentino@unime.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>
+       </div>  
+      
+
+      <div class="testo">
+          <h2>Università degli Studi di Catania</h2>
+      </div>
+        <!--cardCT-->
+    <div class="card-container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Salvatore_MENZA.png" class="img-tonda"></th>
+                      <th><div class="card-title">Salvatore MENZA</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Linguista (Vicecoordinatore scientifico)</p>
+                    <p class="card-text">salvatore.menza@unict.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>
+            <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Marianna_NICOLOSI_ASMUNDO.png" class="img-tonda"></th>
+                      <th><div class="card-title">Marianna NICOLOSI ASMUNDO</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Logica Comptazionale</p>
+                    <p class="card-text">nicolosi@dmi.unict.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>   
+      <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Vincenzo_Nicolò_DICARO.jpg" class="img-tonda"></th>
+                      <th><div class="card-title">Vincenzo Nicolò<br> DI CARO</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Linguista</p>
+                    <p class="card-text">vincenzo.dicaro@unict.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Cristiano_LONGO.png" class="img-tonda"></th>
+                      <th><div class="card-title">Cristiano LONGO</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Informatico</p>
+                    <p class="card-text">cristianolongo@opendatahacklab.org</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>  
+      <div class="card">
+                  <div class="card-body">
+                      <div class="icona">
+                        <table>
+                          <tr>
+                            <th><img src="foto_team/Federica_BREIMAIER.png" class="img-tonda"></th>
+                            <th><div class="card-title">Federica BREIMAIER</div><br>
+                          </tr>   
+                        </table>
+                        <br>
+                        <strong>  
+                          <p class="card-text">Statistica</p>
+                          <p class="card-text">federica.breimaier@uzh.ch</p>
+                        </strong> 
+                      </div> 
+                  </div>
+                </div>  
+          <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/sofia_DIBELLA.png" class="img-tonda"></th>
+                      <th><div class="card-title">Sofia <br>DI BELLA</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Web Developer</p>
+                    <p class="card-text">sofia.dibella00@gmail.com</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/erika_DAMIGELLA.png.jpeg" class="img-tonda"></th>
+                      <th><div class="card-title">Erika DAMIGELLA</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Linguista</p>
+                    <p class="card-text">erika.damigella@unict.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>
+      </div>
+    <hr>
+
+<br>
+<div class="testo">
+    <h2>Collaboratori Esterni</h2>
+</div>
+
+    <!--collaboratori-->
+    <div class="card-container mt-4">
+          <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Daniele_Francesco_SANTAMARIA.png" class="img-tonda"></th>
+                      <th><div class="card-title">Daniele Francesco SANTAMARIA</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p>Università degli Studi di Catania</p>
+                    <p class="card-text">Informatico</p>
+                    <p class="card-text">daniele.santamaria@unict.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>
+            <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Domenico_CANTONE.jpg" class="img-tonda"></th>
+                      <th><div class="card-title">Domenico CANTONE</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p>Università degli Studi di Catania</p>
+                    <p class="card-text">Informatico teorico</p>
+                    <p class="card-text">domenico.cantone@unict.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>
+    </div>   
+<hr>
+
+<br>
+<div class="testo">
+    <h2>Partners</h2>
+</div>
+<!--partners-->
+    <div class="card-container mt-4">
+         <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Salvatore_TROVATO.png" class="img-tonda"></th>
+                      <th><div class="card-title">Salvatore C. TROVATO</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text">Presidente dell'Associazione per la conoscenza e la salvaguardia dei dialetti galloitalici della Sicilia </p>
+                    <p class="card-text">salvtrov@libero.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>   
+        <div class="card">
+            <div class="card-body">
+                <div class="icona">
+                  <table>
+                    <tr>
+                      <th><img src="foto_team/Giovanni_RUFFINO.jpg" class="img-tonda"></th>
+                      <th><div class="card-title">Giovanni RUFFINO</div><br>
+                    </tr>   
+                  </table>
+                  <br>
+                  <strong>  
+                    <p class="card-text"> Presidente del Centro di Studi filologici e linguistici siciliani </p>
+                    <p class="card-text">csfls@libero.it</p>
+                  </strong> 
+                </div> 
+            </div>
+        </div>   
+       </div>  
+    </div>
+  </div>  
+</div>
+
+
+     
+  <br>
+  <br>
+  <br>
+
+
+</div>
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h4>DOVE SIAMO</h4>
+        <p>
+          Piazza Università, 2<br>
+          95131 – Catania
+        </p>
+        <p>Partita IVA 02772010878</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>CONTATTI</h4>
+        <p>
+          URP » tutti i recapiti<br>
+          protocollo@unict.it<br>
+          protocollo@pec.unict.it<br>
+        </p>
+      </div>
+    </div>
+  </footer>
+  </div>   
+</body>
