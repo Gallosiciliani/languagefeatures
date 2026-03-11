@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="it">
+<head> 
+  <div class="container-fluid">
+    <title>Database_it</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="bootstrap" href="bootstrap.htm">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+</head>
+
+<body>
+<!--nav-->
+     
+            <div class="row align-items-center">
+                <div class="col" style="border-right: solid 1px white">
+                    <img class="img-fluid"  src="/eu.png" alt="Finanziato dall'Unione Europea NextGenerationEU" />
+                </div>
+                <div class="col" style="border-right: solid 1px white">
+                    <img class="img-fluid" style="padding: 5%" src="/mur.png" alt="Ministero dell'Università e della Ricerca" />
+                </div>
+                <div class="col" style="border-right: solid 1px white">
+                    <img class="img-fluid" src="/italiadomani.png" alt="Italiadomani Piano nazionale di ripresa e resilenza" />
+                </div>
+                <div class="col" style="border-right: solid 1px white">
+                    <img class="img-fluid"  src="/unime.png" alt="Università di Messina" />
+                </div>
+                <div class="col">
+                    <img class="img-fluid" src="/unict.png" alt="Università di Catania" />
+                </div>
+            </div>
+     </div>
+
+<br>
+<div class="language-switch">
+  <a href="dbnicosiano_it.htm" class="flag-btn">
+    <img src="/it.jpg" alt="Italiano">
+  </a>
+  <a href="dbnicosiano.htm" class="flag-btn">
+    <img src="/uk.png" alt="English">
+  </a>
+</div>
+
+
+<br>
+    <div class="container mt-4">
+     <div class="testo">
+        <h1><strong>Database Nicosiano</strong></h1>
+        <br>
+        <h4>
+        <a href="DB/GALLOSIC_database.xlsx" download>Scarica in formato .xlsl</a>
+        <a href="DB/GALLOSIC_database.csv" download>Scarica in formato .csv</a>
+        </h4>
+        <br>
+        <h4><p>Il “Database Nicosiano” (DBN) è un documento accessibile al pubblico che è stato creato al fine di valutare non solo la presenza di tratti fonetici riconducibili ai dialetti settentrionali nel vocabolario nicosiano, ma anche la produttività delle regole fonologiche endogene. L'NDB raccoglie circa 5.800 nomi e verbi, tutti in forma di citazione, estratti dal Vocabolario del dialetto galloitalico di Nicosia e Sperlinga (VNiSp; Trovato / Menza 2020). Ciascuno di questi lemmi rappresenta plausibilmente un prestito dal siciliano. I lemmi di chiara origine patrimoniale sono stati esclusi perché è l'applicazione di regole fonologiche specificamente galloitaliche ai prestiti siciliani che costituisce la prova della produttività di tali regole (almeno fino al momento in cui un dato prestito è entrato nel nicosiano e nello sperlinghese) e permette di escludere la possibilità che un dato tratto fonetico sia presente nel galloitalico solo perché è stato lessicalizzato. In quest'ultimo caso, non sarebbe più possibile sostenere la conservazione della fonologia galloitalica intesa come l'applicazione di regole sincronicamente attive. L'intensità del contatto e la possibile produttività di un dato fenomeno possono essere misurate solo alla luce dell'interferenza fonologica all'interno dei prestiti dal siciliano o, eventualmente, da altre varietà. Sulla base della letteratura disponibile sulle varietà galloitaliche di Nicosia e Sperlinga, è stata identificata una serie di tratti macrofonologici caratteristici del repertorio settentrionale:</h4></p>
+        <br>
+        <h4><p> - Lenizione delle consonanti sorde intervocaliche (occlusive e fricative) [LENIZ];<br>
+            - Nasalizzazione delle vocali [NASAL];<br>
+            - Degeminazione [DEGEM];<br>
+            - Assibilazione [ASSIB];<br>
+            - Mantenimento dei gruppi -MB- e -ND- [DISSIM];<br>
+            - Dittongazione non metafonica [DITT];<br>
+            - Mantenimento del sistema settentrionale delle sette vocali accentate [VOCAL];<br>
+            - Mantenimento del vocalismo galloitalico atono [incluso in VOCAL];<br>
+            - Aferesi dell'a iniziale [AFER];<br>
+            - Palatalizzazione della /a/ accentata [PALAT];<br>
+            - Eliminazione delle varianti allofoniche siciliane in posizione debole [ELIM];<br>
+            - Deretroflessione dei risultati di TR, TTR e STR [DERETR];<br>
+            - Indebolimento delle sonanti [INDSON].
+        </h4>    
+        </p>
+        <br>
+        <h4><p>Ogni macro-tratto è stato poi suddiviso in un livello intermedio denominato super-tratto e infine in una serie di micro-tratti, tenendo conto delle convenzioni ortografiche sia delle forme di partenza (lemmi siciliani tratti dal Vocabolario Siciliano, VS) sia delle forme di arrivo (lemmi tratti dal VNiSp). A ciascun micro-tratto è stata assegnata un'etichetta specifica al fine di semplificare il processo di derivazione. Il meccanismo di derivazione inizia con il lemma Nicosiano (o Sperlinga) tratto dal VNiSp e lo correla con possibili candidati derivazionali tratti dal VS. Per ogni candidato vengono identificati i micro-tratti rilevanti e la derivazione procede all'indietro (cioè da destra a sinistra; vedi colonna X) fino a raggiungere il lemma nicosiano. Tra le derivazioni proposte, viene selezionata quella più plausibile sulla base di un'analisi qualitativa. Si consideri la seguente derivazione: il verbo nicosiano segutè “inseguire” è correlato al siciliano assicutàri:</p></h4>
+        <br>
+        <h4><p><strong>segutè <-vocal.7.b-- sigutè <-palat.5-- sigutàri <-leniz.1-- sicutàri <-degem.13-- ssicutàri <-afer.1-- assicutàri</strong></p></h4>
+        <br>
+        <h4><p>Nel processo derivazionale da assicutàri a segutè, otteniamo una stringa derivazionale “grezza”, indipendente dalla cronologia relativa, secondo la quale viene prima identificato il micro-tratto afer.1, che produce la forma intermedia *ssicutàri. Nella fase successiva, il micro-tratto degem.13 produce *sicutàri, seguito da leniz.1 (sigutàri), palat.5 (sigutè) e infine vocal.7.b (segutè). I risultati della derivazione possono variare notevolmente (e devono essere sottoposti ad analisi qualitativa per eventuali adeguamenti). Essi vanno dalla “derivazione zero”, che non mostra alcuna applicazione delle regole fonologiche gallo-italiche rispetto ai corrispondenti lemmi siciliani (come in anciòva “acciuga”, fastùca ‘pistacchio’ e sausìzza ‘salsiccia’), a derivazioni molto lunghe come quella di böfetìn ‘tavolino’ dal siciliano bbuffittìnu, che presenta sei distinti passaggi derivazionali.</p></h4>
+     </div>
+</div>
+
+<br>
+<br>
+<br>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h4>DOVE SIAMO</h4>
+        <p>
+          Piazza Università, 2<br>
+          95131 – Catania
+        </p>
+        <p>Partita IVA 02772010878</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>CONTATTI</h4>
+        <p>
+          URP » tutti i recapiti<br>
+          protocollo@unict.it<br>
+          protocollo@pec.unict.it<br>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
